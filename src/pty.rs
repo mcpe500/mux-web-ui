@@ -7,6 +7,7 @@ use tokio::sync::mpsc;
 use tracing::{error, info};
 
 /// Raw PTY implementation using nix/libc — works on both Linux and Android (Termux).
+/// Fork-safe: resolves all paths/strings BEFORE forking. Child only does libc calls.
 pub struct PtySession {
     master_fd: Arc<OwnedFd>,
     child_pid: nix::unistd::Pid,
@@ -21,6 +22,45 @@ impl PtySession {
         custom_shell: Option<String>,
         output_tx: mpsc::Sender<Vec<u8>>,
     ) -> Result<Self, String> {
+        // ===== RESOLVE EVERYTHING BEFORE FORK (fork-safe) =====
+
+        // Resolve shell path
+        let shell = custom_shell
+            .or_else(|| std::env::var("SHELL").ok())
+            .unwrap_or_else(|| {
+                // Auto-detect shell for Termux vs regular Linux
+                for candidate in &[
+                    "/data/data/com.termux/files/usr/bin/bash",
+                    "/data/data/com.termux/files/usr/bin/sh",
+                    "/bin/bash",
+                    "/bin/sh",
+                ] {
+                    if std::path::Path::new(candidate).exists() {
+                        return candidate.to_string();
+                    }
+                }
+                "/bin/sh".to_string()
+            });
+
+        // Pre-allocate CStrings before fork (heap allocation is unsafe after fork)
+        let shell_cstr = CString::new(shell.as_str())
+            .map_err(|e| format!("Invalid shell path: {}", e))?;
+
+        let arg0_cstr = CString::new(shell.as_str())
+            .map_err(|e| format!("Invalid shell arg0: {}", e))?;
+
+        // Resolve work directory to a CString before fork
+        let work_dir_cstr = if let Some(ref dir) = work_dir {
+            let dir_str = dir.to_str().ok_or("Invalid work_dir path")?;
+            Some(CString::new(dir_str).map_err(|e| format!("Invalid work_dir: {}", e))?)
+        } else {
+            None
+        };
+
+        // Pre-allocate env vars
+        let term_key = CString::new("TERM").unwrap();
+        let term_val = CString::new("xterm-256color").unwrap();
+
         // Set initial window size
         let win_size = libc::winsize {
             ws_row: rows,
@@ -29,8 +69,8 @@ impl PtySession {
             ws_ypixel: 0,
         };
 
-        // Use forkpty to create a PTY + child process in one call
-        let fork_result = unsafe {
+        // ===== FORK =====
+        let (pid, raw_master_fd) = unsafe {
             let mut master_fd: libc::c_int = -1;
             let pid = libc::forkpty(
                 &mut master_fd as *mut libc::c_int,
@@ -44,43 +84,31 @@ impl PtySession {
             (pid, master_fd)
         };
 
-        let (pid, raw_master_fd) = fork_result;
-
         if pid == 0 {
             // ===== CHILD PROCESS =====
-            // Change working directory if specified
-            if let Some(ref dir) = work_dir {
-                let _ = std::env::set_current_dir(dir);
-            }
+            // ONLY libc/syscall calls here — no Rust std allocations!
 
-            let shell = custom_shell
-                .or_else(|| std::env::var("SHELL").ok())
-                .unwrap_or_else(|| {
-                    // Auto-detect shell for Termux vs regular Linux
-                    if std::path::Path::new("/data/data/com.termux/files/usr/bin/bash").exists() {
-                        "/data/data/com.termux/files/usr/bin/bash".to_string()
-                    } else if std::path::Path::new("/bin/bash").exists() {
-                        "/bin/bash".to_string()
-                    } else {
-                        "/bin/sh".to_string()
-                    }
-                });
-
-            let shell_c = CString::new(shell.as_str()).unwrap();
-            let login_arg = CString::new("-l").unwrap();
-
-            // Set TERM environment variable
-            let term_key = CString::new("TERM").unwrap();
-            let term_val = CString::new("xterm-256color").unwrap();
-            unsafe { libc::setenv(term_key.as_ptr(), term_val.as_ptr(), 1); }
-
-            // exec the shell as login shell
             unsafe {
-                libc::execvp(
-                    shell_c.as_ptr(),
-                    [shell_c.as_ptr(), login_arg.as_ptr(), std::ptr::null()].as_ptr(),
-                );
-                // If exec fails, exit
+                // Change working directory
+                if let Some(ref dir_c) = work_dir_cstr {
+                    libc::chdir(dir_c.as_ptr());
+                }
+
+                // Set TERM environment variable
+                libc::setenv(term_key.as_ptr(), term_val.as_ptr(), 1);
+
+                // Build argv: [shell, NULL] — interactive login shell
+                let argv: [*const libc::c_char; 2] = [
+                    arg0_cstr.as_ptr(),
+                    std::ptr::null(),
+                ];
+
+                // exec the shell
+                libc::execvp(shell_cstr.as_ptr(), argv.as_ptr());
+
+                // If execvp returns, it failed — write error to stderr and exit
+                let err_msg = b"mux-web: execvp failed\n";
+                libc::write(2, err_msg.as_ptr() as *const libc::c_void, err_msg.len());
                 libc::_exit(127);
             }
         }
@@ -106,26 +134,29 @@ impl PtySession {
 
         let child_pid = nix::unistd::Pid::from_raw(pid);
 
+        info!("Spawned PTY child pid={} shell={}", pid, shell);
+
         // Background reader thread
         std::thread::spawn(move || {
             let mut buf = [0u8; 4096];
             loop {
                 match reader_file.read(&mut buf) {
                     Ok(0) => {
-                        info!("PTY EOF reached");
+                        info!("PTY EOF reached (pid={})", pid);
                         break;
                     }
                     Ok(n) => {
                         if output_tx.blocking_send(buf[..n].to_vec()).is_err() {
+                            info!("PTY output channel closed (pid={})", pid);
                             break;
                         }
                     }
                     Err(e) => {
-                        // EIO is expected when the child exits on Linux PTY
+                        // EIO is expected when the child exits on Linux/Android PTY
                         if e.raw_os_error() == Some(libc::EIO) {
-                            info!("PTY child exited (EIO)");
+                            info!("PTY child exited (EIO, pid={})", pid);
                         } else {
-                            error!("Error reading from PTY: {}", e);
+                            error!("Error reading from PTY (pid={}): {}", pid, e);
                         }
                         break;
                     }
