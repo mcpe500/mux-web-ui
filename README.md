@@ -6,18 +6,27 @@ Mux Web UI runs as a single self-contained binary server. Open one local URL in 
 
 ---
 
-## ⚡ Quick 1-Line Installation
+## ⚡ Quick 1-Line Commands (Create / Update / Delete)
 
-Run this command in your Termux or Linux terminal:
+### 📥 Install (Create)
+Run this single command in Termux or Linux terminal to install `mux-web` immediately (no pre-cloning required):
 
 ```bash
 curl -fsSL https://raw.githubusercontent.com/mcpe500/mux-web-ui/main/install.sh | bash
 ```
 
-Or from inside the cloned repository:
+### 🔄 Update
+To update `mux-web` to the latest version at any time:
 
 ```bash
-./install.sh
+curl -fsSL https://raw.githubusercontent.com/mcpe500/mux-web-ui/main/update.sh | bash
+```
+
+### 🗑️ Uninstall (Delete)
+To completely remove `mux-web` from your system:
+
+```bash
+curl -fsSL https://raw.githubusercontent.com/mcpe500/mux-web-ui/main/uninstall.sh | bash
 ```
 
 ---
