@@ -54,8 +54,11 @@ export function FileExplorerView({ onOpenFile, onOpenTerminalHere }: FileExplore
     const url = `/api/v1/fs/entries?root=${encodeURIComponent(root)}&path=${encodeURIComponent(path)}`;
 
     fetch(url)
-      .then((res) => {
-        if (!res.ok) throw new Error(`HTTP ${res.status}`);
+      .then(async (res) => {
+        if (!res.ok) {
+          const errText = await res.text();
+          throw new Error(`HTTP ${res.status}: ${errText}`);
+        }
         return res.json();
       })
       .then((data: DirectoryListing) => {

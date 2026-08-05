@@ -70,7 +70,13 @@ export function TextEditorView({ rootId: propRootId, filePath: propFilePath, ini
 
   const loadDir = useCallback((rootId: string, dirPath: string) => {
     fetch(`/api/v1/fs/entries?root=${encodeURIComponent(rootId)}&path=${encodeURIComponent(dirPath)}`)
-      .then(res => res.json())
+      .then(async res => {
+        if (!res.ok) {
+          const errText = await res.text();
+          throw new Error(`HTTP ${res.status}: ${errText}`);
+        }
+        return res.json();
+      })
       .then(data => {
         setDirEntries(prev => ({ ...prev, [dirPath]: data.entries || [] }));
       })
@@ -128,8 +134,11 @@ export function TextEditorView({ rootId: propRootId, filePath: propFilePath, ini
     setActiveTabId(tabId);
 
     fetch(`/api/v1/fs/file?root=${encodeURIComponent(rootId)}&path=${encodeURIComponent(normPath)}`)
-      .then(res => {
-        if (!res.ok) throw new Error(`HTTP ${res.status}`);
+      .then(async res => {
+        if (!res.ok) {
+          const errText = await res.text();
+          throw new Error(`HTTP ${res.status}: ${errText}`);
+        }
         return res.text();
       })
       .then(text => {

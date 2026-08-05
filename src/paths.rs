@@ -58,31 +58,46 @@ impl AllowedRoots {
             .collect()
     }
 
-    /// Resolve a relative path against an opaque root ID safely
-    pub fn resolve_path(&self, root_id: &str, relative_path: &str) -> Result<PathBuf, PathError> {
+    /// Resolve a relative or absolute path against an opaque root ID safely
+    pub fn resolve_path(&self, root_id: &str, raw_path: &str) -> Result<PathBuf, PathError> {
         let root = self.get_root(root_id)?;
 
-        if relative_path.contains('\0') {
+        if raw_path.contains('\0') {
             return Err(PathError::NulByteDetected);
         }
 
-        let path_obj = Path::new(relative_path);
+        let mut path_str = raw_path.trim();
 
-        // Disallow absolute path input
-        if path_obj.is_absolute() {
-            return Err(PathError::PathTraversalAttempt);
-        }
-
-        // Sanitize components: disallow ParentDir (..) or Prefix / RootDir
-        for comp in path_obj.components() {
-            match comp {
-                Component::ParentDir => return Err(PathError::PathTraversalAttempt),
-                Component::RootDir | Component::Prefix(_) => return Err(PathError::PathTraversalAttempt),
-                Component::Normal(_) | Component::CurDir => {}
+        let root_str = root.to_string_lossy();
+        if path_str.starts_with('/') {
+            if path_str.starts_with(root_str.as_ref()) {
+                // Absolute path starting with root path (e.g. /data/data/com.termux/files/home/light)
+                path_str = &path_str[root_str.len()..];
+            } else if Path::new(path_str).is_absolute() && !root_str.starts_with(path_str) {
+                // Absolute path pointing outside root (e.g. /etc/passwd)
+                return Err(PathError::PathTraversalAttempt);
             }
         }
 
-        let full_path = root.join(path_obj);
+        // Strip leading slashes so subpaths like '/light' are treated as relative to root
+        let clean_path = path_str.trim_start_matches('/');
+
+        let path_obj = Path::new(clean_path);
+
+        // Sanitize components: disallow ParentDir (..) or Prefix
+        for comp in path_obj.components() {
+            match comp {
+                Component::ParentDir => return Err(PathError::PathTraversalAttempt),
+                Component::Prefix(_) => return Err(PathError::PathTraversalAttempt),
+                Component::Normal(_) | Component::CurDir | Component::RootDir => {}
+            }
+        }
+
+        let full_path = if clean_path.is_empty() {
+            root.clone()
+        } else {
+            root.join(path_obj)
+        };
 
         // If the path exists, canonicalize and verify it stays inside root
         if full_path.exists() {
