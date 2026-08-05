@@ -20,7 +20,8 @@ export type WindowAction =
   | { type: 'MINIMIZE_WINDOW'; id: string }
   | { type: 'MAXIMIZE_WINDOW'; id: string }
   | { type: 'RESTORE_WINDOW'; id: string }
-  | { type: 'UPDATE_BOUNDS'; id: string; bounds: { x?: number; y?: number; width?: number; height?: number } };
+  | { type: 'UPDATE_BOUNDS'; id: string; bounds: { x?: number; y?: number; width?: number; height?: number } }
+  | { type: 'UPDATE_PROPS'; id: string; props: Record<string, any> };
 
 export function windowReducer(state: WindowState[], action: WindowAction): WindowState[] {
   switch (action.type) {
@@ -58,6 +59,11 @@ export function windowReducer(state: WindowState[], action: WindowAction): Windo
     }
     case 'UPDATE_BOUNDS': {
       return state.map((w) => (w.id === action.id ? { ...w, ...action.bounds } : w));
+    }
+    case 'UPDATE_PROPS': {
+      return state.map((w) =>
+        w.id === action.id ? { ...w, props: { ...w.props, ...action.props } } : w
+      );
     }
     default:
       return state;

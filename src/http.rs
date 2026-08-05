@@ -194,12 +194,16 @@ async fn terminal_ws_handler(
     Path(id): Path<String>,
     ws: WebSocketUpgrade,
 ) -> impl IntoResponse {
+    // CRITICAL: take_output_rx MUST happen BEFORE get_session.
+    // get_session clones the Arc (ref count = 2), which makes
+    // Arc::get_mut inside take_output_rx return None, causing
+    // the WebSocket to immediately disconnect with no output.
+    let rx = state.sessions.take_output_rx(&id);
+
     let session = match state.sessions.get_session(&id) {
         Some(s) => s,
         None => return StatusCode::NOT_FOUND.into_response(),
     };
-
-    let rx = state.sessions.take_output_rx(&id);
 
     ws.on_upgrade(move |socket| handle_terminal_ws(socket, session, rx))
 }

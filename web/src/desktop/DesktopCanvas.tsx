@@ -57,20 +57,33 @@ export function DesktopCanvas() {
     });
   };
 
-  const openEditor = (rootId: string, filePath: string) => {
+  const openEditor = (rootId?: string, filePath?: string) => {
+    // Check if there's already an editor window open
+    const existingEditor = windows.find((w) => w.appId === 'editor');
+    if (existingEditor && rootId && filePath) {
+      // Focus existing editor and add the file as a new tab via props update
+      dispatch({
+        type: 'UPDATE_PROPS',
+        id: existingEditor.id,
+        props: { rootId, filePath, openNewFile: true },
+      });
+      dispatch({ type: 'FOCUS_WINDOW', id: existingEditor.id });
+      return;
+    }
+
     const id = `editor-${Date.now()}`;
-    const fileName = filePath.split('/').pop() || filePath;
+    const title = filePath ? `Editor - ${filePath.split('/').pop() || filePath}` : 'Code Editor';
     dispatch({
       type: 'OPEN_WINDOW',
       payload: {
         id,
         appId: 'editor',
-        title: `Editor - ${fileName}`,
+        title,
         icon: '📝',
-        x: 140,
-        y: 80,
-        width: 680,
-        height: 520,
+        x: 80,
+        y: 40,
+        width: 900,
+        height: 580,
         props: { rootId, filePath },
       },
     });
@@ -114,7 +127,11 @@ export function DesktopCanvas() {
               />
             )}
             {win.appId === 'editor' && (
-              <TextEditorView rootId={win.props?.rootId} filePath={win.props?.filePath} />
+              <TextEditorView
+                rootId={win.props?.rootId}
+                filePath={win.props?.filePath}
+                initialRoot={win.props?.initialRoot}
+              />
             )}
             {win.appId === 'monitor' && <SystemMonitorView />}
           </WindowFrame>
@@ -128,6 +145,9 @@ export function DesktopCanvas() {
         </button>
         <button className="start-btn" onClick={openFileExplorer} style={{ background: '#3b82f6' }}>
           📁 Files
+        </button>
+        <button className="start-btn" onClick={() => openEditor()} style={{ background: '#8b5cf6' }}>
+          📝 Editor
         </button>
         <button className="start-btn" onClick={openMonitor} style={{ background: '#10b981' }}>
           📊 Monitor
