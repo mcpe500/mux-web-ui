@@ -1,5 +1,5 @@
-import { useReducer, useEffect } from 'preact/hooks';
-import { windowReducer } from './windowStore';
+import { useReducer, useEffect, useRef } from 'preact/hooks';
+import { windowReducer, WindowState } from './windowStore';
 import { WindowFrame } from './WindowFrame';
 import { TerminalView } from '../apps/terminal/TerminalView';
 import { FileExplorerView } from '../apps/files/FileExplorerView';
@@ -8,11 +8,20 @@ import { SystemMonitorView } from '../apps/monitor/SystemMonitorView';
 
 export function DesktopCanvas() {
   const [windows, dispatch] = useReducer(windowReducer, []);
+  const canvasRef = useRef<HTMLDivElement>(null);
 
   // Open default terminal on initial load
   useEffect(() => {
     openTerminal();
   }, []);
+
+  const getCanvasBounds = () => {
+    if (canvasRef.current) {
+      const rect = canvasRef.current.getBoundingClientRect();
+      return { width: rect.width || window.innerWidth, height: rect.height || (window.innerHeight - 44) };
+    }
+    return { width: window.innerWidth, height: window.innerHeight - 44 };
+  };
 
   const openTerminal = (_workDir?: string) => {
     fetch('/api/v1/terminals', {
@@ -40,6 +49,44 @@ export function DesktopCanvas() {
       .catch((err) => console.error('Failed to create terminal session:', err));
   };
 
+  const spawnMultipleTerminals = async (count: number) => {
+    const { width, height } = getCanvasBounds();
+    const newWindows: Omit<WindowState, 'zIndex' | 'isMinimized' | 'isMaximized'>[] = [];
+
+    for (let i = 0; i < count; i++) {
+      try {
+        const res = await fetch('/api/v1/terminals', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ cols: 80, rows: 24 }),
+        });
+        const data = await res.json();
+        newWindows.push({
+          id: data.id,
+          appId: 'terminal',
+          title: `Terminal (${data.id})`,
+          icon: '💻',
+          x: 0,
+          y: 0,
+          width: 400,
+          height: 300,
+          props: { terminalId: data.id },
+        });
+      } catch (err) {
+        console.error('Failed spawning batch terminal:', err);
+      }
+    }
+
+    if (newWindows.length > 0) {
+      dispatch({
+        type: 'BATCH_ADD_WINDOWS',
+        windows: newWindows,
+        canvasWidth: width,
+        canvasHeight: height,
+      });
+    }
+  };
+
   const openFileExplorer = () => {
     const id = `files-${Date.now()}`;
     dispatch({
@@ -58,10 +105,8 @@ export function DesktopCanvas() {
   };
 
   const openEditor = (rootId?: string, filePath?: string) => {
-    // Check if there's already an editor window open
     const existingEditor = windows.find((w) => w.appId === 'editor');
     if (existingEditor && rootId && filePath) {
-      // Focus existing editor and add the file as a new tab via props update
       dispatch({
         type: 'UPDATE_PROPS',
         id: existingEditor.id,
@@ -106,9 +151,14 @@ export function DesktopCanvas() {
     });
   };
 
+  const handleTileGrid = () => {
+    const { width, height } = getCanvasBounds();
+    dispatch({ type: 'TILE_GRID', canvasWidth: width, canvasHeight: height });
+  };
+
   return (
     <div className="desktop-viewport">
-      <div className="desktop-canvas">
+      <div className="desktop-canvas" ref={canvasRef}>
         {windows.map((win) => (
           <WindowFrame
             key={win.id}
@@ -142,6 +192,15 @@ export function DesktopCanvas() {
       <div className="taskbar">
         <button className="start-btn" onClick={() => openTerminal()}>
           ⚡ New Terminal
+        </button>
+        <button className="start-btn" onClick={() => spawnMultipleTerminals(4)} style={{ background: '#4f46e5' }}>
+          🔲 4 Terminals (2x2)
+        </button>
+        <button className="start-btn" onClick={() => spawnMultipleTerminals(16)} style={{ background: '#0284c7' }}>
+          🔲 16 Terminals (4x4)
+        </button>
+        <button className="start-btn" onClick={handleTileGrid} style={{ background: '#059669' }}>
+          📐 Tile Grid
         </button>
         <button className="start-btn" onClick={openFileExplorer} style={{ background: '#3b82f6' }}>
           📁 Files

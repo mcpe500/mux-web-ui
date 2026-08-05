@@ -25,6 +25,7 @@ export function FileExplorerView({ onOpenFile, onOpenTerminalHere }: FileExplore
   const [roots, setRoots] = useState<[string, string][]>([]);
   const [currentRoot, setCurrentRoot] = useState<string>('home');
   const [currentPath, setCurrentPath] = useState<string>('');
+  const [pathInput, setPathInput] = useState<string>('');
   const [listing, setListing] = useState<DirectoryListing | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -44,6 +45,7 @@ export function FileExplorerView({ onOpenFile, onOpenTerminalHere }: FileExplore
   useEffect(() => {
     if (!currentRoot) return;
     loadDirectory(currentRoot, currentPath);
+    setPathInput(currentPath);
   }, [currentRoot, currentPath]);
 
   const loadDirectory = (root: string, path: string) => {
@@ -74,17 +76,16 @@ export function FileExplorerView({ onOpenFile, onOpenTerminalHere }: FileExplore
     }
   };
 
-  const handleBreadcrumbClick = (index: number, parts: string[]) => {
-    const newPath = parts.slice(0, index + 1).join('/');
-    setCurrentPath(newPath);
+  const handlePathInputSubmit = () => {
+    setCurrentPath(pathInput.trim());
   };
 
-  const pathParts = currentPath.split('/').filter(Boolean);
+  const currentRootObj = roots.find(([id]) => id === currentRoot);
 
   return (
     <div style={{ display: 'flex', flexDirection: 'column', width: '100%', height: '100%', padding: '8px' }}>
       {/* Top Toolbar */}
-      <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '8px' }}>
+      <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '8px', flexWrap: 'wrap' }}>
         <select
           value={currentRoot}
           onChange={(e) => {
@@ -94,9 +95,10 @@ export function FileExplorerView({ onOpenFile, onOpenTerminalHere }: FileExplore
           style={{
             background: '#1e293b',
             color: '#f8fafc',
-            border: '1px solid rgba(255,255,255,0.1)',
-            padding: '4px 8px',
+            border: '1px solid rgba(255,255,255,0.2)',
+            padding: '6px 8px',
             borderRadius: '4px',
+            fontSize: '0.85rem'
           }}
         >
           {roots.map(([id, path]) => (
@@ -106,25 +108,38 @@ export function FileExplorerView({ onOpenFile, onOpenTerminalHere }: FileExplore
           ))}
         </select>
 
-        {/* Breadcrumb Navigation */}
-        <div style={{ display: 'flex', alignItems: 'center', gap: '4px', flex: 1, overflowX: 'auto' }}>
+        {/* Editable Path Navigation Bar */}
+        <div style={{ display: 'flex', alignItems: 'center', gap: '4px', flex: 1, minWidth: '200px' }}>
+          <span style={{ color: '#94a3b8', fontSize: '0.85rem' }}>📂</span>
+          <input
+            type="text"
+            value={pathInput}
+            onInput={(e) => setPathInput((e.target as HTMLInputElement).value)}
+            onKeyDown={(e) => e.key === 'Enter' && handlePathInputSubmit()}
+            placeholder="Type subpath (e.g. quant or /)..."
+            style={{
+              flex: 1,
+              background: '#1e293b',
+              color: '#f8fafc',
+              border: '1px solid rgba(255,255,255,0.2)',
+              padding: '4px 8px',
+              borderRadius: '4px',
+              fontSize: '0.85rem'
+            }}
+          />
           <button
-            onClick={() => setCurrentPath('')}
-            style={{ padding: '2px 6px', background: 'rgba(255,255,255,0.05)', borderRadius: '4px' }}
+            onClick={handlePathInputSubmit}
+            style={{
+              padding: '4px 8px',
+              background: '#3b82f6',
+              color: 'white',
+              borderRadius: '4px',
+              fontSize: '0.8rem',
+              fontWeight: 600
+            }}
           >
-            /
+            Go
           </button>
-          {pathParts.map((part, idx) => (
-            <div key={idx} style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
-              <span>/</span>
-              <button
-                onClick={() => handleBreadcrumbClick(idx, pathParts)}
-                style={{ padding: '2px 6px', background: 'rgba(255,255,255,0.05)', borderRadius: '4px' }}
-              >
-                {part}
-              </button>
-            </div>
-          ))}
         </div>
 
         {onOpenTerminalHere && (
@@ -136,12 +151,19 @@ export function FileExplorerView({ onOpenFile, onOpenTerminalHere }: FileExplore
               color: 'white',
               borderRadius: '4px',
               fontSize: '0.8rem',
+              fontWeight: 600
             }}
           >
             💻 Terminal Here
           </button>
         )}
       </div>
+
+      {currentRootObj && (
+        <div style={{ fontSize: '0.75rem', color: '#94a3b8', marginBottom: '6px' }}>
+          Full path: <span style={{ color: '#38bdf8' }}>{currentRootObj[1]}{currentPath}</span>
+        </div>
+      )}
 
       {/* Directory Content Table */}
       {error && <div style={{ color: '#ef4444', padding: '8px' }}>{error}</div>}
@@ -160,12 +182,13 @@ export function FileExplorerView({ onOpenFile, onOpenTerminalHere }: FileExplore
               {currentPath && (
                 <tr
                   onClick={() => {
-                    const parent = pathParts.slice(0, -1).join('/');
-                    setCurrentPath(parent);
+                    const parts = currentPath.split('/').filter(Boolean);
+                    const parent = parts.slice(0, -1).join('/');
+                    setCurrentPath(parent ? `/${parent}` : '');
                   }}
                   style={{ cursor: 'pointer', borderBottom: '1px solid rgba(255,255,255,0.05)' }}
                 >
-                  <td style={{ padding: '6px', color: '#6366f1' }}>📁 ..</td>
+                  <td style={{ padding: '6px', color: '#6366f1' }}>📁 .. (Parent Directory)</td>
                   <td style={{ padding: '6px' }}>—</td>
                 </tr>
               )}

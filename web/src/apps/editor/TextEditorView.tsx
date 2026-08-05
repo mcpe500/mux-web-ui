@@ -1,4 +1,3 @@
-
 import { useState, useEffect, useCallback, useMemo } from 'preact/hooks';
 
 interface TextEditorViewProps {
@@ -38,6 +37,7 @@ export function TextEditorView({ rootId: propRootId, filePath: propFilePath, ini
   // Tree State
   const [roots, setRoots] = useState<FsRoot[]>([]);
   const [selectedRootId, setSelectedRootId] = useState<string | undefined>(initialRoot || propRootId);
+  const [customPathInput, setCustomPathInput] = useState<string>('');
   
   // path -> entries
   const [dirEntries, setDirEntries] = useState<Record<string, FsEntry[]>>({});
@@ -101,8 +101,10 @@ export function TextEditorView({ rootId: propRootId, filePath: propFilePath, ini
   };
 
   const openFile = (rootId: string, filePath: string) => {
-    const tabId = `${rootId}:${filePath}`;
-    const fileName = filePath.split('/').pop() || filePath;
+    // Normalize path leading slash
+    const normPath = filePath.startsWith('/') ? filePath : `/${filePath}`;
+    const tabId = `${rootId}:${normPath}`;
+    const fileName = normPath.split('/').pop() || normPath;
     
     // Check if already open
     if (tabs.some(t => t.id === tabId)) {
@@ -113,7 +115,7 @@ export function TextEditorView({ rootId: propRootId, filePath: propFilePath, ini
     const newTab: TabData = {
       id: tabId,
       rootId,
-      filePath,
+      filePath: normPath,
       fileName,
       content: '',
       initialContent: '',
@@ -125,13 +127,16 @@ export function TextEditorView({ rootId: propRootId, filePath: propFilePath, ini
     setTabs(prev => [...prev, newTab]);
     setActiveTabId(tabId);
 
-    fetch(`/api/v1/fs/file?root=${encodeURIComponent(rootId)}&path=${encodeURIComponent(filePath)}`)
-      .then(res => res.text())
+    fetch(`/api/v1/fs/file?root=${encodeURIComponent(rootId)}&path=${encodeURIComponent(normPath)}`)
+      .then(res => {
+        if (!res.ok) throw new Error(`HTTP ${res.status}`);
+        return res.text();
+      })
       .then(text => {
         setTabs(prev => prev.map(t => t.id === tabId ? { ...t, content: text, initialContent: text, isLoading: false } : t));
       })
       .catch(err => {
-        setTabs(prev => prev.map(t => t.id === tabId ? { ...t, error: String(err), isLoading: false } : t));
+        setTabs(prev => prev.map(t => t.id === tabId ? { ...t, error: String(err.message || err), isLoading: false } : t));
       });
   };
 
@@ -160,19 +165,19 @@ export function TextEditorView({ rootId: propRootId, filePath: propFilePath, ini
   const handleSave = async () => {
     if (!activeTab) return;
     try {
-      updateActiveTab({ isLoading: true });
+      updateActiveTab({ isLoading: true, error: undefined });
       const res = await fetch(`/api/v1/fs/file?root=${encodeURIComponent(activeTab.rootId)}&path=${encodeURIComponent(activeTab.filePath)}`, {
         method: 'PUT',
-        headers: { 'Content-Type': 'text/plain' },
+        headers: { 'Content-Type': 'text/plain; charset=utf-8' },
         body: activeTab.content
       });
       if (res.ok) {
         updateActiveTab({ initialContent: activeTab.content, isLoading: false });
       } else {
-        throw new Error('Save failed');
+        throw new Error(`HTTP ${res.status}`);
       }
-    } catch (e) {
-      updateActiveTab({ error: String(e), isLoading: false });
+    } catch (e: any) {
+      updateActiveTab({ error: `Save failed: ${e.message || e}`, isLoading: false });
     }
   };
 
@@ -198,11 +203,6 @@ export function TextEditorView({ rootId: propRootId, filePath: propFilePath, ini
     }
   };
 
-  const handleEditorChange = (e: Event) => {
-    const target = e.target as HTMLTextAreaElement;
-    updateActiveTab({ content: target.value });
-  };
-
   const handleEditorSelect = (e: Event) => {
     const target = e.target as HTMLTextAreaElement;
     const textBeforeCursor = target.value.substring(0, target.selectionStart);
@@ -213,10 +213,16 @@ export function TextEditorView({ rootId: propRootId, filePath: propFilePath, ini
     });
   };
 
+  const handleOpenCustomPath = () => {
+    if (!customPathInput.trim() || !selectedRootId) return;
+    openFile(selectedRootId, customPathInput.trim());
+  };
+
+  const selectedRootObj = roots.find(r => r.id === selectedRootId);
+
   // Render tree recursively
   const renderTree = (dirPath: string, depth: number) => {
     const entries = dirEntries[dirPath] || [];
-    // Sort dirs first, then files
     const sorted = [...entries].sort((a, b) => {
       if (a.is_dir === b.is_dir) return a.name.localeCompare(b.name);
       return a.is_dir ? -1 : 1;
@@ -290,24 +296,63 @@ export function TextEditorView({ rootId: propRootId, filePath: propFilePath, ini
   return (
     <div style={{ display: 'flex', width: '100%', height: '100%', backgroundColor: '#0f172a', color: '#f8fafc', fontFamily: 'sans-serif' }}>
       {/* Sidebar */}
-      <div style={{ width: '220px', backgroundColor: '#0c1222', borderRight: '1px solid rgba(255,255,255,0.08)', display: 'flex', flexDirection: 'column', flexShrink: 0 }}>
+      <div style={{ width: '250px', backgroundColor: '#0c1222', borderRight: '1px solid rgba(255,255,255,0.08)', display: 'flex', flexDirection: 'column', flexShrink: 0 }}>
+        {/* Root Selector & Full Path Display */}
         <div style={{ padding: '8px', borderBottom: '1px solid rgba(255,255,255,0.08)' }}>
+          <label style={{ fontSize: '11px', color: '#94a3b8', display: 'block', marginBottom: '4px', textTransform: 'uppercase', fontWeight: 600 }}>
+            Root Directory:
+          </label>
           <select 
             value={selectedRootId || ''} 
             onChange={e => setSelectedRootId((e.target as HTMLSelectElement).value)}
-            style={{ width: '100%', padding: '4px', backgroundColor: '#1e293b', color: '#f8fafc', border: '1px solid rgba(255,255,255,0.2)', borderRadius: '4px' }}
+            style={{ width: '100%', padding: '6px', backgroundColor: '#1e293b', color: '#f8fafc', border: '1px solid rgba(255,255,255,0.2)', borderRadius: '4px', fontSize: '12px' }}
           >
             {roots.map(r => (
-              <option key={r.id} value={r.id}>{r.id}</option>
+              <option key={r.id} value={r.id}>
+                {r.id.toUpperCase()}: {r.path}
+              </option>
             ))}
           </select>
+          {selectedRootObj && (
+            <div style={{ fontSize: '11px', color: '#6366f1', marginTop: '4px', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+              📍 {selectedRootObj.path}
+            </div>
+          )}
         </div>
+
+        {/* Quick Open File Path Input */}
+        <div style={{ padding: '8px', borderBottom: '1px solid rgba(255,255,255,0.08)' }}>
+          <label style={{ fontSize: '11px', color: '#94a3b8', display: 'block', marginBottom: '4px', textTransform: 'uppercase', fontWeight: 600 }}>
+            Open File by Path:
+          </label>
+          <div style={{ display: 'flex', gap: '4px' }}>
+            <input
+              type="text"
+              placeholder="e.g. src/main.rs or Makefile"
+              value={customPathInput}
+              onInput={e => setCustomPathInput((e.target as HTMLInputElement).value)}
+              onKeyDown={e => e.key === 'Enter' && handleOpenCustomPath()}
+              style={{ flex: 1, padding: '4px 6px', backgroundColor: '#1e293b', color: '#f8fafc', border: '1px solid rgba(255,255,255,0.2)', borderRadius: '4px', fontSize: '12px' }}
+            />
+            <button
+              onClick={handleOpenCustomPath}
+              style={{ padding: '4px 8px', backgroundColor: '#6366f1', color: 'white', borderRadius: '4px', fontSize: '12px', fontWeight: 600 }}
+            >
+              Open
+            </button>
+          </div>
+        </div>
+
+        {/* File Tree Explorer */}
         <div style={{ flex: 1, overflowY: 'auto', overflowX: 'hidden' }}>
+          <div style={{ padding: '6px 8px', fontSize: '11px', color: '#94a3b8', textTransform: 'uppercase', fontWeight: 600, borderBottom: '1px solid rgba(255,255,255,0.04)' }}>
+            Files & Folders:
+          </div>
           {selectedRootId && renderTree('/', 1)}
         </div>
       </div>
 
-      {/* Main Area */}
+      {/* Main Editor Area */}
       <div style={{ flex: 1, display: 'flex', flexDirection: 'column', overflow: 'hidden' }}>
         {/* Tab Bar */}
         <div style={{ display: 'flex', backgroundColor: '#1e293b', overflowX: 'auto', flexShrink: 0, height: '36px' }}>
@@ -318,6 +363,7 @@ export function TextEditorView({ rootId: propRootId, filePath: propFilePath, ini
               <div 
                 key={tab.id}
                 onClick={() => setActiveTabId(tab.id)}
+                title={`${tab.rootId}:${tab.filePath}`}
                 style={{
                   display: 'flex',
                   alignItems: 'center',
@@ -328,8 +374,8 @@ export function TextEditorView({ rootId: propRootId, filePath: propFilePath, ini
                   cursor: 'pointer',
                   fontSize: '13px',
                   color: isActive ? '#f8fafc' : '#94a3b8',
-                  minWidth: '100px',
-                  maxWidth: '200px'
+                  minWidth: '110px',
+                  maxWidth: '220px'
                 }}
               >
                 <span style={{ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', flex: 1 }}>
@@ -338,30 +384,32 @@ export function TextEditorView({ rootId: propRootId, filePath: propFilePath, ini
                 {isDirty && <span style={{ color: '#f59e0b', margin: '0 6px', fontSize: '10px' }}>●</span>}
                 <span 
                   onClick={(e) => closeTab(e, tab.id)}
-                  style={{ marginLeft: '6px', fontSize: '16px', opacity: 0.6, cursor: 'pointer' }}
-                  onMouseEnter={(e) => (e.currentTarget as HTMLElement).style.opacity = '1'}
-                  onMouseLeave={(e) => (e.currentTarget as HTMLElement).style.opacity = '0.6'}
+                  style={{ marginLeft: '6px', color: '#94a3b8', padding: '2px 4px', borderRadius: '3px' }}
                 >
-                  ×
+                  ✕
                 </span>
               </div>
             );
           })}
         </div>
 
-        {/* Editor Area */}
+        {/* Content Area */}
         {activeTab ? (
-          <div style={{ flex: 1, display: 'flex', overflow: 'hidden' }}>
-            {renderLineNumbers()}
-            <div style={{ flex: 1, position: 'relative', display: 'flex' }}>
-              {activeTab.isLoading ? (
-                <div style={{ position: 'absolute', top: 16, left: 16, color: '#94a3b8' }}>Loading...</div>
-              ) : activeTab.error ? (
-                <div style={{ position: 'absolute', top: 16, left: 16, color: '#ef4444' }}>Error: {activeTab.error}</div>
-              ) : (
+          <div style={{ flex: 1, display: 'flex', flexDirection: 'column', overflow: 'hidden' }}>
+            {/* Save Error / Loading banner */}
+            {activeTab.error && (
+              <div style={{ padding: '6px 12px', backgroundColor: 'rgba(239, 68, 68, 0.2)', color: '#fca5a5', borderBottom: '1px solid #ef4444', fontSize: '12px' }}>
+                ⚠️ {activeTab.error}
+              </div>
+            )}
+            {activeTab.isLoading ? (
+              <div style={{ padding: '20px', color: '#94a3b8' }}>Loading file content...</div>
+            ) : (
+              <div style={{ flex: 1, display: 'flex', overflow: 'hidden' }}>
+                {renderLineNumbers()}
                 <textarea
                   value={activeTab.content}
-                  onInput={handleEditorChange}
+                  onInput={e => updateActiveTab({ content: (e.target as HTMLTextAreaElement).value })}
                   onKeyDown={handleKeyDown}
                   onSelect={handleEditorSelect}
                   onMouseUp={handleEditorSelect}
@@ -385,12 +433,13 @@ export function TextEditorView({ rootId: propRootId, filePath: propFilePath, ini
                     boxSizing: 'border-box'
                   }}
                 />
-              )}
-            </div>
+              </div>
+            )}
           </div>
         ) : (
-          <div style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#64748b' }}>
-            Select a file to open
+          <div style={{ flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', color: '#64748b', gap: '12px' }}>
+            <div style={{ fontSize: '32px' }}>📝</div>
+            <div>Select a file from the sidebar tree or type a file path above to start editing.</div>
           </div>
         )}
 
@@ -407,10 +456,10 @@ export function TextEditorView({ rootId: propRootId, filePath: propFilePath, ini
           flexShrink: 0,
           justifyContent: 'space-between'
         }}>
-          <div>
-            {activeTab ? `${activeTab.rootId} : ${activeTab.filePath}` : 'Ready'}
+          <div style={{ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+            {activeTab ? `[${activeTab.rootId.toUpperCase()}] ${selectedRootObj ? selectedRootObj.path : ''}${activeTab.filePath}` : 'Ready'}
           </div>
-          <div style={{ display: 'flex', gap: '16px' }}>
+          <div style={{ display: 'flex', gap: '16px', flexShrink: 0 }}>
             {activeTab && (
               <span>
                 Ln {activeTab.cursorLine}, Col {activeTab.cursorCol}
@@ -418,7 +467,7 @@ export function TextEditorView({ rootId: propRootId, filePath: propFilePath, ini
             )}
             {activeTab && (
               <span>
-                {activeTab.content !== activeTab.initialContent ? 'Unsaved' : 'Saved'}
+                {activeTab.content !== activeTab.initialContent ? '● Unsaved' : 'Saved'}
               </span>
             )}
           </div>
