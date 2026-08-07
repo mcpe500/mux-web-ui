@@ -1,0 +1,182 @@
+{
+  "install.sh": {
+    "mtime": 1785861405.4179864,
+    "ast_hash": "70d399db1547adbc2801329a9ba5c0e2",
+    "semantic_hash": "70d399db1547adbc2801329a9ba5c0e2"
+  },
+  "scripts/check_budget.sh": {
+    "mtime": 1785857667.6346772,
+    "ast_hash": "c5bae64b10eb02aedbea7ed9c56d9f7b",
+    "semantic_hash": "c5bae64b10eb02aedbea7ed9c56d9f7b"
+  },
+  "src/assets.rs": {
+    "mtime": 1785857170.425385,
+    "ast_hash": "7e424fc9a2ae78a5d9e6e72d118cf211",
+    "semantic_hash": "7e424fc9a2ae78a5d9e6e72d118cf211"
+  },
+  "src/config.rs": {
+    "mtime": 1785857166.0769851,
+    "ast_hash": "2db42aa2d284bae61698e4fe07470c6c",
+    "semantic_hash": "2db42aa2d284bae61698e4fe07470c6c"
+  },
+  "src/files.rs": {
+    "mtime": 1785857390.0567153,
+    "ast_hash": "44a90f95ee4d3c41c91b4e1ab4de7554",
+    "semantic_hash": "44a90f95ee4d3c41c91b4e1ab4de7554"
+  },
+  "src/http.rs": {
+    "mtime": 1785944087.0664997,
+    "ast_hash": "7c43facba56004ea049b172efb9decf7",
+    "semantic_hash": "7c43facba56004ea049b172efb9decf7"
+  },
+  "src/lib.rs": {
+    "mtime": 1785857460.7494311,
+    "ast_hash": "5d57e708538824c33e7d66420e351507",
+    "semantic_hash": "5d57e708538824c33e7d66420e351507"
+  },
+  "src/main.rs": {
+    "mtime": 1785857192.296384,
+    "ast_hash": "f71449bac539322088306a0fadbb3a00",
+    "semantic_hash": "f71449bac539322088306a0fadbb3a00"
+  },
+  "src/paths.rs": {
+    "mtime": 1785951148.2984576,
+    "ast_hash": "72c0fb507d6c8832ffc0b9741a8adf86",
+    "semantic_hash": "72c0fb507d6c8832ffc0b9741a8adf86"
+  },
+  "src/protocol.rs": {
+    "mtime": 1785857392.4213643,
+    "ast_hash": "e83129bee2960e306fc7d4627f6a9b39",
+    "semantic_hash": "e83129bee2960e306fc7d4627f6a9b39"
+  },
+  "src/pty.rs": {
+    "mtime": 1785863061.9004686,
+    "ast_hash": "b08a3d8e3b1e5b48287f08c66c88ff63",
+    "semantic_hash": "b08a3d8e3b1e5b48287f08c66c88ff63"
+  },
+  "src/session.rs": {
+    "mtime": 1785857186.8271298,
+    "ast_hash": "e233db3ceddea54a63b1f3ddc42f0e74",
+    "semantic_hash": "e233db3ceddea54a63b1f3ddc42f0e74"
+  },
+  "tests/boot_tests.rs": {
+    "mtime": 1785857431.487273,
+    "ast_hash": "b30e1939791ddd2eb1367dee5b3bde13",
+    "semantic_hash": "b30e1939791ddd2eb1367dee5b3bde13"
+  },
+  "tests/editor_tests.rs": {
+    "mtime": 1785858533.673113,
+    "ast_hash": "9c907f40c7d699789d5e85eb02c06d92",
+    "semantic_hash": "9c907f40c7d699789d5e85eb02c06d92"
+  },
+  "tests/term_tests.rs": {
+    "mtime": 1785857457.1550536,
+    "ast_hash": "a4461d45c98432d63083aad473842644",
+    "semantic_hash": "a4461d45c98432d63083aad473842644"
+  },
+  "uninstall.sh": {
+    "mtime": 1785860022.8718557,
+    "ast_hash": "f9cf058e125d1739c11532202958e636",
+    "semantic_hash": "f9cf058e125d1739c11532202958e636"
+  },
+  "update.sh": {
+    "mtime": 1785861411.134728,
+    "ast_hash": "4a826c3d579d61eb81f7fccb6d1a6ea2",
+    "semantic_hash": "4a826c3d579d61eb81f7fccb6d1a6ea2"
+  },
+  "web/package.json": {
+    "mtime": 1785857150.389085,
+    "ast_hash": "27d888f48e4657087b4519d669aebdd7",
+    "semantic_hash": "27d888f48e4657087b4519d669aebdd7"
+  },
+  "web/src/app.tsx": {
+    "mtime": 1785857636.844929,
+    "ast_hash": "8ae608a5b56071db6c5cdc9a1f004147",
+    "semantic_hash": "8ae608a5b56071db6c5cdc9a1f004147"
+  },
+  "web/src/apps/editor/TextEditorView.tsx": {
+    "mtime": 1785951091.0931456,
+    "ast_hash": "bb8e645817fc325a3d0e840d948ea918",
+    "semantic_hash": "bb8e645817fc325a3d0e840d948ea918"
+  },
+  "web/src/apps/files/FileExplorerView.tsx": {
+    "mtime": 1785951098.7144003,
+    "ast_hash": "11d9a4f800ff160b5acf5d3412a4b787",
+    "semantic_hash": "11d9a4f800ff160b5acf5d3412a4b787"
+  },
+  "web/src/apps/monitor/SystemMonitorView.tsx": {
+    "mtime": 1785858402.146088,
+    "ast_hash": "a76a3bd0b96f6b399ee62dfafe845f73",
+    "semantic_hash": "a76a3bd0b96f6b399ee62dfafe845f73"
+  },
+  "web/src/apps/terminal/TerminalView.tsx": {
+    "mtime": 1785857612.8881695,
+    "ast_hash": "38ff062aadd92ec0bf469c287f7f493a",
+    "semantic_hash": "38ff062aadd92ec0bf469c287f7f493a"
+  },
+  "web/src/desktop/DesktopCanvas.tsx": {
+    "mtime": 1785945561.0972965,
+    "ast_hash": "e68852bfed3e5e103c3a38a39bf0e9b3",
+    "semantic_hash": "e68852bfed3e5e103c3a38a39bf0e9b3"
+  },
+  "web/src/desktop/WindowFrame.tsx": {
+    "mtime": 1785857621.399888,
+    "ast_hash": "f470c68fd4f4bee1dc45b6518dffe466",
+    "semantic_hash": "f470c68fd4f4bee1dc45b6518dffe466"
+  },
+  "web/src/desktop/windowStore.ts": {
+    "mtime": 1785945548.8656056,
+    "ast_hash": "d1c8bac1339dc7e81e98c4b0c56d6d35",
+    "semantic_hash": "d1c8bac1339dc7e81e98c4b0c56d6d35"
+  },
+  "web/src/main.tsx": {
+    "mtime": 1785857163.805838,
+    "ast_hash": "c4f7920d55195759c0f45f629671e11d",
+    "semantic_hash": "c4f7920d55195759c0f45f629671e11d"
+  },
+  "web/tsconfig.json": {
+    "mtime": 1785857153.8301282,
+    "ast_hash": "e420033cfec723b7089d929349a135d6",
+    "semantic_hash": "e420033cfec723b7089d929349a135d6"
+  },
+  "web/vite.config.ts": {
+    "mtime": 1785857151.9132168,
+    "ast_hash": "e547cc16ad72dfca51739fa9fa6ce7b5",
+    "semantic_hash": "e547cc16ad72dfca51739fa9fa6ce7b5"
+  },
+  "README.md": {
+    "mtime": 1785860031.6814318,
+    "ast_hash": "9a6169a7ad3b7c1b568c2ce827f813ae",
+    "semantic_hash": "9a6169a7ad3b7c1b568c2ce827f813ae"
+  },
+  "spec/specs/000.plan.md": {
+    "mtime": 1785856895.3561382,
+    "ast_hash": "f31f518439769086b106adffc3891eba",
+    "semantic_hash": "f31f518439769086b106adffc3891eba"
+  },
+  "spec/specs/000a.plan-test.md": {
+    "mtime": 1785856895.6619725,
+    "ast_hash": "c49b666388a7c51398383a1714d2131d",
+    "semantic_hash": "c49b666388a7c51398383a1714d2131d"
+  },
+  "spec/specs/000b.plan-checklist.md": {
+    "mtime": 1785857701.1327784,
+    "ast_hash": "f8be80d7c0632a6c791e45f83c0a7c53",
+    "semantic_hash": "f8be80d7c0632a6c791e45f83c0a7c53"
+  },
+  "tests/traceability.md": {
+    "mtime": 1785857146.0569398,
+    "ast_hash": "fb4c96290fc204679f1e3903e2f32746",
+    "semantic_hash": "fb4c96290fc204679f1e3903e2f32746"
+  },
+  "web/index.html": {
+    "mtime": 1785857156.9846928,
+    "ast_hash": "ca92b762f4cba4f6a4272ce4daa8c82a",
+    "semantic_hash": "ca92b762f4cba4f6a4272ce4daa8c82a"
+  },
+  "spec/specs/001.plan-v0.2.md": {
+    "mtime": 1786115926.071777,
+    "ast_hash": "4bb3e012c48d20fc49e4ab5d88888aa6",
+    "semantic_hash": ""
+  }
+}

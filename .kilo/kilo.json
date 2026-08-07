@@ -1,0 +1,5 @@
+{
+  "plugin": [
+    "file:///mnt/data/projects/mux-web-ui/.kilo/plugins/graphify.js"
+  ]
+}

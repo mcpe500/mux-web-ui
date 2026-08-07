@@ -1,0 +1,11 @@
+.claude/
+.codex/
+.gemini/
+.kilo/
+.opencode/
+.agents/
+.cursor/
+AGENTS.md
+CLAUDE.md
+GEMINI.md
+graphify-out/
