@@ -28,7 +28,9 @@ impl fmt::Display for CodecError {
             CodecError::UnknownOpcode(op) => write!(f, "Unknown frame opcode: {:#04x}", op),
             CodecError::InvalidPayloadLength => write!(f, "Invalid payload length for frame"),
             CodecError::InvalidUtf8 => write!(f, "Invalid UTF-8 payload"),
-            CodecError::PayloadTooLarge(sz) => write!(f, "Frame payload exceeds limit: {} bytes", sz),
+            CodecError::PayloadTooLarge(sz) => {
+                write!(f, "Frame payload exceeds limit: {} bytes", sz)
+            }
         }
     }
 }
@@ -135,7 +137,10 @@ mod tests {
         let frames = vec![
             Frame::Output(b"Hello Terminal".to_vec()),
             Frame::Input(b"ls -la\n".to_vec()),
-            Frame::Resize { cols: 120, rows: 40 },
+            Frame::Resize {
+                cols: 120,
+                rows: 40,
+            },
             Frame::Exit(0),
             Frame::Exit(-1),
             Frame::Error("Something went wrong".to_string()),
@@ -159,10 +164,16 @@ mod tests {
         assert_eq!(decode_frame(&[0xFF]), Err(CodecError::UnknownOpcode(0xFF)));
 
         // Invalid RESIZE length
-        assert_eq!(decode_frame(&[OPCODE_RESIZE, 0, 80]), Err(CodecError::InvalidPayloadLength));
+        assert_eq!(
+            decode_frame(&[OPCODE_RESIZE, 0, 80]),
+            Err(CodecError::InvalidPayloadLength)
+        );
 
         // Invalid EXIT length
-        assert_eq!(decode_frame(&[OPCODE_EXIT, 0, 0]), Err(CodecError::InvalidPayloadLength));
+        assert_eq!(
+            decode_frame(&[OPCODE_EXIT, 0, 0]),
+            Err(CodecError::InvalidPayloadLength)
+        );
 
         // Invalid UTF-8 in ERROR
         assert_eq!(

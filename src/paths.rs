@@ -8,6 +8,7 @@ pub enum PathError {
     InvalidUtf8,
     NulByteDetected,
     SymlinkOutsideRoot,
+    HardlinkOutsideRoot,
     NotFound,
     IoError(String),
 }
@@ -20,6 +21,7 @@ impl std::fmt::Display for PathError {
             PathError::InvalidUtf8 => write!(f, "Invalid UTF-8 path component"),
             PathError::NulByteDetected => write!(f, "NUL byte detected in path"),
             PathError::SymlinkOutsideRoot => write!(f, "Symlink points outside allowed root"),
+            PathError::HardlinkOutsideRoot => write!(f, "Hardlinked file detected"),
             PathError::NotFound => write!(f, "File or directory not found"),
             PathError::IoError(e) => write!(f, "I/O error: {}", e),
         }
@@ -66,6 +68,13 @@ impl AllowedRoots {
             return Err(PathError::NulByteDetected);
         }
 
+        // FS-017: strict single decode — lossy UTF-8 decoding of overlong /
+        // malformed sequences yields U+FFFD; reject rather than resolve a
+        // mangled path.
+        if raw_path.contains('\u{FFFD}') {
+            return Err(PathError::InvalidUtf8);
+        }
+
         let mut path_str = raw_path.trim();
 
         let root_str = root.to_string_lossy();
@@ -93,6 +102,15 @@ impl AllowedRoots {
             }
         }
 
+        // Defense in depth (FS-017): treat backslash as a separator too, so
+        // Windows-style `..\` traversal is rejected on Unix as well.
+        if clean_path
+            .split('\\')
+            .any(|seg| seg == ".." || seg == "../..")
+        {
+            return Err(PathError::PathTraversalAttempt);
+        }
+
         let full_path = if clean_path.is_empty() {
             root.clone()
         } else {
@@ -106,6 +124,18 @@ impl AllowedRoots {
                 .map_err(|e| PathError::IoError(e.to_string()))?;
             if !canonical_target.starts_with(root) {
                 return Err(PathError::SymlinkOutsideRoot);
+            }
+            #[cfg(unix)]
+            {
+                use std::os::unix::fs::MetadataExt;
+                // FS-016: hardlinks to inodes outside the root cannot be
+                // detected by canonicalize (same inode, different path).
+                // Reject regular files with multiple links as defense in depth.
+                if let Ok(meta) = std::fs::metadata(&canonical_target) {
+                    if meta.is_file() && meta.nlink() > 1 {
+                        return Err(PathError::HardlinkOutsideRoot);
+                    }
+                }
             }
             Ok(canonical_target)
         } else {
@@ -208,5 +238,79 @@ mod tests {
         assert!(allowed.resolve_path("root1", "file.txt").is_ok());
         assert!(allowed.resolve_path("root2", "file.txt").is_ok());
         assert!(allowed.resolve_path("root3", "file.txt").is_err());
+    }
+
+    #[test]
+    fn test_fs_016_hardlink_escape_rejected() {
+        let temp_root = tempdir().unwrap();
+        let temp_outside = tempdir().unwrap();
+
+        let root_path = temp_root.path().canonicalize().unwrap();
+        let outside_file = temp_outside.path().join("secret.txt");
+        std::fs::write(&outside_file, "secret").unwrap();
+
+        let hardlink = root_path.join("hard_secret");
+        #[cfg(unix)]
+        std::fs::hard_link(&outside_file, &hardlink).unwrap();
+
+        let allowed = AllowedRoots::new(vec![("home".to_string(), root_path)]).unwrap();
+
+        #[cfg(unix)]
+        assert_eq!(
+            allowed.resolve_path("home", "hard_secret"),
+            Err(PathError::HardlinkOutsideRoot)
+        );
+
+        // A single-linked file inside the root must still resolve fine.
+        let normal = temp_root.path().join("normal.txt");
+        std::fs::write(&normal, "hello").unwrap();
+        assert!(allowed.resolve_path("home", "normal.txt").is_ok());
+    }
+
+    #[test]
+    fn test_fs_017_encoding_and_literal_matrix() {
+        let temp = tempdir().unwrap();
+        let root_path = temp.path().canonicalize().unwrap();
+        let allowed = AllowedRoots::new(vec![("home".to_string(), root_path.clone())]).unwrap();
+
+        // Every vector must be rejected or resolved safely (never escape root).
+        let traversal_vectors = [
+            "..",          // parent dir
+            "a/../b",      // embedded ..
+            "a/../../b",   // double .. after a component
+            "../..",       // deep parent
+            "..\\..",      // backslash parent (defense in depth)
+            "%2e%2e",      // literal encoded dots are a plain filename
+            "%252e%252e",  // double-encoded stays a literal filename
+            "/etc/passwd", // absolute path outside root
+            "..%2fsecret", // encoded slash after ..
+        ];
+        for v in traversal_vectors {
+            let res = allowed.resolve_path("home", v);
+            assert!(
+                !matches!(&res, Ok(p) if !p.starts_with(&root_path)),
+                "vector {v:?} escaped the root: {res:?}"
+            );
+        }
+        assert_eq!(
+            allowed.resolve_path("home", "../foo"),
+            Err(PathError::PathTraversalAttempt)
+        );
+        assert_eq!(
+            allowed.resolve_path("home", "..\\foo"),
+            Err(PathError::PathTraversalAttempt)
+        );
+        assert_eq!(
+            allowed.resolve_path("home", "/etc/passwd"),
+            Err(PathError::PathTraversalAttempt)
+        );
+        assert_eq!(
+            allowed.resolve_path("home", "foo\0bar"),
+            Err(PathError::NulByteDetected)
+        );
+
+        // Trailing dots are normal filename components (defined behavior).
+        assert!(allowed.resolve_path("home", "a..").is_ok());
+        assert!(allowed.resolve_path("home", "a.").is_ok());
     }
 }

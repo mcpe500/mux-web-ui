@@ -1,8 +1,8 @@
+use clap::Parser;
+use mux_web::config::Config;
 use mux_web::http::{create_router, AppState};
 use mux_web::paths::AllowedRoots;
 use mux_web::session::SessionRegistry;
-use mux_web::config::Config;
-use clap::Parser;
 use tempfile::tempdir;
 
 #[tokio::test]
@@ -17,12 +17,16 @@ async fn test_edit_001_file_read_and_atomic_write() {
         config,
         allowed_roots: allowed,
         sessions: SessionRegistry::new(),
+        auth: mux_web::auth::AuthState::new(mux_web::auth::AuthConfig::default()),
     };
 
     let _app = create_router(state.clone());
 
     // Verify reading file directly from paths resolver
-    let resolved = state.allowed_roots.resolve_path("temp", "test.txt").unwrap();
+    let resolved = state
+        .allowed_roots
+        .resolve_path("temp", "test.txt")
+        .unwrap();
     let content = std::fs::read_to_string(&resolved).unwrap();
     assert_eq!(content, "Hello World");
 

@@ -55,6 +55,6 @@ else
     cp "$TEMP_DIR/target/release/mux-web" "$INSTALL_DIR/mux-web"
 fi
 
-chmod +x "$INSTALL_DIR/mux-web"
-
-echo -e "\n${BOLD}${GREEN}✅ Mux Web UI updated successfully at $INSTALL_DIR/mux-web!${RESET}\n"
+echo -e "\n${BOLD}${GREEN}✅ Mux Web UI updated successfully at $INSTALL_DIR/mux-web!${RESET}"
+echo -e "${YELLOW}Notice: v0.2+ requires single-use token pairing for web access.${RESET}"
+echo -e "${YELLOW}Run 'mux-web' and use the bootstrap URL / token printed on startup.${RESET}\n"

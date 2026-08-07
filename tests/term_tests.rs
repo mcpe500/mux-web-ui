@@ -1,12 +1,13 @@
 use mux_web::pty::PtySession;
 use mux_web::session::SessionRegistry;
-use tokio::sync::mpsc;
 use std::time::Duration;
+use tokio::sync::mpsc;
 
 #[tokio::test]
 async fn test_term_003_and_005_pty_spawn_and_output() {
     let (tx, mut rx) = mpsc::channel(256);
-    let pty = PtySession::new(80, 24, None, None, tx).expect("Failed to spawn PTY");
+    let (exit_tx, _exit_rx) = mpsc::channel(4);
+    let pty = PtySession::new(80, 24, None, None, tx, exit_tx).expect("Failed to spawn PTY");
 
     // Write a echo command to PTY
     pty.write_input(b"echo MUX_TEST_OUTPUT\n").unwrap();
@@ -37,11 +38,15 @@ async fn test_term_003_and_005_pty_spawn_and_output() {
 #[tokio::test]
 async fn test_life_003_session_registry_cleanup() {
     let registry = SessionRegistry::new();
-    let meta = registry.create_session(80, 24, None, None).expect("Session creation failed");
+    let meta = registry
+        .create_session(80, 24, None, None)
+        .expect("Session creation failed");
 
     assert!(registry.get_session(&meta.id).is_some());
 
-    registry.remove_session(&meta.id).expect("Session removal failed");
+    registry
+        .remove_session(&meta.id)
+        .expect("Session removal failed");
     assert!(registry.get_session(&meta.id).is_none());
 
     // Idempotent delete

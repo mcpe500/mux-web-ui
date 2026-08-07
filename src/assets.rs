@@ -41,7 +41,10 @@ pub async fn static_handler(uri: Uri) -> Response {
 
             if let Some(index) = Assets::get("index.html") {
                 let mut headers = HeaderMap::new();
-                headers.insert(header::CONTENT_TYPE, "text/html; charset=utf-8".parse().unwrap());
+                headers.insert(
+                    header::CONTENT_TYPE,
+                    "text/html; charset=utf-8".parse().unwrap(),
+                );
                 headers.insert(header::CACHE_CONTROL, "no-cache".parse().unwrap());
                 (StatusCode::OK, headers, index.data).into_response()
             } else {

@@ -59,6 +59,16 @@ Open your browser at `http://127.0.0.1:7681` to view your desktop environment.
 
 ---
 
+## 🔒 Security & Authentication
+
+Every Mux Web UI session is authenticated by default:
+- **Single-Use Bootstrap Secret**: On startup, `mux-web` generates a 32-byte CSPRNG bearer token and prints a pairing URL to stdout. Opening the URL exchanges the token for an HTTP-only, `SameSite=Strict` session cookie.
+- **TLS Support**: Pass `--tls-cert <path>` and `--tls-key <path>` to enable HTTPS/WSS. Use `--generate-cert` to automatically create a self-signed TLS certificate in `~/.mux-web`.
+- **Loopback Default**: By default, `mux-web` binds strictly to `127.0.0.1`. Remote network access requires `--lan` or explicit `--bind <ip>`.
+- **DNS Rebinding Defense**: Requests with invalid `Origin` or spoofed `Host` headers are automatically rejected with `403 Forbidden`.
+
+---
+
 ## 📊 Performance & Size Benchmarks
 
 | Metric | Budget Target | Measured Result |

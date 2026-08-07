@@ -21,20 +21,54 @@ pub struct DirectoryListing {
     pub total: usize,
 }
 
+// Reserved for Milestone D (upload/download/share): create/rename/copy/trash.
+#[allow(dead_code)]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(tag = "action", rename_all = "kebab-case")]
 pub enum FsAction {
-    CreateDir { root_id: String, path: String },
-    CreateFile { root_id: String, path: String },
-    Rename { root_id: String, path: String, new_name: String },
-    Copy { src_root_id: String, src_path: String, dest_root_id: String, dest_path: String },
-    Move { src_root_id: String, src_path: String, dest_root_id: String, dest_path: String },
-    Trash { root_id: String, path: String },
-    DeletePermanent { root_id: String, path: String, confirm: bool },
+    CreateDir {
+        root_id: String,
+        path: String,
+    },
+    CreateFile {
+        root_id: String,
+        path: String,
+    },
+    Rename {
+        root_id: String,
+        path: String,
+        new_name: String,
+    },
+    Copy {
+        src_root_id: String,
+        src_path: String,
+        dest_root_id: String,
+        dest_path: String,
+    },
+    Move {
+        src_root_id: String,
+        src_path: String,
+        dest_root_id: String,
+        dest_path: String,
+    },
+    Trash {
+        root_id: String,
+        path: String,
+    },
+    DeletePermanent {
+        root_id: String,
+        path: String,
+        confirm: bool,
+    },
 }
 
-pub fn list_directory(dir_path: &Path, root_id: &str, relative_path: &str) -> Result<DirectoryListing, String> {
-    let read_dir = fs::read_dir(dir_path).map_err(|e| format!("Failed to read directory: {}", e))?;
+pub fn list_directory(
+    dir_path: &Path,
+    root_id: &str,
+    relative_path: &str,
+) -> Result<DirectoryListing, String> {
+    let read_dir =
+        fs::read_dir(dir_path).map_err(|e| format!("Failed to read directory: {}", e))?;
 
     let mut entries = Vec::new();
 
