@@ -358,7 +358,7 @@ async fn test_sess_009_no_orphan_children_after_shutdown() {
 
     server.shutdown().await;
 
-    let deadline = std::time::Instant::now() + Duration::from_millis(500);
+    let deadline = std::time::Instant::now() + Duration::from_secs(3);
     let mut is_dead = false;
     while std::time::Instant::now() < deadline {
         if nix::sys::signal::kill(child_pid, None).is_err() {

@@ -90,9 +90,9 @@
     "semantic_hash": "27d888f48e4657087b4519d669aebdd7"
   },
   "web/src/app.tsx": {
-    "mtime": 1785857636.844929,
-    "ast_hash": "8ae608a5b56071db6c5cdc9a1f004147",
-    "semantic_hash": "8ae608a5b56071db6c5cdc9a1f004147"
+    "mtime": 1786126388.9740207,
+    "ast_hash": "b200590443cb590d2d4911b46bba4b1d",
+    "semantic_hash": ""
   },
   "web/src/apps/editor/TextEditorView.tsx": {
     "mtime": 1785951091.0931456,
@@ -110,9 +110,9 @@
     "semantic_hash": "a76a3bd0b96f6b399ee62dfafe845f73"
   },
   "web/src/apps/terminal/TerminalView.tsx": {
-    "mtime": 1785857612.8881695,
-    "ast_hash": "38ff062aadd92ec0bf469c287f7f493a",
-    "semantic_hash": "38ff062aadd92ec0bf469c287f7f493a"
+    "mtime": 1786126384.7153337,
+    "ast_hash": "ac864af7a48d9aa5e78e4f7cce01ab85",
+    "semantic_hash": ""
   },
   "web/src/desktop/DesktopCanvas.tsx": {
     "mtime": 1785945561.0972965,
