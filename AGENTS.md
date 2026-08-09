@@ -1,12 +1,21 @@
-## graphify
+## graphify (WAJIB — gunakan secara MAKSIMAL)
 
-This project has a knowledge graph at graphify-out/ with god nodes, community structure, and cross-file relationships.
+Project ini punya knowledge graph di graphify-out/ dengan god nodes, community structure, dan cross-file relationships.
 
-When the user types `/graphify`, use the installed graphify skill or instructions before doing anything else.
+Ketika user mengetik `/graphify`, gunakan skill/instruksi graphify yang terpasang sebelum melakukan hal lain.
 
-Rules:
-- For codebase questions, first run `graphify query "<question>"` when graphify-out/graph.json exists. Use `graphify path "<A>" "<B>"` for relationships and `graphify explain "<concept>"` for focused concepts. These return a scoped subgraph, usually much smaller than GRAPH_REPORT.md or raw grep output.
-- Dirty graphify-out/ files are expected after hooks or incremental updates; dirty graph files are not a reason to skip graphify. Only skip graphify if the task is about stale or incorrect graph output, or the user explicitly says not to use it.
-- If graphify-out/wiki/index.md exists, use it for broad navigation instead of raw source browsing.
-- Read graphify-out/GRAPH_REPORT.md only for broad architecture review or when query/path/explain do not surface enough context.
-- After modifying code, run `graphify update .` to keep the graph current (AST-only, no API cost).
+Aturan WAJIB:
+
+1. **Graph dulu, grep belakangan.** Untuk SETIAP pertanyaan/task tentang codebase, jalankan `graphify query "<question>"` lebih dulu ketika `graphify-out/graph.json` ada. Perluas kosakata pertanyaan terhadap node di graph (lihat `references/query.md` di skill). Variasi: `--dfs` untuk menelusuri jalur spesifik, `--budget N` untuk membatasi token jawaban, `context_filter=[...]` untuk menyaring tipe node. Pakai `graphify path "<A>" "<B>"` (tambah `--undirected` bila perlu) untuk relasi antar dua konsep, dan `graphify explain "<concept>"` untuk satu node. Hasilnya adalah subgraph terfokus — lebih kecil dan lebih relevan daripada GRAPH_REPORT.md atau raw grep.
+
+2. **Kutip sumber.** Saat menjawab dari graph, kutip `source_location` (path + line) agar bisa diverifikasi.
+
+3. **Gunakan wiki bila ada.** Jika `graphify-out/wiki/index.md` ada, pakai untuk navigasi luas sebelum browsing source mentah.
+
+4. **GRAPH_REPORT.md hanya untuk review arsitektur luas** atau ketika query/path/explain tidak memunculkan konteks yang cukup.
+
+5. **Jangan skip graphify karena graphify-out/ dirty.** File kotor di graphify-out/ adalah hal wajar setelah hook/update inkremental; graph file kotor bukan alasan untuk melewati graphify. Hanya skip bila: task tentang output graph yang basi/salah, atau user eksplisit meminta tanpa graphify.
+
+6. **Sinkronkan graph setelah modif.** Setelah mengubah kode, jalankan `graphify update .` (AST-only, tanpa biaya API). Untuk perubahan docs/spec yang substansial, jalankan `/graphify --update` (semantic) di session yang sama atau berikutnya.
+
+7. **Rule of thumb:** graphify dulu selalu; grep/glob/read hanya pelengkap untuk detail baris yang graph tidak tampilkan (misal membaca file penuh sebelum edit).
