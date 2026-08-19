@@ -342,8 +342,8 @@
       "source_location": "",
       "_origin": "ast",
       "id": "systemtime",
-      "community": 20,
-      "community_name": "files.rs",
+      "community": 3,
+      "community_name": "auth.rs",
       "norm_label": "systemtime"
     },
     {
@@ -662,7 +662,7 @@
       "_origin": "ast",
       "id": "src_config",
       "community": 12,
-      "community_name": "Config",
+      "community_name": "start_server",
       "norm_label": "config.rs"
     },
     {
@@ -673,7 +673,7 @@
       "_origin": "ast",
       "id": "src_config_config",
       "community": 12,
-      "community_name": "Config",
+      "community_name": "start_server",
       "norm_label": "config"
     },
     {
@@ -684,7 +684,7 @@
       "_origin": "ast",
       "id": "src_config_rs_ipaddr",
       "community": 12,
-      "community_name": "Config",
+      "community_name": "start_server",
       "norm_label": "ipaddr"
     },
     {
@@ -695,7 +695,7 @@
       "_origin": "ast",
       "id": "src_config_rs_option",
       "community": 12,
-      "community_name": "Config",
+      "community_name": "start_server",
       "norm_label": "option"
     },
     {
@@ -706,7 +706,7 @@
       "_origin": "ast",
       "id": "src_config_rs_pathbuf",
       "community": 12,
-      "community_name": "Config",
+      "community_name": "start_server",
       "norm_label": "pathbuf"
     },
     {
@@ -717,7 +717,7 @@
       "_origin": "ast",
       "id": "src_config_rs_string",
       "community": 12,
-      "community_name": "Config",
+      "community_name": "start_server",
       "norm_label": "string"
     },
     {
@@ -728,7 +728,7 @@
       "_origin": "ast",
       "id": "src_config_config_effective_bind",
       "community": 12,
-      "community_name": "Config",
+      "community_name": "start_server",
       "norm_label": ".effective_bind()"
     },
     {
@@ -739,7 +739,7 @@
       "_origin": "ast",
       "id": "src_config_config_tls_enabled",
       "community": 12,
-      "community_name": "Config",
+      "community_name": "start_server",
       "norm_label": ".tls_enabled()"
     },
     {
@@ -750,7 +750,7 @@
       "_origin": "ast",
       "id": "src_config_config_data_dir",
       "community": 12,
-      "community_name": "Config",
+      "community_name": "start_server",
       "norm_label": ".data_dir()"
     },
     {
@@ -947,8 +947,8 @@
       "source_location": "L61",
       "_origin": "ast",
       "id": "src_http_create_router",
-      "community": 0,
-      "community_name": "http.rs",
+      "community": 12,
+      "community_name": "start_server",
       "norm_label": "create_router()"
     },
     {
@@ -958,8 +958,8 @@
       "source_location": "",
       "_origin": "ast",
       "id": "router",
-      "community": 0,
-      "community_name": "http.rs",
+      "community": 12,
+      "community_name": "start_server",
       "norm_label": "router"
     },
     {
@@ -1531,7 +1531,7 @@
       "_origin": "ast",
       "id": "src_main",
       "community": 12,
-      "community_name": "Config",
+      "community_name": "start_server",
       "norm_label": "main.rs"
     },
     {
@@ -1542,7 +1542,7 @@
       "_origin": "ast",
       "id": "src_main_private_ips",
       "community": 12,
-      "community_name": "Config",
+      "community_name": "start_server",
       "norm_label": "private_ips()"
     },
     {
@@ -1553,7 +1553,7 @@
       "_origin": "ast",
       "id": "src_main_rs_vec",
       "community": 12,
-      "community_name": "Config",
+      "community_name": "start_server",
       "norm_label": "vec"
     },
     {
@@ -1564,7 +1564,7 @@
       "_origin": "ast",
       "id": "src_main_rs_ipaddr",
       "community": 12,
-      "community_name": "Config",
+      "community_name": "start_server",
       "norm_label": "ipaddr"
     },
     {
@@ -1575,7 +1575,7 @@
       "_origin": "ast",
       "id": "src_main_generate_self_signed_cert",
       "community": 12,
-      "community_name": "Config",
+      "community_name": "start_server",
       "norm_label": "generate_self_signed_cert()"
     },
     {
@@ -1586,7 +1586,7 @@
       "_origin": "ast",
       "id": "src_main_rs_path",
       "community": 12,
-      "community_name": "Config",
+      "community_name": "start_server",
       "norm_label": "path"
     },
     {
@@ -1597,7 +1597,7 @@
       "_origin": "ast",
       "id": "src_main_rs_result",
       "community": 12,
-      "community_name": "Config",
+      "community_name": "start_server",
       "norm_label": "result"
     },
     {
@@ -1608,7 +1608,7 @@
       "_origin": "ast",
       "id": "src_main_rs_pathbuf",
       "community": 12,
-      "community_name": "Config",
+      "community_name": "start_server",
       "norm_label": "pathbuf"
     },
     {
@@ -1619,7 +1619,7 @@
       "_origin": "ast",
       "id": "box",
       "community": 12,
-      "community_name": "Config",
+      "community_name": "start_server",
       "norm_label": "box"
     },
     {
@@ -1630,7 +1630,7 @@
       "_origin": "ast",
       "id": "src_main_rs_error",
       "community": 12,
-      "community_name": "Config",
+      "community_name": "start_server",
       "norm_label": "error"
     },
     {
@@ -1641,7 +1641,7 @@
       "_origin": "ast",
       "id": "src_main_main",
       "community": 12,
-      "community_name": "Config",
+      "community_name": "start_server",
       "norm_label": "main()"
     },
     {
@@ -3092,7 +3092,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "tests_common_mod",
-      "community": 24,
+      "community": 12,
       "community_name": "start_server",
       "norm_label": "mod.rs"
     },
@@ -3103,7 +3103,7 @@
       "source_location": "L12",
       "_origin": "ast",
       "id": "tests_common_mod_test_auth",
-      "community": 24,
+      "community": 12,
       "community_name": "start_server",
       "norm_label": "test_auth()"
     },
@@ -3213,7 +3213,7 @@
       "source_location": "L46",
       "_origin": "ast",
       "id": "tests_common_mod_start_server",
-      "community": 24,
+      "community": 12,
       "community_name": "start_server",
       "norm_label": "start_server()"
     },
@@ -3224,7 +3224,7 @@
       "source_location": "",
       "_origin": "ast",
       "id": "tests_common_mod_rs_vec",
-      "community": 24,
+      "community": 12,
       "community_name": "start_server",
       "norm_label": "vec"
     },
@@ -3235,7 +3235,7 @@
       "source_location": "",
       "_origin": "ast",
       "id": "tests_common_mod_rs_pathbuf",
-      "community": 24,
+      "community": 12,
       "community_name": "start_server",
       "norm_label": "pathbuf"
     },
@@ -3257,8 +3257,8 @@
       "source_location": "L69",
       "_origin": "ast",
       "id": "tests_common_mod_start_server_with_state",
-      "community": 0,
-      "community_name": "http.rs",
+      "community": 12,
+      "community_name": "start_server",
       "norm_label": "start_server_with_state()"
     },
     {
@@ -3334,8 +3334,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "tests_editor_tests",
-      "community": 0,
-      "community_name": "http.rs",
+      "community": 12,
+      "community_name": "start_server",
       "norm_label": "editor_tests.rs"
     },
     {
@@ -3345,8 +3345,8 @@
       "source_location": "L9",
       "_origin": "ast",
       "id": "tests_editor_tests_test_edit_001_file_read_and_atomic_write",
-      "community": 0,
-      "community_name": "http.rs",
+      "community": 12,
+      "community_name": "start_server",
       "norm_label": "test_edit_001_file_read_and_atomic_write()"
     },
     {
@@ -3356,7 +3356,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "tests_fs_tests",
-      "community": 24,
+      "community": 12,
       "community_name": "start_server",
       "norm_label": "fs_tests.rs"
     },
@@ -3367,7 +3367,7 @@
       "source_location": "L8",
       "_origin": "ast",
       "id": "tests_fs_tests_expect_rejected",
-      "community": 24,
+      "community": 12,
       "community_name": "start_server",
       "norm_label": "expect_rejected()"
     },
@@ -3378,7 +3378,7 @@
       "source_location": "L29",
       "_origin": "ast",
       "id": "tests_fs_tests_test_fs_002_traversal_dotdot_rejected",
-      "community": 24,
+      "community": 12,
       "community_name": "start_server",
       "norm_label": "test_fs_002_traversal_dotdot_rejected()"
     },
@@ -3389,7 +3389,7 @@
       "source_location": "L36",
       "_origin": "ast",
       "id": "tests_fs_tests_test_fs_017_encoded_slash_and_dots_rejected",
-      "community": 24,
+      "community": 12,
       "community_name": "start_server",
       "norm_label": "test_fs_017_encoded_slash_and_dots_rejected()"
     },
@@ -3400,7 +3400,7 @@
       "source_location": "L74",
       "_origin": "ast",
       "id": "tests_fs_tests_test_fs_017_overlong_utf8_and_nul_rejected",
-      "community": 24,
+      "community": 12,
       "community_name": "start_server",
       "norm_label": "test_fs_017_overlong_utf8_and_nul_rejected()"
     },
@@ -3411,7 +3411,7 @@
       "source_location": "L102",
       "_origin": "ast",
       "id": "tests_fs_tests_test_fs_003_symlink_escape_rejected",
-      "community": 24,
+      "community": 12,
       "community_name": "start_server",
       "norm_label": "test_fs_003_symlink_escape_rejected()"
     },
@@ -3422,7 +3422,7 @@
       "source_location": "L128",
       "_origin": "ast",
       "id": "tests_fs_tests_test_fs_016_hardlink_escape_rejected",
-      "community": 24,
+      "community": 12,
       "community_name": "start_server",
       "norm_label": "test_fs_016_hardlink_escape_rejected()"
     },
@@ -3433,7 +3433,7 @@
       "source_location": "L155",
       "_origin": "ast",
       "id": "tests_fs_tests_test_fs_002_normal_file_still_served",
-      "community": 24,
+      "community": 12,
       "community_name": "start_server",
       "norm_label": "test_fs_002_normal_file_still_served()"
     },
@@ -4938,7 +4938,7 @@
       "_origin": "ast",
       "id": "spec_specs_000_plan",
       "community": 26,
-      "community_name": "v0.2 Implementation Checklist & Verification Matrix",
+      "community_name": "000a.plan-test.md",
       "norm_label": "000.plan.md"
     },
     {
@@ -5290,7 +5290,7 @@
       "_origin": "ast",
       "id": "spec_specs_000a_plan_test",
       "community": 26,
-      "community_name": "v0.2 Implementation Checklist & Verification Matrix",
+      "community_name": "000a.plan-test.md",
       "norm_label": "000a.plan-test.md"
     },
     {
@@ -5752,7 +5752,7 @@
       "_origin": "ast",
       "id": "spec_specs_000b_plan_checklist",
       "community": 26,
-      "community_name": "v0.2 Implementation Checklist & Verification Matrix",
+      "community_name": "000a.plan-test.md",
       "norm_label": "000b.plan-checklist.md"
     },
     {
@@ -5762,7 +5762,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "spec_specs_000b_plan_checklist_mux_web_ui_implementation_checklist_verification_matrix",
-      "community": 21,
+      "community": 18,
       "community_name": "Mux Web UI \u2014 Implementation Checklist & Verification Matrix",
       "norm_label": "mux web ui \u2014 implementation checklist & verification matrix"
     },
@@ -5773,7 +5773,7 @@
       "source_location": "L9",
       "_origin": "ast",
       "id": "spec_specs_000b_plan_checklist_tdd_execution_loop_standard",
-      "community": 21,
+      "community": 18,
       "community_name": "Mux Web UI \u2014 Implementation Checklist & Verification Matrix",
       "norm_label": "tdd execution loop standard"
     },
@@ -5784,7 +5784,7 @@
       "source_location": "L19",
       "_origin": "ast",
       "id": "spec_specs_000b_plan_checklist_milestone_0_baseline_infrastructure_budget_gate",
-      "community": 21,
+      "community": 18,
       "community_name": "Mux Web UI \u2014 Implementation Checklist & Verification Matrix",
       "norm_label": "milestone 0 \u2014 baseline infrastructure & budget gate"
     },
@@ -5795,7 +5795,7 @@
       "source_location": "L40",
       "_origin": "ast",
       "id": "spec_specs_000b_plan_checklist_milestone_1_vertical_slice_pty_terminal_backend_xterm_js",
-      "community": 21,
+      "community": 18,
       "community_name": "Mux Web UI \u2014 Implementation Checklist & Verification Matrix",
       "norm_label": "milestone 1 \u2014 vertical slice: pty terminal backend & xterm.js"
     },
@@ -5806,7 +5806,7 @@
       "source_location": "L65",
       "_origin": "ast",
       "id": "spec_specs_000b_plan_checklist_milestone_2_desktop_window_manager_launcher_multi_window",
-      "community": 21,
+      "community": 18,
       "community_name": "Mux Web UI \u2014 Implementation Checklist & Verification Matrix",
       "norm_label": "milestone 2 \u2014 desktop window manager, launcher & multi-window"
     },
@@ -5817,7 +5817,7 @@
       "source_location": "L89",
       "_origin": "ast",
       "id": "spec_specs_000b_plan_checklist_milestone_3_file_explorer_lightweight_text_editor",
-      "community": 21,
+      "community": 18,
       "community_name": "Mux Web UI \u2014 Implementation Checklist & Verification Matrix",
       "norm_label": "milestone 3 \u2014 file explorer & lightweight text editor"
     },
@@ -5828,7 +5828,7 @@
       "source_location": "L123",
       "_origin": "ast",
       "id": "spec_specs_000b_plan_checklist_milestone_4_control_center_security_hardening_lan_pairing",
-      "community": 21,
+      "community": 18,
       "community_name": "Mux Web UI \u2014 Implementation Checklist & Verification Matrix",
       "norm_label": "milestone 4 \u2014 control center, security hardening & lan pairing"
     },
@@ -5839,7 +5839,7 @@
       "source_location": "L161",
       "_origin": "ast",
       "id": "spec_specs_000b_plan_checklist_milestone_5_optimization_low_end_performance_release_artifacts",
-      "community": 21,
+      "community": 18,
       "community_name": "Mux Web UI \u2014 Implementation Checklist & Verification Matrix",
       "norm_label": "milestone 5 \u2014 optimization, low-end performance & release artifacts"
     },
@@ -5850,7 +5850,7 @@
       "source_location": "L182",
       "_origin": "ast",
       "id": "spec_specs_000b_plan_checklist_definition_of_done_dod_final_audit",
-      "community": 21,
+      "community": 18,
       "community_name": "Mux Web UI \u2014 Implementation Checklist & Verification Matrix",
       "norm_label": "definition of done (dod) final audit"
     },
@@ -5862,7 +5862,7 @@
       "_origin": "ast",
       "id": "spec_specs_001_plan_v0_2",
       "community": 26,
-      "community_name": "v0.2 Implementation Checklist & Verification Matrix",
+      "community_name": "000a.plan-test.md",
       "norm_label": "001.plan-v0.2.md"
     },
     {
@@ -6460,13 +6460,453 @@
       "norm_label": "langkah 3 \u2014 milestone c: traceability, documentation & graph update"
     },
     {
+      "label": "004.plan-v0.4-suite.md",
+      "file_type": "document",
+      "source_file": "spec/specs/004.plan-v0.4-suite.md",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "spec_specs_004_plan_v0_4_suite",
+      "community": 26,
+      "community_name": "000a.plan-test.md",
+      "norm_label": "004.plan-v0.4-suite.md"
+    },
+    {
+      "label": "Mux Web UI \u2014 v0.4 plan: Developer Suite (Git UI, Package Center, Read-only Share Links, Archive Manager)",
+      "file_type": "document",
+      "source_file": "spec/specs/004.plan-v0.4-suite.md",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "spec_specs_004_plan_v0_4_suite_mux_web_ui_v0_4_plan_developer_suite_git_ui_package_center_read_only_share_links_archive_manager",
+      "community": 21,
+      "community_name": "Mux Web UI \u2014 v0.4 plan: Developer Suite (Git UI, Package Center, Read-only Share Links, Archive Manager)",
+      "norm_label": "mux web ui \u2014 v0.4 plan: developer suite (git ui, package center, read-only share links, archive manager)"
+    },
+    {
+      "label": "1. Latar Belakang dan Risiko",
+      "file_type": "document",
+      "source_file": "spec/specs/004.plan-v0.4-suite.md",
+      "source_location": "L15",
+      "_origin": "ast",
+      "id": "spec_specs_004_plan_v0_4_suite_1_latar_belakang_dan_risiko",
+      "community": 21,
+      "community_name": "Mux Web UI \u2014 v0.4 plan: Developer Suite (Git UI, Package Center, Read-only Share Links, Archive Manager)",
+      "norm_label": "1. latar belakang dan risiko"
+    },
+    {
+      "label": "1.1 Fakta Kode v0.3 yang Menjadi Titik Awal",
+      "file_type": "document",
+      "source_file": "spec/specs/004.plan-v0.4-suite.md",
+      "source_location": "L38",
+      "_origin": "ast",
+      "id": "spec_specs_004_plan_v0_4_suite_1_1_fakta_kode_v0_3_yang_menjadi_titik_awal",
+      "community": 21,
+      "community_name": "Mux Web UI \u2014 v0.4 plan: Developer Suite (Git UI, Package Center, Read-only Share Links, Archive Manager)",
+      "norm_label": "1.1 fakta kode v0.3 yang menjadi titik awal"
+    },
+    {
+      "label": "2. Hubungan dengan Rencana dan Requirement",
+      "file_type": "document",
+      "source_file": "spec/specs/004.plan-v0.4-suite.md",
+      "source_location": "L60",
+      "_origin": "ast",
+      "id": "spec_specs_004_plan_v0_4_suite_2_hubungan_dengan_rencana_dan_requirement",
+      "community": 21,
+      "community_name": "Mux Web UI \u2014 v0.4 plan: Developer Suite (Git UI, Package Center, Read-only Share Links, Archive Manager)",
+      "norm_label": "2. hubungan dengan rencana dan requirement"
+    },
+    {
+      "label": "3. Threat Model & Security Boundaries",
+      "file_type": "document",
+      "source_file": "spec/specs/004.plan-v0.4-suite.md",
+      "source_location": "L73",
+      "_origin": "ast",
+      "id": "spec_specs_004_plan_v0_4_suite_3_threat_model_security_boundaries",
+      "community": 21,
+      "community_name": "Mux Web UI \u2014 v0.4 plan: Developer Suite (Git UI, Package Center, Read-only Share Links, Archive Manager)",
+      "norm_label": "3. threat model & security boundaries"
+    },
+    {
+      "label": "4. Milestone A \u2014 Git UI (Visual Version Control)",
+      "file_type": "document",
+      "source_file": "spec/specs/004.plan-v0.4-suite.md",
+      "source_location": "L87",
+      "_origin": "ast",
+      "id": "spec_specs_004_plan_v0_4_suite_4_milestone_a_git_ui_visual_version_control",
+      "community": 21,
+      "community_name": "Mux Web UI \u2014 v0.4 plan: Developer Suite (Git UI, Package Center, Read-only Share Links, Archive Manager)",
+      "norm_label": "4. milestone a \u2014 git ui (visual version control)"
+    },
+    {
+      "label": "A.1 Kemampuan Inti",
+      "file_type": "document",
+      "source_file": "spec/specs/004.plan-v0.4-suite.md",
+      "source_location": "L89",
+      "_origin": "ast",
+      "id": "spec_specs_004_plan_v0_4_suite_a_1_kemampuan_inti",
+      "community": 21,
+      "community_name": "Mux Web UI \u2014 v0.4 plan: Developer Suite (Git UI, Package Center, Read-only Share Links, Archive Manager)",
+      "norm_label": "a.1 kemampuan inti"
+    },
+    {
+      "label": "A.2 Acceptance Criteria Milestone A",
+      "file_type": "document",
+      "source_file": "spec/specs/004.plan-v0.4-suite.md",
+      "source_location": "L109",
+      "_origin": "ast",
+      "id": "spec_specs_004_plan_v0_4_suite_a_2_acceptance_criteria_milestone_a",
+      "community": 21,
+      "community_name": "Mux Web UI \u2014 v0.4 plan: Developer Suite (Git UI, Package Center, Read-only Share Links, Archive Manager)",
+      "norm_label": "a.2 acceptance criteria milestone a"
+    },
+    {
+      "label": "5. Milestone B \u2014 Package Center (Visual Package Management)",
+      "file_type": "document",
+      "source_file": "spec/specs/004.plan-v0.4-suite.md",
+      "source_location": "L120",
+      "_origin": "ast",
+      "id": "spec_specs_004_plan_v0_4_suite_5_milestone_b_package_center_visual_package_management",
+      "community": 21,
+      "community_name": "Mux Web UI \u2014 v0.4 plan: Developer Suite (Git UI, Package Center, Read-only Share Links, Archive Manager)",
+      "norm_label": "5. milestone b \u2014 package center (visual package management)"
+    },
+    {
+      "label": "B.1 Multi-Backend Architecture",
+      "file_type": "document",
+      "source_file": "spec/specs/004.plan-v0.4-suite.md",
+      "source_location": "L122",
+      "_origin": "ast",
+      "id": "spec_specs_004_plan_v0_4_suite_b_1_multi_backend_architecture",
+      "community": 21,
+      "community_name": "Mux Web UI \u2014 v0.4 plan: Developer Suite (Git UI, Package Center, Read-only Share Links, Archive Manager)",
+      "norm_label": "b.1 multi-backend architecture"
+    },
+    {
+      "label": "B.2 Acceptance Criteria Milestone B",
+      "file_type": "document",
+      "source_file": "spec/specs/004.plan-v0.4-suite.md",
+      "source_location": "L139",
+      "_origin": "ast",
+      "id": "spec_specs_004_plan_v0_4_suite_b_2_acceptance_criteria_milestone_b",
+      "community": 21,
+      "community_name": "Mux Web UI \u2014 v0.4 plan: Developer Suite (Git UI, Package Center, Read-only Share Links, Archive Manager)",
+      "norm_label": "b.2 acceptance criteria milestone b"
+    },
+    {
+      "label": "6. Milestone C \u2014 Read-only Share Links (Capability Sharing)",
+      "file_type": "document",
+      "source_file": "spec/specs/004.plan-v0.4-suite.md",
+      "source_location": "L148",
+      "_origin": "ast",
+      "id": "spec_specs_004_plan_v0_4_suite_6_milestone_c_read_only_share_links_capability_sharing",
+      "community": 21,
+      "community_name": "Mux Web UI \u2014 v0.4 plan: Developer Suite (Git UI, Package Center, Read-only Share Links, Archive Manager)",
+      "norm_label": "6. milestone c \u2014 read-only share links (capability sharing)"
+    },
+    {
+      "label": "C.1 Desain Protokol & Keamanan",
+      "file_type": "document",
+      "source_file": "spec/specs/004.plan-v0.4-suite.md",
+      "source_location": "L150",
+      "_origin": "ast",
+      "id": "spec_specs_004_plan_v0_4_suite_c_1_desain_protokol_keamanan",
+      "community": 21,
+      "community_name": "Mux Web UI \u2014 v0.4 plan: Developer Suite (Git UI, Package Center, Read-only Share Links, Archive Manager)",
+      "norm_label": "c.1 desain protokol & keamanan"
+    },
+    {
+      "label": "C.2 Acceptance Criteria Milestone C",
+      "file_type": "document",
+      "source_file": "spec/specs/004.plan-v0.4-suite.md",
+      "source_location": "L168",
+      "_origin": "ast",
+      "id": "spec_specs_004_plan_v0_4_suite_c_2_acceptance_criteria_milestone_c",
+      "community": 21,
+      "community_name": "Mux Web UI \u2014 v0.4 plan: Developer Suite (Git UI, Package Center, Read-only Share Links, Archive Manager)",
+      "norm_label": "c.2 acceptance criteria milestone c"
+    },
+    {
+      "label": "7. Milestone D \u2014 Archive Manager (Safe Compression & Extraction)",
+      "file_type": "document",
+      "source_file": "spec/specs/004.plan-v0.4-suite.md",
+      "source_location": "L177",
+      "_origin": "ast",
+      "id": "spec_specs_004_plan_v0_4_suite_7_milestone_d_archive_manager_safe_compression_extraction",
+      "community": 21,
+      "community_name": "Mux Web UI \u2014 v0.4 plan: Developer Suite (Git UI, Package Center, Read-only Share Links, Archive Manager)",
+      "norm_label": "7. milestone d \u2014 archive manager (safe compression & extraction)"
+    },
+    {
+      "label": "D.1 Format & Proteksi Ekstraksi",
+      "file_type": "document",
+      "source_file": "spec/specs/004.plan-v0.4-suite.md",
+      "source_location": "L179",
+      "_origin": "ast",
+      "id": "spec_specs_004_plan_v0_4_suite_d_1_format_proteksi_ekstraksi",
+      "community": 21,
+      "community_name": "Mux Web UI \u2014 v0.4 plan: Developer Suite (Git UI, Package Center, Read-only Share Links, Archive Manager)",
+      "norm_label": "d.1 format & proteksi ekstraksi"
+    },
+    {
+      "label": "D.2 Acceptance Criteria Milestone D",
+      "file_type": "document",
+      "source_file": "spec/specs/004.plan-v0.4-suite.md",
+      "source_location": "L199",
+      "_origin": "ast",
+      "id": "spec_specs_004_plan_v0_4_suite_d_2_acceptance_criteria_milestone_d",
+      "community": 21,
+      "community_name": "Mux Web UI \u2014 v0.4 plan: Developer Suite (Git UI, Package Center, Read-only Share Links, Archive Manager)",
+      "norm_label": "d.2 acceptance criteria milestone d"
+    },
+    {
+      "label": "8. Milestone E \u2014 Desktop Frontend Integration",
+      "file_type": "document",
+      "source_file": "spec/specs/004.plan-v0.4-suite.md",
+      "source_location": "L208",
+      "_origin": "ast",
+      "id": "spec_specs_004_plan_v0_4_suite_8_milestone_e_desktop_frontend_integration",
+      "community": 21,
+      "community_name": "Mux Web UI \u2014 v0.4 plan: Developer Suite (Git UI, Package Center, Read-only Share Links, Archive Manager)",
+      "norm_label": "8. milestone e \u2014 desktop frontend integration"
+    },
+    {
+      "label": "9. Konfigurasi Baru (CLI Flags & Env Vars)",
+      "file_type": "document",
+      "source_file": "spec/specs/004.plan-v0.4-suite.md",
+      "source_location": "L221",
+      "_origin": "ast",
+      "id": "spec_specs_004_plan_v0_4_suite_9_konfigurasi_baru_cli_flags_env_vars",
+      "community": 21,
+      "community_name": "Mux Web UI \u2014 v0.4 plan: Developer Suite (Git UI, Package Center, Read-only Share Links, Archive Manager)",
+      "norm_label": "9. konfigurasi baru (cli flags & env vars)"
+    },
+    {
+      "label": "10. Bukan Scope (Out of Scope v0.4)",
+      "file_type": "document",
+      "source_file": "spec/specs/004.plan-v0.4-suite.md",
+      "source_location": "L232",
+      "_origin": "ast",
+      "id": "spec_specs_004_plan_v0_4_suite_10_bukan_scope_out_of_scope_v0_4",
+      "community": 21,
+      "community_name": "Mux Web UI \u2014 v0.4 plan: Developer Suite (Git UI, Package Center, Read-only Share Links, Archive Manager)",
+      "norm_label": "10. bukan scope (out of scope v0.4)"
+    },
+    {
+      "label": "11. Urutan Pengerjaan TDD (Red \u2192 Green \u2192 Refactor)",
+      "file_type": "document",
+      "source_file": "spec/specs/004.plan-v0.4-suite.md",
+      "source_location": "L241",
+      "_origin": "ast",
+      "id": "spec_specs_004_plan_v0_4_suite_11_urutan_pengerjaan_tdd_red_green_refactor",
+      "community": 21,
+      "community_name": "Mux Web UI \u2014 v0.4 plan: Developer Suite (Git UI, Package Center, Read-only Share Links, Archive Manager)",
+      "norm_label": "11. urutan pengerjaan tdd (red \u2192 green \u2192 refactor)"
+    },
+    {
+      "label": "12. Definition of Done (DoD)",
+      "file_type": "document",
+      "source_file": "spec/specs/004.plan-v0.4-suite.md",
+      "source_location": "L266",
+      "_origin": "ast",
+      "id": "spec_specs_004_plan_v0_4_suite_12_definition_of_done_dod",
+      "community": 21,
+      "community_name": "Mux Web UI \u2014 v0.4 plan: Developer Suite (Git UI, Package Center, Read-only Share Links, Archive Manager)",
+      "norm_label": "12. definition of done (dod)"
+    },
+    {
+      "label": "004b.plan-checklist.md",
+      "file_type": "document",
+      "source_file": "spec/specs/004b.plan-checklist.md",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "spec_specs_004b_plan_checklist",
+      "community": 26,
+      "community_name": "000a.plan-test.md",
+      "norm_label": "004b.plan-checklist.md"
+    },
+    {
+      "label": "Companion Checklist \u2014 v0.4 Plan: Developer Suite",
+      "file_type": "document",
+      "source_file": "spec/specs/004b.plan-checklist.md",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "spec_specs_004b_plan_checklist_companion_checklist_v0_4_plan_developer_suite",
+      "community": 24,
+      "community_name": "Companion Checklist \u2014 v0.4 Plan: Developer Suite",
+      "norm_label": "companion checklist \u2014 v0.4 plan: developer suite"
+    },
+    {
+      "label": "1. Milestone A \u2014 Git UI (`GIT-001..010`)",
+      "file_type": "document",
+      "source_file": "spec/specs/004b.plan-checklist.md",
+      "source_location": "L9",
+      "_origin": "ast",
+      "id": "spec_specs_004b_plan_checklist_1_milestone_a_git_ui_git_001_010",
+      "community": 24,
+      "community_name": "Companion Checklist \u2014 v0.4 Plan: Developer Suite",
+      "norm_label": "1. milestone a \u2014 git ui (`git-001..010`)"
+    },
+    {
+      "label": "Test Suite (`tests/git_tests.rs`)",
+      "file_type": "document",
+      "source_file": "spec/specs/004b.plan-checklist.md",
+      "source_location": "L11",
+      "_origin": "ast",
+      "id": "spec_specs_004b_plan_checklist_test_suite_tests_git_tests_rs",
+      "community": 24,
+      "community_name": "Companion Checklist \u2014 v0.4 Plan: Developer Suite",
+      "norm_label": "test suite (`tests/git_tests.rs`)"
+    },
+    {
+      "label": "Backend Implementation (`src/git.rs` & `src/http.rs`)",
+      "file_type": "document",
+      "source_file": "spec/specs/004b.plan-checklist.md",
+      "source_location": "L20",
+      "_origin": "ast",
+      "id": "spec_specs_004b_plan_checklist_backend_implementation_src_git_rs_src_http_rs",
+      "community": 24,
+      "community_name": "Companion Checklist \u2014 v0.4 Plan: Developer Suite",
+      "norm_label": "backend implementation (`src/git.rs` & `src/http.rs`)"
+    },
+    {
+      "label": "2. Milestone B \u2014 Package Center (`PKG-001..008`)",
+      "file_type": "document",
+      "source_file": "spec/specs/004b.plan-checklist.md",
+      "source_location": "L32",
+      "_origin": "ast",
+      "id": "spec_specs_004b_plan_checklist_2_milestone_b_package_center_pkg_001_008",
+      "community": 24,
+      "community_name": "Companion Checklist \u2014 v0.4 Plan: Developer Suite",
+      "norm_label": "2. milestone b \u2014 package center (`pkg-001..008`)"
+    },
+    {
+      "label": "Test Suite (`tests/package_tests.rs`)",
+      "file_type": "document",
+      "source_file": "spec/specs/004b.plan-checklist.md",
+      "source_location": "L34",
+      "_origin": "ast",
+      "id": "spec_specs_004b_plan_checklist_test_suite_tests_package_tests_rs",
+      "community": 24,
+      "community_name": "Companion Checklist \u2014 v0.4 Plan: Developer Suite",
+      "norm_label": "test suite (`tests/package_tests.rs`)"
+    },
+    {
+      "label": "Backend Implementation (`src/packages.rs` & `src/http.rs`)",
+      "file_type": "document",
+      "source_file": "spec/specs/004b.plan-checklist.md",
+      "source_location": "L41",
+      "_origin": "ast",
+      "id": "spec_specs_004b_plan_checklist_backend_implementation_src_packages_rs_src_http_rs",
+      "community": 24,
+      "community_name": "Companion Checklist \u2014 v0.4 Plan: Developer Suite",
+      "norm_label": "backend implementation (`src/packages.rs` & `src/http.rs`)"
+    },
+    {
+      "label": "3. Milestone C \u2014 Read-only Share Links (`SHR-001..008`)",
+      "file_type": "document",
+      "source_file": "spec/specs/004b.plan-checklist.md",
+      "source_location": "L52",
+      "_origin": "ast",
+      "id": "spec_specs_004b_plan_checklist_3_milestone_c_read_only_share_links_shr_001_008",
+      "community": 24,
+      "community_name": "Companion Checklist \u2014 v0.4 Plan: Developer Suite",
+      "norm_label": "3. milestone c \u2014 read-only share links (`shr-001..008`)"
+    },
+    {
+      "label": "Test Suite (`tests/share_tests.rs`)",
+      "file_type": "document",
+      "source_file": "spec/specs/004b.plan-checklist.md",
+      "source_location": "L54",
+      "_origin": "ast",
+      "id": "spec_specs_004b_plan_checklist_test_suite_tests_share_tests_rs",
+      "community": 24,
+      "community_name": "Companion Checklist \u2014 v0.4 Plan: Developer Suite",
+      "norm_label": "test suite (`tests/share_tests.rs`)"
+    },
+    {
+      "label": "Backend Implementation (`src/share.rs` & `src/http.rs`)",
+      "file_type": "document",
+      "source_file": "spec/specs/004b.plan-checklist.md",
+      "source_location": "L61",
+      "_origin": "ast",
+      "id": "spec_specs_004b_plan_checklist_backend_implementation_src_share_rs_src_http_rs",
+      "community": 24,
+      "community_name": "Companion Checklist \u2014 v0.4 Plan: Developer Suite",
+      "norm_label": "backend implementation (`src/share.rs` & `src/http.rs`)"
+    },
+    {
+      "label": "4. Milestone D \u2014 Archive Manager (`ARC-001..008`)",
+      "file_type": "document",
+      "source_file": "spec/specs/004b.plan-checklist.md",
+      "source_location": "L71",
+      "_origin": "ast",
+      "id": "spec_specs_004b_plan_checklist_4_milestone_d_archive_manager_arc_001_008",
+      "community": 24,
+      "community_name": "Companion Checklist \u2014 v0.4 Plan: Developer Suite",
+      "norm_label": "4. milestone d \u2014 archive manager (`arc-001..008`)"
+    },
+    {
+      "label": "Test Suite (`tests/archive_tests.rs`)",
+      "file_type": "document",
+      "source_file": "spec/specs/004b.plan-checklist.md",
+      "source_location": "L73",
+      "_origin": "ast",
+      "id": "spec_specs_004b_plan_checklist_test_suite_tests_archive_tests_rs",
+      "community": 24,
+      "community_name": "Companion Checklist \u2014 v0.4 Plan: Developer Suite",
+      "norm_label": "test suite (`tests/archive_tests.rs`)"
+    },
+    {
+      "label": "Backend Implementation (`src/archive.rs` & `src/http.rs`)",
+      "file_type": "document",
+      "source_file": "spec/specs/004b.plan-checklist.md",
+      "source_location": "L81",
+      "_origin": "ast",
+      "id": "spec_specs_004b_plan_checklist_backend_implementation_src_archive_rs_src_http_rs",
+      "community": 24,
+      "community_name": "Companion Checklist \u2014 v0.4 Plan: Developer Suite",
+      "norm_label": "backend implementation (`src/archive.rs` & `src/http.rs`)"
+    },
+    {
+      "label": "5. Milestone E \u2014 Desktop Frontend & UI (`WIN-010..013`)",
+      "file_type": "document",
+      "source_file": "spec/specs/004b.plan-checklist.md",
+      "source_location": "L91",
+      "_origin": "ast",
+      "id": "spec_specs_004b_plan_checklist_5_milestone_e_desktop_frontend_ui_win_010_013",
+      "community": 24,
+      "community_name": "Companion Checklist \u2014 v0.4 Plan: Developer Suite",
+      "norm_label": "5. milestone e \u2014 desktop frontend & ui (`win-010..013`)"
+    },
+    {
+      "label": "Frontend Components (`web/src/*`)",
+      "file_type": "document",
+      "source_file": "spec/specs/004b.plan-checklist.md",
+      "source_location": "L93",
+      "_origin": "ast",
+      "id": "spec_specs_004b_plan_checklist_frontend_components_web_src",
+      "community": 24,
+      "community_name": "Companion Checklist \u2014 v0.4 Plan: Developer Suite",
+      "norm_label": "frontend components (`web/src/*`)"
+    },
+    {
+      "label": "6. Definition of Done & Quality Checks",
+      "file_type": "document",
+      "source_file": "spec/specs/004b.plan-checklist.md",
+      "source_location": "L104",
+      "_origin": "ast",
+      "id": "spec_specs_004b_plan_checklist_6_definition_of_done_quality_checks",
+      "community": 24,
+      "community_name": "Companion Checklist \u2014 v0.4 Plan: Developer Suite",
+      "norm_label": "6. definition of done & quality checks"
+    },
+    {
       "label": "README.md",
       "file_type": "document",
       "source_file": "README.md",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 19,
-      "community_name": "v0.2.1 Plan: Distribution (prebuilt binary + installer)",
+      "community": 35,
+      "community_name": "v0.2 Implementation Checklist & Verification Matrix",
       "norm_label": "readme.md",
       "id": "readme"
     },
@@ -6829,7 +7269,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "community": 18,
-      "community_name": "Mux Web UI \u2014 v0.2 Implementation Checklist & Verification Matrix",
+      "community_name": "Mux Web UI \u2014 Implementation Checklist & Verification Matrix",
       "norm_label": "mux web ui \u2014 v0.2 implementation checklist & verification matrix",
       "id": "spec_specs_001b_plan_checklist_mux_web_ui_v0_2_implementation_checklist_verification_matrix"
     },
@@ -6840,7 +7280,7 @@
       "source_location": "L10",
       "_origin": "ast",
       "community": 18,
-      "community_name": "Mux Web UI \u2014 v0.2 Implementation Checklist & Verification Matrix",
+      "community_name": "Mux Web UI \u2014 Implementation Checklist & Verification Matrix",
       "norm_label": "tdd execution loop standard",
       "id": "spec_specs_001b_plan_checklist_tdd_execution_loop_standard"
     },
@@ -6851,7 +7291,7 @@
       "source_location": "L20",
       "_origin": "ast",
       "community": 18,
-      "community_name": "Mux Web UI \u2014 v0.2 Implementation Checklist & Verification Matrix",
+      "community_name": "Mux Web UI \u2014 Implementation Checklist & Verification Matrix",
       "norm_label": "langkah 1 \u2014 harness test + regression (harus hijau sejak awal)",
       "id": "spec_specs_001b_plan_checklist_langkah_1_harness_test_regression_harus_hijau_sejak_awal"
     },
@@ -6862,7 +7302,7 @@
       "source_location": "L33",
       "_origin": "ast",
       "community": 18,
-      "community_name": "Mux Web UI \u2014 v0.2 Implementation Checklist & Verification Matrix",
+      "community_name": "Mux Web UI \u2014 Implementation Checklist & Verification Matrix",
       "norm_label": "langkah 2 \u2014 milestone a: auth + tls",
       "id": "spec_specs_001b_plan_checklist_langkah_2_milestone_a_auth_tls"
     },
@@ -6873,7 +7313,7 @@
       "source_location": "L63",
       "_origin": "ast",
       "community": 18,
-      "community_name": "Mux Web UI \u2014 v0.2 Implementation Checklist & Verification Matrix",
+      "community_name": "Mux Web UI \u2014 Implementation Checklist & Verification Matrix",
       "norm_label": "langkah 3 \u2014 milestone b: session persistence",
       "id": "spec_specs_001b_plan_checklist_langkah_3_milestone_b_session_persistence"
     },
@@ -6884,7 +7324,7 @@
       "source_location": "L83",
       "_origin": "ast",
       "community": 18,
-      "community_name": "Mux Web UI \u2014 v0.2 Implementation Checklist & Verification Matrix",
+      "community_name": "Mux Web UI \u2014 Implementation Checklist & Verification Matrix",
       "norm_label": "langkah 4 \u2014 ci",
       "id": "spec_specs_001b_plan_checklist_langkah_4_ci"
     },
@@ -6895,7 +7335,7 @@
       "source_location": "L93",
       "_origin": "ast",
       "community": 18,
-      "community_name": "Mux Web UI \u2014 v0.2 Implementation Checklist & Verification Matrix",
+      "community_name": "Mux Web UI \u2014 Implementation Checklist & Verification Matrix",
       "norm_label": "langkah 5-6 \u2014 traceability, readme, update.sh",
       "id": "spec_specs_001b_plan_checklist_langkah_5_6_traceability_readme_update_sh"
     },
@@ -6906,7 +7346,7 @@
       "source_location": "L102",
       "_origin": "ast",
       "community": 18,
-      "community_name": "Mux Web UI \u2014 v0.2 Implementation Checklist & Verification Matrix",
+      "community_name": "Mux Web UI \u2014 Implementation Checklist & Verification Matrix",
       "norm_label": "langkah 7 \u2014 rilis",
       "id": "spec_specs_001b_plan_checklist_langkah_7_rilis"
     },
@@ -6917,7 +7357,7 @@
       "source_location": "L110",
       "_origin": "ast",
       "community": 18,
-      "community_name": "Mux Web UI \u2014 v0.2 Implementation Checklist & Verification Matrix",
+      "community_name": "Mux Web UI \u2014 Implementation Checklist & Verification Matrix",
       "norm_label": "open questions yang diputuskan saat implementasi",
       "id": "spec_specs_001b_plan_checklist_open_questions_yang_diputuskan_saat_implementasi"
     },
@@ -7235,8 +7675,8 @@
       "source_file": "tests/traceability.md",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 23,
-      "community_name": "Requirement Traceability Matrix",
+      "community": 26,
+      "community_name": "000a.plan-test.md",
       "norm_label": "traceability.md",
       "id": "tests_traceability"
     },
@@ -7500,8 +7940,8 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 19,
-      "community_name": "v0.2.1 Plan: Distribution (prebuilt binary + installer)",
+      "community": 35,
+      "community_name": "v0.2 Implementation Checklist & Verification Matrix",
       "norm_label": "uninstall.sh",
       "_origin": "semantic",
       "id": "uninstall_sh"
@@ -7515,7 +7955,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 26,
+      "community": 35,
       "community_name": "v0.2 Implementation Checklist & Verification Matrix",
       "norm_label": "handoff 001 - progress & backlog (v0.2)",
       "_origin": "semantic",
@@ -7545,7 +7985,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 26,
+      "community": 35,
       "community_name": "v0.2 Implementation Checklist & Verification Matrix",
       "norm_label": "milestone b: session persistence",
       "_origin": "semantic",
@@ -7590,7 +8030,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 26,
+      "community": 35,
       "community_name": "v0.2 Implementation Checklist & Verification Matrix",
       "norm_label": "life-002 orphan child cleanup",
       "_origin": "semantic",
@@ -7605,7 +8045,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 26,
+      "community": 35,
       "community_name": "v0.2 Implementation Checklist & Verification Matrix",
       "norm_label": "v0.2 implementation checklist & verification matrix",
       "_origin": "semantic",
@@ -7620,7 +8060,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 26,
+      "community": 35,
       "community_name": "v0.2 Implementation Checklist & Verification Matrix",
       "norm_label": "tdd execution loop (red-green-refactor)",
       "_origin": "semantic",
@@ -7650,7 +8090,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 26,
+      "community": 35,
       "community_name": "v0.2 Implementation Checklist & Verification Matrix",
       "norm_label": "checklist milestone b: session persistence (b.1-b.9)",
       "_origin": "semantic",
@@ -7920,8 +8360,8 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 23,
-      "community_name": "Requirement Traceability Matrix",
+      "community": 35,
+      "community_name": "v0.2 Implementation Checklist & Verification Matrix",
       "norm_label": "life requirement family",
       "_origin": "semantic",
       "id": "tests_traceability_life_family"
@@ -19323,6 +19763,17 @@
       "confidence_score": 1.0
     },
     {
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "source_file": "spec/specs/004.plan-v0.4-suite.md",
+      "source_location": "L8",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "spec_specs_004_plan_v0_4_suite",
+      "target": "spec_specs_000a_plan_test",
+      "confidence_score": 1.0
+    },
+    {
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "spec/specs/000a.plan-test.md",
@@ -20302,6 +20753,17 @@
       "confidence_score": 1.0
     },
     {
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "source_file": "spec/specs/004.plan-v0.4-suite.md",
+      "source_location": "L18",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "spec_specs_004_plan_v0_4_suite",
+      "target": "spec_specs_003_plan_v0_3_terminal_resize",
+      "confidence_score": 1.0
+    },
+    {
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "spec/specs/003.plan-v0.3-terminal-resize.md",
@@ -20486,6 +20948,446 @@
       "_origin": "ast",
       "source": "spec_specs_003b_plan_checklist_mux_web_ui_v0_3_implementation_checklist_verification_matrix",
       "target": "spec_specs_003b_plan_checklist_tdd_execution_loop_standard",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "spec/specs/004.plan-v0.4-suite.md",
+      "source_location": "L1",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "spec_specs_004_plan_v0_4_suite",
+      "target": "spec_specs_004_plan_v0_4_suite_mux_web_ui_v0_4_plan_developer_suite_git_ui_package_center_read_only_share_links_archive_manager",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "source_file": "spec/specs/004.plan-v0.4-suite.md",
+      "source_location": "L9",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "spec_specs_004_plan_v0_4_suite",
+      "target": "spec_specs_004b_plan_checklist",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "source_file": "spec/specs/004.plan-v0.4-suite.md",
+      "source_location": "L62",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "spec_specs_004_plan_v0_4_suite",
+      "target": "tests_traceability",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "spec/specs/004.plan-v0.4-suite.md",
+      "source_location": "L232",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "spec_specs_004_plan_v0_4_suite_mux_web_ui_v0_4_plan_developer_suite_git_ui_package_center_read_only_share_links_archive_manager",
+      "target": "spec_specs_004_plan_v0_4_suite_10_bukan_scope_out_of_scope_v0_4",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "spec/specs/004.plan-v0.4-suite.md",
+      "source_location": "L241",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "spec_specs_004_plan_v0_4_suite_mux_web_ui_v0_4_plan_developer_suite_git_ui_package_center_read_only_share_links_archive_manager",
+      "target": "spec_specs_004_plan_v0_4_suite_11_urutan_pengerjaan_tdd_red_green_refactor",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "spec/specs/004.plan-v0.4-suite.md",
+      "source_location": "L266",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "spec_specs_004_plan_v0_4_suite_mux_web_ui_v0_4_plan_developer_suite_git_ui_package_center_read_only_share_links_archive_manager",
+      "target": "spec_specs_004_plan_v0_4_suite_12_definition_of_done_dod",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "spec/specs/004.plan-v0.4-suite.md",
+      "source_location": "L15",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "spec_specs_004_plan_v0_4_suite_mux_web_ui_v0_4_plan_developer_suite_git_ui_package_center_read_only_share_links_archive_manager",
+      "target": "spec_specs_004_plan_v0_4_suite_1_latar_belakang_dan_risiko",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "spec/specs/004.plan-v0.4-suite.md",
+      "source_location": "L60",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "spec_specs_004_plan_v0_4_suite_mux_web_ui_v0_4_plan_developer_suite_git_ui_package_center_read_only_share_links_archive_manager",
+      "target": "spec_specs_004_plan_v0_4_suite_2_hubungan_dengan_rencana_dan_requirement",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "spec/specs/004.plan-v0.4-suite.md",
+      "source_location": "L73",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "spec_specs_004_plan_v0_4_suite_mux_web_ui_v0_4_plan_developer_suite_git_ui_package_center_read_only_share_links_archive_manager",
+      "target": "spec_specs_004_plan_v0_4_suite_3_threat_model_security_boundaries",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "spec/specs/004.plan-v0.4-suite.md",
+      "source_location": "L87",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "spec_specs_004_plan_v0_4_suite_mux_web_ui_v0_4_plan_developer_suite_git_ui_package_center_read_only_share_links_archive_manager",
+      "target": "spec_specs_004_plan_v0_4_suite_4_milestone_a_git_ui_visual_version_control",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "spec/specs/004.plan-v0.4-suite.md",
+      "source_location": "L120",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "spec_specs_004_plan_v0_4_suite_mux_web_ui_v0_4_plan_developer_suite_git_ui_package_center_read_only_share_links_archive_manager",
+      "target": "spec_specs_004_plan_v0_4_suite_5_milestone_b_package_center_visual_package_management",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "spec/specs/004.plan-v0.4-suite.md",
+      "source_location": "L148",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "spec_specs_004_plan_v0_4_suite_mux_web_ui_v0_4_plan_developer_suite_git_ui_package_center_read_only_share_links_archive_manager",
+      "target": "spec_specs_004_plan_v0_4_suite_6_milestone_c_read_only_share_links_capability_sharing",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "spec/specs/004.plan-v0.4-suite.md",
+      "source_location": "L177",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "spec_specs_004_plan_v0_4_suite_mux_web_ui_v0_4_plan_developer_suite_git_ui_package_center_read_only_share_links_archive_manager",
+      "target": "spec_specs_004_plan_v0_4_suite_7_milestone_d_archive_manager_safe_compression_extraction",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "spec/specs/004.plan-v0.4-suite.md",
+      "source_location": "L208",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "spec_specs_004_plan_v0_4_suite_mux_web_ui_v0_4_plan_developer_suite_git_ui_package_center_read_only_share_links_archive_manager",
+      "target": "spec_specs_004_plan_v0_4_suite_8_milestone_e_desktop_frontend_integration",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "spec/specs/004.plan-v0.4-suite.md",
+      "source_location": "L221",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "spec_specs_004_plan_v0_4_suite_mux_web_ui_v0_4_plan_developer_suite_git_ui_package_center_read_only_share_links_archive_manager",
+      "target": "spec_specs_004_plan_v0_4_suite_9_konfigurasi_baru_cli_flags_env_vars",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "spec/specs/004.plan-v0.4-suite.md",
+      "source_location": "L38",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "spec_specs_004_plan_v0_4_suite_1_latar_belakang_dan_risiko",
+      "target": "spec_specs_004_plan_v0_4_suite_1_1_fakta_kode_v0_3_yang_menjadi_titik_awal",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "spec/specs/004.plan-v0.4-suite.md",
+      "source_location": "L89",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "spec_specs_004_plan_v0_4_suite_4_milestone_a_git_ui_visual_version_control",
+      "target": "spec_specs_004_plan_v0_4_suite_a_1_kemampuan_inti",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "spec/specs/004.plan-v0.4-suite.md",
+      "source_location": "L109",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "spec_specs_004_plan_v0_4_suite_4_milestone_a_git_ui_visual_version_control",
+      "target": "spec_specs_004_plan_v0_4_suite_a_2_acceptance_criteria_milestone_a",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "spec/specs/004.plan-v0.4-suite.md",
+      "source_location": "L122",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "spec_specs_004_plan_v0_4_suite_5_milestone_b_package_center_visual_package_management",
+      "target": "spec_specs_004_plan_v0_4_suite_b_1_multi_backend_architecture",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "spec/specs/004.plan-v0.4-suite.md",
+      "source_location": "L139",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "spec_specs_004_plan_v0_4_suite_5_milestone_b_package_center_visual_package_management",
+      "target": "spec_specs_004_plan_v0_4_suite_b_2_acceptance_criteria_milestone_b",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "spec/specs/004.plan-v0.4-suite.md",
+      "source_location": "L150",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "spec_specs_004_plan_v0_4_suite_6_milestone_c_read_only_share_links_capability_sharing",
+      "target": "spec_specs_004_plan_v0_4_suite_c_1_desain_protokol_keamanan",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "spec/specs/004.plan-v0.4-suite.md",
+      "source_location": "L168",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "spec_specs_004_plan_v0_4_suite_6_milestone_c_read_only_share_links_capability_sharing",
+      "target": "spec_specs_004_plan_v0_4_suite_c_2_acceptance_criteria_milestone_c",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "spec/specs/004.plan-v0.4-suite.md",
+      "source_location": "L179",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "spec_specs_004_plan_v0_4_suite_7_milestone_d_archive_manager_safe_compression_extraction",
+      "target": "spec_specs_004_plan_v0_4_suite_d_1_format_proteksi_ekstraksi",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "spec/specs/004.plan-v0.4-suite.md",
+      "source_location": "L199",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "spec_specs_004_plan_v0_4_suite_7_milestone_d_archive_manager_safe_compression_extraction",
+      "target": "spec_specs_004_plan_v0_4_suite_d_2_acceptance_criteria_milestone_d",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "spec/specs/004b.plan-checklist.md",
+      "source_location": "L1",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "spec_specs_004b_plan_checklist",
+      "target": "spec_specs_004b_plan_checklist_companion_checklist_v0_4_plan_developer_suite",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "spec/specs/004b.plan-checklist.md",
+      "source_location": "L9",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "spec_specs_004b_plan_checklist_companion_checklist_v0_4_plan_developer_suite",
+      "target": "spec_specs_004b_plan_checklist_1_milestone_a_git_ui_git_001_010",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "spec/specs/004b.plan-checklist.md",
+      "source_location": "L32",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "spec_specs_004b_plan_checklist_companion_checklist_v0_4_plan_developer_suite",
+      "target": "spec_specs_004b_plan_checklist_2_milestone_b_package_center_pkg_001_008",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "spec/specs/004b.plan-checklist.md",
+      "source_location": "L52",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "spec_specs_004b_plan_checklist_companion_checklist_v0_4_plan_developer_suite",
+      "target": "spec_specs_004b_plan_checklist_3_milestone_c_read_only_share_links_shr_001_008",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "spec/specs/004b.plan-checklist.md",
+      "source_location": "L71",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "spec_specs_004b_plan_checklist_companion_checklist_v0_4_plan_developer_suite",
+      "target": "spec_specs_004b_plan_checklist_4_milestone_d_archive_manager_arc_001_008",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "spec/specs/004b.plan-checklist.md",
+      "source_location": "L91",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "spec_specs_004b_plan_checklist_companion_checklist_v0_4_plan_developer_suite",
+      "target": "spec_specs_004b_plan_checklist_5_milestone_e_desktop_frontend_ui_win_010_013",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "spec/specs/004b.plan-checklist.md",
+      "source_location": "L104",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "spec_specs_004b_plan_checklist_companion_checklist_v0_4_plan_developer_suite",
+      "target": "spec_specs_004b_plan_checklist_6_definition_of_done_quality_checks",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "spec/specs/004b.plan-checklist.md",
+      "source_location": "L20",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "spec_specs_004b_plan_checklist_1_milestone_a_git_ui_git_001_010",
+      "target": "spec_specs_004b_plan_checklist_backend_implementation_src_git_rs_src_http_rs",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "spec/specs/004b.plan-checklist.md",
+      "source_location": "L11",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "spec_specs_004b_plan_checklist_1_milestone_a_git_ui_git_001_010",
+      "target": "spec_specs_004b_plan_checklist_test_suite_tests_git_tests_rs",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "spec/specs/004b.plan-checklist.md",
+      "source_location": "L41",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "spec_specs_004b_plan_checklist_2_milestone_b_package_center_pkg_001_008",
+      "target": "spec_specs_004b_plan_checklist_backend_implementation_src_packages_rs_src_http_rs",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "spec/specs/004b.plan-checklist.md",
+      "source_location": "L34",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "spec_specs_004b_plan_checklist_2_milestone_b_package_center_pkg_001_008",
+      "target": "spec_specs_004b_plan_checklist_test_suite_tests_package_tests_rs",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "spec/specs/004b.plan-checklist.md",
+      "source_location": "L61",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "spec_specs_004b_plan_checklist_3_milestone_c_read_only_share_links_shr_001_008",
+      "target": "spec_specs_004b_plan_checklist_backend_implementation_src_share_rs_src_http_rs",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "spec/specs/004b.plan-checklist.md",
+      "source_location": "L54",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "spec_specs_004b_plan_checklist_3_milestone_c_read_only_share_links_shr_001_008",
+      "target": "spec_specs_004b_plan_checklist_test_suite_tests_share_tests_rs",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "spec/specs/004b.plan-checklist.md",
+      "source_location": "L81",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "spec_specs_004b_plan_checklist_4_milestone_d_archive_manager_arc_001_008",
+      "target": "spec_specs_004b_plan_checklist_backend_implementation_src_archive_rs_src_http_rs",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "spec/specs/004b.plan-checklist.md",
+      "source_location": "L73",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "spec_specs_004b_plan_checklist_4_milestone_d_archive_manager_arc_001_008",
+      "target": "spec_specs_004b_plan_checklist_test_suite_tests_archive_tests_rs",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "spec/specs/004b.plan-checklist.md",
+      "source_location": "L93",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "spec_specs_004b_plan_checklist_5_milestone_e_desktop_frontend_ui_win_010_013",
+      "target": "spec_specs_004b_plan_checklist_frontend_components_web_src",
       "confidence_score": 1.0
     },
     {
@@ -22361,5 +23263,5 @@
       "source_file": ".github/workflows/ci.yml"
     }
   ],
-  "built_at_commit": "3189dd317b248214242b86a74f82a0befae623b5"
+  "built_at_commit": "1592b06091d5c68a90dda8105294ee788ca3cb35"
 }

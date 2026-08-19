@@ -165,8 +165,8 @@
     "semantic_hash": "f8be80d7c0632a6c791e45f83c0a7c53"
   },
   "tests/traceability.md": {
-    "mtime": 1787119150.5343006,
-    "ast_hash": "fbb9e74cf50d525662eb67e52523a06f",
+    "mtime": 1787137485.6723664,
+    "ast_hash": "a050488bb89e28e5f9e8c4626ef5c799",
     "semantic_hash": ""
   },
   "web/index.html": {
@@ -252,6 +252,16 @@
   "spec/handoff/002.terminal-resize-completed.md": {
     "mtime": 1787122312.161951,
     "ast_hash": "e974373b4e7b94d66b645df8970ec800",
+    "semantic_hash": ""
+  },
+  "spec/specs/004.plan-v0.4-suite.md": {
+    "mtime": 1787137469.6882234,
+    "ast_hash": "d66863605294a5425546a152df3f5540",
+    "semantic_hash": ""
+  },
+  "spec/specs/004b.plan-checklist.md": {
+    "mtime": 1787137479.0668845,
+    "ast_hash": "e7457f7f03adc6ddb1db66054e104cde",
     "semantic_hash": ""
   }
 }
