@@ -39,6 +39,20 @@
 | CI-005 Release artifact + SHA-256 checksums | CI-005 | Build CI | Portable | Passed |
 | CI-006 Frontend asset size & build check | CI-006 | Build CI | Portable | Passed |
 | CI-007 Code quality fmt & clippy -D warnings | CI-007 | Build CI | Portable | Passed |
+| DIST-001 Tag v* → binary x86_64-unknown-linux-gnu | DIST-001 | Build CI | Linux x86_64 | Planned |
+| DIST-002 Tag v* → binary x86_64-unknown-linux-musl (static) | DIST-002 | Build CI | Linux x86_64 | Planned |
+| DIST-003 Tag v* → binary aarch64-unknown-linux-gnu | DIST-003 | Build CI | Linux ARM64 | Planned |
+| DIST-004 Tag v* → binary aarch64-linux-android (Termux) | DIST-004 | Build CI | Termux/Android ARM64 | Planned |
+| DIST-005 SHA-256 per artifact + checksums.txt agregat | DIST-005 | Build CI | Portable | Planned |
+| DIST-006 GitHub Release otomatis berisi seluruh artifact | DIST-006 | Build CI | Portable | Planned |
+| DIST-007 install.sh binary-first tanpa Rust (detect OS/arch) | DIST-007 | Build CI (installer-test S1) | Linux x86_64, Termux ARM64 | Passed |
+| DIST-008 install.sh --version pin versi spesifik | DIST-008 | Build CI (installer-test S2) | Portable | Passed |
+| DIST-009 Verifikasi SHA-256 wajib sebelum install | DIST-009 | Build CI (installer-test S3) | Portable | Passed |
+| DIST-010 Fallback build-from-source bila download/verify gagal | DIST-010 | Manual | Portable | Passed |
+| DIST-011 update.sh binary-first + banding versi (tidak dari main) | DIST-011 | Build CI (installer-test S4a) | Portable | Passed |
+| DIST-012 update.sh backup + auto-rollback saat update gagal | DIST-012 | Build CI (installer-test S4b/4c) | Portable | Passed |
+| DIST-013 MUX_WEB_BASE_URL override untuk pengujian installer | DIST-013 | Build CI (installer-test) | Portable | Passed |
+| DIST-014 README: install-dari-release vs build-source | DIST-014 | Docs | Portable | Passed |
 | TERM-001 WebSocket binary codec validation | TERM-001 | Unit | Portable | Passed |
 | TERM-002 Frame decoder safety & chunking | TERM-002 | Unit | Portable | Passed |
 | TERM-003 Spawn interactive shell in PTY | TERM-003 | Integration | Linux, Termux ARM64 | Passed |
@@ -122,4 +136,15 @@
 | PERF-003 Idle RSS <= 35 MiB (hard limit <= 50 MiB) | PERF-003 | Integration | Portable | Passed |
 | PERF-004 Cold startup time <= 1s | PERF-004 | Integration | Portable | Passed |
 | PERF-005 4 active terminals responsive on 1 GiB RAM | PERF-005 | Soak Test | Portable | Passed |
+| RSZ-001 RESIZE codec length validation | RSZ-001 | Unit | Portable | Passed |
+| RSZ-002 Server clamp cols/rows before PTY | RSZ-002 | Unit / Integration | Linux x86_64 / ARM64, Termux ARM64 | Passed |
+| RSZ-003 create_terminal initial size clamp | RSZ-003 | Unit / Integration | Portable | Passed |
+| RSZ-004 Resize error surfaced as 0x04 | RSZ-004 | Integration | Portable | Passed |
+| RSZ-005 Metadata cols/rows clamped & consistent | RSZ-005 | Integration | Portable | Passed |
+| RSZ-006 Resize after closed session safe | RSZ-006 | Integration | Portable | Passed |
+| RSZ-007 Frontend resize debounce & no 0x0 frame | RSZ-007 | Frontend Component | Portable | Passed |
+| RSZ-008 fit() safe on 0x0 container | RSZ-008 | Frontend Component | Portable | Passed |
+| RSZ-009 visualViewport & orientation resize | RSZ-009 | Frontend Component / E2E | Portable | Passed |
+| RSZ-010 Flood resize no unbounded resource growth | RSZ-010 | Integration / Soak | Portable | Passed |
+
 

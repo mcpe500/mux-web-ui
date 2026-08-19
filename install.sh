@@ -1,7 +1,17 @@
 #!/usr/bin/env bash
 set -e
 
-# Mux Web UI — Termux & Linux Universal 1-Liner Auto-Installer
+# Mux Web UI — Termux & Linux Universal Installer (binary-first)
+#
+# DIST-007..010: download prebuilt release binary, verify SHA-256, and install
+# WITHOUT a Rust toolchain. Compile-from-source is an explicit fallback when the
+# download/verify path fails or the platform has no prebuilt binary.
+#
+# Config (precedence: CLI > env > default):
+#   --version <ver>      pin a specific version (DIST-008)
+#   MUX_WEB_VERSION      same, via env
+#   MUX_WEB_BASE_URL     override download base URL (https:// or file://) for tests (DIST-013)
+#   MUX_WEB_INSTALL_DIR  override install directory (DIST-007/B.7)
 
 BOLD="\033[1m"
 GREEN="\033[32m"
@@ -10,59 +20,167 @@ YELLOW="\033[33m"
 RED="\033[31m"
 RESET="\033[0m"
 
-echo -e "${BOLD}${BLUE}=== Mux Web UI Universal Installer ===${RESET}"
+DEFAULT_BASE_URL="https://github.com/mcpe500/mux-web-ui/releases/download"
+GITHUB_API="https://api.github.com/repos/mcpe500/mux-web-ui/releases/latest"
+API_URL="${MUX_WEB_API_URL:-$GITHUB_API}"
 
+usage() {
+    cat <<EOF
+Mux Web UI Installer (binary-first)
+
+Usage: $0 [--version <ver>] [--help]
+
+  --version <ver>   Install a specific version (default: latest release)
+  --help            Show this help
+
+Env:
+  MUX_WEB_VERSION     Same as --version
+  MUX_WEB_BASE_URL    Override download base URL (default: $DEFAULT_BASE_URL)
+  MUX_WEB_API_URL     Override releases/latest API URL (tests; default: GitHub API)
+  MUX_WEB_INSTALL_DIR Override install directory
+EOF
+}
+
+die() {
+    echo -e "${RED}Error: $1${RESET}" >&2
+    exit 1
+}
+
+# --- CLI args --------------------------------------------------------------
+VERSION=""
+while [ $# -gt 0 ]; do
+    case "$1" in
+        --version) VERSION="$2"; shift 2 ;;
+        --help|-h) usage; exit 0 ;;
+        *) die "unknown argument: $1 (see --help)" ;;
+    esac
+done
+VERSION="${MUX_WEB_VERSION:-$VERSION}"
+
+# --- platform detection ----------------------------------------------------
 IS_TERMUX=0
 if [ -n "$TERMUX_VERSION" ] || [ -d "/data/data/com.termux/files/usr/bin" ]; then
     IS_TERMUX=1
+fi
+
+ARCH=$(uname -m)
+TARGET=""
+case "$ARCH" in
+    aarch64|arm64)
+        if [ $IS_TERMUX -eq 1 ]; then TARGET="aarch64-linux-android"; else TARGET="aarch64-unknown-linux-gnu"; fi ;;
+    x86_64|amd64)
+        TARGET="x86_64-unknown-linux-gnu" ;;
+    *)
+        TARGET="" ;;
+esac
+
+if [ -n "$MUX_WEB_INSTALL_DIR" ]; then
+    INSTALL_DIR="$MUX_WEB_INSTALL_DIR"
+elif [ $IS_TERMUX -eq 1 ]; then
     INSTALL_DIR="/data/data/com.termux/files/usr/bin"
 elif [ -w "/usr/local/bin" ]; then
     INSTALL_DIR="/usr/local/bin"
 else
     INSTALL_DIR="$HOME/.local/bin"
-    mkdir -p "$INSTALL_DIR"
 fi
+mkdir -p "$INSTALL_DIR"
 
+BASE_URL="${MUX_WEB_BASE_URL:-$DEFAULT_BASE_URL}"
+
+echo -e "${BOLD}${BLUE}=== Mux Web UI Installer ===${RESET}"
+echo -e "${GREEN}Platform:${RESET} $([ $IS_TERMUX -eq 1 ] && echo "Termux/Android" || echo "Linux") ($ARCH)"
 echo -e "${GREEN}Target installation directory:${RESET} $INSTALL_DIR"
 
-# Fresh Termux environment handler: auto-install rust/git if missing
-if [ $IS_TERMUX -eq 1 ]; then
-    if ! command -v cargo >/dev/null 2>&1 || ! command -v git >/dev/null 2>&1; then
-        echo -e "${YELLOW}Fresh Termux environment detected! Auto-installing required packages (rust, git)...${RESET}"
-        pkg update -y || true
-        pkg install -y rust git tar || true
+# --- resolve version (DIST-008) --------------------------------------------
+if [ -z "$VERSION" ]; then
+    VERSION=$(curl -fsSL "$API_URL" | grep -o '"tag_name": *"[^"]*"' | head -1 | cut -d'"' -f4 | sed 's/^v//')
+fi
+[ -z "$VERSION" ] && die "cannot resolve latest version (check network / MUX_WEB_BASE_URL)"
+
+echo -e "${GREEN}Version:${RESET} $VERSION"
+
+# --- binary-first install (DIST-007..009) -----------------------------------
+install_from_release() {
+    local tmp
+    tmp=$(mktemp -d)
+    trap 'rm -rf "$tmp"' EXIT
+
+    local bin_url="$BASE_URL/v$VERSION/mux-web-$VERSION-$TARGET"
+    local sha_url="$bin_url.sha256"
+
+    echo -e "${BLUE}Downloading mux-web $VERSION ($TARGET)...${RESET}"
+    curl -fsSL -o "$tmp/mux-web-$VERSION-$TARGET" "$bin_url" || return 1
+    curl -fsSL -o "$tmp/mux-web-$VERSION-$TARGET.sha256" "$sha_url" || return 1
+
+    echo -e "${BLUE}Verifying SHA-256 checksum...${RESET}"
+    if ! (cd "$tmp" && sha256sum -c "mux-web-$VERSION-$TARGET.sha256" >/dev/null 2>&1); then
+        echo -e "${RED}Checksum verification FAILED — refusing to install.${RESET}" >&2
+        return 1
     fi
-fi
 
-# Verify Cargo
-if ! command -v cargo >/dev/null 2>&1; then
-    echo -e "${RED}Error: Rust toolchain ('cargo') is required to build Mux Web UI.${RESET}"
-    echo -e "Please install Rust by running:"
-    echo -e "  ${BOLD}${GREEN}curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh${RESET}"
-    exit 1
-fi
+    if [ -f "$INSTALL_DIR/mux-web" ]; then
+        echo -e "${BLUE}Backing up existing binary to mux-web.old...${RESET}"
+        mv -f "$INSTALL_DIR/mux-web" "$INSTALL_DIR/mux-web.old"
+    fi
 
-TEMP_DIR=$(mktemp -d)
-trap 'rm -rf "$TEMP_DIR"' EXIT
+    install -m 0755 "$tmp/mux-web-$VERSION-$TARGET" "$INSTALL_DIR/mux-web"
+    echo -e "${BLUE}Smoke test: mux-web --version...${RESET}"
+    if ! "$INSTALL_DIR/mux-web" --version 2>&1 | grep -q "$VERSION"; then
+        echo -e "${RED}Smoke test failed — restoring previous binary.${RESET}" >&2
+        [ -f "$INSTALL_DIR/mux-web.old" ] && mv -f "$INSTALL_DIR/mux-web.old" "$INSTALL_DIR/mux-web"
+        return 1
+    fi
 
-# Check if running inside local repo with prebuilt binary
-if [ -f "./Cargo.toml" ] && [ -f "./target/release/mux-web" ]; then
-    echo -e "${BLUE}Installing local compiled binary...${RESET}"
-    cp ./target/release/mux-web "$INSTALL_DIR/mux-web"
-else
-    echo -e "${BLUE}Fetching latest Mux Web UI source...${RESET}"
+    rm -f "$INSTALL_DIR/mux-web.old"
+    return 0
+}
+
+# --- fallback: compile from source (DIST-010) -------------------------------
+fallback_source() {
+    echo -e "${YELLOW}No prebuilt binary for this platform (or download failed).${RESET}"
+    echo -e "${YELLOW}Falling back to compile-from-source. A Rust toolchain is required.${RESET}"
+
+    if ! command -v cargo >/dev/null 2>&1; then
+        if [ $IS_TERMUX -eq 1 ] && command -v pkg >/dev/null 2>&1; then
+            echo -e "${YELLOW}Fresh Termux environment: installing rust git tar...${RESET}"
+            pkg update -y || true
+            pkg install -y rust git tar || true
+        fi
+    fi
+
+    if ! command -v cargo >/dev/null 2>&1; then
+        die "Rust toolchain ('cargo') is required for fallback build. Install via: curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh"
+    fi
+
+    local tmp
+    tmp=$(mktemp -d)
+    trap 'rm -rf "$tmp"' EXIT
+
+    echo -e "${BLUE}Fetching Mux Web UI source...${RESET}"
     if command -v git >/dev/null 2>&1; then
-        git clone --depth 1 https://github.com/mcpe500/mux-web-ui.git "$TEMP_DIR"
+        git clone --depth 1 --branch "v$VERSION" https://github.com/mcpe500/mux-web-ui.git "$tmp" 2>/dev/null \
+            || git clone --depth 1 https://github.com/mcpe500/mux-web-ui.git "$tmp"
     else
-        curl -sSL https://github.com/mcpe500/mux-web-ui/tarball/main | tar -xz -C "$TEMP_DIR" --strip-components=1
+        curl -sSL "https://github.com/mcpe500/mux-web-ui/tarball/v$VERSION" | tar -xz -C "$tmp" --strip-components=1 \
+            || curl -sSL https://github.com/mcpe500/mux-web-ui/tarball/main | tar -xz -C "$tmp" --strip-components=1
     fi
 
-    echo -e "${BLUE}Compiling Mux Web UI with Cargo...${RESET}"
-    (cd "$TEMP_DIR" && cargo build --release)
-    cp "$TEMP_DIR/target/release/mux-web" "$INSTALL_DIR/mux-web"
-fi
+    echo -e "${BLUE}Compiling Mux Web UI (release)...${RESET}"
+    (cd "$tmp" && cargo build --release)
+    install -m 0755 "$tmp/target/release/mux-web" "$INSTALL_DIR/mux-web"
+}
 
-chmod +x "$INSTALL_DIR/mux-web"
+# --- main -------------------------------------------------------------------
+if [ -z "$TARGET" ]; then
+    fallback_source
+else
+    if ! install_from_release; then
+        if [ "$MUX_WEB_NO_FALLBACK" = "1" ]; then
+            die "install aborted (download/verify failed) — set MUX_WEB_NO_FALLBACK to 1 only for testing"
+        fi
+        fallback_source
+    fi
+fi
 
 echo -e "\n${BOLD}${GREEN}✅ Mux Web UI successfully installed to $INSTALL_DIR/mux-web!${RESET}\n"
 echo -e "${BOLD}To start Mux Web UI immediately:${RESET}"

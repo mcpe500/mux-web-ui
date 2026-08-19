@@ -62,6 +62,8 @@ impl PtySession {
         let term_key = CString::new("TERM").unwrap();
         let term_val = CString::new("xterm-256color").unwrap();
 
+        let (cols, rows) = clamp_dimensions(cols, rows);
+
         // Set initial window size
         let win_size = libc::winsize {
             ws_row: rows,
@@ -285,6 +287,7 @@ impl PtySession {
     }
 
     pub fn resize(&self, cols: u16, rows: u16) -> Result<(), String> {
+        let (cols, rows) = clamp_dimensions(cols, rows);
         let win_size = libc::winsize {
             ws_row: rows,
             ws_col: cols,
@@ -359,5 +362,33 @@ fn reap_exit_code(pid: nix::unistd::Pid) -> i32 {
             Err(nix::errno::Errno::ECHILD) => return -1,
             Err(_) => return -1,
         }
+    }
+}
+
+pub const MIN_COLS: u16 = 2;
+pub const MAX_COLS: u16 = 500;
+pub const MIN_ROWS: u16 = 1;
+pub const MAX_ROWS: u16 = 200;
+pub const DEFAULT_COLS: u16 = 80;
+pub const DEFAULT_ROWS: u16 = 24;
+
+pub fn clamp_dimensions(cols: u16, rows: u16) -> (u16, u16) {
+    (
+        cols.clamp(MIN_COLS, MAX_COLS),
+        rows.clamp(MIN_ROWS, MAX_ROWS),
+    )
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn test_rsz_002_clamp_dimensions_bounds() {
+        assert_eq!(clamp_dimensions(0, 0), (MIN_COLS, MIN_ROWS));
+        assert_eq!(clamp_dimensions(1, 0), (MIN_COLS, MIN_ROWS));
+        assert_eq!(clamp_dimensions(80, 24), (80, 24));
+        assert_eq!(clamp_dimensions(65535, 65535), (MAX_COLS, MAX_ROWS));
+        assert_eq!(clamp_dimensions(1000, 300), (MAX_COLS, MAX_ROWS));
     }
 }

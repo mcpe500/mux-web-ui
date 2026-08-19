@@ -8,18 +8,38 @@ Mux Web UI runs as a single self-contained binary server. Open one local URL in 
 
 ## ⚡ Quick 1-Line Commands (Create / Update / Delete)
 
-### 📥 Install (Create)
+### 📥 Install (Create) — from Release, binary-first
 Run this single command in Termux or Linux terminal to install `mux-web` immediately (no pre-cloning required):
 
 ```bash
 curl -fsSL https://raw.githubusercontent.com/mcpe500/mux-web-ui/main/install.sh | bash
 ```
 
+> **Binary-first since v0.2.1** (`DIST-007..010`): `install.sh` detects your
+> platform (Linux x86_64 / ARM64, Termux/Android ARM64), downloads the matching
+> prebuilt release binary, **verifies its SHA-256 checksum**, then installs it —
+> **no Rust toolchain required**. Compile-from-source only runs as an explicit
+> fallback when the download/verify path fails.
+
+Pin a specific version:
+
+```bash
+curl -fsSL https://raw.githubusercontent.com/mcpe500/mux-web-ui/main/install.sh | bash -s -- --version 0.2.1
+```
+
 ### 🔄 Update
-To update `mux-web` to the latest version at any time:
+To update `mux-web` to the latest release (never from `main`):
 
 ```bash
 curl -fsSL https://raw.githubusercontent.com/mcpe500/mux-web-ui/main/update.sh | bash
+```
+
+`update.sh` compares your installed version against the latest release,
+downloads + verifies the new binary, and backs up the old one to `mux-web.bak`
+with **automatic rollback** on failure (`DIST-011..012`). Restore manually anytime:
+
+```bash
+curl -fsSL https://raw.githubusercontent.com/mcpe500/mux-web-ui/main/update.sh | bash -s -- --rollback
 ```
 
 ### 🗑️ Uninstall (Delete)
@@ -81,6 +101,10 @@ Every Mux Web UI session is authenticated by default:
 ---
 
 ## 🛠️ Building from Source
+
+Prefer compiling yourself (e.g. for development or unsupported platforms)?
+`install.sh` falls back to this path automatically when no prebuilt binary is
+available, or follow the steps manually:
 
 ### Prerequisites
 - [Rust toolchain](https://rustup.rs/) (`cargo`, `rustc`)

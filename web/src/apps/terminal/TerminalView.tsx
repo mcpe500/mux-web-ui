@@ -35,12 +35,19 @@ export function TerminalView({ terminalId }: TerminalViewProps) {
     term.loadAddon(fitAddon);
 
     term.open(containerRef.current);
-    fitAddon.fit();
+    if (containerRef.current.clientWidth > 0 && containerRef.current.clientHeight > 0) {
+      try {
+        fitAddon.fit();
+      } catch (_) {}
+    }
     termRef.current = term;
 
     let ws: WebSocket | null = null;
     let dataDisposable: { dispose: () => void } | null = null;
     let resizeObserver: ResizeObserver | null = null;
+    let resizeTimer: number | null = null;
+    let lastCols = term.cols;
+    let lastRows = term.rows;
 
     // 1. Request attach token first (v0.2 spec)
     fetch(`/api/v1/terminals/${terminalId}/attach`, { method: 'POST' })
@@ -109,15 +116,34 @@ export function TerminalView({ terminalId }: TerminalViewProps) {
           }
         });
 
-        // Resize handler
+        // Resize handler with trailing-edge debounce
         const handleResize = () => {
-          fitAddon.fit();
-          if (ws && ws.readyState === WebSocket.OPEN) {
-            sendResize(term.cols, term.rows);
+          if (!containerRef.current) return;
+          const { clientWidth, clientHeight } = containerRef.current;
+          if (clientWidth <= 0 || clientHeight <= 0) return;
+
+          try {
+            fitAddon.fit();
+            if (term.cols !== lastCols || term.rows !== lastRows) {
+              lastCols = term.cols;
+              lastRows = term.rows;
+              if (ws && ws.readyState === WebSocket.OPEN) {
+                sendResize(term.cols, term.rows);
+              }
+            }
+          } catch (err) {
+            console.warn('Terminal fit failed:', err);
           }
         };
 
-        resizeObserver = new ResizeObserver(() => handleResize());
+        const debouncedResize = () => {
+          if (resizeTimer) {
+            window.clearTimeout(resizeTimer);
+          }
+          resizeTimer = window.setTimeout(handleResize, 75);
+        };
+
+        resizeObserver = new ResizeObserver(() => debouncedResize());
         if (containerRef.current) {
           resizeObserver.observe(containerRef.current);
         }
@@ -142,6 +168,7 @@ export function TerminalView({ terminalId }: TerminalViewProps) {
 
     return () => {
       isSubscribed = false;
+      if (resizeTimer) window.clearTimeout(resizeTimer);
       if (dataDisposable) dataDisposable.dispose();
       if (resizeObserver) resizeObserver.disconnect();
       if (ws) ws.close();

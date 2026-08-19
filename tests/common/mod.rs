@@ -26,6 +26,7 @@ impl TestServer {
         format!("{}{}", self.base_url, path)
     }
 
+    #[allow(dead_code)]
     pub async fn shutdown(self) {
         self.sessions.stop_all();
         self.task.abort();

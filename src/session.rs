@@ -168,6 +168,7 @@ impl SessionRegistry {
         let (output_tx, mut output_rx) = mpsc::channel::<Vec<u8>>(256);
         let (exit_tx, mut exit_rx) = mpsc::channel::<i32>(4);
 
+        let (cols, rows) = crate::pty::clamp_dimensions(cols, rows);
         let pty = PtySession::new(cols, rows, work_dir, shell, output_tx, exit_tx)
             .map_err(SessionError::SpawnFailed)?;
 

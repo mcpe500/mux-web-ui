@@ -1,4 +1,5 @@
 {
+  "$schema": "https://app.kilo.ai/config.json",
   "plugin": [
     "file:///mnt/data/projects/mux-web-ui/.kilo/plugins/graphify.js"
   ]

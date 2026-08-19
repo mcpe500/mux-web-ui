@@ -69,10 +69,117 @@ jobs:
       - name: Verify Budget & Metrics
         run: bash ./scripts/check_budget.sh
 
+  # Milestone A — multi-target release pipeline (DIST-001..006)
   release:
-    name: Create Release Artifacts
+    name: Release (${{ matrix.target }})
     needs: [test-and-lint, cross-check, budget-check]
     if: startsWith(github.ref, 'refs/tags/v')
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - target: x86_64-unknown-linux-gnu
+          - target: x86_64-unknown-linux-musl
+            apt: musl-tools
+          - target: aarch64-unknown-linux-gnu
+            apt: gcc-aarch64-linux-gnu
+          - target: aarch64-linux-android
+            android: true
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install Rust toolchain
+        uses: dtolnay/rust-toolchain@stable
+        with:
+          targets: ${{ matrix.target }}
+
+      - name: Rust Cache
+        uses: Swatinem/rust-cache@v2
+        with:
+          key: release-${{ matrix.target }}
+
+      - name: Install cross-compile dependencies
+        if: matrix.apt
+        run: sudo apt-get update && sudo apt-get install -y ${{ matrix.apt }}
+
+      - name: Install NDK r27 + cargo-ndk
+        if: matrix.android
+        run: |
+          wget -q https://dl.google.com/android/repository/android-ndk-r27-linux.zip
+          unzip -q android-ndk-r27-linux.zip
+          cargo install cargo-ndk --locked
+
+      - name: Build Release (Android ARM64, API 24)
+        if: matrix.android
+        env:
+          ANDROID_NDK_HOME: ${{ github.workspace }}/android-ndk-r27
+        run: cargo ndk -t arm64-v8a -p 24 build --release
+
+      - name: Build Release
+        if: ${{ !matrix.android }}
+        env:
+          CC_x86_64_unknown_linux_musl: musl-gcc
+          CC_aarch64_unknown_linux_gnu: aarch64-linux-gnu-gcc
+        run: cargo build --release --target ${{ matrix.target }}
+
+      - name: Package, Checksum & Verify (DIST-005)
+        run: |
+          VERSION="${GITHUB_REF_NAME#v}"
+          BIN="mux-web-$VERSION-${{ matrix.target }}"
+          mkdir -p dist
+          if [ "${{ matrix.android }}" = "true" ]; then
+            cp target/aarch64-linux-android/release/mux-web "dist/$BIN"
+          else
+            cp "target/${{ matrix.target }}/release/mux-web" "dist/$BIN"
+          fi
+          (cd dist && sha256sum "$BIN" > "$BIN.sha256")
+          ls -lh "dist/$BIN"
+          file "dist/$BIN" | sed 's/^dist\/[^:]*: //'
+          readelf -h "dist/$BIN" 2>/dev/null | grep -E "Class:|Machine:" || true
+
+      - name: Smoke Test (native x86_64)
+        if: matrix.target == 'x86_64-unknown-linux-gnu'
+        run: ./dist/mux-web-${GITHUB_REF_NAME#v}-x86_64-unknown-linux-gnu --version
+
+      - name: Upload Artifact (per target)
+        uses: actions/upload-artifact@v4
+        with:
+          name: dist-${{ matrix.target }}
+          path: dist/
+          if-no-files-found: error
+
+  release-summary:
+    name: Assemble Release (checksums.txt)
+    needs: release
+    if: startsWith(github.ref, 'refs/tags/v')
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Download all target artifacts
+        uses: actions/download-artifact@v4
+        with:
+          path: dist/
+          merge-multiple: true
+
+      - name: Aggregate checksums (DIST-005)
+        run: |
+          (cd dist && sha256sum mux-web-* > checksums.txt)
+          cat dist/checksums.txt
+          ls -lh dist/
+
+      - name: Upload Release Artifacts (DIST-006)
+        uses: softprops/action-gh-release@v2
+        with:
+          files: |
+            dist/mux-web-*
+            dist/checksums.txt
+
+  # Milestone B — installer/updater testability (DIST-013)
+  installer-test:
+    name: Installer & Updater Test (DIST-013)
+    needs: [test-and-lint]
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -80,19 +187,83 @@ jobs:
       - name: Install Rust toolchain
         uses: dtolnay/rust-toolchain@stable
 
+      - name: Rust Cache
+        uses: Swatinem/rust-cache@v2
+
       - name: Build Release Binary
         run: cargo build --release
 
-      - name: Package & Checksum
+      - name: Prepare staging (two versions)
         run: |
-          mkdir -p dist
-          cp target/release/mux-web dist/mux-web-linux-x86_64
-          cd dist
-          sha256sum mux-web-linux-x86_64 > checksums.txt
+          set -e
+          VERSION="0.2.1"
+          TARGET="x86_64-unknown-linux-gnu"
+          mkdir -p "dist/v$VERSION" "dist/v0.2.0"
+          cp target/release/mux-web "dist/v$VERSION/mux-web-$VERSION-$TARGET"
+          (cd "dist/v$VERSION" && sha256sum "mux-web-$VERSION-$TARGET" > "mux-web-$VERSION-$TARGET.sha256")
+          printf '#!/bin/sh\necho "mux-web 0.2.0"\n' > "dist/v0.2.0/mux-web-0.2.0-$TARGET"
+          chmod +x "dist/v0.2.0/mux-web-0.2.0-$TARGET"
+          (cd "dist/v0.2.0" && sha256sum "mux-web-0.2.0-$TARGET" > "mux-web-0.2.0-$TARGET.sha256")
+          printf '{"tag_name":"v0.2.1"}' > "dist/latest.json"
 
-      - name: Upload Release Artifacts
-        uses: softprops/action-gh-release@v2
-        with:
-          files: |
-            dist/mux-web-linux-x86_64
-            dist/checksums.txt
+      - name: Scenario 1 — clean install, latest via staging (DIST-007)
+        run: |
+          export MUX_WEB_BASE_URL="file://$PWD/dist"
+          export MUX_WEB_API_URL="file://$PWD/dist/latest.json"
+          export MUX_WEB_INSTALL_DIR="$PWD/scen1"
+          bash install.sh >/dev/null
+          ./scen1/mux-web --version | grep -q "0.2.1"
+
+      - name: Scenario 2 — pinned version (DIST-008)
+        run: |
+          export MUX_WEB_BASE_URL="file://$PWD/dist"
+          export MUX_WEB_INSTALL_DIR="$PWD/scen2"
+          bash install.sh --version 0.2.0 >/dev/null
+          ./scen2/mux-web --version | grep -q "0.2.0"
+
+      - name: Scenario 3 — corrupted checksum rejected, old binary intact (DIST-009)
+        run: |
+          export MUX_WEB_BASE_URL="file://$PWD/dist"
+          export MUX_WEB_INSTALL_DIR="$PWD/scen3"
+          export MUX_WEB_NO_FALLBACK=1
+          bash install.sh --version 0.2.0 >/dev/null
+          printf 'deadbeef  mux-web-0.2.0-x86_64-unknown-linux-gnu\n' > "dist/v0.2.0/mux-web-0.2.0-x86_64-unknown-linux-gnu.sha256"
+          if bash install.sh --version 0.2.0 >/dev/null 2>&1; then
+            echo "FAIL: install should have been rejected"
+            exit 1
+          fi
+          ./scen3/mux-web --version | grep -q "0.2.0"
+
+      - name: Scenario 4a — update.sh upgrades version (DIST-011)
+        run: |
+          export MUX_WEB_BASE_URL="file://$PWD/dist"
+          export MUX_WEB_API_URL="file://$PWD/dist/latest.json"
+          export MUX_WEB_INSTALL_DIR="$PWD/scen4"
+          bash install.sh --version 0.2.0 >/dev/null
+          bash update.sh >/dev/null
+          ./scen4/mux-web --version | grep -q "0.2.1"
+
+      - name: Scenario 4b — smoke failure rolls back to .bak (DIST-012)
+        run: |
+          export MUX_WEB_BASE_URL="file://$PWD/dist"
+          export MUX_WEB_API_URL="file://$PWD/dist/latest.json"
+          export MUX_WEB_INSTALL_DIR="$PWD/scen4b"
+          export MUX_WEB_SMOKE_FAIL=1
+          bash install.sh --version 0.2.0 >/dev/null
+          if bash update.sh >/dev/null 2>&1; then
+            echo "FAIL: update should have failed (smoke injected)"
+            exit 1
+          fi
+          ./scen4b/mux-web --version | grep -q "0.2.0"
+
+      - name: Scenario 4c — manual rollback idempotent (DIST-012)
+        run: |
+          export MUX_WEB_BASE_URL="file://$PWD/dist"
+          export MUX_WEB_API_URL="file://$PWD/dist/latest.json"
+          export MUX_WEB_INSTALL_DIR="$PWD/scen4c"
+          bash install.sh --version 0.2.0 >/dev/null
+          bash update.sh >/dev/null
+          ./scen4c/mux-web --version | grep -q "0.2.1"
+          bash update.sh --rollback >/dev/null
+          ./scen4c/mux-web --version | grep -q "0.2.0"
+          bash update.sh --rollback >/dev/null

@@ -20,7 +20,7 @@ use futures_util::{SinkExt, StreamExt};
 use serde::{Deserialize, Serialize};
 use std::net::IpAddr;
 use std::sync::Arc;
-use tracing::info;
+use tracing::{debug, info};
 
 #[derive(Clone)]
 pub struct AppState {
@@ -324,6 +324,8 @@ pub struct TerminalListItem {
     pub id: String,
     pub state: String,
     pub pid: u32,
+    pub cols: u16,
+    pub rows: u16,
     pub has_client: bool,
     pub attach_count: u64,
     pub idle_since_ms: Option<u64>,
@@ -352,6 +354,8 @@ async fn list_terminals_handler(State(state): State<AppState>) -> Json<serde_jso
                 id: m.id.clone(),
                 state: format!("{:?}", m.state).to_lowercase(),
                 pid: m.pid,
+                cols: m.cols,
+                rows: m.rows,
                 has_client,
                 attach_count,
                 idle_since_ms,
@@ -365,8 +369,10 @@ async fn create_terminal_handler(
     State(state): State<AppState>,
     Json(req): Json<CreateTerminalReq>,
 ) -> Response {
-    let cols = req.cols.unwrap_or(80);
-    let rows = req.rows.unwrap_or(24);
+    let (cols, rows) = crate::pty::clamp_dimensions(
+        req.cols.unwrap_or(crate::pty::DEFAULT_COLS),
+        req.rows.unwrap_or(crate::pty::DEFAULT_ROWS),
+    );
 
     match state.sessions.create_session(
         cols,
@@ -653,10 +659,14 @@ async fn handle_terminal_ws(
                         let _ = session_in.pty.write_input(&input_bytes);
                     }
                     Frame::Resize { cols, rows } => {
-                        let _ = session_in.pty.resize(cols, rows);
-                        let mut meta = session_in.metadata.lock().unwrap();
-                        meta.cols = cols;
-                        meta.rows = rows;
+                        let (safe_cols, safe_rows) = crate::pty::clamp_dimensions(cols, rows);
+                        if let Err(e) = session_in.pty.resize(safe_cols, safe_rows) {
+                            debug!("PTY resize failed: {}", e);
+                        } else {
+                            let mut meta = session_in.metadata.lock().unwrap();
+                            meta.cols = safe_cols;
+                            meta.rows = safe_rows;
+                        }
                     }
                     Frame::Ping => {
                         // Pong handled by ws
