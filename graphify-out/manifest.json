@@ -1,7 +1,7 @@
 {
   "install.sh": {
-    "mtime": 1787117400.5234094,
-    "ast_hash": "5fac19d2bc448f5816107a4d1bcbedeb",
+    "mtime": 1787128344.584119,
+    "ast_hash": "e32614c3a95a4164c5abe96993c973b2",
     "semantic_hash": ""
   },
   "scripts/check_budget.sh": {
@@ -80,8 +80,8 @@
     "semantic_hash": "f9cf058e125d1739c11532202958e636"
   },
   "update.sh": {
-    "mtime": 1787117400.5307071,
-    "ast_hash": "b6ad072a5fbd57a483fd2fd1d8bb6bcc",
+    "mtime": 1787128350.7784798,
+    "ast_hash": "f0007da33798ddace68d8452749fb94a",
     "semantic_hash": ""
   },
   "web/package.json": {
@@ -247,6 +247,11 @@
   "spec/specs/003b.plan-checklist.md": {
     "mtime": 1787119153.8803623,
     "ast_hash": "b665c3131f305847029e87e281392171",
+    "semantic_hash": ""
+  },
+  "spec/handoff/002.terminal-resize-completed.md": {
+    "mtime": 1787122312.161951,
+    "ast_hash": "e974373b4e7b94d66b645df8970ec800",
     "semantic_hash": ""
   }
 }

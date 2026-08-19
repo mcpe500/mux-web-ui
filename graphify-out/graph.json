@@ -114,7 +114,7 @@
       "label": "install_from_release()",
       "file_type": "code",
       "source_file": "install.sh",
-      "source_location": "L103",
+      "source_location": "L114",
       "metadata": {
         "language": "bash",
         "kind": "bash_function"
@@ -129,7 +129,7 @@
       "label": "fallback_source()",
       "file_type": "code",
       "source_file": "install.sh",
-      "source_location": "L139",
+      "source_location": "L156",
       "metadata": {
         "language": "bash",
         "kind": "bash_function"
@@ -342,8 +342,8 @@
       "source_location": "",
       "_origin": "ast",
       "id": "systemtime",
-      "community": 3,
-      "community_name": "auth.rs",
+      "community": 20,
+      "community_name": "files.rs",
       "norm_label": "systemtime"
     },
     {
@@ -662,7 +662,7 @@
       "_origin": "ast",
       "id": "src_config",
       "community": 12,
-      "community_name": "start_server",
+      "community_name": "Config",
       "norm_label": "config.rs"
     },
     {
@@ -673,7 +673,7 @@
       "_origin": "ast",
       "id": "src_config_config",
       "community": 12,
-      "community_name": "start_server",
+      "community_name": "Config",
       "norm_label": "config"
     },
     {
@@ -684,7 +684,7 @@
       "_origin": "ast",
       "id": "src_config_rs_ipaddr",
       "community": 12,
-      "community_name": "start_server",
+      "community_name": "Config",
       "norm_label": "ipaddr"
     },
     {
@@ -695,7 +695,7 @@
       "_origin": "ast",
       "id": "src_config_rs_option",
       "community": 12,
-      "community_name": "start_server",
+      "community_name": "Config",
       "norm_label": "option"
     },
     {
@@ -706,7 +706,7 @@
       "_origin": "ast",
       "id": "src_config_rs_pathbuf",
       "community": 12,
-      "community_name": "start_server",
+      "community_name": "Config",
       "norm_label": "pathbuf"
     },
     {
@@ -717,7 +717,7 @@
       "_origin": "ast",
       "id": "src_config_rs_string",
       "community": 12,
-      "community_name": "start_server",
+      "community_name": "Config",
       "norm_label": "string"
     },
     {
@@ -728,7 +728,7 @@
       "_origin": "ast",
       "id": "src_config_config_effective_bind",
       "community": 12,
-      "community_name": "start_server",
+      "community_name": "Config",
       "norm_label": ".effective_bind()"
     },
     {
@@ -739,7 +739,7 @@
       "_origin": "ast",
       "id": "src_config_config_tls_enabled",
       "community": 12,
-      "community_name": "start_server",
+      "community_name": "Config",
       "norm_label": ".tls_enabled()"
     },
     {
@@ -750,7 +750,7 @@
       "_origin": "ast",
       "id": "src_config_config_data_dir",
       "community": 12,
-      "community_name": "start_server",
+      "community_name": "Config",
       "norm_label": ".data_dir()"
     },
     {
@@ -947,8 +947,8 @@
       "source_location": "L61",
       "_origin": "ast",
       "id": "src_http_create_router",
-      "community": 12,
-      "community_name": "start_server",
+      "community": 0,
+      "community_name": "http.rs",
       "norm_label": "create_router()"
     },
     {
@@ -958,8 +958,8 @@
       "source_location": "",
       "_origin": "ast",
       "id": "router",
-      "community": 12,
-      "community_name": "start_server",
+      "community": 0,
+      "community_name": "http.rs",
       "norm_label": "router"
     },
     {
@@ -1531,7 +1531,7 @@
       "_origin": "ast",
       "id": "src_main",
       "community": 12,
-      "community_name": "start_server",
+      "community_name": "Config",
       "norm_label": "main.rs"
     },
     {
@@ -1542,7 +1542,7 @@
       "_origin": "ast",
       "id": "src_main_private_ips",
       "community": 12,
-      "community_name": "start_server",
+      "community_name": "Config",
       "norm_label": "private_ips()"
     },
     {
@@ -1553,7 +1553,7 @@
       "_origin": "ast",
       "id": "src_main_rs_vec",
       "community": 12,
-      "community_name": "start_server",
+      "community_name": "Config",
       "norm_label": "vec"
     },
     {
@@ -1564,7 +1564,7 @@
       "_origin": "ast",
       "id": "src_main_rs_ipaddr",
       "community": 12,
-      "community_name": "start_server",
+      "community_name": "Config",
       "norm_label": "ipaddr"
     },
     {
@@ -1575,7 +1575,7 @@
       "_origin": "ast",
       "id": "src_main_generate_self_signed_cert",
       "community": 12,
-      "community_name": "start_server",
+      "community_name": "Config",
       "norm_label": "generate_self_signed_cert()"
     },
     {
@@ -1586,7 +1586,7 @@
       "_origin": "ast",
       "id": "src_main_rs_path",
       "community": 12,
-      "community_name": "start_server",
+      "community_name": "Config",
       "norm_label": "path"
     },
     {
@@ -1597,7 +1597,7 @@
       "_origin": "ast",
       "id": "src_main_rs_result",
       "community": 12,
-      "community_name": "start_server",
+      "community_name": "Config",
       "norm_label": "result"
     },
     {
@@ -1608,7 +1608,7 @@
       "_origin": "ast",
       "id": "src_main_rs_pathbuf",
       "community": 12,
-      "community_name": "start_server",
+      "community_name": "Config",
       "norm_label": "pathbuf"
     },
     {
@@ -1619,7 +1619,7 @@
       "_origin": "ast",
       "id": "box",
       "community": 12,
-      "community_name": "start_server",
+      "community_name": "Config",
       "norm_label": "box"
     },
     {
@@ -1630,7 +1630,7 @@
       "_origin": "ast",
       "id": "src_main_rs_error",
       "community": 12,
-      "community_name": "start_server",
+      "community_name": "Config",
       "norm_label": "error"
     },
     {
@@ -1641,7 +1641,7 @@
       "_origin": "ast",
       "id": "src_main_main",
       "community": 12,
-      "community_name": "start_server",
+      "community_name": "Config",
       "norm_label": "main()"
     },
     {
@@ -3092,8 +3092,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "tests_common_mod",
-      "community": 12,
-      "community_name": "start_server",
+      "community": 2,
+      "community_name": "TestServer",
       "norm_label": "mod.rs"
     },
     {
@@ -3103,8 +3103,8 @@
       "source_location": "L12",
       "_origin": "ast",
       "id": "tests_common_mod_test_auth",
-      "community": 12,
-      "community_name": "start_server",
+      "community": 2,
+      "community_name": "TestServer",
       "norm_label": "test_auth()"
     },
     {
@@ -3213,8 +3213,8 @@
       "source_location": "L46",
       "_origin": "ast",
       "id": "tests_common_mod_start_server",
-      "community": 12,
-      "community_name": "start_server",
+      "community": 2,
+      "community_name": "TestServer",
       "norm_label": "start_server()"
     },
     {
@@ -3224,8 +3224,8 @@
       "source_location": "",
       "_origin": "ast",
       "id": "tests_common_mod_rs_vec",
-      "community": 12,
-      "community_name": "start_server",
+      "community": 2,
+      "community_name": "TestServer",
       "norm_label": "vec"
     },
     {
@@ -3235,8 +3235,8 @@
       "source_location": "",
       "_origin": "ast",
       "id": "tests_common_mod_rs_pathbuf",
-      "community": 12,
-      "community_name": "start_server",
+      "community": 2,
+      "community_name": "TestServer",
       "norm_label": "pathbuf"
     },
     {
@@ -3257,8 +3257,8 @@
       "source_location": "L68",
       "_origin": "ast",
       "id": "tests_common_mod_start_server_with_state",
-      "community": 12,
-      "community_name": "start_server",
+      "community": 0,
+      "community_name": "http.rs",
       "norm_label": "start_server_with_state()"
     },
     {
@@ -3334,8 +3334,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "tests_editor_tests",
-      "community": 12,
-      "community_name": "start_server",
+      "community": 0,
+      "community_name": "http.rs",
       "norm_label": "editor_tests.rs"
     },
     {
@@ -3345,8 +3345,8 @@
       "source_location": "L9",
       "_origin": "ast",
       "id": "tests_editor_tests_test_edit_001_file_read_and_atomic_write",
-      "community": 12,
-      "community_name": "start_server",
+      "community": 0,
+      "community_name": "http.rs",
       "norm_label": "test_edit_001_file_read_and_atomic_write()"
     },
     {
@@ -3356,8 +3356,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "tests_fs_tests",
-      "community": 12,
-      "community_name": "start_server",
+      "community": 2,
+      "community_name": "TestServer",
       "norm_label": "fs_tests.rs"
     },
     {
@@ -3367,8 +3367,8 @@
       "source_location": "L8",
       "_origin": "ast",
       "id": "tests_fs_tests_expect_rejected",
-      "community": 12,
-      "community_name": "start_server",
+      "community": 2,
+      "community_name": "TestServer",
       "norm_label": "expect_rejected()"
     },
     {
@@ -3378,8 +3378,8 @@
       "source_location": "L29",
       "_origin": "ast",
       "id": "tests_fs_tests_test_fs_002_traversal_dotdot_rejected",
-      "community": 12,
-      "community_name": "start_server",
+      "community": 2,
+      "community_name": "TestServer",
       "norm_label": "test_fs_002_traversal_dotdot_rejected()"
     },
     {
@@ -3389,8 +3389,8 @@
       "source_location": "L36",
       "_origin": "ast",
       "id": "tests_fs_tests_test_fs_017_encoded_slash_and_dots_rejected",
-      "community": 12,
-      "community_name": "start_server",
+      "community": 2,
+      "community_name": "TestServer",
       "norm_label": "test_fs_017_encoded_slash_and_dots_rejected()"
     },
     {
@@ -3400,8 +3400,8 @@
       "source_location": "L74",
       "_origin": "ast",
       "id": "tests_fs_tests_test_fs_017_overlong_utf8_and_nul_rejected",
-      "community": 12,
-      "community_name": "start_server",
+      "community": 2,
+      "community_name": "TestServer",
       "norm_label": "test_fs_017_overlong_utf8_and_nul_rejected()"
     },
     {
@@ -3411,8 +3411,8 @@
       "source_location": "L102",
       "_origin": "ast",
       "id": "tests_fs_tests_test_fs_003_symlink_escape_rejected",
-      "community": 12,
-      "community_name": "start_server",
+      "community": 2,
+      "community_name": "TestServer",
       "norm_label": "test_fs_003_symlink_escape_rejected()"
     },
     {
@@ -3422,8 +3422,8 @@
       "source_location": "L128",
       "_origin": "ast",
       "id": "tests_fs_tests_test_fs_016_hardlink_escape_rejected",
-      "community": 12,
-      "community_name": "start_server",
+      "community": 2,
+      "community_name": "TestServer",
       "norm_label": "test_fs_016_hardlink_escape_rejected()"
     },
     {
@@ -3433,8 +3433,8 @@
       "source_location": "L155",
       "_origin": "ast",
       "id": "tests_fs_tests_test_fs_002_normal_file_still_served",
-      "community": 12,
-      "community_name": "start_server",
+      "community": 2,
+      "community_name": "TestServer",
       "norm_label": "test_fs_002_normal_file_still_served()"
     },
     {
@@ -4887,14 +4887,58 @@
       "norm_label": "vite.config.ts"
     },
     {
+      "label": "002.terminal-resize-completed.md",
+      "file_type": "document",
+      "source_file": "spec/handoff/002.terminal-resize-completed.md",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "spec_handoff_002_terminal_resize_completed",
+      "community": 16,
+      "community_name": "Mux Web UI \u2014 v0.3 plan: Terminal Resizing & Window Control Hardening",
+      "norm_label": "002.terminal-resize-completed.md"
+    },
+    {
+      "label": "Handoff 002 \u2014 Terminal Resizing & Window Control Hardening (v0.3)",
+      "file_type": "document",
+      "source_file": "spec/handoff/002.terminal-resize-completed.md",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "spec_handoff_002_terminal_resize_completed_handoff_002_terminal_resizing_window_control_hardening_v0_3",
+      "community": 16,
+      "community_name": "Mux Web UI \u2014 v0.3 plan: Terminal Resizing & Window Control Hardening",
+      "norm_label": "handoff 002 \u2014 terminal resizing & window control hardening (v0.3)"
+    },
+    {
+      "label": "1. Status Ringkas",
+      "file_type": "document",
+      "source_file": "spec/handoff/002.terminal-resize-completed.md",
+      "source_location": "L10",
+      "_origin": "ast",
+      "id": "spec_handoff_002_terminal_resize_completed_1_status_ringkas",
+      "community": 16,
+      "community_name": "Mux Web UI \u2014 v0.3 plan: Terminal Resizing & Window Control Hardening",
+      "norm_label": "1. status ringkas"
+    },
+    {
+      "label": "2. Git & Release Status",
+      "file_type": "document",
+      "source_file": "spec/handoff/002.terminal-resize-completed.md",
+      "source_location": "L31",
+      "_origin": "ast",
+      "id": "spec_handoff_002_terminal_resize_completed_2_git_release_status",
+      "community": 16,
+      "community_name": "Mux Web UI \u2014 v0.3 plan: Terminal Resizing & Window Control Hardening",
+      "norm_label": "2. git & release status"
+    },
+    {
       "label": "000.plan.md",
       "file_type": "document",
       "source_file": "spec/specs/000.plan.md",
       "source_location": "L1",
       "_origin": "ast",
       "id": "spec_specs_000_plan",
-      "community": 19,
-      "community_name": "Mux Web UI \u26a1",
+      "community": 43,
+      "community_name": "v0.2 Implementation Checklist & Verification Matrix",
       "norm_label": "000.plan.md"
     },
     {
@@ -5245,8 +5289,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "spec_specs_000a_plan_test",
-      "community": 19,
-      "community_name": "Mux Web UI \u26a1",
+      "community": 43,
+      "community_name": "v0.2 Implementation Checklist & Verification Matrix",
       "norm_label": "000a.plan-test.md"
     },
     {
@@ -5707,8 +5751,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "spec_specs_000b_plan_checklist",
-      "community": 19,
-      "community_name": "Mux Web UI \u26a1",
+      "community": 43,
+      "community_name": "v0.2 Implementation Checklist & Verification Matrix",
       "norm_label": "000b.plan-checklist.md"
     },
     {
@@ -5817,8 +5861,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "spec_specs_001_plan_v0_2",
-      "community": 19,
-      "community_name": "Mux Web UI \u26a1",
+      "community": 43,
+      "community_name": "v0.2 Implementation Checklist & Verification Matrix",
       "norm_label": "001.plan-v0.2.md"
     },
     {
@@ -6422,7 +6466,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "community": 19,
-      "community_name": "Mux Web UI \u26a1",
+      "community_name": "v0.2.1 Plan: Distribution (prebuilt binary + installer)",
       "norm_label": "readme.md",
       "id": "readme"
     },
@@ -6432,7 +6476,7 @@
       "source_file": "README.md",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 19,
+      "community": 22,
       "community_name": "Mux Web UI \u26a1",
       "norm_label": "mux web ui \u26a1",
       "id": "readme_mux_web_ui"
@@ -6443,7 +6487,7 @@
       "source_file": "README.md",
       "source_location": "L9",
       "_origin": "ast",
-      "community": 19,
+      "community": 22,
       "community_name": "Mux Web UI \u26a1",
       "norm_label": "\u26a1 quick 1-line commands (create / update / delete)",
       "id": "readme_quick_1_line_commands_create_update_delete"
@@ -6454,7 +6498,7 @@
       "source_file": "README.md",
       "source_location": "L11",
       "_origin": "ast",
-      "community": 19,
+      "community": 22,
       "community_name": "Mux Web UI \u26a1",
       "norm_label": "\ud83d\udce5 install (create)",
       "id": "readme_install_create"
@@ -6465,7 +6509,7 @@
       "source_file": "README.md",
       "source_location": "L18",
       "_origin": "ast",
-      "community": 19,
+      "community": 22,
       "community_name": "Mux Web UI \u26a1",
       "norm_label": "\ud83d\udd04 update",
       "id": "readme_update"
@@ -6476,7 +6520,7 @@
       "source_file": "README.md",
       "source_location": "L25",
       "_origin": "ast",
-      "community": 19,
+      "community": 22,
       "community_name": "Mux Web UI \u26a1",
       "norm_label": "\ud83d\uddd1\ufe0f uninstall (delete)",
       "id": "readme_uninstall_delete"
@@ -6487,7 +6531,7 @@
       "source_file": "README.md",
       "source_location": "L34",
       "_origin": "ast",
-      "community": 19,
+      "community": 22,
       "community_name": "Mux Web UI \u26a1",
       "norm_label": "\ud83d\ude80 quick start",
       "id": "readme_quick_start"
@@ -6498,7 +6542,7 @@
       "source_file": "README.md",
       "source_location": "L50",
       "_origin": "ast",
-      "community": 19,
+      "community": 22,
       "community_name": "Mux Web UI \u26a1",
       "norm_label": "\u2728 features",
       "id": "readme_features"
@@ -6509,7 +6553,7 @@
       "source_file": "README.md",
       "source_location": "L62",
       "_origin": "ast",
-      "community": 19,
+      "community": 22,
       "community_name": "Mux Web UI \u26a1",
       "norm_label": "\ud83d\udd12 security & authentication",
       "id": "readme_security_authentication"
@@ -6520,7 +6564,7 @@
       "source_file": "README.md",
       "source_location": "L72",
       "_origin": "ast",
-      "community": 19,
+      "community": 22,
       "community_name": "Mux Web UI \u26a1",
       "norm_label": "\ud83d\udcca performance & size benchmarks",
       "id": "readme_performance_size_benchmarks"
@@ -6531,7 +6575,7 @@
       "source_file": "README.md",
       "source_location": "L83",
       "_origin": "ast",
-      "community": 19,
+      "community": 22,
       "community_name": "Mux Web UI \u26a1",
       "norm_label": "\ud83d\udee0\ufe0f building from source",
       "id": "readme_building_from_source"
@@ -6542,7 +6586,7 @@
       "source_file": "README.md",
       "source_location": "L85",
       "_origin": "ast",
-      "community": 19,
+      "community": 22,
       "community_name": "Mux Web UI \u26a1",
       "norm_label": "prerequisites",
       "id": "readme_prerequisites"
@@ -6553,7 +6597,7 @@
       "source_file": "README.md",
       "source_location": "L89",
       "_origin": "ast",
-      "community": 19,
+      "community": 22,
       "community_name": "Mux Web UI \u26a1",
       "norm_label": "steps",
       "id": "readme_steps"
@@ -6564,7 +6608,7 @@
       "source_file": "README.md",
       "source_location": "L112",
       "_origin": "ast",
-      "community": 19,
+      "community": 22,
       "community_name": "Mux Web UI \u26a1",
       "norm_label": "\ud83d\udcdc license",
       "id": "readme_license"
@@ -7103,7 +7147,7 @@
       "source_file": "spec/specs/002b.plan-checklist.md",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 22,
+      "community": 42,
       "community_name": "Mux Web UI \u2014 v0.2.1 Implementation Checklist & Verification Matrix",
       "norm_label": "mux web ui \u2014 v0.2.1 implementation checklist & verification matrix",
       "id": "spec_specs_002b_plan_checklist_mux_web_ui_v0_2_1_implementation_checklist_verification_matrix"
@@ -7114,7 +7158,7 @@
       "source_file": "spec/specs/002b.plan-checklist.md",
       "source_location": "L11",
       "_origin": "ast",
-      "community": 22,
+      "community": 42,
       "community_name": "Mux Web UI \u2014 v0.2.1 Implementation Checklist & Verification Matrix",
       "norm_label": "tdd execution loop standard",
       "id": "spec_specs_002b_plan_checklist_tdd_execution_loop_standard"
@@ -7125,7 +7169,7 @@
       "source_file": "spec/specs/002b.plan-checklist.md",
       "source_location": "L22",
       "_origin": "ast",
-      "community": 22,
+      "community": 42,
       "community_name": "Mux Web UI \u2014 v0.2.1 Implementation Checklist & Verification Matrix",
       "norm_label": "langkah 1 \u2014 milestone a: release pipeline multi-target",
       "id": "spec_specs_002b_plan_checklist_langkah_1_milestone_a_release_pipeline_multi_target"
@@ -7136,7 +7180,7 @@
       "source_file": "spec/specs/002b.plan-checklist.md",
       "source_location": "L36",
       "_origin": "ast",
-      "community": 22,
+      "community": 42,
       "community_name": "Mux Web UI \u2014 v0.2.1 Implementation Checklist & Verification Matrix",
       "norm_label": "langkah 2 \u2014 milestone b: `install.sh` binary-first",
       "id": "spec_specs_002b_plan_checklist_langkah_2_milestone_b_install_sh_binary_first"
@@ -7147,7 +7191,7 @@
       "source_file": "spec/specs/002b.plan-checklist.md",
       "source_location": "L53",
       "_origin": "ast",
-      "community": 22,
+      "community": 42,
       "community_name": "Mux Web UI \u2014 v0.2.1 Implementation Checklist & Verification Matrix",
       "norm_label": "langkah 3 \u2014 milestone b: `update.sh` binary-first",
       "id": "spec_specs_002b_plan_checklist_langkah_3_milestone_b_update_sh_binary_first"
@@ -7158,7 +7202,7 @@
       "source_file": "spec/specs/002b.plan-checklist.md",
       "source_location": "L64",
       "_origin": "ast",
-      "community": 22,
+      "community": 42,
       "community_name": "Mux Web UI \u2014 v0.2.1 Implementation Checklist & Verification Matrix",
       "norm_label": "langkah 4 \u2014 ci `installer-test` (dist-013)",
       "id": "spec_specs_002b_plan_checklist_langkah_4_ci_installer_test_dist_013"
@@ -7169,7 +7213,7 @@
       "source_file": "spec/specs/002b.plan-checklist.md",
       "source_location": "L76",
       "_origin": "ast",
-      "community": 22,
+      "community": 42,
       "community_name": "Mux Web UI \u2014 v0.2.1 Implementation Checklist & Verification Matrix",
       "norm_label": "langkah 5 \u2014 traceability, readme, rilis",
       "id": "spec_specs_002b_plan_checklist_langkah_5_traceability_readme_rilis"
@@ -7180,7 +7224,7 @@
       "source_file": "spec/specs/002b.plan-checklist.md",
       "source_location": "L89",
       "_origin": "ast",
-      "community": 22,
+      "community": 42,
       "community_name": "Mux Web UI \u2014 v0.2.1 Implementation Checklist & Verification Matrix",
       "norm_label": "open questions yang diputuskan saat implementasi",
       "id": "spec_specs_002b_plan_checklist_open_questions_yang_diputuskan_saat_implementasi"
@@ -7191,8 +7235,8 @@
       "source_file": "tests/traceability.md",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 19,
-      "community_name": "Mux Web UI \u26a1",
+      "community": 39,
+      "community_name": "Requirement Traceability Matrix",
       "norm_label": "traceability.md",
       "id": "tests_traceability"
     },
@@ -7202,8 +7246,8 @@
       "source_file": "tests/traceability.md",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 19,
-      "community_name": "Mux Web UI \u26a1",
+      "community": 39,
+      "community_name": "Requirement Traceability Matrix",
       "norm_label": "requirement traceability matrix",
       "id": "tests_traceability_requirement_traceability_matrix"
     },
@@ -7231,8 +7275,8 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 19,
-      "community_name": "Mux Web UI \u26a1",
+      "community": 41,
+      "community_name": "CI & Release Workflow",
       "norm_label": "ci & release workflow",
       "_origin": "semantic",
       "id": "_github_workflows_ci_workflow"
@@ -7246,8 +7290,8 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 19,
-      "community_name": "Mux Web UI \u26a1",
+      "community": 41,
+      "community_name": "CI & Release Workflow",
       "norm_label": "test-and-lint job (fmt, clippy, tests)",
       "_origin": "semantic",
       "id": "_github_workflows_ci_testandlint"
@@ -7261,8 +7305,8 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 19,
-      "community_name": "Mux Web UI \u26a1",
+      "community": 41,
+      "community_name": "CI & Release Workflow",
       "norm_label": "cross-check job (android arm64 cargo check)",
       "_origin": "semantic",
       "id": "_github_workflows_ci_crosscheck"
@@ -7276,8 +7320,8 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 19,
-      "community_name": "Mux Web UI \u26a1",
+      "community": 41,
+      "community_name": "CI & Release Workflow",
       "norm_label": "budget-check job (check_budget.sh)",
       "_origin": "semantic",
       "id": "_github_workflows_ci_budgetcheck"
@@ -7291,8 +7335,8 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 19,
-      "community_name": "Mux Web UI \u26a1",
+      "community": 41,
+      "community_name": "CI & Release Workflow",
       "norm_label": "release job (artifact + checksum upload)",
       "_origin": "semantic",
       "id": "_github_workflows_ci_release"
@@ -7306,8 +7350,8 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 19,
-      "community_name": "Mux Web UI \u26a1",
+      "community": 41,
+      "community_name": "CI & Release Workflow",
       "norm_label": "check_budget.sh budget gate script",
       "_origin": "semantic",
       "id": "scripts_check_budget_sh"
@@ -7321,8 +7365,8 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 19,
-      "community_name": "Mux Web UI \u26a1",
+      "community": 39,
+      "community_name": "Requirement Traceability Matrix",
       "norm_label": "pty interactive terminal (xterm.js)",
       "_origin": "semantic",
       "id": "readme_pty_terminal"
@@ -7336,7 +7380,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 19,
+      "community": 22,
       "community_name": "Mux Web UI \u26a1",
       "norm_label": "desktop window manager",
       "_origin": "semantic",
@@ -7351,8 +7395,8 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 19,
-      "community_name": "Mux Web UI \u26a1",
+      "community": 39,
+      "community_name": "Requirement Traceability Matrix",
       "norm_label": "file explorer",
       "_origin": "semantic",
       "id": "readme_file_explorer"
@@ -7366,7 +7410,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 19,
+      "community": 22,
       "community_name": "Mux Web UI \u26a1",
       "norm_label": "text editor",
       "_origin": "semantic",
@@ -7381,7 +7425,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 19,
+      "community": 22,
       "community_name": "Mux Web UI \u26a1",
       "norm_label": "system monitor control center",
       "_origin": "semantic",
@@ -7396,8 +7440,8 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 19,
-      "community_name": "Mux Web UI \u26a1",
+      "community": 39,
+      "community_name": "Requirement Traceability Matrix",
       "norm_label": "security & authentication model",
       "_origin": "semantic",
       "id": "readme_security_auth"
@@ -7411,8 +7455,8 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 19,
-      "community_name": "Mux Web UI \u26a1",
+      "community": 39,
+      "community_name": "Requirement Traceability Matrix",
       "norm_label": "single-use bootstrap secret pairing",
       "_origin": "semantic",
       "id": "readme_bootstrap_secret"
@@ -7427,7 +7471,7 @@
       "author": null,
       "contributor": null,
       "community": 19,
-      "community_name": "Mux Web UI \u26a1",
+      "community_name": "v0.2.1 Plan: Distribution (prebuilt binary + installer)",
       "norm_label": "install.sh",
       "_origin": "semantic",
       "id": "install_sh"
@@ -7442,7 +7486,7 @@
       "author": null,
       "contributor": null,
       "community": 19,
-      "community_name": "Mux Web UI \u26a1",
+      "community_name": "v0.2.1 Plan: Distribution (prebuilt binary + installer)",
       "norm_label": "update.sh",
       "_origin": "semantic",
       "id": "update_sh"
@@ -7457,7 +7501,7 @@
       "author": null,
       "contributor": null,
       "community": 19,
-      "community_name": "Mux Web UI \u26a1",
+      "community_name": "v0.2.1 Plan: Distribution (prebuilt binary + installer)",
       "norm_label": "uninstall.sh",
       "_origin": "semantic",
       "id": "uninstall_sh"
@@ -7471,8 +7515,8 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 19,
-      "community_name": "Mux Web UI \u26a1",
+      "community": 43,
+      "community_name": "v0.2 Implementation Checklist & Verification Matrix",
       "norm_label": "handoff 001 - progress & backlog (v0.2)",
       "_origin": "semantic",
       "id": "spec_handoff_001_progress_and_backlog_doc"
@@ -7501,8 +7545,8 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 19,
-      "community_name": "Mux Web UI \u26a1",
+      "community": 43,
+      "community_name": "v0.2 Implementation Checklist & Verification Matrix",
       "norm_label": "milestone b: session persistence",
       "_origin": "semantic",
       "id": "spec_handoff_001_progress_and_backlog_milestone_b"
@@ -7546,8 +7590,8 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 19,
-      "community_name": "Mux Web UI \u26a1",
+      "community": 43,
+      "community_name": "v0.2 Implementation Checklist & Verification Matrix",
       "norm_label": "life-002 orphan child cleanup",
       "_origin": "semantic",
       "id": "spec_handoff_001_progress_and_backlog_life_002_orphan_cleanup"
@@ -7561,8 +7605,8 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 19,
-      "community_name": "Mux Web UI \u26a1",
+      "community": 43,
+      "community_name": "v0.2 Implementation Checklist & Verification Matrix",
       "norm_label": "v0.2 implementation checklist & verification matrix",
       "_origin": "semantic",
       "id": "spec_specs_001b_plan_checklist_doc"
@@ -7576,8 +7620,8 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 19,
-      "community_name": "Mux Web UI \u26a1",
+      "community": 43,
+      "community_name": "v0.2 Implementation Checklist & Verification Matrix",
       "norm_label": "tdd execution loop (red-green-refactor)",
       "_origin": "semantic",
       "id": "spec_specs_001b_plan_checklist_tdd_loop"
@@ -7606,8 +7650,8 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 19,
-      "community_name": "Mux Web UI \u26a1",
+      "community": 43,
+      "community_name": "v0.2 Implementation Checklist & Verification Matrix",
       "norm_label": "checklist milestone b: session persistence (b.1-b.9)",
       "_origin": "semantic",
       "id": "spec_specs_001b_plan_checklist_milestone_b_session_persistence"
@@ -7621,8 +7665,8 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 19,
-      "community_name": "Mux Web UI \u26a1",
+      "community": 41,
+      "community_name": "CI & Release Workflow",
       "norm_label": "checklist langkah 4: ci (c.1-c.6)",
       "_origin": "semantic",
       "id": "spec_specs_001b_plan_checklist_ci_steps"
@@ -7637,7 +7681,7 @@
       "author": null,
       "contributor": null,
       "community": 19,
-      "community_name": "Mux Web UI \u26a1",
+      "community_name": "v0.2.1 Plan: Distribution (prebuilt binary + installer)",
       "norm_label": "v0.2.1 plan: distribution (prebuilt binary + installer)",
       "_origin": "semantic",
       "id": "spec_specs_002_plan_v0_2_1_doc"
@@ -7652,7 +7696,7 @@
       "author": null,
       "contributor": null,
       "community": 19,
-      "community_name": "Mux Web UI \u26a1",
+      "community_name": "v0.2.1 Plan: Distribution (prebuilt binary + installer)",
       "norm_label": "v0.2.1 milestone a: multi-target release pipeline",
       "_origin": "semantic",
       "id": "spec_specs_002_plan_v0_2_1_milestone_a_release_pipeline"
@@ -7667,7 +7711,7 @@
       "author": null,
       "contributor": null,
       "community": 19,
-      "community_name": "Mux Web UI \u26a1",
+      "community_name": "v0.2.1 Plan: Distribution (prebuilt binary + installer)",
       "norm_label": "v0.2.1 milestone b: binary-first installer & updater",
       "_origin": "semantic",
       "id": "spec_specs_002_plan_v0_2_1_milestone_b_installer"
@@ -7682,7 +7726,7 @@
       "author": null,
       "contributor": null,
       "community": 19,
-      "community_name": "Mux Web UI \u26a1",
+      "community_name": "v0.2.1 Plan: Distribution (prebuilt binary + installer)",
       "norm_label": "dist requirement family (dist-001..014)",
       "_origin": "semantic",
       "id": "spec_specs_002_plan_v0_2_1_dist_family"
@@ -7697,7 +7741,7 @@
       "author": null,
       "contributor": null,
       "community": 19,
-      "community_name": "Mux Web UI \u26a1",
+      "community_name": "v0.2.1 Plan: Distribution (prebuilt binary + installer)",
       "norm_label": "supply chain threat model",
       "_origin": "semantic",
       "id": "spec_specs_002_plan_v0_2_1_supply_chain_threat_model"
@@ -7712,7 +7756,7 @@
       "author": null,
       "contributor": null,
       "community": 19,
-      "community_name": "Mux Web UI \u26a1",
+      "community_name": "v0.2.1 Plan: Distribution (prebuilt binary + installer)",
       "norm_label": "binary-first distribution principle",
       "_origin": "semantic",
       "id": "spec_specs_002_plan_v0_2_1_binary_first_principle"
@@ -7727,7 +7771,7 @@
       "author": null,
       "contributor": null,
       "community": 19,
-      "community_name": "Mux Web UI \u26a1",
+      "community_name": "v0.2.1 Plan: Distribution (prebuilt binary + installer)",
       "norm_label": "sha-256 checksum verification",
       "_origin": "semantic",
       "id": "spec_specs_002_plan_v0_2_1_checksum_verification"
@@ -7742,7 +7786,7 @@
       "author": null,
       "contributor": null,
       "community": 19,
-      "community_name": "Mux Web UI \u26a1",
+      "community_name": "v0.2.1 Plan: Distribution (prebuilt binary + installer)",
       "norm_label": "backup & auto-rollback (mux-web.bak)",
       "_origin": "semantic",
       "id": "spec_specs_002_plan_v0_2_1_backup_rollback"
@@ -7757,7 +7801,7 @@
       "author": null,
       "contributor": null,
       "community": 19,
-      "community_name": "Mux Web UI \u26a1",
+      "community_name": "v0.2.1 Plan: Distribution (prebuilt binary + installer)",
       "norm_label": "mux_web_* configuration (base_url/version/install_dir)",
       "_origin": "semantic",
       "id": "spec_specs_002_plan_v0_2_1_mux_web_env_config"
@@ -7771,8 +7815,8 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 19,
-      "community_name": "Mux Web UI \u26a1",
+      "community": 41,
+      "community_name": "CI & Release Workflow",
       "norm_label": "4-target build matrix (gnu/musl/arm64/android)",
       "_origin": "semantic",
       "id": "spec_specs_002_plan_v0_2_1_target_matrix"
@@ -7787,7 +7831,7 @@
       "author": null,
       "contributor": null,
       "community": 19,
-      "community_name": "Mux Web UI \u26a1",
+      "community_name": "v0.2.1 Plan: Distribution (prebuilt binary + installer)",
       "norm_label": "v0.2.1 implementation checklist & verification matrix",
       "_origin": "semantic",
       "id": "spec_specs_002b_plan_checklist_doc"
@@ -7802,7 +7846,7 @@
       "author": null,
       "contributor": null,
       "community": 19,
-      "community_name": "Mux Web UI \u26a1",
+      "community_name": "v0.2.1 Plan: Distribution (prebuilt binary + installer)",
       "norm_label": "tdd execution loop (scenario-based)",
       "_origin": "semantic",
       "id": "spec_specs_002b_plan_checklist_tdd_loop"
@@ -7817,7 +7861,7 @@
       "author": null,
       "contributor": null,
       "community": 19,
-      "community_name": "Mux Web UI \u26a1",
+      "community_name": "v0.2.1 Plan: Distribution (prebuilt binary + installer)",
       "norm_label": "ci installer-test job (4 scenarios)",
       "_origin": "semantic",
       "id": "spec_specs_002b_plan_checklist_installer_test_job"
@@ -7831,8 +7875,8 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 19,
-      "community_name": "Mux Web UI \u26a1",
+      "community": 39,
+      "community_name": "Requirement Traceability Matrix",
       "norm_label": "auth requirement family",
       "_origin": "semantic",
       "id": "tests_traceability_auth_family"
@@ -7861,8 +7905,8 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 19,
-      "community_name": "Mux Web UI \u26a1",
+      "community": 39,
+      "community_name": "Requirement Traceability Matrix",
       "norm_label": "term requirement family",
       "_origin": "semantic",
       "id": "tests_traceability_term_family"
@@ -7876,8 +7920,8 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 19,
-      "community_name": "Mux Web UI \u26a1",
+      "community": 39,
+      "community_name": "Requirement Traceability Matrix",
       "norm_label": "life requirement family",
       "_origin": "semantic",
       "id": "tests_traceability_life_family"
@@ -7891,8 +7935,8 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 19,
-      "community_name": "Mux Web UI \u26a1",
+      "community": 39,
+      "community_name": "Requirement Traceability Matrix",
       "norm_label": "fs requirement family",
       "_origin": "semantic",
       "id": "tests_traceability_fs_family"
@@ -7906,8 +7950,8 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 19,
-      "community_name": "Mux Web UI \u26a1",
+      "community": 41,
+      "community_name": "CI & Release Workflow",
       "norm_label": "ci requirement family",
       "_origin": "semantic",
       "id": "tests_traceability_ci_family"
@@ -7921,8 +7965,8 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 19,
-      "community_name": "Mux Web UI \u26a1",
+      "community": 39,
+      "community_name": "Requirement Traceability Matrix",
       "norm_label": "sec requirement family",
       "_origin": "semantic",
       "id": "tests_traceability_sec_family"
@@ -7936,8 +7980,8 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 19,
-      "community_name": "Mux Web UI \u26a1",
+      "community": 39,
+      "community_name": "Requirement Traceability Matrix",
       "norm_label": "lan requirement family",
       "_origin": "semantic",
       "id": "tests_traceability_lan_family"
@@ -7951,8 +7995,8 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 19,
-      "community_name": "Mux Web UI \u26a1",
+      "community": 39,
+      "community_name": "Requirement Traceability Matrix",
       "norm_label": "perf requirement family",
       "_origin": "semantic",
       "id": "tests_traceability_perf_family"
@@ -7974,7 +8018,7 @@
       "relation": "defines",
       "confidence": "EXTRACTED",
       "source_file": "install.sh",
-      "source_location": "L139",
+      "source_location": "L156",
       "weight": 1.0,
       "_origin": "ast",
       "source": "install",
@@ -7985,7 +8029,7 @@
       "relation": "defines",
       "confidence": "EXTRACTED",
       "source_file": "install.sh",
-      "source_location": "L103",
+      "source_location": "L114",
       "weight": 1.0,
       "_origin": "ast",
       "source": "install",
@@ -8030,7 +8074,7 @@
       "relation": "calls",
       "confidence": "EXTRACTED",
       "source_file": "install.sh",
-      "source_location": "L175",
+      "source_location": "L192",
       "weight": 1.0,
       "context": "call",
       "_origin": "ast",
@@ -8042,7 +8086,7 @@
       "relation": "calls",
       "confidence": "EXTRACTED",
       "source_file": "install.sh",
-      "source_location": "L177",
+      "source_location": "L194",
       "weight": 1.0,
       "context": "call",
       "_origin": "ast",
@@ -8066,7 +8110,7 @@
       "relation": "calls",
       "confidence": "EXTRACTED",
       "source_file": "install.sh",
-      "source_location": "L152",
+      "source_location": "L169",
       "weight": 1.0,
       "context": "call",
       "_origin": "ast",
@@ -18785,6 +18829,61 @@
     {
       "relation": "contains",
       "confidence": "EXTRACTED",
+      "source_file": "spec/handoff/002.terminal-resize-completed.md",
+      "source_location": "L1",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "spec_handoff_002_terminal_resize_completed",
+      "target": "spec_handoff_002_terminal_resize_completed_handoff_002_terminal_resizing_window_control_hardening_v0_3",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "source_file": "spec/handoff/002.terminal-resize-completed.md",
+      "source_location": "L5",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "spec_handoff_002_terminal_resize_completed",
+      "target": "spec_specs_003_plan_v0_3_terminal_resize",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "source_file": "spec/handoff/002.terminal-resize-completed.md",
+      "source_location": "L6",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "spec_handoff_002_terminal_resize_completed",
+      "target": "spec_specs_003b_plan_checklist",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "spec/handoff/002.terminal-resize-completed.md",
+      "source_location": "L10",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "spec_handoff_002_terminal_resize_completed_handoff_002_terminal_resizing_window_control_hardening_v0_3",
+      "target": "spec_handoff_002_terminal_resize_completed_1_status_ringkas",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "spec/handoff/002.terminal-resize-completed.md",
+      "source_location": "L31",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "spec_handoff_002_terminal_resize_completed_handoff_002_terminal_resizing_window_control_hardening_v0_3",
+      "target": "spec_handoff_002_terminal_resize_completed_2_git_release_status",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
       "source_file": "spec/specs/000.plan.md",
       "source_location": "L1",
       "weight": 1.0,
@@ -22250,5 +22349,5 @@
       "source_file": ".github/workflows/ci.yml"
     }
   ],
-  "built_at_commit": "9e7216b895cc64343eaf7aac6ea389d32765053f"
+  "built_at_commit": "9fded3f9199f0fcda52c06fdaa24e309942de035"
 }

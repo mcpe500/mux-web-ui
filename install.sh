@@ -93,9 +93,20 @@ echo -e "${GREEN}Target installation directory:${RESET} $INSTALL_DIR"
 
 # --- resolve version (DIST-008) --------------------------------------------
 if [ -z "$VERSION" ]; then
-    VERSION=$(curl -fsSL "$API_URL" | grep -o '"tag_name": *"[^"]*"' | head -1 | cut -d'"' -f4 | sed 's/^v//')
+    VERSION=$(curl -sSL "$API_URL" 2>/dev/null | grep -o '"tag_name": *"[^"]*"' | head -1 | cut -d'"' -f4 | sed 's/^v//' || true)
+    if [ -z "$VERSION" ]; then
+        if [ -f "Cargo.toml" ]; then
+            VERSION=$(grep -m1 '^version' Cargo.toml | cut -d'"' -f2 || true)
+        fi
+        if [ -z "$VERSION" ]; then
+            VERSION=$(curl -sSL "https://raw.githubusercontent.com/mcpe500/mux-web-ui/main/Cargo.toml" 2>/dev/null | grep -m1 '^version' | cut -d'"' -f2 || true)
+        fi
+    fi
 fi
-[ -z "$VERSION" ] && die "cannot resolve latest version (check network / MUX_WEB_BASE_URL)"
+
+if [ -z "$VERSION" ]; then
+    VERSION="0.2.1"
+fi
 
 echo -e "${GREEN}Version:${RESET} $VERSION"
 
@@ -109,8 +120,14 @@ install_from_release() {
     local sha_url="$bin_url.sha256"
 
     echo -e "${BLUE}Downloading mux-web $VERSION ($TARGET)...${RESET}"
-    curl -fsSL -o "$tmp/mux-web-$VERSION-$TARGET" "$bin_url" || return 1
-    curl -fsSL -o "$tmp/mux-web-$VERSION-$TARGET.sha256" "$sha_url" || return 1
+    if ! curl -fsSL -o "$tmp/mux-web-$VERSION-$TARGET" "$bin_url" 2>/dev/null; then
+        echo -e "${YELLOW}Prebuilt binary not available at $bin_url${RESET}"
+        return 1
+    fi
+    if ! curl -fsSL -o "$tmp/mux-web-$VERSION-$TARGET.sha256" "$sha_url" 2>/dev/null; then
+        echo -e "${YELLOW}Checksum not available at $sha_url${RESET}"
+        return 1
+    fi
 
     echo -e "${BLUE}Verifying SHA-256 checksum...${RESET}"
     if ! (cd "$tmp" && sha256sum -c "mux-web-$VERSION-$TARGET.sha256" >/dev/null 2>&1); then

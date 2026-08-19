@@ -108,7 +108,15 @@ echo -e "${BOLD}${BLUE}=== Updating Mux Web UI ===${RESET}"
 CURRENT=$("$BIN" --version 2>&1 | grep -oE '[0-9]+\.[0-9]+\.[0-9]+' | head -1)
 [ -z "$CURRENT" ] && die "cannot parse installed version from: $("$BIN" --version 2>&1)"
 
-LATEST=$(curl -fsSL "$API_URL" | grep -o '"tag_name": *"[^"]*"' | head -1 | cut -d'"' -f4 | sed 's/^v//')
+LATEST=$(curl -sSL "$API_URL" 2>/dev/null | grep -o '"tag_name": *"[^"]*"' | head -1 | cut -d'"' -f4 | sed 's/^v//' || true)
+if [ -z "$LATEST" ]; then
+    if [ -f "Cargo.toml" ]; then
+        LATEST=$(grep -m1 '^version' Cargo.toml | cut -d'"' -f2 || true)
+    fi
+    if [ -z "$LATEST" ]; then
+        LATEST=$(curl -sSL "https://raw.githubusercontent.com/mcpe500/mux-web-ui/main/Cargo.toml" 2>/dev/null | grep -m1 '^version' | cut -d'"' -f2 || true)
+    fi
+fi
 [ -z "$LATEST" ] && die "cannot resolve latest version (check network / MUX_WEB_BASE_URL)"
 
 echo -e "${GREEN}Installed version:${RESET} $CURRENT"
