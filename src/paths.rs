@@ -78,17 +78,12 @@ impl AllowedRoots {
         let mut path_str = raw_path.trim();
 
         let root_str = root.to_string_lossy();
-        if path_str.starts_with('/') {
-            if path_str.starts_with(root_str.as_ref()) {
-                // Absolute path starting with root path (e.g. /data/data/com.termux/files/home/light)
-                path_str = &path_str[root_str.len()..];
-            } else if Path::new(path_str).is_absolute() && !root_str.starts_with(path_str) {
-                // Absolute path pointing outside root (e.g. /etc/passwd)
-                return Err(PathError::PathTraversalAttempt);
-            }
+        if path_str.starts_with('/') && path_str.starts_with(root_str.as_ref()) {
+            // Absolute filesystem path starting with root path (e.g. /home/ivan/docs/file.txt)
+            path_str = &path_str[root_str.len()..];
         }
 
-        // Strip leading slashes so subpaths like '/light' are treated as relative to root
+        // Strip leading slashes so root-relative subpaths like '/ollama.log' or '/docs' are treated as relative to root
         let clean_path = path_str.trim_start_matches('/');
 
         let path_obj = Path::new(clean_path);
@@ -190,12 +185,33 @@ mod tests {
             Err(PathError::PathTraversalAttempt)
         );
         assert_eq!(
-            allowed.resolve_path("home", "/etc/passwd"),
+            allowed.resolve_path("home", "/../foo"),
             Err(PathError::PathTraversalAttempt)
         );
         assert_eq!(
             allowed.resolve_path("home", "foo\0bar"),
             Err(PathError::NulByteDetected)
+        );
+
+        // Valid root-relative files with and without leading slash
+        let test_file = root_path.join("resp.html");
+        std::fs::write(&test_file, "hello").unwrap();
+        assert_eq!(
+            allowed.resolve_path("home", "/resp.html").unwrap(),
+            test_file
+        );
+        assert_eq!(
+            allowed.resolve_path("home", "resp.html").unwrap(),
+            test_file
+        );
+        assert_eq!(
+            allowed
+                .resolve_path(
+                    "home",
+                    &format!("{}/resp.html", root_path.to_string_lossy())
+                )
+                .unwrap(),
+            test_file
         );
     }
 
@@ -301,7 +317,7 @@ mod tests {
             Err(PathError::PathTraversalAttempt)
         );
         assert_eq!(
-            allowed.resolve_path("home", "/etc/passwd"),
+            allowed.resolve_path("home", "/../foo"),
             Err(PathError::PathTraversalAttempt)
         );
         assert_eq!(

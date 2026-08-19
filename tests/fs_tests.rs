@@ -155,8 +155,13 @@ async fn test_fs_016_hardlink_escape_rejected() {
 async fn test_fs_002_normal_file_still_served() {
     let temp = tempdir().unwrap();
     std::fs::write(temp.path().join("ok.txt"), "hello world").unwrap();
+    let sub = temp.path().join("subdir");
+    std::fs::create_dir(&sub).unwrap();
+    std::fs::write(sub.join("nested.log"), "nested content").unwrap();
+
     let server = start_server(vec![("home".to_string(), temp.path().to_path_buf())]).await;
 
+    // Relative path without leading slash
     let resp = server
         .client
         .get(server.url("/api/v1/fs/file"))
@@ -166,5 +171,28 @@ async fn test_fs_002_normal_file_still_served() {
         .unwrap();
     assert_eq!(resp.status(), 200);
     assert_eq!(resp.text().await.unwrap(), "hello world");
+
+    // Root-relative path with leading slash (e.g. /ok.txt from explorer)
+    let resp = server
+        .client
+        .get(server.url("/api/v1/fs/file"))
+        .query(&[("root", "home"), ("path", "/ok.txt")])
+        .send()
+        .await
+        .unwrap();
+    assert_eq!(resp.status(), 200);
+    assert_eq!(resp.text().await.unwrap(), "hello world");
+
+    // Nested path with leading slash (e.g. /subdir/nested.log)
+    let resp = server
+        .client
+        .get(server.url("/api/v1/fs/file"))
+        .query(&[("root", "home"), ("path", "/subdir/nested.log")])
+        .send()
+        .await
+        .unwrap();
+    assert_eq!(resp.status(), 200);
+    assert_eq!(resp.text().await.unwrap(), "nested content");
+
     server.shutdown().await;
 }

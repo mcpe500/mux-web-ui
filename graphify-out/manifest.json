@@ -40,9 +40,9 @@
     "semantic_hash": "e2392c2c39234d48785938a45fcfb50a"
   },
   "src/paths.rs": {
-    "mtime": 1786125597.9218636,
-    "ast_hash": "cb1116563133c6f891f08ce5aa540272",
-    "semantic_hash": "cb1116563133c6f891f08ce5aa540272"
+    "mtime": 1787131718.379735,
+    "ast_hash": "73dd9211cc5732f058ead57946e82a58",
+    "semantic_hash": ""
   },
   "src/protocol.rs": {
     "mtime": 1786125597.9243615,
@@ -195,9 +195,9 @@
     "semantic_hash": ""
   },
   "tests/fs_tests.rs": {
-    "mtime": 1786118333.529197,
-    "ast_hash": "3762ecdb805b55843831439d1a8e587d",
-    "semantic_hash": "3762ecdb805b55843831439d1a8e587d"
+    "mtime": 1787131609.517897,
+    "ast_hash": "af519256b2bfe0e5f1ce5c460aa8a375",
+    "semantic_hash": ""
   },
   "tests/session_tests.rs": {
     "mtime": 1786126523.1156642,
