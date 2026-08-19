@@ -615,8 +615,8 @@ async fn handle_terminal_ws(
                     if let Some(code) = code {
                         let frame = Frame::Exit(code);
                         let _ = ws_sender.send(Message::Binary(encode_frame(&frame))).await;
+                        break;
                     }
-                    break;
                 }
                 _ = gen_rx.changed() => {
                     if *gen_rx.borrow() != my_gen {
@@ -678,8 +678,13 @@ async fn handle_terminal_ws(
     });
 
     tokio::select! {
-        _ = &mut out_task => in_task.abort(),
-        _ = &mut in_task => out_task.abort(),
+        _ = &mut out_task => {
+            tokio::time::sleep(std::time::Duration::from_millis(50)).await;
+            in_task.abort();
+        }
+        _ = &mut in_task => {
+            out_task.abort();
+        }
     }
 
     info!(

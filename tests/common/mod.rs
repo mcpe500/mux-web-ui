@@ -44,7 +44,8 @@ impl Drop for TestServer {
 /// The returned client is already authenticated (auto-paired).
 #[allow(dead_code)]
 pub async fn start_server(roots: Vec<(String, PathBuf)>) -> TestServer {
-    let config = Config::parse_from(["mux-web"]);
+    let mut config = Config::parse_from(["mux-web"]);
+    config.shell = Some("/bin/sh".to_string());
     let allowed_roots = AllowedRoots::new(roots).expect("roots must canonicalize");
     let mut server = start_server_with_state(AppState {
         config,

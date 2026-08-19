@@ -1,7 +1,7 @@
 {
   "install.sh": {
-    "mtime": 1787128344.584119,
-    "ast_hash": "e32614c3a95a4164c5abe96993c973b2",
+    "mtime": 1787135419.7719443,
+    "ast_hash": "dea7b1ca3f76bbde38e51a6965b33d67",
     "semantic_hash": ""
   },
   "scripts/check_budget.sh": {
@@ -25,8 +25,8 @@
     "semantic_hash": "96a162b5abf6f90bfe36d36c7e8ab226"
   },
   "src/http.rs": {
-    "mtime": 1787118998.8725507,
-    "ast_hash": "e61741d3ac34c445a287ebdfb2eacf64",
+    "mtime": 1787136858.7150292,
+    "ast_hash": "352e5f5fb2358305337472a0519d630e",
     "semantic_hash": ""
   },
   "src/lib.rs": {
@@ -55,8 +55,8 @@
     "semantic_hash": ""
   },
   "src/session.rs": {
-    "mtime": 1787118920.8732848,
-    "ast_hash": "88d85b094b763c821803211d7a4fef25",
+    "mtime": 1787137302.533922,
+    "ast_hash": "49d933979d5562d18f1b6bb242b84421",
     "semantic_hash": ""
   },
   "tests/boot_tests.rs": {
@@ -85,9 +85,9 @@
     "semantic_hash": ""
   },
   "web/package.json": {
-    "mtime": 1785857150.389085,
-    "ast_hash": "27d888f48e4657087b4519d669aebdd7",
-    "semantic_hash": "27d888f48e4657087b4519d669aebdd7"
+    "mtime": 1787135412.734218,
+    "ast_hash": "a804724e883e2e16625fd9afd28f56e7",
+    "semantic_hash": ""
   },
   "web/src/app.tsx": {
     "mtime": 1786126388.9740207,
@@ -145,8 +145,8 @@
     "semantic_hash": "e547cc16ad72dfca51739fa9fa6ce7b5"
   },
   "README.md": {
-    "mtime": 1787117400.4946084,
-    "ast_hash": "b20b6101355fce288c3e09eb5bd643f4",
+    "mtime": 1787135429.9513867,
+    "ast_hash": "5fe693e4d4b3f75b41516a35e96055d2",
     "semantic_hash": ""
   },
   "spec/specs/000.plan.md": {
@@ -190,8 +190,8 @@
     "semantic_hash": "c8f6539e13ca899c2a5d15932358db45"
   },
   "tests/common/mod.rs": {
-    "mtime": 1787119175.766266,
-    "ast_hash": "1db6283f4a345e20a389ab24c79023d3",
+    "mtime": 1787137039.8086498,
+    "ast_hash": "dc13b1150813c86614fd5fcd1e2b0a23",
     "semantic_hash": ""
   },
   "tests/fs_tests.rs": {
@@ -200,9 +200,9 @@
     "semantic_hash": ""
   },
   "tests/session_tests.rs": {
-    "mtime": 1786126523.1156642,
-    "ast_hash": "66c8382f2dd74be0f4cc14ebb3d0e8dd",
-    "semantic_hash": "66c8382f2dd74be0f4cc14ebb3d0e8dd"
+    "mtime": 1787136647.385471,
+    "ast_hash": "012068b4e73774b19c1c2fae6f227adf",
+    "semantic_hash": ""
   },
   "spec/specs/001b.plan-checklist.md": {
     "mtime": 1786125584.6316533,
@@ -215,8 +215,8 @@
     "semantic_hash": "3bd7278b4a607c75aae38fb500d5d2ee"
   },
   ".github/workflows/ci.yml": {
-    "mtime": 1787117400.4903708,
-    "ast_hash": "796e8b7b7ececde2de258698b85aa1ec",
+    "mtime": 1787135426.3363128,
+    "ast_hash": "09763c9e9ba55901bd48bb657106d73a",
     "semantic_hash": ""
   },
   "spec/specs/002.plan-v0.2.1.md": {

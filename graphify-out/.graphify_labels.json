@@ -22,7 +22,10 @@
   "20": "files.rs",
   "21": "Mux Web UI — Implementation Checklist & Verification Matrix",
   "22": "Mux Web UI ⚡",
+  "23": "Requirement Traceability Matrix",
+  "24": "start_server",
   "25": "static_handler",
+  "26": "v0.2 Implementation Checklist & Verification Matrix",
   "27": "install.sh",
   "28": "check_budget.sh",
   "29": "boot_tests.rs",
@@ -30,8 +33,6 @@
   "31": "update.sh",
   "32": "lib.rs",
   "33": "vite.config.ts",
-  "39": "Requirement Traceability Matrix",
-  "41": "CI & Release Workflow",
-  "42": "Mux Web UI — v0.2.1 Implementation Checklist & Verification Matrix",
-  "43": "v0.2 Implementation Checklist & Verification Matrix"
+  "34": "CI & Release Workflow",
+  "42": "Mux Web UI — v0.2.1 Implementation Checklist & Verification Matrix"
 }

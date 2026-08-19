@@ -24,7 +24,7 @@ curl -fsSL https://raw.githubusercontent.com/mcpe500/mux-web-ui/main/install.sh 
 Pin a specific version:
 
 ```bash
-curl -fsSL https://raw.githubusercontent.com/mcpe500/mux-web-ui/main/install.sh | bash -s -- --version 0.2.1
+curl -fsSL https://raw.githubusercontent.com/mcpe500/mux-web-ui/main/install.sh | bash -s -- --version 0.3.0
 ```
 
 ### 🔄 Update

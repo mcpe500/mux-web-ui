@@ -105,7 +105,7 @@ if [ -z "$VERSION" ]; then
 fi
 
 if [ -z "$VERSION" ]; then
-    VERSION="0.2.1"
+    VERSION="0.3.0"
 fi
 
 echo -e "${GREEN}Version:${RESET} $VERSION"

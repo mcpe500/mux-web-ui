@@ -196,7 +196,7 @@ jobs:
       - name: Prepare staging (two versions)
         run: |
           set -e
-          VERSION="0.2.1"
+          VERSION="0.3.0"
           TARGET="x86_64-unknown-linux-gnu"
           mkdir -p "dist/v$VERSION" "dist/v0.2.0"
           cp target/release/mux-web "dist/v$VERSION/mux-web-$VERSION-$TARGET"
@@ -204,7 +204,7 @@ jobs:
           printf '#!/bin/sh\necho "mux-web 0.2.0"\n' > "dist/v0.2.0/mux-web-0.2.0-$TARGET"
           chmod +x "dist/v0.2.0/mux-web-0.2.0-$TARGET"
           (cd "dist/v0.2.0" && sha256sum "mux-web-0.2.0-$TARGET" > "mux-web-0.2.0-$TARGET.sha256")
-          printf '{"tag_name":"v0.2.1"}' > "dist/latest.json"
+          printf '{"tag_name":"v0.3.0"}' > "dist/latest.json"
 
       - name: Scenario 1 — clean install, latest via staging (DIST-007)
         run: |
@@ -212,7 +212,7 @@ jobs:
           export MUX_WEB_API_URL="file://$PWD/dist/latest.json"
           export MUX_WEB_INSTALL_DIR="$PWD/scen1"
           bash install.sh >/dev/null
-          ./scen1/mux-web --version | grep -q "0.2.1"
+          ./scen1/mux-web --version | grep -q "0.3.0"
 
       - name: Scenario 2 — pinned version (DIST-008)
         run: |
@@ -241,7 +241,7 @@ jobs:
           export MUX_WEB_INSTALL_DIR="$PWD/scen4"
           bash install.sh --version 0.2.0 >/dev/null
           bash update.sh >/dev/null
-          ./scen4/mux-web --version | grep -q "0.2.1"
+          ./scen4/mux-web --version | grep -q "0.3.0"
 
       - name: Scenario 4b — smoke failure rolls back to .bak (DIST-012)
         run: |
@@ -263,7 +263,7 @@ jobs:
           export MUX_WEB_INSTALL_DIR="$PWD/scen4c"
           bash install.sh --version 0.2.0 >/dev/null
           bash update.sh >/dev/null
-          ./scen4c/mux-web --version | grep -q "0.2.1"
+          ./scen4c/mux-web --version | grep -q "0.3.0"
           bash update.sh --rollback >/dev/null
           ./scen4c/mux-web --version | grep -q "0.2.0"
           bash update.sh --rollback >/dev/null

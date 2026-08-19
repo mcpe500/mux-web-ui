@@ -1,16 +1,16 @@
 # Graph Report - mux-web-ui  (2026-08-19)
 
 ## Corpus Check
-- 49 files · ~41,641 words
+- 49 files · ~41,692 words
 - Verdict: corpus is large enough that graph structure adds value.
 
 ## Summary
-- 696 nodes · 1243 edges · 35 communities (33 shown, 2 thin omitted)
+- 696 nodes · 1244 edges · 36 communities (34 shown, 2 thin omitted)
 - Extraction: 96% EXTRACTED · 4% INFERRED · 0% AMBIGUOUS · INFERRED: 51 edges (avg confidence: 0.82)
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `6ef4c12e`
+- Built from commit: `3189dd31`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
@@ -38,15 +38,16 @@
 - files.rs
 - Mux Web UI — Implementation Checklist & Verification Matrix
 - Mux Web UI ⚡
+- Requirement Traceability Matrix
+- start_server
 - static_handler
+- v0.2 Implementation Checklist & Verification Matrix
 - install.sh
 - check_budget.sh
 - uninstall.sh
 - update.sh
-- Requirement Traceability Matrix
 - CI & Release Workflow
 - Mux Web UI — v0.2.1 Implementation Checklist & Verification Matrix
-- v0.2 Implementation Checklist & Verification Matrix
 
 ## God Nodes (most connected - your core abstractions)
 1. `SessionRegistry` - 28 edges
@@ -80,7 +81,7 @@
 - **v0.2 Milestone B Session Persistence Workstream** — spec_handoff_001_progress_and_backlog_milestone_b, src_session_sessionregistry, src_session_ringbuffer, spec_handoff_001_progress_and_backlog_life_002_orphan_cleanup, tests_session_tests [INFERRED 0.85]
 - **CI Release Gate (test-and-lint + cross-check + budget-check required)** — _github_workflows_ci_testandlint, _github_workflows_ci_crosscheck, _github_workflows_ci_budgetcheck, _github_workflows_ci_release [EXTRACTED 1.00]
 
-## Communities (35 total, 2 thin omitted)
+## Communities (36 total, 2 thin omitted)
 
 ### Community 0 - "http.rs"
 Cohesion: 0.09
@@ -91,8 +92,8 @@ Cohesion: 0.09
 Nodes (35): AtomicBool, AtomicU64, AttachError, AttachInfo, PendingAttach, rand_id(), RingBuffer, Arc (+27 more)
 
 ### Community 2 - "TestServer"
-Cohesion: 0.09
-Nodes (54): Client, JoinHandle, MaybeTlsStream, TcpStream, authed_ws_connect(), Drop, Option, PathBuf (+46 more)
+Cohesion: 0.12
+Nodes (43): Client, JoinHandle, MaybeTlsStream, TcpStream, authed_ws_connect(), Drop, Option, Result (+35 more)
 
 ### Community 3 - "auth.rs"
 Cohesion: 0.12
@@ -174,9 +175,21 @@ Nodes (9): Definition of Done (DoD) Final Audit, Milestone 0 — Baseline Infras
 Cohesion: 0.12
 Nodes (16): 🛠️ Building from Source, ✨ Features, 📥 Install (Create), 📜 License, Mux Web UI ⚡, 📊 Performance & Size Benchmarks, Prerequisites, ⚡ Quick 1-Line Commands (Create / Update / Delete) (+8 more)
 
+### Community 23 - "Requirement Traceability Matrix"
+Cohesion: 0.17
+Nodes (12): Single-Use Bootstrap Secret Pairing, File Explorer, PTY Interactive Terminal (xterm.js), Security & Authentication Model, AUTH Requirement Family, FS Requirement Family, LAN Requirement Family, LIFE Requirement Family (+4 more)
+
+### Community 24 - "start_server"
+Cohesion: 0.26
+Nodes (11): PathBuf, Vec, start_server(), test_auth(), expect_rejected(), test_fs_002_normal_file_still_served(), test_fs_002_traversal_dotdot_rejected(), test_fs_003_symlink_escape_rejected() (+3 more)
+
 ### Community 25 - "static_handler"
 Cohesion: 0.40
 Nodes (4): Assets, Response, static_handler(), Uri
+
+### Community 26 - "v0.2 Implementation Checklist & Verification Matrix"
+Cohesion: 0.36
+Nodes (6): Handoff 001 - Progress & Backlog (v0.2), LIFE-002 Orphan Child Cleanup, Milestone B: Session Persistence, v0.2 Implementation Checklist & Verification Matrix, Checklist Milestone B: Session Persistence (B.1-B.9), TDD Execution Loop (Red-Green-Refactor)
 
 ### Community 27 - "install.sh"
 Cohesion: 0.67
@@ -186,21 +199,13 @@ Nodes (5): die(), fallback_source(), install_from_release(), install.sh script, 
 Cohesion: 0.60
 Nodes (3): die(), update.sh script, usage()
 
-### Community 39 - "Requirement Traceability Matrix"
-Cohesion: 0.17
-Nodes (12): Single-Use Bootstrap Secret Pairing, File Explorer, PTY Interactive Terminal (xterm.js), Security & Authentication Model, AUTH Requirement Family, FS Requirement Family, LAN Requirement Family, LIFE Requirement Family (+4 more)
-
-### Community 41 - "CI & Release Workflow"
+### Community 34 - "CI & Release Workflow"
 Cohesion: 0.42
 Nodes (9): budget-check Job (check_budget.sh), cross-check Job (Android ARM64 cargo check), release Job (artifact + checksum upload), test-and-lint Job (fmt, clippy, tests), CI & Release Workflow, check_budget.sh Budget Gate Script, Checklist Langkah 4: CI (C.1-C.6), 4-Target Build Matrix (gnu/musl/arm64/android) (+1 more)
 
 ### Community 42 - "Mux Web UI — v0.2.1 Implementation Checklist & Verification Matrix"
 Cohesion: 0.25
 Nodes (8): Langkah 1 — Milestone A: Release pipeline multi-target, Langkah 2 — Milestone B: `install.sh` binary-first, Langkah 3 — Milestone B: `update.sh` binary-first, Langkah 4 — CI `installer-test` (DIST-013), Langkah 5 — Traceability, README, rilis, Mux Web UI — v0.2.1 Implementation Checklist & Verification Matrix, Open questions yang diputuskan saat implementasi, TDD Execution Loop Standard
-
-### Community 43 - "v0.2 Implementation Checklist & Verification Matrix"
-Cohesion: 0.36
-Nodes (6): Handoff 001 - Progress & Backlog (v0.2), LIFE-002 Orphan Child Cleanup, Milestone B: Session Persistence, v0.2 Implementation Checklist & Verification Matrix, Checklist Milestone B: Session Persistence (B.1-B.9), TDD Execution Loop (Red-Green-Refactor)
 
 ## Knowledge Gaps
 - **217 isolated node(s):** `check_budget.sh script`, `Assets`, `uninstall.sh script`, `name`, `private` (+212 more)
@@ -210,11 +215,11 @@ Nodes (6): Handoff 001 - Progress & Backlog (v0.2), LIFE-002 Orphan Child Cleanu
 ## Suggested Questions
 _Questions this graph is uniquely positioned to answer:_
 
-- **Why does `v0.2 Implementation Checklist & Verification Matrix` connect `v0.2 Implementation Checklist & Verification Matrix` to `Requirement Traceability Matrix`, `CI & Release Workflow`, `auth_tests.rs`, `Mux Web UI — v0.2 Implementation Checklist & Verification Matrix`, `v0.2.1 Plan: Distribution (prebuilt binary + installer)`?**
+- **Why does `v0.2 Implementation Checklist & Verification Matrix` connect `v0.2 Implementation Checklist & Verification Matrix` to `CI & Release Workflow`, `auth_tests.rs`, `Mux Web UI — v0.2 Implementation Checklist & Verification Matrix`, `v0.2.1 Plan: Distribution (prebuilt binary + installer)`, `Requirement Traceability Matrix`?**
   _High betweenness centrality (0.181) - this node is a cross-community bridge._
-- **Why does `Handoff 001 - Progress & Backlog (v0.2)` connect `v0.2 Implementation Checklist & Verification Matrix` to `TestServer`, `PtySession`, `CI & Release Workflow`, `4. SISA PEKERJAAN — Apa yang Belum Selesai`, `auth_tests.rs`?**
+- **Why does `Handoff 001 - Progress & Backlog (v0.2)` connect `v0.2 Implementation Checklist & Verification Matrix` to `CI & Release Workflow`, `TestServer`, `PtySession`, `4. SISA PEKERJAAN — Apa yang Belum Selesai`, `auth_tests.rs`?**
   _High betweenness centrality (0.176) - this node is a cross-community bridge._
-- **Why does `TestServer` connect `TestServer` to `http.rs`, `SessionRegistry`, `v0.2 Implementation Checklist & Verification Matrix`, `auth_tests.rs`?**
+- **Why does `TestServer` connect `TestServer` to `http.rs`, `SessionRegistry`, `auth_tests.rs`, `start_server`, `v0.2 Implementation Checklist & Verification Matrix`?**
   _High betweenness centrality (0.124) - this node is a cross-community bridge._
 - **What connects `check_budget.sh script`, `Assets`, `uninstall.sh script` to the rest of the system?**
   _217 weakly-connected nodes found - possible documentation gaps or missing edges._
@@ -223,4 +228,4 @@ _Questions this graph is uniquely positioned to answer:_
 - **Should `SessionRegistry` be split into smaller, more focused modules?**
   _Cohesion score 0.09143686502177069 - nodes in this community are weakly interconnected._
 - **Should `TestServer` be split into smaller, more focused modules?**
-  _Cohesion score 0.088841882601798 - nodes in this community are weakly interconnected._
+  _Cohesion score 0.12074829931972789 - nodes in this community are weakly interconnected._

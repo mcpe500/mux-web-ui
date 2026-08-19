@@ -252,6 +252,11 @@ async fn test_sess_003_exit_while_detached_reports_status() {
     let attach = request_attach(&server, &id).await;
     let token = attach["ws_token"].as_str().unwrap().to_string();
     let mut ws = connect(&server, &id, &token).await;
+
+    // Ensure shell prompt is initialized and listening
+    send_input(&mut ws, "echo READY\n").await;
+    let _ = read_until(&mut ws, "READY", 5).await;
+
     send_input(&mut ws, "exit 0\n").await;
 
     // Attached client receives the Exit frame.

@@ -465,7 +465,9 @@ mod tests {
     #[tokio::test]
     async fn test_sess_003_exit_detection_marks_closed() {
         let registry = SessionRegistry::new();
-        let meta = registry.create_session(80, 24, None, None).unwrap();
+        let meta = registry
+            .create_session(80, 24, None, Some("/bin/sh".to_string()))
+            .unwrap();
         let instance = registry.get_session(&meta.id).unwrap();
 
         // PTY child must be reaped and state set to Closed.
@@ -473,13 +475,24 @@ mod tests {
         let trigger_registry = registry.clone();
         let trigger_id = meta.id.clone();
         tokio::spawn(async move {
-            tokio::time::sleep(Duration::from_millis(50)).await;
-            let inst = trigger_registry.get_session(&trigger_id).unwrap();
-            let _ = inst.pty.write_input(b"exit 0\n");
+            for _ in 0..10 {
+                tokio::time::sleep(Duration::from_millis(100)).await;
+                if let Some(inst) = trigger_registry.get_session(&trigger_id) {
+                    let _ = inst.pty.write_input(b"\nexit 0\n");
+                } else {
+                    break;
+                }
+            }
         });
-        let _ = tokio::time::timeout(Duration::from_secs(5), exit_rx.changed())
-            .await
-            .expect("exit notification within 5s");
+        tokio::time::timeout(Duration::from_secs(10), async {
+            while exit_rx.borrow().is_none() {
+                if exit_rx.changed().await.is_err() {
+                    break;
+                }
+            }
+        })
+        .await
+        .expect("exit notification within 10s");
         assert_eq!(*exit_rx.borrow(), Some(0));
         assert_eq!(
             instance.metadata.lock().unwrap().state,
