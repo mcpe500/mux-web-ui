@@ -7,6 +7,7 @@ use mux_web::config::Config;
 use mux_web::http::AppState;
 use mux_web::paths::AllowedRoots;
 use mux_web::session::SessionRegistry;
+use mux_web::share::{ShareConfig, ShareRegistry};
 use tempfile::tempdir;
 
 const SECRET: &str = "test-bootstrap-secret-0123456789abcdef";
@@ -20,6 +21,7 @@ async fn start_auth_server(global_limit: u32) -> TestServer {
             .unwrap(),
         sessions: SessionRegistry::new(),
         auth: AuthState::with_secret(AuthConfig::from_parts(60, global_limit, 30, false), SECRET),
+        share: ShareRegistry::new(ShareConfig::default()),
     };
     common::start_server_with_state(state).await
 }

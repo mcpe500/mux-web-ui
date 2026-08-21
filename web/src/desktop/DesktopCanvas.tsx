@@ -5,6 +5,9 @@ import { TerminalView } from '../apps/terminal/TerminalView';
 import { FileExplorerView } from '../apps/files/FileExplorerView';
 import { TextEditorView } from '../apps/editor/TextEditorView';
 import { SystemMonitorView } from '../apps/monitor/SystemMonitorView';
+import { GitView } from '../apps/git/GitView';
+import { PackageCenterView } from '../apps/packages/PackageCenterView';
+import { ShareModal } from '../apps/share/ShareModal';
 
 export function DesktopCanvas() {
   const [windows, dispatch] = useReducer(windowReducer, []);
@@ -151,6 +154,58 @@ export function DesktopCanvas() {
     });
   };
 
+  const openGit = () => {
+    const id = `git-${Date.now()}`;
+    dispatch({
+      type: 'OPEN_WINDOW',
+      payload: {
+        id,
+        appId: 'git',
+        title: 'Git',
+        icon: '🔧',
+        x: 120,
+        y: 80,
+        width: 700,
+        height: 500,
+        props: { rootId: 'home', repoPath: '' },
+      },
+    });
+  };
+
+  const openPackages = () => {
+    const id = `packages-${Date.now()}`;
+    dispatch({
+      type: 'OPEN_WINDOW',
+      payload: {
+        id,
+        appId: 'packages',
+        title: 'Packages',
+        icon: '📦',
+        x: 140,
+        y: 90,
+        width: 650,
+        height: 480,
+      },
+    });
+  };
+
+  const openShare = () => {
+    const id = `share-${Date.now()}`;
+    dispatch({
+      type: 'OPEN_WINDOW',
+      payload: {
+        id,
+        appId: 'share',
+        title: 'Share Links',
+        icon: '🔗',
+        x: 160,
+        y: 100,
+        width: 500,
+        height: 400,
+      },
+    });
+  };
+
   const handleTileGrid = () => {
     const { width, height } = getCanvasBounds();
     dispatch({ type: 'TILE_GRID', canvasWidth: width, canvasHeight: height });
@@ -184,6 +239,9 @@ export function DesktopCanvas() {
               />
             )}
             {win.appId === 'monitor' && <SystemMonitorView />}
+            {win.appId === 'git' && <GitView rootId={win.props?.rootId} repoPath={win.props?.repoPath} />}
+            {win.appId === 'packages' && <PackageCenterView />}
+            {win.appId === 'share' && <ShareModal />}
           </WindowFrame>
         ))}
       </div>
@@ -210,6 +268,15 @@ export function DesktopCanvas() {
         </button>
         <button className="start-btn" onClick={openMonitor} style={{ background: '#10b981' }}>
           📊 Monitor
+        </button>
+        <button className="start-btn" onClick={openGit} style={{ background: '#f59e0b' }}>
+          🔧 Git
+        </button>
+        <button className="start-btn" onClick={openPackages} style={{ background: '#06b6d4' }}>
+          📦 Packages
+        </button>
+        <button className="start-btn" onClick={openShare} style={{ background: '#8b5cf6' }}>
+          🔗 Share
         </button>
 
         <div className="taskbar-items">

@@ -365,12 +365,11 @@ impl SessionRegistry {
 }
 
 fn rand_id() -> String {
-    use std::time::{SystemTime, UNIX_EPOCH};
-    let nanos = SystemTime::now()
-        .duration_since(UNIX_EPOCH)
-        .unwrap()
-        .as_nanos();
-    format!("{:x}", nanos)
+    // H1 fix: CSPRNG, not nanos. 16 bytes -> 32 hex chars, high entropy,
+    // no collision in burst, not predictable.
+    let mut buf = [0u8; 16];
+    getrandom::getrandom(&mut buf).expect("CSPRNG failure");
+    buf.iter().map(|b| format!("{:02x}", b)).collect()
 }
 
 #[cfg(test)]

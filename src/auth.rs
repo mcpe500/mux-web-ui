@@ -211,18 +211,25 @@ impl AuthState {
     }
 }
 
-/// Constant-time string equality over the full length of both operands.
+/// Constant-time string equality (M3 fix: use `subtle` crate).
 fn constant_time_eq(a: &str, b: &str) -> bool {
+    use subtle::ConstantTimeEq;
     let a = a.as_bytes();
     let b = b.as_bytes();
-    let max = a.len().max(b.len());
-    let mut diff = (a.len() as u8) ^ (b.len() as u8);
-    for i in 0..max {
-        let av = a.get(i).copied().unwrap_or(0);
-        let bv = b.get(i).copied().unwrap_or(0);
-        diff |= av ^ bv;
+    if a.len() != b.len() {
+        // Still do a constant-time compare of the shorter prefix to avoid
+        // timing leak on length, then return false.
+        let max = a.len().max(b.len());
+        let mut diff = 1u8;
+        for i in 0..max {
+            let av = a.get(i).copied().unwrap_or(0);
+            let bv = b.get(i).copied().unwrap_or(0);
+            diff &= (av == bv) as u8;
+            let _ = subtle::Choice::from(diff);
+        }
+        return false;
     }
-    diff == 0
+    a.ct_eq(b).unwrap_u8() == 1
 }
 
 fn random_secret() -> String {

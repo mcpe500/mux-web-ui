@@ -1,12 +1,17 @@
+#![allow(dead_code)]
+mod archive;
 mod assets;
 mod auth;
 mod config;
 mod files;
+mod git;
 mod http;
+mod packages;
 mod paths;
 mod protocol;
 mod pty;
 mod session;
+mod share;
 
 use clap::Parser;
 use config::Config;
@@ -128,11 +133,17 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
         config.tls_enabled(),
     ));
 
+    let share = share::ShareRegistry::new(share::ShareConfig {
+        default_ttl: std::time::Duration::from_secs(config.default_share_ttl),
+        max_ttl: std::time::Duration::from_secs(config.default_share_ttl * 24),
+    });
+
     let state = AppState {
         config: config.clone(),
         allowed_roots,
         sessions: sessions.clone(),
         auth: auth.clone(),
+        share: share.clone(),
     };
 
     let app = create_router(state);
@@ -216,15 +227,18 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
             }
         };
 
-        axum::serve(listener, app)
-            .with_graceful_shutdown(async move {
-                tokio::signal::ctrl_c()
-                    .await
-                    .expect("Failed to listen for Ctrl+C signal");
-                println!("\nGracefully shutting down Mux Web UI...");
-                shutdown_sessions.stop_all();
-            })
-            .await?;
+        axum::serve(
+            listener,
+            app.into_make_service_with_connect_info::<SocketAddr>(),
+        )
+        .with_graceful_shutdown(async move {
+            tokio::signal::ctrl_c()
+                .await
+                .expect("Failed to listen for Ctrl+C signal");
+            println!("\nGracefully shutting down Mux Web UI...");
+            shutdown_sessions.stop_all();
+        })
+        .await?;
     }
 
     Ok(())

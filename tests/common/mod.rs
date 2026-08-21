@@ -4,6 +4,7 @@ use mux_web::config::Config;
 use mux_web::http::{create_router, AppState};
 use mux_web::paths::AllowedRoots;
 use mux_web::session::SessionRegistry;
+use mux_web::share::{ShareConfig, ShareRegistry};
 use std::path::PathBuf;
 
 pub const TEST_SECRET: &str = "test-bootstrap-secret-0123456789abcdef";
@@ -47,11 +48,13 @@ pub async fn start_server(roots: Vec<(String, PathBuf)>) -> TestServer {
     let mut config = Config::parse_from(["mux-web"]);
     config.shell = Some("/bin/sh".to_string());
     let allowed_roots = AllowedRoots::new(roots).expect("roots must canonicalize");
+    let share = ShareRegistry::new(ShareConfig::default());
     let mut server = start_server_with_state(AppState {
         config,
         allowed_roots,
         sessions: SessionRegistry::new(),
         auth: test_auth(),
+        share,
     })
     .await;
     server.auto_pair().await;
@@ -77,7 +80,12 @@ pub async fn start_server_with_state(state: AppState) -> TestServer {
     let sessions = state.sessions.clone();
     let app = create_router(state);
     let task = tokio::spawn(async move {
-        axum::serve(listener, app).await.expect("server run");
+        axum::serve(
+            listener,
+            app.into_make_service_with_connect_info::<std::net::SocketAddr>(),
+        )
+        .await
+        .expect("server run");
     });
     TestServer {
         base_url: format!("http://{}", addr),

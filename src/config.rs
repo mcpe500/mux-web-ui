@@ -64,6 +64,22 @@ pub struct Config {
     /// WS attach token TTL (seconds)
     #[arg(long, default_value_t = 10)]
     pub ws_token_ttl: u64,
+
+    /// Max archive extract total bytes (ARC-005)
+    #[arg(long, env = "MUX_WEB_MAX_EXTRACT_SIZE", default_value_t = 500 * 1024 * 1024)]
+    pub max_extract_size: u64,
+
+    /// Max archive extract file count (ARC-005)
+    #[arg(long, env = "MUX_WEB_MAX_EXTRACT_FILES", default_value_t = 10000)]
+    pub max_extract_files: usize,
+
+    /// Enable read-only share links (SHR)
+    #[arg(long, env = "MUX_WEB_ENABLE_SHARE", default_value_t = true)]
+    pub enable_share_links: bool,
+
+    /// Default share link TTL seconds (SHR-002)
+    #[arg(long, env = "MUX_WEB_DEFAULT_SHARE_TTL", default_value_t = 3600)]
+    pub default_share_ttl: u64,
 }
 
 impl Config {

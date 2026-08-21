@@ -146,28 +146,31 @@
 | RSZ-008 fit() safe on 0x0 container | RSZ-008 | Frontend Component | Portable | Passed |
 | RSZ-009 visualViewport & orientation resize | RSZ-009 | Frontend Component / E2E | Portable | Passed |
 | RSZ-010 Flood resize no unbounded resource growth | RSZ-010 | Integration / Soak | Portable | Passed |
-| GIT-001 Repository status porcelain v2 representation | GIT-001 | Integration | Portable | Planned |
-| GIT-002 Visual diff hunks parsing | GIT-002 | Unit / Integration | Portable | Planned |
-| GIT-003 File staging, unstaging & discard changes | GIT-003 | Integration | Portable | Planned |
-| GIT-004 Commit creation with message & amend | GIT-004 | Integration | Portable | Planned |
-| GIT-005 Branch listing, creation & checkout | GIT-005 | Integration | Portable | Planned |
-| GIT-006 Remote operations & streaming progress | GIT-006 | Integration | Portable | Planned |
-| GIT-007 Git command injection & sandbox safety | GIT-007 | Security / Fuzz | Portable | Planned |
-| PKG-001 Platform package manager auto-detection | PKG-001 | Unit / Integration | Termux / Linux | Planned |
-| PKG-002 Installed packages listing & version info | PKG-002 | Integration | Portable | Planned |
-| PKG-003 Repository package search | PKG-003 | Integration | Portable | Planned |
-| PKG-004 Streaming task runner for install/remove/upgrade | PKG-004 | Integration | Portable | Planned |
-| PKG-005 Package name input validation & anti-injection | PKG-005 | Security / Fuzz | Portable | Planned |
-| SHR-001 Capability share token generation (256-bit CSPRNG) | SHR-001 | Unit / Integration | Portable | Planned |
-| SHR-002 Share token TTL expiry & constant-time check | SHR-002 | Unit / Integration | Portable | Planned |
-| SHR-003 Read-only terminal output streaming (input dropped) | SHR-003 | Integration | Portable | Planned |
-| SHR-004 Read-only file/folder viewing (mutations blocked) | SHR-004 | Integration | Portable | Planned |
-| SHR-005 Instant token revocation | SHR-005 | Integration | Portable | Planned |
-| ARC-001 Archive inspection without disk extraction | ARC-001 | Unit / Integration | Portable | Planned |
-| ARC-002 Safe zip extraction to target sandbox directory | ARC-002 | Integration | Portable | Planned |
-| ARC-003 Safe tar.gz extraction to target sandbox directory | ARC-003 | Integration | Portable | Planned |
-| ARC-004 Zip-Slip path traversal rejection | ARC-004 | Security / Fuzz | Portable | Planned |
-| ARC-005 Anti Zip-bomb byte & file count budget limits | ARC-005 | Integration / Fuzz | Portable | Planned |
-| ARC-006 Safe archive creation (.zip/.tar.gz) | ARC-006 | Integration | Portable | Planned |
+| GIT-001 Repository status porcelain v2 representation | GIT-001 | Integration | Portable | Passed |
+| GIT-002 Visual diff hunks parsing | GIT-002 | Unit / Integration | Portable | Passed |
+| GIT-003 File staging, unstaging & discard changes | GIT-003 | Integration | Portable | Passed |
+| GIT-004 Commit creation with message & amend | GIT-004 | Integration | Portable | Passed |
+| GIT-005 Branch listing, creation & checkout | GIT-005 | Integration | Portable | Passed |
+| GIT-006 Remote operations & streaming progress | GIT-006 | Integration | Portable | Passed |
+| GIT-007 Git command injection & sandbox safety | GIT-007 | Security / Fuzz | Portable | Passed |
+| PKG-001 Platform package manager auto-detection | PKG-001 | Unit / Integration | Termux / Linux | Passed |
+| PKG-002 Installed packages listing & version info | PKG-002 | Integration | Portable | Passed |
+| PKG-003 Repository package search | PKG-003 | Integration | Portable | Passed |
+| PKG-004 Streaming task runner for install/remove/upgrade | PKG-004 | Integration | Portable | Passed |
+| PKG-005 Package name input validation & anti-injection | PKG-005 | Security / Fuzz | Portable | Passed |
+| SHR-001 Capability share token generation (256-bit CSPRNG) | SHR-001 | Unit / Integration | Portable | Passed |
+| SHR-002 Share token TTL expiry & constant-time check | SHR-002 | Unit / Integration | Portable | Passed |
+| SHR-003 Read-only terminal output streaming (input dropped) | SHR-003 | Integration | Portable | Passed |
+| SHR-004 Read-only file/folder viewing (mutations blocked) | SHR-004 | Integration | Portable | Passed |
+| SHR-005 Instant token revocation | SHR-005 | Integration | Portable | Passed |
+| ARC-001 Archive inspection without disk extraction | ARC-001 | Unit / Integration | Portable | Passed |
+| ARC-002 Safe zip extraction to target sandbox directory | ARC-002 | Integration | Portable | Passed |
+| ARC-003 Safe tar.gz extraction to target sandbox directory | ARC-003 | Integration | Portable | Passed |
+| ARC-004 Zip-Slip path traversal rejection | ARC-004 | Security / Fuzz | Portable | Passed |
+| ARC-005 Anti Zip-bomb byte & file count budget limits | ARC-005 | Integration / Fuzz | Portable | Passed |
+| ARC-006 Safe archive creation (.zip/.tar.gz) | ARC-006 | Integration | Portable | Passed |
+| SEC-004 Global security headers (CSP/X-Frame/HSTS) | SEC-004 | Integration | Portable | Passed |
+| SEC-005 CSRF double-submit token | SEC-005 | Integration | Portable | Passed |
+| SEC-006 CSPRNG session/attach token + real-IP rate limit | SEC-006 | Unit / Integration | Portable | Passed |
 
 
