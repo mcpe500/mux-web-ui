@@ -25,8 +25,8 @@
     "semantic_hash": "96a162b5abf6f90bfe36d36c7e8ab226"
   },
   "src/http.rs": {
-    "mtime": 1787252545.4209912,
-    "ast_hash": "f63dd4937247c08e6f7a70c26d64f4bf",
+    "mtime": 1787325641.6215842,
+    "ast_hash": "0d5ede61442bc71f20492fd682f9fb60",
     "semantic_hash": ""
   },
   "src/lib.rs": {
@@ -95,8 +95,8 @@
     "semantic_hash": "b200590443cb590d2d4911b46bba4b1d"
   },
   "web/src/apps/editor/TextEditorView.tsx": {
-    "mtime": 1787315064.051638,
-    "ast_hash": "2cd358728aedb1a2fa92ea146269a6ab",
+    "mtime": 1787326281.413227,
+    "ast_hash": "7bb91de72cf7d9994e5a54132d3cdb79",
     "semantic_hash": ""
   },
   "web/src/apps/files/FileExplorerView.tsx": {
@@ -115,8 +115,8 @@
     "semantic_hash": ""
   },
   "web/src/desktop/DesktopCanvas.tsx": {
-    "mtime": 1787315142.4069579,
-    "ast_hash": "bc2b545ab35f0f270381d2d35a76ed9f",
+    "mtime": 1787326133.1545613,
+    "ast_hash": "2b4165709c4297e2713e38b3ad0cbbcd",
     "semantic_hash": ""
   },
   "web/src/desktop/WindowFrame.tsx": {
@@ -165,8 +165,8 @@
     "semantic_hash": "f8be80d7c0632a6c791e45f83c0a7c53"
   },
   "tests/traceability.md": {
-    "mtime": 1787252474.4868336,
-    "ast_hash": "c3a771da38eaecc0c91289463787e344",
+    "mtime": 1787326454.4879324,
+    "ast_hash": "56cfb5b66f0c34fb807e3b46c19e0099",
     "semantic_hash": ""
   },
   "web/index.html": {
@@ -200,8 +200,8 @@
     "semantic_hash": ""
   },
   "tests/session_tests.rs": {
-    "mtime": 1787251602.0241332,
-    "ast_hash": "bffe347bb58a606eb0b5f7b048c88850",
+    "mtime": 1787326400.2637856,
+    "ast_hash": "b3b0c8c0bbfd3c0e6aa398c2676dd837",
     "semantic_hash": ""
   },
   "spec/specs/001b.plan-checklist.md": {
@@ -372,6 +372,31 @@
   "spec/specs/006b.plan-checklist.md": {
     "mtime": 1787323836.4683065,
     "ast_hash": "1f1db6ac50cddbcf5d1b838983c90c47",
+    "semantic_hash": ""
+  },
+  "web/src/apps/editor/editorLogic.test.ts": {
+    "mtime": 1787325732.7559776,
+    "ast_hash": "3cec407944c883e2c364399f7b5650c5",
+    "semantic_hash": ""
+  },
+  "web/src/apps/editor/editorLogic.ts": {
+    "mtime": 1787325770.7061214,
+    "ast_hash": "f7a19b7077870ee1bf42043600473bf1",
+    "semantic_hash": ""
+  },
+  "web/src/apps/files/FolderPicker.tsx": {
+    "mtime": 1787325870.2339647,
+    "ast_hash": "6c9269a01e2c98e5b7cdd2bf39783d3a",
+    "semantic_hash": ""
+  },
+  "web/src/apps/files/pickerLogic.test.ts": {
+    "mtime": 1787325815.473051,
+    "ast_hash": "4e58f1b4c77e2cf30777f576091f113a",
+    "semantic_hash": ""
+  },
+  "web/src/apps/files/pickerLogic.ts": {
+    "mtime": 1787325800.7284515,
+    "ast_hash": "6e194b9ca36e6cd93b8d080589bacde8",
     "semantic_hash": ""
   }
 }

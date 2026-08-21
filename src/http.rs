@@ -37,6 +37,13 @@ pub struct AppState {
 pub struct CreateTerminalReq {
     pub cols: Option<u16>,
     pub rows: Option<u16>,
+    /// EDT-002 (spec 006): optional working directory for the integrated
+    /// editor terminal. Must resolve inside an AllowedRoot; traversal/NUL are
+    /// rejected with 400 PATH_TRAVERSAL before any PTY is created.
+    #[serde(default)]
+    pub cwd_root: Option<String>,
+    #[serde(default)]
+    pub cwd_path: Option<String>,
 }
 
 #[derive(Serialize)]
@@ -564,12 +571,27 @@ async fn create_terminal_handler(
         req.rows.unwrap_or(crate::pty::DEFAULT_ROWS),
     );
 
-    match state.sessions.create_session(
-        cols,
-        rows,
-        state.config.work_dir.clone(),
-        state.config.shell.clone(),
-    ) {
+    // EDT-002: resolve the optional cwd pair through AllowedRoots so the
+    // integrated editor terminal starts inside the opened folder. Any resolver
+    // failure (traversal, NUL, unknown root, symlink escape) is a hard 400 and
+    // must not create a session.
+    let work_dir = match (req.cwd_root.as_deref(), req.cwd_path.as_deref()) {
+        (Some(root_id), Some(rel)) => match state.allowed_roots.resolve_path(root_id, rel) {
+            Ok(p) => Some(p),
+            Err(e) => {
+                let body = serde_json::json!({
+                    "error": {"code": "PATH_TRAVERSAL", "message": e.to_string()}
+                });
+                return (StatusCode::BAD_REQUEST, Json(body)).into_response();
+            }
+        },
+        _ => state.config.work_dir.clone(),
+    };
+
+    match state
+        .sessions
+        .create_session(cols, rows, work_dir, state.config.shell.clone())
+    {
         Ok(meta) => (StatusCode::CREATED, Json(meta)).into_response(),
         Err(session::SessionError::MaxSessions) => {
             let body = serde_json::json!({"error": {"code": "MAX_SESSIONS", "message": "session limit reached"}});

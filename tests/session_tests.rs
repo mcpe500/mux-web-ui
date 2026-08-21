@@ -2,7 +2,7 @@
 // Red phase: these fail against the v0.1 registry (disconnect kills the PTY).
 mod common;
 
-use common::{authed_ws_connect, start_health_server};
+use common::{authed_ws_connect, start_health_server, start_server};
 use futures_util::{SinkExt, StreamExt};
 use mux_web::protocol::{decode_frame, encode_frame, Frame};
 use std::time::Duration;
@@ -379,4 +379,120 @@ async fn test_sess_009_no_orphan_children_after_shutdown() {
         is_dead,
         "child process {pid} must be terminated and reaped after server shutdown (LIFE-002)"
     );
+}
+
+// ── EDT-002: integrated-terminal cwd via CreateTerminalReq (spec 006 §A.2) ──
+
+/// RED→GREEN: terminal spawns INSIDE the requested allowed-root folder.
+#[tokio::test]
+async fn test_edt_002_cwd_ok() {
+    let temp = tempfile::tempdir().expect("tempdir");
+    let sub = temp.path().join("sub");
+    std::fs::create_dir_all(&sub).expect("create sub");
+    let roots = vec![("home".to_string(), temp.path().to_path_buf())];
+    let server = start_server(roots).await;
+
+    let resp = server
+        .client
+        .post(server.url("/api/v1/terminals"))
+        .json(&serde_json::json!({"cols": 80, "rows": 24, "cwd_root": "home", "cwd_path": "/sub"}))
+        .send()
+        .await
+        .unwrap();
+    assert_eq!(resp.status(), 201, "cwd spawn must succeed");
+    let meta: serde_json::Value = resp.json().await.unwrap();
+    let id = meta["id"].as_str().unwrap().to_string();
+
+    let attach = request_attach(&server, &id).await;
+    let token = attach["ws_token"].as_str().unwrap().to_string();
+    let mut ws = connect(&server, &id, &token).await;
+    send_input(&mut ws, "pwd\n").await;
+    let out = read_until(&mut ws, "/sub", 5).await;
+    assert!(
+        out.contains("/sub"),
+        "shell cwd must be the opened folder; got: {out}"
+    );
+}
+
+/// Security: traversal outside AllowedRoots is rejected with 400 PATH_TRAVERSAL
+/// and NO session is created.
+#[tokio::test]
+async fn test_edt_002_cwd_traversal_400() {
+    let server = start_health_server().await;
+    let before: serde_json::Value = server
+        .client
+        .get(server.url("/api/v1/terminals"))
+        .send()
+        .await
+        .unwrap()
+        .json()
+        .await
+        .unwrap();
+    let before_count = before["sessions"].as_array().map(|a| a.len()).unwrap_or(0);
+
+    for evil in ["../..", "../../etc", "a/../../b"] {
+        let resp = server
+            .client
+            .post(server.url("/api/v1/terminals"))
+            .json(
+                &serde_json::json!({"cols": 80, "rows": 24, "cwd_root": "home", "cwd_path": evil}),
+            )
+            .send()
+            .await
+            .unwrap();
+        assert_eq!(resp.status(), 400, "traversal {evil:?} must be rejected");
+        let body: serde_json::Value = resp.json().await.unwrap();
+        assert_eq!(body["error"]["code"], "PATH_TRAVERSAL");
+    }
+
+    let after: serde_json::Value = server
+        .client
+        .get(server.url("/api/v1/terminals"))
+        .send()
+        .await
+        .unwrap()
+        .json()
+        .await
+        .unwrap();
+    let after_count = after["sessions"].as_array().map(|a| a.len()).unwrap_or(0);
+    assert_eq!(
+        before_count, after_count,
+        "rejected requests must not create sessions"
+    );
+}
+
+/// Security: NUL bytes are rejected (PathError::NulByteDetected → 400).
+#[tokio::test]
+async fn test_edt_002_cwd_nul_400() {
+    let server = start_health_server().await;
+    let resp = server
+        .client
+        .post(server.url("/api/v1/terminals"))
+        .json(&serde_json::json!({"cols": 80, "rows": 24, "cwd_root": "home", "cwd_path": "a\u{0000}b"}))
+        .send()
+        .await
+        .unwrap();
+    assert_eq!(resp.status(), 400);
+    let body: serde_json::Value = resp.json().await.unwrap();
+    assert_eq!(body["error"]["code"], "PATH_TRAVERSAL");
+
+    // Regression: unknown root id also maps to 400 (InvalidRootId).
+    let resp = server
+        .client
+        .post(server.url("/api/v1/terminals"))
+        .json(&serde_json::json!({"cols": 80, "rows": 24, "cwd_root": "nope", "cwd_path": "/x"}))
+        .send()
+        .await
+        .unwrap();
+    assert_eq!(resp.status(), 400);
+
+    // Regression: legacy payload WITHOUT cwd_* still spawns in default work_dir.
+    let resp = server
+        .client
+        .post(server.url("/api/v1/terminals"))
+        .json(&serde_json::json!({"cols": 80, "rows": 24}))
+        .send()
+        .await
+        .unwrap();
+    assert_eq!(resp.status(), 201, "legacy payload must stay compatible");
 }

@@ -284,6 +284,7 @@ export function DesktopCanvas() {
                 rootId={win.props?.rootId}
                 filePath={win.props?.filePath}
                 initialRoot={win.props?.initialRoot}
+                winId={win.id}
               />
             )}
             {win.appId === 'monitor' && <SystemMonitorView />}

@@ -174,3 +174,13 @@
 | SEC-006 CSPRNG session/attach token + real-IP rate limit | SEC-006 | Unit / Integration | Portable | Passed |
 
 
+| EDT-001 Integrated terminal spawn-on-demand, toggle no duplicate | EDT-001 | Integration / Frontend Unit | Portable | Passed |
+| EDT-002 Terminal cwd from opened folder via AllowedRoots resolve | EDT-002 | Integration / Security | Portable | Passed |
+| EDT-003 Split panel editor-terminal resize clamp 0.25..0.75 | EDT-003 | Component / Perf | Portable | Passed |
+| EDT-004 Terminal lifecycle: restart keeps cwd, exit overlay | EDT-004 | Integration | Portable | Passed |
+| EDT-005 MAX_SESSIONS friendly guard on integrated terminal spawn | EDT-005 | Integration | Portable | Passed |
+| EDT-006 FolderPicker modal mode folder/file depth-1 lazy listing | EDT-006 | Frontend Component | Portable | Passed |
+| EDT-007 Editor workspace state persisted per window with fallback | EDT-007 | Frontend Component | Portable | Passed |
+| EDT-008 Menu File Open File/Open Folder + Ctrl+O and Ctrl+K O chord | EDT-008 | Frontend Component | Portable | Passed |
+| EDT-009 Terminal follows folder change with Replace/Keep dialog | EDT-009 | Integration | Portable | Passed |
+| EDT-010 Status bar folder active + git branch badge poll 30s | EDT-010 | Frontend Component | Portable | Passed |

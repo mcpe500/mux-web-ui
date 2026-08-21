@@ -1,23 +1,23 @@
 # Graph Report - mux-web-ui  (2026-08-21)
 
 ## Corpus Check
-- 73 files · ~72,130 words
+- 78 files · ~75,832 words
 - Verdict: corpus is large enough that graph structure adds value.
 
 ## Summary
-- 1048 nodes · 1844 edges · 59 communities (56 shown, 3 thin omitted)
-- Extraction: 96% EXTRACTED · 4% INFERRED · 0% AMBIGUOUS · INFERRED: 67 edges (avg confidence: 0.82)
+- 1076 nodes · 1913 edges · 56 communities (53 shown, 3 thin omitted)
+- Extraction: 96% EXTRACTED · 4% INFERRED · 0% AMBIGUOUS · INFERRED: 70 edges (avg confidence: 0.82)
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `ef4257ff`
+- Built from commit: `62fdb7bb`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
 ## Community Hubs (Navigation)
 - http.rs
 - SessionRegistry
-- TestServer
+- TextEditorView.tsx
 - auth.rs
 - Mux Web UI — TDD and verification plan
 - Mux Web UI — v0.2 plan: Auth + TLS, Session Persistence, Test Suite & CI
@@ -26,7 +26,7 @@
 - PtySession
 - package.json
 - compilerOptions
-- Config
+- start_server
 - Mux Web UI — v0.5 plan: Workspace & Desktop System + File Manager (Windows Explorer Sempurna) + Editor (VS Code Sempurna) + Browser — Lebih Baik & Tidak Ngelag
 - Mux Web UI — v0.2.1 plan: Distribution (prebuilt binary + installer tanpa Rust)
 - 4. SISA PEKERJAAN — Apa yang Belum Selesai
@@ -58,7 +58,6 @@
 - packages.rs
 - Handoff 001 - Progress & Backlog (v0.2)
 - git_tests.rs
-- 0. Milestone PRE — Hardening Gate (SEC-004..006) — WAJIB PERTAMA
 - ArchiveModal.tsx
 - start_health_server
 - 11. Definition of Done — Sempurna = Lengkap + Lebih Baik + Tidak Ngelag
@@ -68,31 +67,29 @@
 - 2. Desktop System — Sempurna (`DESK-001..008`) — Lebih Baik dari Windows
 - 3. File Manager Windows-like — Sempurna (`FM-001..018`) — Recreation + Lebih Baik
 - 3b. Browser Inside Desktop — Sempurna (`BR-001..006`) — Chrome-like
-- v0.2 Implementation Checklist & Verification Matrix
-- 3. Milestone C — Read-only Share Links (`SHR-001..008`) — v0.4.0 (Bersama Archive)
 
 ## God Nodes (most connected - your core abstractions)
 1. `AppState` - 43 edges
-2. `SessionRegistry` - 28 edges
-3. `start_health_server()` - 28 edges
+2. `start_health_server()` - 30 edges
+3. `SessionRegistry` - 28 edges
 4. `TestServer` - 25 edges
 5. `ShareRegistry` - 19 edges
 6. `PtySession` - 17 edges
 7. `TerminalSessionInstance` - 17 edges
 8. `compilerOptions` - 17 edges
 9. `AuthState` - 16 edges
-10. `Mux Web UI — v0.4 plan: Developer Suite (Git UI, Package Center, Read-only Share Links, Archive Manager)` - 16 edges
+10. `start_server()` - 16 edges
 
 ## Surprising Connections (you probably didn't know these)
 - `SESS Requirement Family` --conceptually_related_to--> `RingBuffer`  [INFERRED]
   tests/traceability.md → src/session.rs
-- `test_edit_001_file_read_and_atomic_write()` --calls--> `create_router()`  [INFERRED]
-  tests/editor_tests.rs → src/http.rs
 - `Handoff 001 - Progress & Backlog (v0.2)` --references--> `TestServer`  [EXTRACTED]
   spec/handoff/001.progress-and-backlog.md → tests/common/mod.rs
 - `PERF Requirement Family` --references--> `check_budget.sh Budget Gate Script`  [INFERRED]
   tests/traceability.md → .github/workflows/ci.yml
 - `PTY Interactive Terminal (xterm.js)` --semantically_similar_to--> `TERM Requirement Family`  [INFERRED] [semantically similar]
+  README.md → tests/traceability.md
+- `File Explorer` --semantically_similar_to--> `FS Requirement Family`  [INFERRED] [semantically similar]
   README.md → tests/traceability.md
 
 ## Import Cycles
@@ -103,7 +100,7 @@
 - **v0.2 Milestone B Session Persistence Workstream** — spec_handoff_001_progress_and_backlog_milestone_b, src_session_sessionregistry, src_session_ringbuffer, spec_handoff_001_progress_and_backlog_life_002_orphan_cleanup, tests_session_tests [INFERRED 0.85]
 - **CI Release Gate (test-and-lint + cross-check + budget-check required)** — _github_workflows_ci_testandlint, _github_workflows_ci_crosscheck, _github_workflows_ci_budgetcheck, _github_workflows_ci_release [EXTRACTED 1.00]
 
-## Communities (59 total, 3 thin omitted)
+## Communities (56 total, 3 thin omitted)
 
 ### Community 0 - "http.rs"
 Cohesion: 0.09
@@ -113,9 +110,9 @@ Nodes (83): Body, ConnectInfo, HeaderMap, IntoResponse, Json, Next, Query, Reque
 Cohesion: 0.09
 Nodes (37): AtomicBool, AtomicU64, LIFE-002 Orphan Child Cleanup, Milestone B: Session Persistence, Checklist Milestone B: Session Persistence (B.1-B.9), AttachError, AttachInfo, PendingAttach (+29 more)
 
-### Community 2 - "TestServer"
-Cohesion: 0.09
-Nodes (38): Client, JoinHandle, MaybeTlsStream, Router, create_router(), TcpStream, authed_ws_connect(), Drop (+30 more)
+### Community 2 - "TextEditorView.tsx"
+Cohesion: 0.12
+Nodes (27): clampRatio(), cwdPayload(), EditorWS, loadPersistedWorkspace(), nextTerminalAction(), parseGitBranch(), persistWorkspace(), safeLoadWorkspace() (+19 more)
 
 ### Community 3 - "auth.rs"
 Cohesion: 0.11
@@ -130,8 +127,8 @@ Cohesion: 0.06
 Nodes (34): 10. Keputusan desain dan open questions, 11. Bukan scope v0.2, 12. Urutan pengerjaan (TDD), 13. Risiko Termux/Android untuk auth, 14. Definition of done v0.2, 1.1 Fakta kode v0.1 yang menjadi titik awal, 1.2 Scope v0.2, 1. Latar belakang dan risiko (+26 more)
 
 ### Community 6 - "DesktopCanvas.tsx"
-Cohesion: 0.05
-Nodes (40): SPA mount point (#app + main.tsx), App(), BrowserView(), Tab, FsEntry, FsRoot, TabData, TextEditorView() (+32 more)
+Cohesion: 0.06
+Nodes (33): SPA mount point (#app + main.tsx), App(), BrowserView(), Tab, DirectoryListing, FileEntry, FileExplorerView(), FileExplorerViewProps (+25 more)
 
 ### Community 7 - "Mux Web UI — implementation plan"
 Cohesion: 0.06
@@ -149,9 +146,9 @@ Nodes (25): preact, @preact/preset-vite, typescript, vite, vitest, dependencies,
 Cohesion: 0.09
 Nodes (22): DOM, DOM.Iterable, ES2020, src, compilerOptions, allowImportingTsExtensions, isolatedModules, jsx (+14 more)
 
-### Community 11 - "Config"
-Cohesion: 0.08
-Nodes (33): Box, Config, IpAddr, Option, PathBuf, String, generate_self_signed_cert(), main() (+25 more)
+### Community 11 - "start_server"
+Cohesion: 0.06
+Nodes (47): Box, Router, Config, IpAddr, Option, PathBuf, String, create_router() (+39 more)
 
 ### Community 12 - "Mux Web UI — v0.5 plan: Workspace & Desktop System + File Manager (Windows Explorer Sempurna) + Editor (VS Code Sempurna) + Browser — Lebih Baik & Tidak Ngelag"
 Cohesion: 0.12
@@ -194,16 +191,16 @@ Cohesion: 0.04
 Nodes (45): 10. Konfigurasi Baru (CLI Flags & Env Vars), 11. Bukan Scope (Out of Scope v0.4), 12.1 Apa Maunya v0.4?, 12.2 Apakah Sudah Cocok? — 85% Ya, 12.3 Apakah Sudah Sempurna? — Belum (Gap Audit), 12.4 Rencana Fase Bertahap (Keputusan: Opsi A — Recommended), 12.5 Alternatif Opsi B (Monolit — Tidak Dipilih), 12. Evaluasi Kelayakan v0.4: Apakah Cocok & Sempurna? (+37 more)
 
 ### Community 22 - "v0.2.1 Plan: Distribution (prebuilt binary + installer)"
-Cohesion: 0.33
-Nodes (11): cross-check Job (Android ARM64 cargo check), install.sh, Backup & Auto-Rollback (mux-web.bak), Binary-first Distribution Principle, SHA-256 Checksum Verification, DIST Requirement Family (DIST-001..014), v0.2.1 Plan: Distribution (prebuilt binary + installer), v0.2.1 Milestone A: Multi-target Release Pipeline (+3 more)
+Cohesion: 0.22
+Nodes (17): install.sh, v0.2 Implementation Checklist & Verification Matrix, TDD Execution Loop (Red-Green-Refactor), Backup & Auto-Rollback (mux-web.bak), Binary-first Distribution Principle, SHA-256 Checksum Verification, DIST Requirement Family (DIST-001..014), v0.2.1 Plan: Distribution (prebuilt binary + installer) (+9 more)
 
 ### Community 23 - "Companion Checklist — v0.5 Workspace, Desktop & File Manager Sempurna (Windows Explorer + VS Code + Browser) — Lebih Baik & Tidak Ngelag"
 Cohesion: 0.22
 Nodes (7): 0. Keputusan Desain Final (Sudah Dijawab — Konfirmasi), 3a. Editor VS Code-like — Sempurna (`ED-001..010`) — Lebih Baik & Tidak Ngelag, 4. DoD & Quality Gates — Sempurna = Lengkap + Lebih Baik + Tidak Ngelag, Companion Checklist — v0.5 Workspace, Desktop & File Manager Sempurna (Windows Explorer + VS Code + Browser) — Lebih Baik & Tidak Ngelag, Green, Impl, Red Tests (`web/src/apps/editor/*.test.tsx`)
 
 ### Community 24 - "Companion Checklist — v0.4 Plan: Developer Suite"
-Cohesion: 0.15
-Nodes (13): 1. Milestone A — Git UI (`GIT-001..010`) — v0.4.1, 2. Milestone B — Package Center (`PKG-001..008`) — v0.4.2 (Terakhir, Non-Sudo Dulu), 4. Milestone D — Archive Manager (`ARC-001..008`) — v0.4.0 (Bersama Share), 5. Milestone E — Desktop Frontend & UI (`WIN-010..013`), 6. Definition of Done & Quality Checks (Per Fase + Final), Backend Implementation (`src/archive.rs` & `src/http.rs` / `src/routes/archive.rs`), Backend Implementation (`src/git.rs` & `src/http.rs` / `src/routes/git.rs`), Backend Implementation (`src/packages.rs` & `src/http.rs` / `src/routes/packages.rs`) (+5 more)
+Cohesion: 0.11
+Nodes (19): 0. Milestone PRE — Hardening Gate (SEC-004..006) — WAJIB PERTAMA, 1. Milestone A — Git UI (`GIT-001..010`) — v0.4.1, 2. Milestone B — Package Center (`PKG-001..008`) — v0.4.2 (Terakhir, Non-Sudo Dulu), 3. Milestone C — Read-only Share Links (`SHR-001..008`) — v0.4.0 (Bersama Archive), 4. Milestone D — Archive Manager (`ARC-001..008`) — v0.4.0 (Bersama Share), 5. Milestone E — Desktop Frontend & UI (`WIN-010..013`), 6. Definition of Done & Quality Checks (Per Fase + Final), Backend Implementation (`src/archive.rs` & `src/http.rs` / `src/routes/archive.rs`) (+11 more)
 
 ### Community 25 - "static_handler"
 Cohesion: 0.40
@@ -262,20 +259,16 @@ Cohesion: 0.20
 Nodes (8): PackageBackend, PackageBackendKind, PackageInfo, PackageService, Display, Formatter, Result, String
 
 ### Community 45 - "Handoff 001 - Progress & Backlog (v0.2)"
-Cohesion: 0.50
-Nodes (8): budget-check Job (check_budget.sh), release Job (artifact + checksum upload), test-and-lint Job (fmt, clippy, tests), CI & Release Workflow, check_budget.sh Budget Gate Script, Handoff 001 - Progress & Backlog (v0.2), Checklist Langkah 4: CI (C.1-C.6), CI Requirement Family
+Cohesion: 0.38
+Nodes (10): budget-check Job (check_budget.sh), cross-check Job (Android ARM64 cargo check), release Job (artifact + checksum upload), test-and-lint Job (fmt, clippy, tests), CI & Release Workflow, check_budget.sh Budget Gate Script, Handoff 001 - Progress & Backlog (v0.2), Checklist Langkah 4: CI (C.1-C.6) (+2 more)
 
 ### Community 46 - "git_tests.rs"
 Cohesion: 0.36
 Nodes (5): init_git_repo(), Path, test_git_001_status_porcelain_parsing(), test_git_002_diff_unified_parser(), test_git_005_branch_list()
 
-### Community 47 - "0. Milestone PRE — Hardening Gate (SEC-004..006) — WAJIB PERTAMA"
-Cohesion: 0.67
-Nodes (3): 0. Milestone PRE — Hardening Gate (SEC-004..006) — WAJIB PERTAMA, Backend Implementation (`src/session.rs` & `src/http.rs` & `src/auth.rs` & `src/routes/*`), Test Suite Baru (`tests/security_tests.rs`)
-
 ### Community 49 - "start_health_server"
-Cohesion: 0.08
-Nodes (43): Bytes, CodecError, decode_frame(), encode_frame(), Frame, Display, Error, Formatter (+35 more)
+Cohesion: 0.06
+Nodes (70): Bytes, Client, JoinHandle, MaybeTlsStream, CodecError, decode_frame(), encode_frame(), Frame (+62 more)
 
 ### Community 50 - "11. Definition of Done — Sempurna = Lengkap + Lebih Baik + Tidak Ngelag"
 Cohesion: 0.40
@@ -305,33 +298,25 @@ Nodes (4): 3. File Manager Windows-like — Sempurna (`FM-001..018`) — Recreat
 Cohesion: 0.50
 Nodes (4): 3b. Browser Inside Desktop — Sempurna (`BR-001..006`) — Chrome-like, Green, Impl, Red Tests (`web/src/apps/browser/*.test.tsx`)
 
-### Community 57 - "v0.2 Implementation Checklist & Verification Matrix"
-Cohesion: 0.31
-Nodes (8): v0.2 Implementation Checklist & Verification Matrix, TDD Execution Loop (Red-Green-Refactor), MUX_WEB_* Configuration (BASE_URL/VERSION/INSTALL_DIR), v0.2.1 Implementation Checklist & Verification Matrix, CI installer-test Job (4 scenarios), TDD Execution Loop (scenario-based), uninstall.sh, update.sh
-
-### Community 58 - "3. Milestone C — Read-only Share Links (`SHR-001..008`) — v0.4.0 (Bersama Archive)"
-Cohesion: 0.67
-Nodes (3): 3. Milestone C — Read-only Share Links (`SHR-001..008`) — v0.4.0 (Bersama Archive), Backend Implementation (`src/share.rs` & `src/http.rs` / `src/routes/share.rs`), Test Suite (`tests/share_tests.rs`)
-
 ## Knowledge Gaps
-- **345 isolated node(s):** `check_budget.sh script`, `Assets`, `uninstall.sh script`, `name`, `private` (+340 more)
+- **352 isolated node(s):** `check_budget.sh script`, `Assets`, `uninstall.sh script`, `name`, `private` (+347 more)
   These have ≤1 connection - possible missing edges or undocumented components.
 - **3 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
 
 ## Suggested Questions
 _Questions this graph is uniquely positioned to answer:_
 
-- **Why does `Handoff 001 - Progress & Backlog (v0.2)` connect `Handoff 001 - Progress & Backlog (v0.2)` to `SessionRegistry`, `TestServer`, `PtySession`, `000a.plan-test.md`, `4. SISA PEKERJAAN — Apa yang Belum Selesai`, `auth_tests.rs`, `v0.2 Implementation Checklist & Verification Matrix`?**
-  _High betweenness centrality (0.165) - this node is a cross-community bridge._
-- **Why does `v0.2 Implementation Checklist & Verification Matrix` connect `v0.2 Implementation Checklist & Verification Matrix` to `SessionRegistry`, `Requirement Traceability Matrix`, `000a.plan-test.md`, `Handoff 001 - Progress & Backlog (v0.2)`, `auth_tests.rs`, `Mux Web UI — v0.2 Implementation Checklist & Verification Matrix`, `v0.2.1 Plan: Distribution (prebuilt binary + installer)`?**
+- **Why does `Handoff 001 - Progress & Backlog (v0.2)` connect `Handoff 001 - Progress & Backlog (v0.2)` to `SessionRegistry`, `PtySession`, `000a.plan-test.md`, `4. SISA PEKERJAAN — Apa yang Belum Selesai`, `auth_tests.rs`, `start_health_server`, `v0.2.1 Plan: Distribution (prebuilt binary + installer)`?**
+  _High betweenness centrality (0.148) - this node is a cross-community bridge._
+- **Why does `v0.2 Implementation Checklist & Verification Matrix` connect `v0.2.1 Plan: Distribution (prebuilt binary + installer)` to `SessionRegistry`, `Requirement Traceability Matrix`, `000a.plan-test.md`, `Handoff 001 - Progress & Backlog (v0.2)`, `auth_tests.rs`, `Mux Web UI — v0.2 Implementation Checklist & Verification Matrix`?**
   _High betweenness centrality (0.141) - this node is a cross-community bridge._
-- **Why does `TestServer` connect `TestServer` to `start_health_server`, `Handoff 001 - Progress & Backlog (v0.2)`, `SessionRegistry`, `auth_tests.rs`?**
-  _High betweenness centrality (0.112) - this node is a cross-community bridge._
-- **Are the 25 inferred relationships involving `start_health_server()` (e.g. with `test_pkg_002_list_installed_packages_via_http()` and `test_pkg_003_search_repository_packages()`) actually correct?**
-  _`start_health_server()` has 25 INFERRED edges - model-reasoned connections that need verification._
+- **Why does `TestServer` connect `start_health_server` to `SessionRegistry`, `start_server`, `Handoff 001 - Progress & Backlog (v0.2)`, `auth_tests.rs`?**
+  _High betweenness centrality (0.110) - this node is a cross-community bridge._
+- **Are the 27 inferred relationships involving `start_health_server()` (e.g. with `test_pkg_002_list_installed_packages_via_http()` and `test_pkg_003_search_repository_packages()`) actually correct?**
+  _`start_health_server()` has 27 INFERRED edges - model-reasoned connections that need verification._
 - **What connects `check_budget.sh script`, `Assets`, `uninstall.sh script` to the rest of the system?**
-  _345 weakly-connected nodes found - possible documentation gaps or missing edges._
+  _352 weakly-connected nodes found - possible documentation gaps or missing edges._
 - **Should `http.rs` be split into smaller, more focused modules?**
-  _Cohesion score 0.08806655192197362 - nodes in this community are weakly interconnected._
+  _Cohesion score 0.08835341365461848 - nodes in this community are weakly interconnected._
 - **Should `SessionRegistry` be split into smaller, more focused modules?**
   _Cohesion score 0.08956228956228957 - nodes in this community are weakly interconnected._
