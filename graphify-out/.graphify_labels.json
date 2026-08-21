@@ -1,6 +1,7 @@
 {
   "0": "http.rs",
   "1": "SessionRegistry",
+  "2": "TestServer",
   "3": "auth.rs",
   "4": "Mux Web UI — TDD and verification plan",
   "5": "Mux Web UI — v0.2 plan: Auth + TLS, Session Persistence, Test Suite & CI",
@@ -9,7 +10,7 @@
   "8": "PtySession",
   "9": "package.json",
   "10": "compilerOptions",
-  "11": "start_server",
+  "11": "Config",
   "12": "Mux Web UI — v0.5 plan: Workspace & Desktop System + File Manager (Windows Explorer Sempurna) + Editor (VS Code Sempurna) + Browser — Lebih Baik & Tidak Ngelag",
   "13": "Mux Web UI — v0.2.1 plan: Distribution (prebuilt binary + installer tanpa Rust)",
   "14": "4. SISA PEKERJAAN — Apa yang Belum Selesai",
@@ -33,8 +34,8 @@
   "32": "lib.rs",
   "33": "vite.config.ts",
   "34": "Mux Web UI — v0.3 Implementation Checklist & Verification Matrix",
-  "35": "Handoff 002 — Terminal Resizing & Window Control Hardening (v0.3)",
-  "36": "1. Milestone A — Git UI (`GIT-001..010`) — v0.4.1",
+  "35": "Mux Web UI — v0.6 plan: Editor Integrated Terminal (Beneran Jalan) + Open File & Open Folder ala VS Code — Sempurna & Tidak Ngelag",
+  "36": "1. Milestone A — Integrated Terminal (`EDT-001..005`)",
   "37": "ArchiveError",
   "38": "Mux Web UI ⚡",
   "39": "GitError",
@@ -42,8 +43,8 @@
   "41": "Requirement Traceability Matrix",
   "42": "Mux Web UI — v0.2.1 Implementation Checklist & Verification Matrix",
   "43": "packages.rs",
-  "44": "v0.2 Implementation Checklist & Verification Matrix",
-  "45": "CI & Release Workflow",
+  "44": "000a.plan-test.md",
+  "45": "Handoff 001 - Progress & Backlog (v0.2)",
   "46": "git_tests.rs",
   "47": "0. Milestone PRE — Hardening Gate (SEC-004..006) — WAJIB PERTAMA",
   "48": "ArchiveModal.tsx",
@@ -54,5 +55,7 @@
   "53": "1. Workspace System — Sempurna (`WS-001..008`)",
   "54": "2. Desktop System — Sempurna (`DESK-001..008`) — Lebih Baik dari Windows",
   "55": "3. File Manager Windows-like — Sempurna (`FM-001..018`) — Recreation + Lebih Baik",
-  "56": "3b. Browser Inside Desktop — Sempurna (`BR-001..006`) — Chrome-like"
+  "56": "3b. Browser Inside Desktop — Sempurna (`BR-001..006`) — Chrome-like",
+  "57": "v0.2 Implementation Checklist & Verification Matrix",
+  "58": "3. Milestone C — Read-only Share Links (`SHR-001..008`) — v0.4.0 (Bersama Archive)"
 }

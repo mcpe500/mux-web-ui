@@ -992,7 +992,7 @@
       "_origin": "ast",
       "id": "src_config",
       "community": 11,
-      "community_name": "start_server",
+      "community_name": "Config",
       "norm_label": "config.rs"
     },
     {
@@ -1003,7 +1003,7 @@
       "_origin": "ast",
       "id": "src_config_config",
       "community": 11,
-      "community_name": "start_server",
+      "community_name": "Config",
       "norm_label": "config"
     },
     {
@@ -1014,7 +1014,7 @@
       "_origin": "ast",
       "id": "src_config_rs_ipaddr",
       "community": 11,
-      "community_name": "start_server",
+      "community_name": "Config",
       "norm_label": "ipaddr"
     },
     {
@@ -1025,7 +1025,7 @@
       "_origin": "ast",
       "id": "src_config_rs_option",
       "community": 11,
-      "community_name": "start_server",
+      "community_name": "Config",
       "norm_label": "option"
     },
     {
@@ -1036,7 +1036,7 @@
       "_origin": "ast",
       "id": "src_config_rs_pathbuf",
       "community": 11,
-      "community_name": "start_server",
+      "community_name": "Config",
       "norm_label": "pathbuf"
     },
     {
@@ -1047,7 +1047,7 @@
       "_origin": "ast",
       "id": "src_config_rs_string",
       "community": 11,
-      "community_name": "start_server",
+      "community_name": "Config",
       "norm_label": "string"
     },
     {
@@ -1058,7 +1058,7 @@
       "_origin": "ast",
       "id": "src_config_config_effective_bind",
       "community": 11,
-      "community_name": "start_server",
+      "community_name": "Config",
       "norm_label": ".effective_bind()"
     },
     {
@@ -1069,7 +1069,7 @@
       "_origin": "ast",
       "id": "src_config_config_tls_enabled",
       "community": 11,
-      "community_name": "start_server",
+      "community_name": "Config",
       "norm_label": ".tls_enabled()"
     },
     {
@@ -1080,7 +1080,7 @@
       "_origin": "ast",
       "id": "src_config_config_data_dir",
       "community": 11,
-      "community_name": "start_server",
+      "community_name": "Config",
       "norm_label": ".data_dir()"
     },
     {
@@ -1420,8 +1420,8 @@
       "source_location": "L64",
       "_origin": "ast",
       "id": "src_http_create_router",
-      "community": 11,
-      "community_name": "start_server",
+      "community": 2,
+      "community_name": "TestServer",
       "norm_label": "create_router()"
     },
     {
@@ -1431,8 +1431,8 @@
       "source_location": "",
       "_origin": "ast",
       "id": "router",
-      "community": 11,
-      "community_name": "start_server",
+      "community": 2,
+      "community_name": "TestServer",
       "norm_label": "router"
     },
     {
@@ -2301,7 +2301,7 @@
       "_origin": "ast",
       "id": "src_main",
       "community": 11,
-      "community_name": "start_server",
+      "community_name": "Config",
       "norm_label": "main.rs"
     },
     {
@@ -2312,7 +2312,7 @@
       "_origin": "ast",
       "id": "src_main_private_ips",
       "community": 11,
-      "community_name": "start_server",
+      "community_name": "Config",
       "norm_label": "private_ips()"
     },
     {
@@ -2323,7 +2323,7 @@
       "_origin": "ast",
       "id": "src_main_rs_vec",
       "community": 11,
-      "community_name": "start_server",
+      "community_name": "Config",
       "norm_label": "vec"
     },
     {
@@ -2334,7 +2334,7 @@
       "_origin": "ast",
       "id": "src_main_rs_ipaddr",
       "community": 11,
-      "community_name": "start_server",
+      "community_name": "Config",
       "norm_label": "ipaddr"
     },
     {
@@ -2345,7 +2345,7 @@
       "_origin": "ast",
       "id": "src_main_generate_self_signed_cert",
       "community": 11,
-      "community_name": "start_server",
+      "community_name": "Config",
       "norm_label": "generate_self_signed_cert()"
     },
     {
@@ -2356,7 +2356,7 @@
       "_origin": "ast",
       "id": "src_main_rs_path",
       "community": 11,
-      "community_name": "start_server",
+      "community_name": "Config",
       "norm_label": "path"
     },
     {
@@ -2367,7 +2367,7 @@
       "_origin": "ast",
       "id": "src_main_rs_result",
       "community": 11,
-      "community_name": "start_server",
+      "community_name": "Config",
       "norm_label": "result"
     },
     {
@@ -2378,7 +2378,7 @@
       "_origin": "ast",
       "id": "src_main_rs_pathbuf",
       "community": 11,
-      "community_name": "start_server",
+      "community_name": "Config",
       "norm_label": "pathbuf"
     },
     {
@@ -2389,7 +2389,7 @@
       "_origin": "ast",
       "id": "box",
       "community": 11,
-      "community_name": "start_server",
+      "community_name": "Config",
       "norm_label": "box"
     },
     {
@@ -2400,7 +2400,7 @@
       "_origin": "ast",
       "id": "src_main_rs_error",
       "community": 11,
-      "community_name": "start_server",
+      "community_name": "Config",
       "norm_label": "error"
     },
     {
@@ -2411,7 +2411,7 @@
       "_origin": "ast",
       "id": "src_main_main",
       "community": 11,
-      "community_name": "start_server",
+      "community_name": "Config",
       "norm_label": "main()"
     },
     {
@@ -2554,7 +2554,7 @@
       "_origin": "ast",
       "id": "src_paths",
       "community": 11,
-      "community_name": "start_server",
+      "community_name": "Config",
       "norm_label": "paths.rs"
     },
     {
@@ -2565,7 +2565,7 @@
       "_origin": "ast",
       "id": "src_paths_patherror",
       "community": 11,
-      "community_name": "start_server",
+      "community_name": "Config",
       "norm_label": "patherror"
     },
     {
@@ -2576,7 +2576,7 @@
       "_origin": "ast",
       "id": "src_paths_rs_string",
       "community": 11,
-      "community_name": "start_server",
+      "community_name": "Config",
       "norm_label": "string"
     },
     {
@@ -2587,7 +2587,7 @@
       "_origin": "ast",
       "id": "src_paths_rs_display",
       "community": 11,
-      "community_name": "start_server",
+      "community_name": "Config",
       "norm_label": "display"
     },
     {
@@ -2598,7 +2598,7 @@
       "_origin": "ast",
       "id": "src_paths_patherror_fmt",
       "community": 11,
-      "community_name": "start_server",
+      "community_name": "Config",
       "norm_label": ".fmt()"
     },
     {
@@ -2609,7 +2609,7 @@
       "_origin": "ast",
       "id": "src_paths_rs_formatter",
       "community": 11,
-      "community_name": "start_server",
+      "community_name": "Config",
       "norm_label": "formatter"
     },
     {
@@ -2620,7 +2620,7 @@
       "_origin": "ast",
       "id": "src_paths_rs_result",
       "community": 11,
-      "community_name": "start_server",
+      "community_name": "Config",
       "norm_label": "result"
     },
     {
@@ -2631,7 +2631,7 @@
       "_origin": "ast",
       "id": "src_paths_rs_error",
       "community": 11,
-      "community_name": "start_server",
+      "community_name": "Config",
       "norm_label": "error"
     },
     {
@@ -2642,7 +2642,7 @@
       "_origin": "ast",
       "id": "src_paths_allowedroots",
       "community": 11,
-      "community_name": "start_server",
+      "community_name": "Config",
       "norm_label": "allowedroots"
     },
     {
@@ -2653,7 +2653,7 @@
       "_origin": "ast",
       "id": "src_paths_rs_hashmap",
       "community": 11,
-      "community_name": "start_server",
+      "community_name": "Config",
       "norm_label": "hashmap"
     },
     {
@@ -2664,7 +2664,7 @@
       "_origin": "ast",
       "id": "src_paths_rs_pathbuf",
       "community": 11,
-      "community_name": "start_server",
+      "community_name": "Config",
       "norm_label": "pathbuf"
     },
     {
@@ -2675,7 +2675,7 @@
       "_origin": "ast",
       "id": "src_paths_allowedroots_new",
       "community": 11,
-      "community_name": "start_server",
+      "community_name": "Config",
       "norm_label": ".new()"
     },
     {
@@ -2686,7 +2686,7 @@
       "_origin": "ast",
       "id": "src_paths_rs_vec",
       "community": 11,
-      "community_name": "start_server",
+      "community_name": "Config",
       "norm_label": "vec"
     },
     {
@@ -2697,7 +2697,7 @@
       "_origin": "ast",
       "id": "src_paths_rs_self",
       "community": 11,
-      "community_name": "start_server",
+      "community_name": "Config",
       "norm_label": "self"
     },
     {
@@ -2708,7 +2708,7 @@
       "_origin": "ast",
       "id": "src_paths_allowedroots_get_root",
       "community": 11,
-      "community_name": "start_server",
+      "community_name": "Config",
       "norm_label": ".get_root()"
     },
     {
@@ -2719,7 +2719,7 @@
       "_origin": "ast",
       "id": "src_paths_allowedroots_list_roots",
       "community": 11,
-      "community_name": "start_server",
+      "community_name": "Config",
       "norm_label": ".list_roots()"
     },
     {
@@ -2730,7 +2730,7 @@
       "_origin": "ast",
       "id": "src_paths_allowedroots_resolve_path",
       "community": 11,
-      "community_name": "start_server",
+      "community_name": "Config",
       "norm_label": ".resolve_path()"
     },
     {
@@ -2741,7 +2741,7 @@
       "_origin": "ast",
       "id": "src_paths_test_fs_001_allowed_roots_resolution",
       "community": 11,
-      "community_name": "start_server",
+      "community_name": "Config",
       "norm_label": "test_fs_001_allowed_roots_resolution()"
     },
     {
@@ -2752,7 +2752,7 @@
       "_origin": "ast",
       "id": "src_paths_test_fs_002_path_traversal_defense",
       "community": 11,
-      "community_name": "start_server",
+      "community_name": "Config",
       "norm_label": "test_fs_002_path_traversal_defense()"
     },
     {
@@ -2763,7 +2763,7 @@
       "_origin": "ast",
       "id": "src_paths_test_fs_003_symlink_containment",
       "community": 11,
-      "community_name": "start_server",
+      "community_name": "Config",
       "norm_label": "test_fs_003_symlink_containment()"
     },
     {
@@ -2774,7 +2774,7 @@
       "_origin": "ast",
       "id": "src_paths_test_fs_014_independent_root_validation",
       "community": 11,
-      "community_name": "start_server",
+      "community_name": "Config",
       "norm_label": "test_fs_014_independent_root_validation()"
     },
     {
@@ -2785,7 +2785,7 @@
       "_origin": "ast",
       "id": "src_paths_test_fs_016_hardlink_escape_rejected",
       "community": 11,
-      "community_name": "start_server",
+      "community_name": "Config",
       "norm_label": "test_fs_016_hardlink_escape_rejected()"
     },
     {
@@ -2796,7 +2796,7 @@
       "_origin": "ast",
       "id": "src_paths_test_fs_017_encoding_and_literal_matrix",
       "community": 11,
-      "community_name": "start_server",
+      "community_name": "Config",
       "norm_label": "test_fs_017_encoding_and_literal_matrix()"
     },
     {
@@ -4533,8 +4533,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "tests_common_mod",
-      "community": 11,
-      "community_name": "start_server",
+      "community": 2,
+      "community_name": "TestServer",
       "norm_label": "mod.rs"
     },
     {
@@ -4544,8 +4544,8 @@
       "source_location": "L13",
       "_origin": "ast",
       "id": "tests_common_mod_test_auth",
-      "community": 11,
-      "community_name": "start_server",
+      "community": 2,
+      "community_name": "TestServer",
       "norm_label": "test_auth()"
     },
     {
@@ -4555,8 +4555,8 @@
       "source_location": "L17",
       "_origin": "ast",
       "id": "tests_common_mod_testserver",
-      "community": 49,
-      "community_name": "start_health_server",
+      "community": 2,
+      "community_name": "TestServer",
       "norm_label": "testserver"
     },
     {
@@ -4566,8 +4566,8 @@
       "source_location": "",
       "_origin": "ast",
       "id": "tests_common_mod_rs_string",
-      "community": 49,
-      "community_name": "start_health_server",
+      "community": 2,
+      "community_name": "TestServer",
       "norm_label": "string"
     },
     {
@@ -4577,8 +4577,8 @@
       "source_location": "",
       "_origin": "ast",
       "id": "client",
-      "community": 49,
-      "community_name": "start_health_server",
+      "community": 2,
+      "community_name": "TestServer",
       "norm_label": "client"
     },
     {
@@ -4588,8 +4588,8 @@
       "source_location": "",
       "_origin": "ast",
       "id": "tests_common_mod_rs_option",
-      "community": 49,
-      "community_name": "start_health_server",
+      "community": 2,
+      "community_name": "TestServer",
       "norm_label": "option"
     },
     {
@@ -4599,8 +4599,8 @@
       "source_location": "",
       "_origin": "ast",
       "id": "joinhandle",
-      "community": 49,
-      "community_name": "start_health_server",
+      "community": 2,
+      "community_name": "TestServer",
       "norm_label": "joinhandle"
     },
     {
@@ -4610,8 +4610,8 @@
       "source_location": "L26",
       "_origin": "ast",
       "id": "tests_common_mod_testserver_url",
-      "community": 49,
-      "community_name": "start_health_server",
+      "community": 2,
+      "community_name": "TestServer",
       "norm_label": ".url()"
     },
     {
@@ -4621,8 +4621,8 @@
       "source_location": "L31",
       "_origin": "ast",
       "id": "tests_common_mod_testserver_shutdown",
-      "community": 49,
-      "community_name": "start_health_server",
+      "community": 2,
+      "community_name": "TestServer",
       "norm_label": ".shutdown()"
     },
     {
@@ -4632,8 +4632,8 @@
       "source_location": "",
       "_origin": "ast",
       "id": "tests_common_mod_rs_drop",
-      "community": 49,
-      "community_name": "start_health_server",
+      "community": 2,
+      "community_name": "TestServer",
       "norm_label": "drop"
     },
     {
@@ -4654,8 +4654,8 @@
       "source_location": "L47",
       "_origin": "ast",
       "id": "tests_common_mod_start_server",
-      "community": 11,
-      "community_name": "start_server",
+      "community": 2,
+      "community_name": "TestServer",
       "norm_label": "start_server()"
     },
     {
@@ -4665,8 +4665,8 @@
       "source_location": "",
       "_origin": "ast",
       "id": "tests_common_mod_rs_vec",
-      "community": 11,
-      "community_name": "start_server",
+      "community": 2,
+      "community_name": "TestServer",
       "norm_label": "vec"
     },
     {
@@ -4676,8 +4676,8 @@
       "source_location": "",
       "_origin": "ast",
       "id": "tests_common_mod_rs_pathbuf",
-      "community": 11,
-      "community_name": "start_server",
+      "community": 2,
+      "community_name": "TestServer",
       "norm_label": "pathbuf"
     },
     {
@@ -4698,8 +4698,8 @@
       "source_location": "L72",
       "_origin": "ast",
       "id": "tests_common_mod_start_server_with_state",
-      "community": 11,
-      "community_name": "start_server",
+      "community": 2,
+      "community_name": "TestServer",
       "norm_label": "start_server_with_state()"
     },
     {
@@ -4709,8 +4709,8 @@
       "source_location": "L104",
       "_origin": "ast",
       "id": "tests_common_mod_testserver_auto_pair",
-      "community": 49,
-      "community_name": "start_health_server",
+      "community": 2,
+      "community_name": "TestServer",
       "norm_label": ".auto_pair()"
     },
     {
@@ -4720,8 +4720,8 @@
       "source_location": "L135",
       "_origin": "ast",
       "id": "tests_common_mod_authed_ws_connect",
-      "community": 49,
-      "community_name": "start_health_server",
+      "community": 2,
+      "community_name": "TestServer",
       "norm_label": "authed_ws_connect()"
     },
     {
@@ -4731,8 +4731,8 @@
       "source_location": "",
       "_origin": "ast",
       "id": "tests_common_mod_rs_result",
-      "community": 49,
-      "community_name": "start_health_server",
+      "community": 2,
+      "community_name": "TestServer",
       "norm_label": "result"
     },
     {
@@ -4742,8 +4742,8 @@
       "source_location": "",
       "_origin": "ast",
       "id": "websocketstream",
-      "community": 49,
-      "community_name": "start_health_server",
+      "community": 2,
+      "community_name": "TestServer",
       "norm_label": "websocketstream"
     },
     {
@@ -4753,8 +4753,8 @@
       "source_location": "",
       "_origin": "ast",
       "id": "maybetlsstream",
-      "community": 49,
-      "community_name": "start_health_server",
+      "community": 2,
+      "community_name": "TestServer",
       "norm_label": "maybetlsstream"
     },
     {
@@ -4764,8 +4764,8 @@
       "source_location": "",
       "_origin": "ast",
       "id": "tcpstream",
-      "community": 49,
-      "community_name": "start_health_server",
+      "community": 2,
+      "community_name": "TestServer",
       "norm_label": "tcpstream"
     },
     {
@@ -4776,7 +4776,7 @@
       "_origin": "ast",
       "id": "tests_editor_tests",
       "community": 11,
-      "community_name": "start_server",
+      "community_name": "Config",
       "norm_label": "editor_tests.rs"
     },
     {
@@ -4787,7 +4787,7 @@
       "_origin": "ast",
       "id": "tests_editor_tests_test_edit_001_file_read_and_atomic_write",
       "community": 11,
-      "community_name": "start_server",
+      "community_name": "Config",
       "norm_label": "test_edit_001_file_read_and_atomic_write()"
     },
     {
@@ -4797,8 +4797,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "tests_fs_tests",
-      "community": 11,
-      "community_name": "start_server",
+      "community": 2,
+      "community_name": "TestServer",
       "norm_label": "fs_tests.rs"
     },
     {
@@ -4808,8 +4808,8 @@
       "source_location": "L8",
       "_origin": "ast",
       "id": "tests_fs_tests_expect_rejected",
-      "community": 11,
-      "community_name": "start_server",
+      "community": 2,
+      "community_name": "TestServer",
       "norm_label": "expect_rejected()"
     },
     {
@@ -4819,8 +4819,8 @@
       "source_location": "L29",
       "_origin": "ast",
       "id": "tests_fs_tests_test_fs_002_traversal_dotdot_rejected",
-      "community": 11,
-      "community_name": "start_server",
+      "community": 2,
+      "community_name": "TestServer",
       "norm_label": "test_fs_002_traversal_dotdot_rejected()"
     },
     {
@@ -4830,8 +4830,8 @@
       "source_location": "L36",
       "_origin": "ast",
       "id": "tests_fs_tests_test_fs_017_encoded_slash_and_dots_rejected",
-      "community": 11,
-      "community_name": "start_server",
+      "community": 2,
+      "community_name": "TestServer",
       "norm_label": "test_fs_017_encoded_slash_and_dots_rejected()"
     },
     {
@@ -4841,8 +4841,8 @@
       "source_location": "L74",
       "_origin": "ast",
       "id": "tests_fs_tests_test_fs_017_overlong_utf8_and_nul_rejected",
-      "community": 11,
-      "community_name": "start_server",
+      "community": 2,
+      "community_name": "TestServer",
       "norm_label": "test_fs_017_overlong_utf8_and_nul_rejected()"
     },
     {
@@ -4852,8 +4852,8 @@
       "source_location": "L102",
       "_origin": "ast",
       "id": "tests_fs_tests_test_fs_003_symlink_escape_rejected",
-      "community": 11,
-      "community_name": "start_server",
+      "community": 2,
+      "community_name": "TestServer",
       "norm_label": "test_fs_003_symlink_escape_rejected()"
     },
     {
@@ -4863,8 +4863,8 @@
       "source_location": "L128",
       "_origin": "ast",
       "id": "tests_fs_tests_test_fs_016_hardlink_escape_rejected",
-      "community": 11,
-      "community_name": "start_server",
+      "community": 2,
+      "community_name": "TestServer",
       "norm_label": "test_fs_016_hardlink_escape_rejected()"
     },
     {
@@ -4874,8 +4874,8 @@
       "source_location": "L155",
       "_origin": "ast",
       "id": "tests_fs_tests_test_fs_002_normal_file_still_served",
-      "community": 11,
-      "community_name": "start_server",
+      "community": 2,
+      "community_name": "TestServer",
       "norm_label": "test_fs_002_normal_file_still_served()"
     },
     {
@@ -5050,8 +5050,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "tests_resize_tests",
-      "community": 49,
-      "community_name": "start_health_server",
+      "community": 2,
+      "community_name": "TestServer",
       "norm_label": "resize_tests.rs"
     },
     {
@@ -5061,8 +5061,8 @@
       "source_location": "L13",
       "_origin": "ast",
       "id": "tests_resize_tests_create_terminal_with_size",
-      "community": 49,
-      "community_name": "start_health_server",
+      "community": 2,
+      "community_name": "TestServer",
       "norm_label": "create_terminal_with_size()"
     },
     {
@@ -5072,8 +5072,8 @@
       "source_location": "",
       "_origin": "ast",
       "id": "tests_resize_tests_rs_option",
-      "community": 49,
-      "community_name": "start_health_server",
+      "community": 2,
+      "community_name": "TestServer",
       "norm_label": "option"
     },
     {
@@ -5083,8 +5083,8 @@
       "source_location": "",
       "_origin": "ast",
       "id": "tests_resize_tests_rs_value",
-      "community": 49,
-      "community_name": "start_health_server",
+      "community": 2,
+      "community_name": "TestServer",
       "norm_label": "value"
     },
     {
@@ -5094,8 +5094,8 @@
       "source_location": "L38",
       "_origin": "ast",
       "id": "tests_resize_tests_request_attach",
-      "community": 49,
-      "community_name": "start_health_server",
+      "community": 2,
+      "community_name": "TestServer",
       "norm_label": "request_attach()"
     },
     {
@@ -5105,8 +5105,8 @@
       "source_location": "L49",
       "_origin": "ast",
       "id": "tests_resize_tests_connect_ws",
-      "community": 49,
-      "community_name": "start_health_server",
+      "community": 2,
+      "community_name": "TestServer",
       "norm_label": "connect_ws()"
     },
     {
@@ -5116,8 +5116,8 @@
       "source_location": "",
       "_origin": "ast",
       "id": "tests_resize_tests_rs_ws",
-      "community": 49,
-      "community_name": "start_health_server",
+      "community": 2,
+      "community_name": "TestServer",
       "norm_label": "ws"
     },
     {
@@ -5127,8 +5127,8 @@
       "source_location": "L54",
       "_origin": "ast",
       "id": "tests_resize_tests_send_resize",
-      "community": 49,
-      "community_name": "start_health_server",
+      "community": 2,
+      "community_name": "TestServer",
       "norm_label": "send_resize()"
     },
     {
@@ -5138,8 +5138,8 @@
       "source_location": "L60",
       "_origin": "ast",
       "id": "tests_resize_tests_get_terminal_metadata",
-      "community": 49,
-      "community_name": "start_health_server",
+      "community": 2,
+      "community_name": "TestServer",
       "norm_label": "get_terminal_metadata()"
     },
     {
@@ -5149,8 +5149,8 @@
       "source_location": "L74",
       "_origin": "ast",
       "id": "tests_resize_tests_test_rsz_003_initial_terminal_creation_clamps_dimensions",
-      "community": 49,
-      "community_name": "start_health_server",
+      "community": 2,
+      "community_name": "TestServer",
       "norm_label": "test_rsz_003_initial_terminal_creation_clamps_dimensions()"
     },
     {
@@ -5160,8 +5160,8 @@
       "source_location": "L94",
       "_origin": "ast",
       "id": "tests_resize_tests_test_rsz_002_and_009_ws_resize_frame_updates_metadata",
-      "community": 49,
-      "community_name": "start_health_server",
+      "community": 2,
+      "community_name": "TestServer",
       "norm_label": "test_rsz_002_and_009_ws_resize_frame_updates_metadata()"
     },
     {
@@ -5171,8 +5171,8 @@
       "source_location": "L120",
       "_origin": "ast",
       "id": "tests_resize_tests_test_rsz_002_ws_resize_frame_clamps_extreme_values",
-      "community": 49,
-      "community_name": "start_health_server",
+      "community": 2,
+      "community_name": "TestServer",
       "norm_label": "test_rsz_002_ws_resize_frame_clamps_extreme_values()"
     },
     {
@@ -5182,8 +5182,8 @@
       "source_location": "L153",
       "_origin": "ast",
       "id": "tests_resize_tests_test_rsz_004_and_010_rapid_resize_flood_stability",
-      "community": 49,
-      "community_name": "start_health_server",
+      "community": 2,
+      "community_name": "TestServer",
       "norm_label": "test_rsz_004_and_010_rapid_resize_flood_stability()"
     },
     {
@@ -5193,8 +5193,8 @@
       "source_location": "L181",
       "_origin": "ast",
       "id": "tests_resize_tests_test_rsz_005_and_006_resize_on_closed_session_is_safe",
-      "community": 49,
-      "community_name": "start_health_server",
+      "community": 2,
+      "community_name": "TestServer",
       "norm_label": "test_rsz_005_and_006_resize_on_closed_session_is_safe()"
     },
     {
@@ -6963,8 +6963,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "spec_handoff_002_terminal_resize_completed_handoff_002_terminal_resizing_window_control_hardening_v0_3",
-      "community": 35,
-      "community_name": "Handoff 002 \u2014 Terminal Resizing & Window Control Hardening (v0.3)",
+      "community": 26,
+      "community_name": "003.plan-v0.3-terminal-resize.md",
       "norm_label": "handoff 002 \u2014 terminal resizing & window control hardening (v0.3)"
     },
     {
@@ -6974,8 +6974,8 @@
       "source_location": "L10",
       "_origin": "ast",
       "id": "spec_handoff_002_terminal_resize_completed_1_status_ringkas",
-      "community": 35,
-      "community_name": "Handoff 002 \u2014 Terminal Resizing & Window Control Hardening (v0.3)",
+      "community": 26,
+      "community_name": "003.plan-v0.3-terminal-resize.md",
       "norm_label": "1. status ringkas"
     },
     {
@@ -6985,8 +6985,8 @@
       "source_location": "L31",
       "_origin": "ast",
       "id": "spec_handoff_002_terminal_resize_completed_2_git_release_status",
-      "community": 35,
-      "community_name": "Handoff 002 \u2014 Terminal Resizing & Window Control Hardening (v0.3)",
+      "community": 26,
+      "community_name": "003.plan-v0.3-terminal-resize.md",
       "norm_label": "2. git & release status"
     },
     {
@@ -7118,7 +7118,7 @@
       "_origin": "ast",
       "id": "spec_specs_000_plan",
       "community": 44,
-      "community_name": "v0.2 Implementation Checklist & Verification Matrix",
+      "community_name": "000a.plan-test.md",
       "norm_label": "000.plan.md"
     },
     {
@@ -7470,7 +7470,7 @@
       "_origin": "ast",
       "id": "spec_specs_000a_plan_test",
       "community": 44,
-      "community_name": "v0.2 Implementation Checklist & Verification Matrix",
+      "community_name": "000a.plan-test.md",
       "norm_label": "000a.plan-test.md"
     },
     {
@@ -7932,7 +7932,7 @@
       "_origin": "ast",
       "id": "spec_specs_000b_plan_checklist",
       "community": 44,
-      "community_name": "v0.2 Implementation Checklist & Verification Matrix",
+      "community_name": "000a.plan-test.md",
       "norm_label": "000b.plan-checklist.md"
     },
     {
@@ -8042,7 +8042,7 @@
       "_origin": "ast",
       "id": "spec_specs_001_plan_v0_2",
       "community": 44,
-      "community_name": "v0.2 Implementation Checklist & Verification Matrix",
+      "community_name": "000a.plan-test.md",
       "norm_label": "001.plan-v0.2.md"
     },
     {
@@ -9207,8 +9207,8 @@
       "source_location": "L37",
       "_origin": "ast",
       "id": "spec_specs_004b_plan_checklist_1_milestone_a_git_ui_git_001_010_v0_4_1",
-      "community": 36,
-      "community_name": "1. Milestone A \u2014 Git UI (`GIT-001..010`) \u2014 v0.4.1",
+      "community": 24,
+      "community_name": "Companion Checklist \u2014 v0.4 Plan: Developer Suite",
       "norm_label": "1. milestone a \u2014 git ui (`git-001..010`) \u2014 v0.4.1"
     },
     {
@@ -9218,8 +9218,8 @@
       "source_location": "L39",
       "_origin": "ast",
       "id": "spec_specs_004b_plan_checklist_test_suite_tests_git_tests_rs",
-      "community": 36,
-      "community_name": "1. Milestone A \u2014 Git UI (`GIT-001..010`) \u2014 v0.4.1",
+      "community": 24,
+      "community_name": "Companion Checklist \u2014 v0.4 Plan: Developer Suite",
       "norm_label": "test suite (`tests/git_tests.rs`)"
     },
     {
@@ -9229,8 +9229,8 @@
       "source_location": "L50",
       "_origin": "ast",
       "id": "spec_specs_004b_plan_checklist_backend_implementation_src_git_rs_src_http_rs_src_routes_git_rs",
-      "community": 36,
-      "community_name": "1. Milestone A \u2014 Git UI (`GIT-001..010`) \u2014 v0.4.1",
+      "community": 24,
+      "community_name": "Companion Checklist \u2014 v0.4 Plan: Developer Suite",
       "norm_label": "backend implementation (`src/git.rs` & `src/http.rs` / `src/routes/git.rs`)"
     },
     {
@@ -9273,8 +9273,8 @@
       "source_location": "L89",
       "_origin": "ast",
       "id": "spec_specs_004b_plan_checklist_3_milestone_c_read_only_share_links_shr_001_008_v0_4_0_bersama_archive",
-      "community": 24,
-      "community_name": "Companion Checklist \u2014 v0.4 Plan: Developer Suite",
+      "community": 58,
+      "community_name": "3. Milestone C \u2014 Read-only Share Links (`SHR-001..008`) \u2014 v0.4.0 (Bersama Archive)",
       "norm_label": "3. milestone c \u2014 read-only share links (`shr-001..008`) \u2014 v0.4.0 (bersama archive)"
     },
     {
@@ -9284,8 +9284,8 @@
       "source_location": "L91",
       "_origin": "ast",
       "id": "spec_specs_004b_plan_checklist_test_suite_tests_share_tests_rs",
-      "community": 24,
-      "community_name": "Companion Checklist \u2014 v0.4 Plan: Developer Suite",
+      "community": 58,
+      "community_name": "3. Milestone C \u2014 Read-only Share Links (`SHR-001..008`) \u2014 v0.4.0 (Bersama Archive)",
       "norm_label": "test suite (`tests/share_tests.rs`)"
     },
     {
@@ -9295,8 +9295,8 @@
       "source_location": "L100",
       "_origin": "ast",
       "id": "spec_specs_004b_plan_checklist_backend_implementation_src_share_rs_src_http_rs_src_routes_share_rs",
-      "community": 24,
-      "community_name": "Companion Checklist \u2014 v0.4 Plan: Developer Suite",
+      "community": 58,
+      "community_name": "3. Milestone C \u2014 Read-only Share Links (`SHR-001..008`) \u2014 v0.4.0 (Bersama Archive)",
       "norm_label": "backend implementation (`src/share.rs` & `src/http.rs` / `src/routes/share.rs`)"
     },
     {
@@ -9927,13 +9927,442 @@
       "norm_label": "4. dod & quality gates \u2014 sempurna = lengkap + lebih baik + tidak ngelag"
     },
     {
+      "label": "006.plan-v0.6-editor-terminal-openfolder.md",
+      "file_type": "document",
+      "source_file": "spec/specs/006.plan-v0.6-editor-terminal-openfolder.md",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "spec_specs_006_plan_v0_6_editor_terminal_openfolder",
+      "community": 44,
+      "community_name": "000a.plan-test.md",
+      "norm_label": "006.plan-v0.6-editor-terminal-openfolder.md"
+    },
+    {
+      "label": "Mux Web UI \u2014 v0.6 plan: Editor Integrated Terminal (Beneran Jalan) + Open File & Open Folder ala VS Code \u2014 Sempurna & Tidak Ngelag",
+      "file_type": "document",
+      "source_file": "spec/specs/006.plan-v0.6-editor-terminal-openfolder.md",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "spec_specs_006_plan_v0_6_editor_terminal_openfolder_mux_web_ui_v0_6_plan_editor_integrated_terminal_beneran_jalan_open_file_open_folder_ala_vs_code_sempurna_tidak_ngelag",
+      "community": 35,
+      "community_name": "Mux Web UI \u2014 v0.6 plan: Editor Integrated Terminal (Beneran Jalan) + Open File & Open Folder ala VS Code \u2014 Sempurna & Tidak Ngelag",
+      "norm_label": "mux web ui \u2014 v0.6 plan: editor integrated terminal (beneran jalan) + open file & open folder ala vs code \u2014 sempurna & tidak ngelag"
+    },
+    {
+      "label": "1. Latar Belakang",
+      "file_type": "document",
+      "source_file": "spec/specs/006.plan-v0.6-editor-terminal-openfolder.md",
+      "source_location": "L14",
+      "_origin": "ast",
+      "id": "spec_specs_006_plan_v0_6_editor_terminal_openfolder_1_latar_belakang",
+      "community": 35,
+      "community_name": "Mux Web UI \u2014 v0.6 plan: Editor Integrated Terminal (Beneran Jalan) + Open File & Open Folder ala VS Code \u2014 Sempurna & Tidak Ngelag",
+      "norm_label": "1. latar belakang"
+    },
+    {
+      "label": "1.1 Fakta Kode Titik Awal (Bukti)",
+      "file_type": "document",
+      "source_file": "spec/specs/006.plan-v0.6-editor-terminal-openfolder.md",
+      "source_location": "L36",
+      "_origin": "ast",
+      "id": "spec_specs_006_plan_v0_6_editor_terminal_openfolder_1_1_fakta_kode_titik_awal_bukti",
+      "community": 35,
+      "community_name": "Mux Web UI \u2014 v0.6 plan: Editor Integrated Terminal (Beneran Jalan) + Open File & Open Folder ala VS Code \u2014 Sempurna & Tidak Ngelag",
+      "norm_label": "1.1 fakta kode titik awal (bukti)"
+    },
+    {
+      "label": "2. Hubungan dengan Rencana & Requirement",
+      "file_type": "document",
+      "source_file": "spec/specs/006.plan-v0.6-editor-terminal-openfolder.md",
+      "source_location": "L53",
+      "_origin": "ast",
+      "id": "spec_specs_006_plan_v0_6_editor_terminal_openfolder_2_hubungan_dengan_rencana_requirement",
+      "community": 35,
+      "community_name": "Mux Web UI \u2014 v0.6 plan: Editor Integrated Terminal (Beneran Jalan) + Open File & Open Folder ala VS Code \u2014 Sempurna & Tidak Ngelag",
+      "norm_label": "2. hubungan dengan rencana & requirement"
+    },
+    {
+      "label": "3. Threat Model",
+      "file_type": "document",
+      "source_file": "spec/specs/006.plan-v0.6-editor-terminal-openfolder.md",
+      "source_location": "L75",
+      "_origin": "ast",
+      "id": "spec_specs_006_plan_v0_6_editor_terminal_openfolder_3_threat_model",
+      "community": 35,
+      "community_name": "Mux Web UI \u2014 v0.6 plan: Editor Integrated Terminal (Beneran Jalan) + Open File & Open Folder ala VS Code \u2014 Sempurna & Tidak Ngelag",
+      "norm_label": "3. threat model"
+    },
+    {
+      "label": "4. Milestone A \u2014 Integrated Terminal Beneran Jalan (`EDT-001..005`)",
+      "file_type": "document",
+      "source_file": "spec/specs/006.plan-v0.6-editor-terminal-openfolder.md",
+      "source_location": "L88",
+      "_origin": "ast",
+      "id": "spec_specs_006_plan_v0_6_editor_terminal_openfolder_4_milestone_a_integrated_terminal_beneran_jalan_edt_001_005",
+      "community": 35,
+      "community_name": "Mux Web UI \u2014 v0.6 plan: Editor Integrated Terminal (Beneran Jalan) + Open File & Open Folder ala VS Code \u2014 Sempurna & Tidak Ngelag",
+      "norm_label": "4. milestone a \u2014 integrated terminal beneran jalan (`edt-001..005`)"
+    },
+    {
+      "label": "A.1 Perilaku Target (VS Code parity)",
+      "file_type": "document",
+      "source_file": "spec/specs/006.plan-v0.6-editor-terminal-openfolder.md",
+      "source_location": "L90",
+      "_origin": "ast",
+      "id": "spec_specs_006_plan_v0_6_editor_terminal_openfolder_a_1_perilaku_target_vs_code_parity",
+      "community": 35,
+      "community_name": "Mux Web UI \u2014 v0.6 plan: Editor Integrated Terminal (Beneran Jalan) + Open File & Open Folder ala VS Code \u2014 Sempurna & Tidak Ngelag",
+      "norm_label": "a.1 perilaku target (vs code parity)"
+    },
+    {
+      "label": "A.2 API Delta (satu-satunya perubahan backend)",
+      "file_type": "document",
+      "source_file": "spec/specs/006.plan-v0.6-editor-terminal-openfolder.md",
+      "source_location": "L101",
+      "_origin": "ast",
+      "id": "spec_specs_006_plan_v0_6_editor_terminal_openfolder_a_2_api_delta_satu_satunya_perubahan_backend",
+      "community": 35,
+      "community_name": "Mux Web UI \u2014 v0.6 plan: Editor Integrated Terminal (Beneran Jalan) + Open File & Open Folder ala VS Code \u2014 Sempurna & Tidak Ngelag",
+      "norm_label": "a.2 api delta (satu-satunya perubahan backend)"
+    },
+    {
+      "label": "A.3 Frontend Wiring (`TextEditorView.tsx`)",
+      "file_type": "document",
+      "source_file": "spec/specs/006.plan-v0.6-editor-terminal-openfolder.md",
+      "source_location": "L128",
+      "_origin": "ast",
+      "id": "spec_specs_006_plan_v0_6_editor_terminal_openfolder_a_3_frontend_wiring_texteditorview_tsx",
+      "community": 35,
+      "community_name": "Mux Web UI \u2014 v0.6 plan: Editor Integrated Terminal (Beneran Jalan) + Open File & Open Folder ala VS Code \u2014 Sempurna & Tidak Ngelag",
+      "norm_label": "a.3 frontend wiring (`texteditorview.tsx`)"
+    },
+    {
+      "label": "A.4 Acceptance Milestone A",
+      "file_type": "document",
+      "source_file": "spec/specs/006.plan-v0.6-editor-terminal-openfolder.md",
+      "source_location": "L156",
+      "_origin": "ast",
+      "id": "spec_specs_006_plan_v0_6_editor_terminal_openfolder_a_4_acceptance_milestone_a",
+      "community": 35,
+      "community_name": "Mux Web UI \u2014 v0.6 plan: Editor Integrated Terminal (Beneran Jalan) + Open File & Open Folder ala VS Code \u2014 Sempurna & Tidak Ngelag",
+      "norm_label": "a.4 acceptance milestone a"
+    },
+    {
+      "label": "5. Milestone B \u2014 Open File & Open Folder ala VS Code (`EDT-006..010`)",
+      "file_type": "document",
+      "source_file": "spec/specs/006.plan-v0.6-editor-terminal-openfolder.md",
+      "source_location": "L166",
+      "_origin": "ast",
+      "id": "spec_specs_006_plan_v0_6_editor_terminal_openfolder_5_milestone_b_open_file_open_folder_ala_vs_code_edt_006_010",
+      "community": 35,
+      "community_name": "Mux Web UI \u2014 v0.6 plan: Editor Integrated Terminal (Beneran Jalan) + Open File & Open Folder ala VS Code \u2014 Sempurna & Tidak Ngelag",
+      "norm_label": "5. milestone b \u2014 open file & open folder ala vs code (`edt-006..010`)"
+    },
+    {
+      "label": "B.1 `FolderPicker.tsx` (komponen reusable)",
+      "file_type": "document",
+      "source_file": "spec/specs/006.plan-v0.6-editor-terminal-openfolder.md",
+      "source_location": "L168",
+      "_origin": "ast",
+      "id": "spec_specs_006_plan_v0_6_editor_terminal_openfolder_b_1_folderpicker_tsx_komponen_reusable",
+      "community": 35,
+      "community_name": "Mux Web UI \u2014 v0.6 plan: Editor Integrated Terminal (Beneran Jalan) + Open File & Open Folder ala VS Code \u2014 Sempurna & Tidak Ngelag",
+      "norm_label": "b.1 `folderpicker.tsx` (komponen reusable)"
+    },
+    {
+      "label": "B.2 Editor Workspace State (`EDT-007`)",
+      "file_type": "document",
+      "source_file": "spec/specs/006.plan-v0.6-editor-terminal-openfolder.md",
+      "source_location": "L187",
+      "_origin": "ast",
+      "id": "spec_specs_006_plan_v0_6_editor_terminal_openfolder_b_2_editor_workspace_state_edt_007",
+      "community": 35,
+      "community_name": "Mux Web UI \u2014 v0.6 plan: Editor Integrated Terminal (Beneran Jalan) + Open File & Open Folder ala VS Code \u2014 Sempurna & Tidak Ngelag",
+      "norm_label": "b.2 editor workspace state (`edt-007`)"
+    },
+    {
+      "label": "B.3 Menu & Shortcut (`EDT-008`)",
+      "file_type": "document",
+      "source_file": "spec/specs/006.plan-v0.6-editor-terminal-openfolder.md",
+      "source_location": "L197",
+      "_origin": "ast",
+      "id": "spec_specs_006_plan_v0_6_editor_terminal_openfolder_b_3_menu_shortcut_edt_008",
+      "community": 35,
+      "community_name": "Mux Web UI \u2014 v0.6 plan: Editor Integrated Terminal (Beneran Jalan) + Open File & Open Folder ala VS Code \u2014 Sempurna & Tidak Ngelag",
+      "norm_label": "b.3 menu & shortcut (`edt-008`)"
+    },
+    {
+      "label": "B.4 Terminal Ikut Folder (`EDT-009`)",
+      "file_type": "document",
+      "source_file": "spec/specs/006.plan-v0.6-editor-terminal-openfolder.md",
+      "source_location": "L205",
+      "_origin": "ast",
+      "id": "spec_specs_006_plan_v0_6_editor_terminal_openfolder_b_4_terminal_ikut_folder_edt_009",
+      "community": 35,
+      "community_name": "Mux Web UI \u2014 v0.6 plan: Editor Integrated Terminal (Beneran Jalan) + Open File & Open Folder ala VS Code \u2014 Sempurna & Tidak Ngelag",
+      "norm_label": "b.4 terminal ikut folder (`edt-009`)"
+    },
+    {
+      "label": "B.5 Status Bar (`EDT-010`)",
+      "file_type": "document",
+      "source_file": "spec/specs/006.plan-v0.6-editor-terminal-openfolder.md",
+      "source_location": "L210",
+      "_origin": "ast",
+      "id": "spec_specs_006_plan_v0_6_editor_terminal_openfolder_b_5_status_bar_edt_010",
+      "community": 35,
+      "community_name": "Mux Web UI \u2014 v0.6 plan: Editor Integrated Terminal (Beneran Jalan) + Open File & Open Folder ala VS Code \u2014 Sempurna & Tidak Ngelag",
+      "norm_label": "b.5 status bar (`edt-010`)"
+    },
+    {
+      "label": "B.6 Acceptance Milestone B",
+      "file_type": "document",
+      "source_file": "spec/specs/006.plan-v0.6-editor-terminal-openfolder.md",
+      "source_location": "L215",
+      "_origin": "ast",
+      "id": "spec_specs_006_plan_v0_6_editor_terminal_openfolder_b_6_acceptance_milestone_b",
+      "community": 35,
+      "community_name": "Mux Web UI \u2014 v0.6 plan: Editor Integrated Terminal (Beneran Jalan) + Open File & Open Folder ala VS Code \u2014 Sempurna & Tidak Ngelag",
+      "norm_label": "b.6 acceptance milestone b"
+    },
+    {
+      "label": "6. Konfigurasi Baru",
+      "file_type": "document",
+      "source_file": "spec/specs/006.plan-v0.6-editor-terminal-openfolder.md",
+      "source_location": "L224",
+      "_origin": "ast",
+      "id": "spec_specs_006_plan_v0_6_editor_terminal_openfolder_6_konfigurasi_baru",
+      "community": 35,
+      "community_name": "Mux Web UI \u2014 v0.6 plan: Editor Integrated Terminal (Beneran Jalan) + Open File & Open Folder ala VS Code \u2014 Sempurna & Tidak Ngelag",
+      "norm_label": "6. konfigurasi baru"
+    },
+    {
+      "label": "7. Performance Budget \u2014 Tidak Ngelag",
+      "file_type": "document",
+      "source_file": "spec/specs/006.plan-v0.6-editor-terminal-openfolder.md",
+      "source_location": "L233",
+      "_origin": "ast",
+      "id": "spec_specs_006_plan_v0_6_editor_terminal_openfolder_7_performance_budget_tidak_ngelag",
+      "community": 35,
+      "community_name": "Mux Web UI \u2014 v0.6 plan: Editor Integrated Terminal (Beneran Jalan) + Open File & Open Folder ala VS Code \u2014 Sempurna & Tidak Ngelag",
+      "norm_label": "7. performance budget \u2014 tidak ngelag"
+    },
+    {
+      "label": "8. Bukan Scope v0.6",
+      "file_type": "document",
+      "source_file": "spec/specs/006.plan-v0.6-editor-terminal-openfolder.md",
+      "source_location": "L246",
+      "_origin": "ast",
+      "id": "spec_specs_006_plan_v0_6_editor_terminal_openfolder_8_bukan_scope_v0_6",
+      "community": 35,
+      "community_name": "Mux Web UI \u2014 v0.6 plan: Editor Integrated Terminal (Beneran Jalan) + Open File & Open Folder ala VS Code \u2014 Sempurna & Tidak Ngelag",
+      "norm_label": "8. bukan scope v0.6"
+    },
+    {
+      "label": "9. Keputusan Desain (Disetujui User)",
+      "file_type": "document",
+      "source_file": "spec/specs/006.plan-v0.6-editor-terminal-openfolder.md",
+      "source_location": "L256",
+      "_origin": "ast",
+      "id": "spec_specs_006_plan_v0_6_editor_terminal_openfolder_9_keputusan_desain_disetujui_user",
+      "community": 35,
+      "community_name": "Mux Web UI \u2014 v0.6 plan: Editor Integrated Terminal (Beneran Jalan) + Open File & Open Folder ala VS Code \u2014 Sempurna & Tidak Ngelag",
+      "norm_label": "9. keputusan desain (disetujui user)"
+    },
+    {
+      "label": "10. Urutan Pengerjaan TDD (Red \u2192 Green \u2192 Refactor)",
+      "file_type": "document",
+      "source_file": "spec/specs/006.plan-v0.6-editor-terminal-openfolder.md",
+      "source_location": "L264",
+      "_origin": "ast",
+      "id": "spec_specs_006_plan_v0_6_editor_terminal_openfolder_10_urutan_pengerjaan_tdd_red_green_refactor",
+      "community": 35,
+      "community_name": "Mux Web UI \u2014 v0.6 plan: Editor Integrated Terminal (Beneran Jalan) + Open File & Open Folder ala VS Code \u2014 Sempurna & Tidak Ngelag",
+      "norm_label": "10. urutan pengerjaan tdd (red \u2192 green \u2192 refactor)"
+    },
+    {
+      "label": "11. Definition of Done (DoD) v0.6",
+      "file_type": "document",
+      "source_file": "spec/specs/006.plan-v0.6-editor-terminal-openfolder.md",
+      "source_location": "L278",
+      "_origin": "ast",
+      "id": "spec_specs_006_plan_v0_6_editor_terminal_openfolder_11_definition_of_done_dod_v0_6",
+      "community": 35,
+      "community_name": "Mux Web UI \u2014 v0.6 plan: Editor Integrated Terminal (Beneran Jalan) + Open File & Open Folder ala VS Code \u2014 Sempurna & Tidak Ngelag",
+      "norm_label": "11. definition of done (dod) v0.6"
+    },
+    {
+      "label": "006b.plan-checklist.md",
+      "file_type": "document",
+      "source_file": "spec/specs/006b.plan-checklist.md",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "spec_specs_006b_plan_checklist",
+      "community": 44,
+      "community_name": "000a.plan-test.md",
+      "norm_label": "006b.plan-checklist.md"
+    },
+    {
+      "label": "Companion Checklist \u2014 v0.6 Editor Integrated Terminal + Open File/Folder ala VS Code",
+      "file_type": "document",
+      "source_file": "spec/specs/006b.plan-checklist.md",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "spec_specs_006b_plan_checklist_companion_checklist_v0_6_editor_integrated_terminal_open_file_folder_ala_vs_code",
+      "community": 36,
+      "community_name": "1. Milestone A \u2014 Integrated Terminal (`EDT-001..005`)",
+      "norm_label": "companion checklist \u2014 v0.6 editor integrated terminal + open file/folder ala vs code"
+    },
+    {
+      "label": "0. Ringkasan Deliverable",
+      "file_type": "document",
+      "source_file": "spec/specs/006b.plan-checklist.md",
+      "source_location": "L10",
+      "_origin": "ast",
+      "id": "spec_specs_006b_plan_checklist_0_ringkasan_deliverable",
+      "community": 36,
+      "community_name": "1. Milestone A \u2014 Integrated Terminal (`EDT-001..005`)",
+      "norm_label": "0. ringkasan deliverable"
+    },
+    {
+      "label": "1. Milestone A \u2014 Integrated Terminal (`EDT-001..005`)",
+      "file_type": "document",
+      "source_file": "spec/specs/006b.plan-checklist.md",
+      "source_location": "L22",
+      "_origin": "ast",
+      "id": "spec_specs_006b_plan_checklist_1_milestone_a_integrated_terminal_edt_001_005",
+      "community": 36,
+      "community_name": "1. Milestone A \u2014 Integrated Terminal (`EDT-001..005`)",
+      "norm_label": "1. milestone a \u2014 integrated terminal (`edt-001..005`)"
+    },
+    {
+      "label": "Red (backend)",
+      "file_type": "document",
+      "source_file": "spec/specs/006b.plan-checklist.md",
+      "source_location": "L24",
+      "_origin": "ast",
+      "id": "spec_specs_006b_plan_checklist_red_backend",
+      "community": 36,
+      "community_name": "1. Milestone A \u2014 Integrated Terminal (`EDT-001..005`)",
+      "norm_label": "red (backend)"
+    },
+    {
+      "label": "Red (frontend vitest)",
+      "file_type": "document",
+      "source_file": "spec/specs/006b.plan-checklist.md",
+      "source_location": "L30",
+      "_origin": "ast",
+      "id": "spec_specs_006b_plan_checklist_red_frontend_vitest",
+      "community": 36,
+      "community_name": "1. Milestone A \u2014 Integrated Terminal (`EDT-001..005`)",
+      "norm_label": "red (frontend vitest)"
+    },
+    {
+      "label": "Impl backend (`src/http.rs`)",
+      "file_type": "document",
+      "source_file": "spec/specs/006b.plan-checklist.md",
+      "source_location": "L36",
+      "_origin": "ast",
+      "id": "spec_specs_006b_plan_checklist_impl_backend_src_http_rs",
+      "community": 36,
+      "community_name": "1. Milestone A \u2014 Integrated Terminal (`EDT-001..005`)",
+      "norm_label": "impl backend (`src/http.rs`)"
+    },
+    {
+      "label": "Impl frontend (`TextEditorView.tsx`)",
+      "file_type": "document",
+      "source_file": "spec/specs/006b.plan-checklist.md",
+      "source_location": "L42",
+      "_origin": "ast",
+      "id": "spec_specs_006b_plan_checklist_impl_frontend_texteditorview_tsx",
+      "community": 36,
+      "community_name": "1. Milestone A \u2014 Integrated Terminal (`EDT-001..005`)",
+      "norm_label": "impl frontend (`texteditorview.tsx`)"
+    },
+    {
+      "label": "Green",
+      "file_type": "document",
+      "source_file": "spec/specs/006b.plan-checklist.md",
+      "source_location": "L48",
+      "_origin": "ast",
+      "id": "spec_specs_006b_plan_checklist_green",
+      "community": 36,
+      "community_name": "1. Milestone A \u2014 Integrated Terminal (`EDT-001..005`)",
+      "norm_label": "green"
+    },
+    {
+      "label": "2. Milestone B \u2014 Open File & Open Folder (`EDT-006..010`)",
+      "file_type": "document",
+      "source_file": "spec/specs/006b.plan-checklist.md",
+      "source_location": "L54",
+      "_origin": "ast",
+      "id": "spec_specs_006b_plan_checklist_2_milestone_b_open_file_open_folder_edt_006_010",
+      "community": 36,
+      "community_name": "1. Milestone A \u2014 Integrated Terminal (`EDT-001..005`)",
+      "norm_label": "2. milestone b \u2014 open file & open folder (`edt-006..010`)"
+    },
+    {
+      "label": "Red (vitest)",
+      "file_type": "document",
+      "source_file": "spec/specs/006b.plan-checklist.md",
+      "source_location": "L56",
+      "_origin": "ast",
+      "id": "spec_specs_006b_plan_checklist_red_vitest",
+      "community": 36,
+      "community_name": "1. Milestone A \u2014 Integrated Terminal (`EDT-001..005`)",
+      "norm_label": "red (vitest)"
+    },
+    {
+      "label": "Impl",
+      "file_type": "document",
+      "source_file": "spec/specs/006b.plan-checklist.md",
+      "source_location": "L66",
+      "_origin": "ast",
+      "id": "spec_specs_006b_plan_checklist_impl",
+      "community": 36,
+      "community_name": "1. Milestone A \u2014 Integrated Terminal (`EDT-001..005`)",
+      "norm_label": "impl"
+    },
+    {
+      "label": "Green",
+      "file_type": "document",
+      "source_file": "spec/specs/006b.plan-checklist.md",
+      "source_location": "L71",
+      "_origin": "ast",
+      "id": "spec_specs_006b_plan_checklist_green_71",
+      "community": 36,
+      "community_name": "1. Milestone A \u2014 Integrated Terminal (`EDT-001..005`)",
+      "norm_label": "green"
+    },
+    {
+      "label": "3. Quality Gates & DoD",
+      "file_type": "document",
+      "source_file": "spec/specs/006b.plan-checklist.md",
+      "source_location": "L77",
+      "_origin": "ast",
+      "id": "spec_specs_006b_plan_checklist_3_quality_gates_dod",
+      "community": 36,
+      "community_name": "1. Milestone A \u2014 Integrated Terminal (`EDT-001..005`)",
+      "norm_label": "3. quality gates & dod"
+    },
+    {
+      "label": "4. Out of Scope (ingat)",
+      "file_type": "document",
+      "source_file": "spec/specs/006b.plan-checklist.md",
+      "source_location": "L89",
+      "_origin": "ast",
+      "id": "spec_specs_006b_plan_checklist_4_out_of_scope_ingat",
+      "community": 36,
+      "community_name": "1. Milestone A \u2014 Integrated Terminal (`EDT-001..005`)",
+      "norm_label": "4. out of scope (ingat)"
+    },
+    {
       "label": "README.md",
       "file_type": "document",
       "source_file": "README.md",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 22,
-      "community_name": "v0.2.1 Plan: Distribution (prebuilt binary + installer)",
+      "community": 57,
+      "community_name": "v0.2 Implementation Checklist & Verification Matrix",
       "norm_label": "readme.md",
       "id": "readme"
     },
@@ -10702,8 +11131,8 @@
       "source_file": "tests/traceability.md",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 26,
-      "community_name": "003.plan-v0.3-terminal-resize.md",
+      "community": 44,
+      "community_name": "000a.plan-test.md",
       "norm_label": "traceability.md",
       "id": "tests_traceability"
     },
@@ -10743,7 +11172,7 @@
       "author": null,
       "contributor": null,
       "community": 45,
-      "community_name": "CI & Release Workflow",
+      "community_name": "Handoff 001 - Progress & Backlog (v0.2)",
       "norm_label": "ci & release workflow",
       "_origin": "semantic",
       "id": "_github_workflows_ci_workflow"
@@ -10758,7 +11187,7 @@
       "author": null,
       "contributor": null,
       "community": 45,
-      "community_name": "CI & Release Workflow",
+      "community_name": "Handoff 001 - Progress & Backlog (v0.2)",
       "norm_label": "test-and-lint job (fmt, clippy, tests)",
       "_origin": "semantic",
       "id": "_github_workflows_ci_testandlint"
@@ -10772,8 +11201,8 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 45,
-      "community_name": "CI & Release Workflow",
+      "community": 22,
+      "community_name": "v0.2.1 Plan: Distribution (prebuilt binary + installer)",
       "norm_label": "cross-check job (android arm64 cargo check)",
       "_origin": "semantic",
       "id": "_github_workflows_ci_crosscheck"
@@ -10788,7 +11217,7 @@
       "author": null,
       "contributor": null,
       "community": 45,
-      "community_name": "CI & Release Workflow",
+      "community_name": "Handoff 001 - Progress & Backlog (v0.2)",
       "norm_label": "budget-check job (check_budget.sh)",
       "_origin": "semantic",
       "id": "_github_workflows_ci_budgetcheck"
@@ -10803,7 +11232,7 @@
       "author": null,
       "contributor": null,
       "community": 45,
-      "community_name": "CI & Release Workflow",
+      "community_name": "Handoff 001 - Progress & Backlog (v0.2)",
       "norm_label": "release job (artifact + checksum upload)",
       "_origin": "semantic",
       "id": "_github_workflows_ci_release"
@@ -10818,7 +11247,7 @@
       "author": null,
       "contributor": null,
       "community": 45,
-      "community_name": "CI & Release Workflow",
+      "community_name": "Handoff 001 - Progress & Backlog (v0.2)",
       "norm_label": "check_budget.sh budget gate script",
       "_origin": "semantic",
       "id": "scripts_check_budget_sh"
@@ -10952,8 +11381,8 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 22,
-      "community_name": "v0.2.1 Plan: Distribution (prebuilt binary + installer)",
+      "community": 57,
+      "community_name": "v0.2 Implementation Checklist & Verification Matrix",
       "norm_label": "update.sh",
       "_origin": "semantic",
       "id": "update_sh"
@@ -10967,8 +11396,8 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 22,
-      "community_name": "v0.2.1 Plan: Distribution (prebuilt binary + installer)",
+      "community": 57,
+      "community_name": "v0.2 Implementation Checklist & Verification Matrix",
       "norm_label": "uninstall.sh",
       "_origin": "semantic",
       "id": "uninstall_sh"
@@ -10982,8 +11411,8 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 44,
-      "community_name": "v0.2 Implementation Checklist & Verification Matrix",
+      "community": 45,
+      "community_name": "Handoff 001 - Progress & Backlog (v0.2)",
       "norm_label": "handoff 001 - progress & backlog (v0.2)",
       "_origin": "semantic",
       "id": "spec_handoff_001_progress_and_backlog_doc"
@@ -11012,8 +11441,8 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 44,
-      "community_name": "v0.2 Implementation Checklist & Verification Matrix",
+      "community": 1,
+      "community_name": "SessionRegistry",
       "norm_label": "milestone b: session persistence",
       "_origin": "semantic",
       "id": "spec_handoff_001_progress_and_backlog_milestone_b"
@@ -11057,8 +11486,8 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 44,
-      "community_name": "v0.2 Implementation Checklist & Verification Matrix",
+      "community": 1,
+      "community_name": "SessionRegistry",
       "norm_label": "life-002 orphan child cleanup",
       "_origin": "semantic",
       "id": "spec_handoff_001_progress_and_backlog_life_002_orphan_cleanup"
@@ -11072,7 +11501,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 44,
+      "community": 57,
       "community_name": "v0.2 Implementation Checklist & Verification Matrix",
       "norm_label": "v0.2 implementation checklist & verification matrix",
       "_origin": "semantic",
@@ -11087,7 +11516,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 44,
+      "community": 57,
       "community_name": "v0.2 Implementation Checklist & Verification Matrix",
       "norm_label": "tdd execution loop (red-green-refactor)",
       "_origin": "semantic",
@@ -11117,8 +11546,8 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 44,
-      "community_name": "v0.2 Implementation Checklist & Verification Matrix",
+      "community": 1,
+      "community_name": "SessionRegistry",
       "norm_label": "checklist milestone b: session persistence (b.1-b.9)",
       "_origin": "semantic",
       "id": "spec_specs_001b_plan_checklist_milestone_b_session_persistence"
@@ -11133,7 +11562,7 @@
       "author": null,
       "contributor": null,
       "community": 45,
-      "community_name": "CI & Release Workflow",
+      "community_name": "Handoff 001 - Progress & Backlog (v0.2)",
       "norm_label": "checklist langkah 4: ci (c.1-c.6)",
       "_origin": "semantic",
       "id": "spec_specs_001b_plan_checklist_ci_steps"
@@ -11267,8 +11696,8 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 22,
-      "community_name": "v0.2.1 Plan: Distribution (prebuilt binary + installer)",
+      "community": 57,
+      "community_name": "v0.2 Implementation Checklist & Verification Matrix",
       "norm_label": "mux_web_* configuration (base_url/version/install_dir)",
       "_origin": "semantic",
       "id": "spec_specs_002_plan_v0_2_1_mux_web_env_config"
@@ -11282,8 +11711,8 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 45,
-      "community_name": "CI & Release Workflow",
+      "community": 22,
+      "community_name": "v0.2.1 Plan: Distribution (prebuilt binary + installer)",
       "norm_label": "4-target build matrix (gnu/musl/arm64/android)",
       "_origin": "semantic",
       "id": "spec_specs_002_plan_v0_2_1_target_matrix"
@@ -11297,8 +11726,8 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 22,
-      "community_name": "v0.2.1 Plan: Distribution (prebuilt binary + installer)",
+      "community": 57,
+      "community_name": "v0.2 Implementation Checklist & Verification Matrix",
       "norm_label": "v0.2.1 implementation checklist & verification matrix",
       "_origin": "semantic",
       "id": "spec_specs_002b_plan_checklist_doc"
@@ -11312,8 +11741,8 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 22,
-      "community_name": "v0.2.1 Plan: Distribution (prebuilt binary + installer)",
+      "community": 57,
+      "community_name": "v0.2 Implementation Checklist & Verification Matrix",
       "norm_label": "tdd execution loop (scenario-based)",
       "_origin": "semantic",
       "id": "spec_specs_002b_plan_checklist_tdd_loop"
@@ -11327,8 +11756,8 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 22,
-      "community_name": "v0.2.1 Plan: Distribution (prebuilt binary + installer)",
+      "community": 57,
+      "community_name": "v0.2 Implementation Checklist & Verification Matrix",
       "norm_label": "ci installer-test job (4 scenarios)",
       "_origin": "semantic",
       "id": "spec_specs_002b_plan_checklist_installer_test_job"
@@ -11357,8 +11786,8 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 1,
-      "community_name": "SessionRegistry",
+      "community": 41,
+      "community_name": "Requirement Traceability Matrix",
       "norm_label": "sess requirement family",
       "_origin": "semantic",
       "id": "tests_traceability_sess_family"
@@ -11418,7 +11847,7 @@
       "author": null,
       "contributor": null,
       "community": 45,
-      "community_name": "CI & Release Workflow",
+      "community_name": "Handoff 001 - Progress & Backlog (v0.2)",
       "norm_label": "ci requirement family",
       "_origin": "semantic",
       "id": "tests_traceability_ci_family"
@@ -27953,6 +28382,17 @@
       "confidence_score": 1.0
     },
     {
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "source_file": "spec/specs/006.plan-v0.6-editor-terminal-openfolder.md",
+      "source_location": "L8",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "spec_specs_006_plan_v0_6_editor_terminal_openfolder",
+      "target": "spec_specs_000a_plan_test",
+      "confidence_score": 1.0
+    },
+    {
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "spec/specs/000a.plan-test.md",
@@ -30406,6 +30846,435 @@
       "confidence_score": 1.0
     },
     {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "spec/specs/006.plan-v0.6-editor-terminal-openfolder.md",
+      "source_location": "L1",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "spec_specs_006_plan_v0_6_editor_terminal_openfolder",
+      "target": "spec_specs_006_plan_v0_6_editor_terminal_openfolder_mux_web_ui_v0_6_plan_editor_integrated_terminal_beneran_jalan_open_file_open_folder_ala_vs_code_sempurna_tidak_ngelag",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "source_file": "spec/specs/006.plan-v0.6-editor-terminal-openfolder.md",
+      "source_location": "L9",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "spec_specs_006_plan_v0_6_editor_terminal_openfolder",
+      "target": "spec_specs_006b_plan_checklist",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "source_file": "spec/specs/006.plan-v0.6-editor-terminal-openfolder.md",
+      "source_location": "L71",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "spec_specs_006_plan_v0_6_editor_terminal_openfolder",
+      "target": "tests_traceability",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "spec/specs/006.plan-v0.6-editor-terminal-openfolder.md",
+      "source_location": "L264",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "spec_specs_006_plan_v0_6_editor_terminal_openfolder_mux_web_ui_v0_6_plan_editor_integrated_terminal_beneran_jalan_open_file_open_folder_ala_vs_code_sempurna_tidak_ngelag",
+      "target": "spec_specs_006_plan_v0_6_editor_terminal_openfolder_10_urutan_pengerjaan_tdd_red_green_refactor",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "spec/specs/006.plan-v0.6-editor-terminal-openfolder.md",
+      "source_location": "L278",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "spec_specs_006_plan_v0_6_editor_terminal_openfolder_mux_web_ui_v0_6_plan_editor_integrated_terminal_beneran_jalan_open_file_open_folder_ala_vs_code_sempurna_tidak_ngelag",
+      "target": "spec_specs_006_plan_v0_6_editor_terminal_openfolder_11_definition_of_done_dod_v0_6",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "spec/specs/006.plan-v0.6-editor-terminal-openfolder.md",
+      "source_location": "L14",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "spec_specs_006_plan_v0_6_editor_terminal_openfolder_mux_web_ui_v0_6_plan_editor_integrated_terminal_beneran_jalan_open_file_open_folder_ala_vs_code_sempurna_tidak_ngelag",
+      "target": "spec_specs_006_plan_v0_6_editor_terminal_openfolder_1_latar_belakang",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "spec/specs/006.plan-v0.6-editor-terminal-openfolder.md",
+      "source_location": "L53",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "spec_specs_006_plan_v0_6_editor_terminal_openfolder_mux_web_ui_v0_6_plan_editor_integrated_terminal_beneran_jalan_open_file_open_folder_ala_vs_code_sempurna_tidak_ngelag",
+      "target": "spec_specs_006_plan_v0_6_editor_terminal_openfolder_2_hubungan_dengan_rencana_requirement",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "spec/specs/006.plan-v0.6-editor-terminal-openfolder.md",
+      "source_location": "L75",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "spec_specs_006_plan_v0_6_editor_terminal_openfolder_mux_web_ui_v0_6_plan_editor_integrated_terminal_beneran_jalan_open_file_open_folder_ala_vs_code_sempurna_tidak_ngelag",
+      "target": "spec_specs_006_plan_v0_6_editor_terminal_openfolder_3_threat_model",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "spec/specs/006.plan-v0.6-editor-terminal-openfolder.md",
+      "source_location": "L88",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "spec_specs_006_plan_v0_6_editor_terminal_openfolder_mux_web_ui_v0_6_plan_editor_integrated_terminal_beneran_jalan_open_file_open_folder_ala_vs_code_sempurna_tidak_ngelag",
+      "target": "spec_specs_006_plan_v0_6_editor_terminal_openfolder_4_milestone_a_integrated_terminal_beneran_jalan_edt_001_005",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "spec/specs/006.plan-v0.6-editor-terminal-openfolder.md",
+      "source_location": "L166",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "spec_specs_006_plan_v0_6_editor_terminal_openfolder_mux_web_ui_v0_6_plan_editor_integrated_terminal_beneran_jalan_open_file_open_folder_ala_vs_code_sempurna_tidak_ngelag",
+      "target": "spec_specs_006_plan_v0_6_editor_terminal_openfolder_5_milestone_b_open_file_open_folder_ala_vs_code_edt_006_010",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "spec/specs/006.plan-v0.6-editor-terminal-openfolder.md",
+      "source_location": "L224",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "spec_specs_006_plan_v0_6_editor_terminal_openfolder_mux_web_ui_v0_6_plan_editor_integrated_terminal_beneran_jalan_open_file_open_folder_ala_vs_code_sempurna_tidak_ngelag",
+      "target": "spec_specs_006_plan_v0_6_editor_terminal_openfolder_6_konfigurasi_baru",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "spec/specs/006.plan-v0.6-editor-terminal-openfolder.md",
+      "source_location": "L233",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "spec_specs_006_plan_v0_6_editor_terminal_openfolder_mux_web_ui_v0_6_plan_editor_integrated_terminal_beneran_jalan_open_file_open_folder_ala_vs_code_sempurna_tidak_ngelag",
+      "target": "spec_specs_006_plan_v0_6_editor_terminal_openfolder_7_performance_budget_tidak_ngelag",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "spec/specs/006.plan-v0.6-editor-terminal-openfolder.md",
+      "source_location": "L246",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "spec_specs_006_plan_v0_6_editor_terminal_openfolder_mux_web_ui_v0_6_plan_editor_integrated_terminal_beneran_jalan_open_file_open_folder_ala_vs_code_sempurna_tidak_ngelag",
+      "target": "spec_specs_006_plan_v0_6_editor_terminal_openfolder_8_bukan_scope_v0_6",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "spec/specs/006.plan-v0.6-editor-terminal-openfolder.md",
+      "source_location": "L256",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "spec_specs_006_plan_v0_6_editor_terminal_openfolder_mux_web_ui_v0_6_plan_editor_integrated_terminal_beneran_jalan_open_file_open_folder_ala_vs_code_sempurna_tidak_ngelag",
+      "target": "spec_specs_006_plan_v0_6_editor_terminal_openfolder_9_keputusan_desain_disetujui_user",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "spec/specs/006.plan-v0.6-editor-terminal-openfolder.md",
+      "source_location": "L36",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "spec_specs_006_plan_v0_6_editor_terminal_openfolder_1_latar_belakang",
+      "target": "spec_specs_006_plan_v0_6_editor_terminal_openfolder_1_1_fakta_kode_titik_awal_bukti",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "spec/specs/006.plan-v0.6-editor-terminal-openfolder.md",
+      "source_location": "L90",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "spec_specs_006_plan_v0_6_editor_terminal_openfolder_4_milestone_a_integrated_terminal_beneran_jalan_edt_001_005",
+      "target": "spec_specs_006_plan_v0_6_editor_terminal_openfolder_a_1_perilaku_target_vs_code_parity",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "spec/specs/006.plan-v0.6-editor-terminal-openfolder.md",
+      "source_location": "L101",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "spec_specs_006_plan_v0_6_editor_terminal_openfolder_4_milestone_a_integrated_terminal_beneran_jalan_edt_001_005",
+      "target": "spec_specs_006_plan_v0_6_editor_terminal_openfolder_a_2_api_delta_satu_satunya_perubahan_backend",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "spec/specs/006.plan-v0.6-editor-terminal-openfolder.md",
+      "source_location": "L128",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "spec_specs_006_plan_v0_6_editor_terminal_openfolder_4_milestone_a_integrated_terminal_beneran_jalan_edt_001_005",
+      "target": "spec_specs_006_plan_v0_6_editor_terminal_openfolder_a_3_frontend_wiring_texteditorview_tsx",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "spec/specs/006.plan-v0.6-editor-terminal-openfolder.md",
+      "source_location": "L156",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "spec_specs_006_plan_v0_6_editor_terminal_openfolder_4_milestone_a_integrated_terminal_beneran_jalan_edt_001_005",
+      "target": "spec_specs_006_plan_v0_6_editor_terminal_openfolder_a_4_acceptance_milestone_a",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "spec/specs/006.plan-v0.6-editor-terminal-openfolder.md",
+      "source_location": "L168",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "spec_specs_006_plan_v0_6_editor_terminal_openfolder_5_milestone_b_open_file_open_folder_ala_vs_code_edt_006_010",
+      "target": "spec_specs_006_plan_v0_6_editor_terminal_openfolder_b_1_folderpicker_tsx_komponen_reusable",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "spec/specs/006.plan-v0.6-editor-terminal-openfolder.md",
+      "source_location": "L187",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "spec_specs_006_plan_v0_6_editor_terminal_openfolder_5_milestone_b_open_file_open_folder_ala_vs_code_edt_006_010",
+      "target": "spec_specs_006_plan_v0_6_editor_terminal_openfolder_b_2_editor_workspace_state_edt_007",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "spec/specs/006.plan-v0.6-editor-terminal-openfolder.md",
+      "source_location": "L197",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "spec_specs_006_plan_v0_6_editor_terminal_openfolder_5_milestone_b_open_file_open_folder_ala_vs_code_edt_006_010",
+      "target": "spec_specs_006_plan_v0_6_editor_terminal_openfolder_b_3_menu_shortcut_edt_008",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "spec/specs/006.plan-v0.6-editor-terminal-openfolder.md",
+      "source_location": "L205",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "spec_specs_006_plan_v0_6_editor_terminal_openfolder_5_milestone_b_open_file_open_folder_ala_vs_code_edt_006_010",
+      "target": "spec_specs_006_plan_v0_6_editor_terminal_openfolder_b_4_terminal_ikut_folder_edt_009",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "spec/specs/006.plan-v0.6-editor-terminal-openfolder.md",
+      "source_location": "L210",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "spec_specs_006_plan_v0_6_editor_terminal_openfolder_5_milestone_b_open_file_open_folder_ala_vs_code_edt_006_010",
+      "target": "spec_specs_006_plan_v0_6_editor_terminal_openfolder_b_5_status_bar_edt_010",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "spec/specs/006.plan-v0.6-editor-terminal-openfolder.md",
+      "source_location": "L215",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "spec_specs_006_plan_v0_6_editor_terminal_openfolder_5_milestone_b_open_file_open_folder_ala_vs_code_edt_006_010",
+      "target": "spec_specs_006_plan_v0_6_editor_terminal_openfolder_b_6_acceptance_milestone_b",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "spec/specs/006b.plan-checklist.md",
+      "source_location": "L1",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "spec_specs_006b_plan_checklist",
+      "target": "spec_specs_006b_plan_checklist_companion_checklist_v0_6_editor_integrated_terminal_open_file_folder_ala_vs_code",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "spec/specs/006b.plan-checklist.md",
+      "source_location": "L10",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "spec_specs_006b_plan_checklist_companion_checklist_v0_6_editor_integrated_terminal_open_file_folder_ala_vs_code",
+      "target": "spec_specs_006b_plan_checklist_0_ringkasan_deliverable",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "spec/specs/006b.plan-checklist.md",
+      "source_location": "L22",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "spec_specs_006b_plan_checklist_companion_checklist_v0_6_editor_integrated_terminal_open_file_folder_ala_vs_code",
+      "target": "spec_specs_006b_plan_checklist_1_milestone_a_integrated_terminal_edt_001_005",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "spec/specs/006b.plan-checklist.md",
+      "source_location": "L54",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "spec_specs_006b_plan_checklist_companion_checklist_v0_6_editor_integrated_terminal_open_file_folder_ala_vs_code",
+      "target": "spec_specs_006b_plan_checklist_2_milestone_b_open_file_open_folder_edt_006_010",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "spec/specs/006b.plan-checklist.md",
+      "source_location": "L77",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "spec_specs_006b_plan_checklist_companion_checklist_v0_6_editor_integrated_terminal_open_file_folder_ala_vs_code",
+      "target": "spec_specs_006b_plan_checklist_3_quality_gates_dod",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "spec/specs/006b.plan-checklist.md",
+      "source_location": "L89",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "spec_specs_006b_plan_checklist_companion_checklist_v0_6_editor_integrated_terminal_open_file_folder_ala_vs_code",
+      "target": "spec_specs_006b_plan_checklist_4_out_of_scope_ingat",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "spec/specs/006b.plan-checklist.md",
+      "source_location": "L48",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "spec_specs_006b_plan_checklist_1_milestone_a_integrated_terminal_edt_001_005",
+      "target": "spec_specs_006b_plan_checklist_green",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "spec/specs/006b.plan-checklist.md",
+      "source_location": "L36",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "spec_specs_006b_plan_checklist_1_milestone_a_integrated_terminal_edt_001_005",
+      "target": "spec_specs_006b_plan_checklist_impl_backend_src_http_rs",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "spec/specs/006b.plan-checklist.md",
+      "source_location": "L42",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "spec_specs_006b_plan_checklist_1_milestone_a_integrated_terminal_edt_001_005",
+      "target": "spec_specs_006b_plan_checklist_impl_frontend_texteditorview_tsx",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "spec/specs/006b.plan-checklist.md",
+      "source_location": "L24",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "spec_specs_006b_plan_checklist_1_milestone_a_integrated_terminal_edt_001_005",
+      "target": "spec_specs_006b_plan_checklist_red_backend",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "spec/specs/006b.plan-checklist.md",
+      "source_location": "L30",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "spec_specs_006b_plan_checklist_1_milestone_a_integrated_terminal_edt_001_005",
+      "target": "spec_specs_006b_plan_checklist_red_frontend_vitest",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "spec/specs/006b.plan-checklist.md",
+      "source_location": "L71",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "spec_specs_006b_plan_checklist_2_milestone_b_open_file_open_folder_edt_006_010",
+      "target": "spec_specs_006b_plan_checklist_green_71",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "spec/specs/006b.plan-checklist.md",
+      "source_location": "L66",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "spec_specs_006b_plan_checklist_2_milestone_b_open_file_open_folder_edt_006_010",
+      "target": "spec_specs_006b_plan_checklist_impl",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "spec/specs/006b.plan-checklist.md",
+      "source_location": "L56",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "spec_specs_006b_plan_checklist_2_milestone_b_open_file_open_folder_edt_006_010",
+      "target": "spec_specs_006b_plan_checklist_red_vitest",
+      "confidence_score": 1.0
+    },
+    {
       "relation": "references",
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
@@ -32278,5 +33147,5 @@
       "source_file": ".github/workflows/ci.yml"
     }
   ],
-  "built_at_commit": "70f1540d83026947bad274306d8c622ea6fadbf9"
+  "built_at_commit": "ef4257ffd85c0b0bf81e9e3f414c391ea502fb7e"
 }

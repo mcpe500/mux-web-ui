@@ -363,5 +363,15 @@
     "mtime": 1787315133.9923635,
     "ast_hash": "fc15147776f21fb57d8a86f04608c185",
     "semantic_hash": ""
+  },
+  "spec/specs/006.plan-v0.6-editor-terminal-openfolder.md": {
+    "mtime": 1787323731.4643934,
+    "ast_hash": "a6736a39886c7b685a362db2f7e2ba1e",
+    "semantic_hash": ""
+  },
+  "spec/specs/006b.plan-checklist.md": {
+    "mtime": 1787323836.4683065,
+    "ast_hash": "1f1db6ac50cddbcf5d1b838983c90c47",
+    "semantic_hash": ""
   }
 }
