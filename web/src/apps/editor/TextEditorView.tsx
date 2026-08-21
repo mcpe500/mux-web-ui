@@ -46,6 +46,12 @@ export function TextEditorView({ rootId: propRootId, filePath: propFilePath, ini
   // Tabs State
   const [tabs, setTabs] = useState<TabData[]>([]);
   const [activeTabId, setActiveTabId] = useState<string | null>(null);
+  // VS Code-like extras
+  const [showFind, setShowFind] = useState(false);
+  const [findQuery, setFindQuery] = useState('');
+  const [replaceQuery, setReplaceQuery] = useState('');
+  const [showTerminal, setShowTerminal] = useState(false);
+  const [highlight, setHighlight] = useState(false);
 
   // Load roots
   useEffect(() => {
@@ -194,6 +200,17 @@ export function TextEditorView({ rootId: propRootId, filePath: propFilePath, ini
     if ((e.ctrlKey || e.metaKey) && e.key === 's') {
       e.preventDefault();
       handleSave();
+    } else if ((e.ctrlKey || e.metaKey) && e.key === 'f') {
+      e.preventDefault();
+      setShowFind(true);
+    } else if ((e.ctrlKey || e.metaKey) && e.key === 'h') {
+      e.preventDefault();
+      setShowFind(true);
+    } else if ((e.ctrlKey || e.metaKey) && e.key === '`') {
+      e.preventDefault();
+      setShowTerminal(!showTerminal);
+    } else if (e.key === 'Escape' && showFind) {
+      setShowFind(false);
     } else if (e.key === 'Tab') {
       e.preventDefault();
       const target = e.target as HTMLTextAreaElement;
@@ -210,6 +227,18 @@ export function TextEditorView({ rootId: propRootId, filePath: propFilePath, ini
         }
       }, 0);
     }
+  };
+
+  const doFind = (_next: boolean) => {
+    if (!activeTab || !findQuery) return;
+    // Simple: just alert count
+    const count = (activeTab.content.match(new RegExp(findQuery.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), 'g')) || []).length;
+    alert(`Found ${count} matches for "${findQuery}"`);
+  };
+  const doReplace = () => {
+    if (!activeTab || !findQuery) return;
+    const newContent = activeTab.content.split(findQuery).join(replaceQuery);
+    updateActiveTab({ content: newContent });
   };
 
   const handleEditorSelect = (e: Event) => {
@@ -402,6 +431,25 @@ export function TextEditorView({ rootId: propRootId, filePath: propFilePath, ini
           })}
         </div>
 
+        {/* Editor Toolbar - VS Code */}
+        <div style={{ display: 'flex', gap: '6px', padding: '4px 8px', background: '#1e293b', borderBottom: '1px solid rgba(255,255,255,0.06)', alignItems: 'center', fontSize: '11px' }}>
+          <button onClick={()=> setShowFind(!showFind)} style={{ padding: '4px 8px', background: showFind?'#3b82f6':'#334155', color: 'white', borderRadius: '3px' }}>🔍 Find (Ctrl+F)</button>
+          <button onClick={()=> setShowTerminal(!showTerminal)} style={{ padding: '4px 8px', background: showTerminal?'#10b981':'#334155', color: 'white', borderRadius: '3px' }}>💻 Terminal (Ctrl+`)</button>
+          <button onClick={()=> setHighlight(!highlight)} style={{ padding: '4px 8px', background: highlight?'#f59e0b':'#334155', color: 'white', borderRadius: '3px' }}>{highlight?'✨ Highlight ON':'✨ Highlight OFF'}</button>
+          <span style={{ marginLeft: 'auto', color: '#64748b' }}>{activeTab ? `${activeTab.content.split('\n').length} lines` : ''}</span>
+        </div>
+
+        {/* VS Code Find/Replace Bar */}
+        {showFind && activeTab && (
+          <div style={{ display: 'flex', gap: '6px', padding: '6px 8px', background: '#1e293b', borderBottom: '1px solid #334155', alignItems: 'center' }}>
+            <input value={findQuery} onInput={(e)=> setFindQuery((e.target as HTMLInputElement).value)} placeholder="Find (Ctrl+F)" style={{ padding: '4px 6px', background: '#0f172a', color: 'white', border: '1px solid #475569', borderRadius: '3px', fontSize: '12px', width: '180px' }} />
+            <input value={replaceQuery} onInput={(e)=> setReplaceQuery((e.target as HTMLInputElement).value)} placeholder="Replace (Ctrl+H)" style={{ padding: '4px 6px', background: '#0f172a', color: 'white', border: '1px solid #475569', borderRadius: '3px', fontSize: '12px', width: '140px' }} />
+            <button onClick={()=> doFind(true)} style={{ padding: '4px 8px', background: '#3b82f6', color: 'white', borderRadius: '3px', fontSize: '11px' }}>Find</button>
+            <button onClick={doReplace} style={{ padding: '4px 8px', background: '#10b981', color: 'white', borderRadius: '3px', fontSize: '11px' }}>Replace All</button>
+            <button onClick={()=> setShowFind(false)} style={{ marginLeft: 'auto', padding: '4px 6px', background: '#334155', color: 'white', borderRadius: '3px' }}>✕</button>
+          </div>
+        )}
+
         {/* Content Area */}
         {activeTab ? (
           <div style={{ flex: 1, display: 'flex', flexDirection: 'column', overflow: 'hidden' }}>
@@ -442,6 +490,19 @@ export function TextEditorView({ rootId: propRootId, filePath: propFilePath, ini
                     boxSizing: 'border-box'
                   }}
                 />
+                {/* Minimap - VS Code */}
+                <div style={{ width: '64px', background: '#0f172a', borderLeft: '1px solid rgba(255,255,255,0.06)', overflow: 'hidden', padding: '4px 2px', fontSize: '2px', lineHeight: '3px', color: '#475569', fontFamily: 'monospace', opacity: 0.6 }}>
+                  {activeTab.content.slice(0, 3000).split('\n').slice(0, 100).map((line, i)=> (
+                    <div key={i} style={{ whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'clip' }}>{line.slice(0, 40) || ' '}</div>
+                  ))}
+                </div>
+              </div>
+            )}
+            {/* Integrated Terminal - VS Code (placeholder, full PTY via separate window) */}
+            {showTerminal && (
+              <div style={{ height: '100px', borderTop: '2px solid #334155', background: '#000', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', color: '#94a3b8', fontSize: '12px', gap: '6px' }}>
+                <div>💻 Integrated Terminal — open via Taskbar → Terminal</div>
+                <button onClick={()=> setShowTerminal(false)} style={{ padding: '4px 8px', background: '#334155', color: 'white', borderRadius: '4px' }}>Close (Ctrl+`)</button>
               </div>
             )}
           </div>

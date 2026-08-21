@@ -8,6 +8,7 @@ import { SystemMonitorView } from '../apps/monitor/SystemMonitorView';
 import { GitView } from '../apps/git/GitView';
 import { PackageCenterView } from '../apps/packages/PackageCenterView';
 import { ShareModal } from '../apps/share/ShareModal';
+import { BrowserView } from '../apps/browser/BrowserView';
 
 export function DesktopCanvas() {
   const [windows, dispatch] = useReducer(windowReducer, []);
@@ -154,20 +155,20 @@ export function DesktopCanvas() {
     });
   };
 
-  const openGit = () => {
+  const openGit = (rootId: string = 'home', repoPath: string = '') => {
     const id = `git-${Date.now()}`;
     dispatch({
       type: 'OPEN_WINDOW',
       payload: {
         id,
         appId: 'git',
-        title: 'Git',
+        title: `Git ${repoPath || rootId}`,
         icon: '🔧',
         x: 120,
         y: 80,
         width: 700,
         height: 500,
-        props: { rootId: 'home', repoPath: '' },
+        props: { rootId, repoPath },
       },
     });
   };
@@ -206,6 +207,24 @@ export function DesktopCanvas() {
     });
   };
 
+  const openBrowser = (url?: string) => {
+    const id = `browser-${Date.now()}`;
+    dispatch({
+      type: 'OPEN_WINDOW',
+      payload: {
+        id,
+        appId: 'browser',
+        title: 'Browser',
+        icon: '🌐',
+        x: 100,
+        y: 50,
+        width: 900,
+        height: 600,
+        props: { url },
+      },
+    });
+  };
+
   const handleTileGrid = () => {
     const { width, height } = getCanvasBounds();
     dispatch({ type: 'TILE_GRID', canvasWidth: width, canvasHeight: height });
@@ -229,6 +248,7 @@ export function DesktopCanvas() {
               <FileExplorerView
                 onOpenFile={(root, path) => openEditor(root, path)}
                 onOpenTerminalHere={(_root, path) => openTerminal(path)}
+                onOpenInGit={(root, path) => openGit(root, path)}
               />
             )}
             {win.appId === 'editor' && (
@@ -242,6 +262,7 @@ export function DesktopCanvas() {
             {win.appId === 'git' && <GitView rootId={win.props?.rootId} repoPath={win.props?.repoPath} />}
             {win.appId === 'packages' && <PackageCenterView />}
             {win.appId === 'share' && <ShareModal />}
+            {win.appId === 'browser' && <BrowserView />}
           </WindowFrame>
         ))}
       </div>
@@ -269,7 +290,7 @@ export function DesktopCanvas() {
         <button className="start-btn" onClick={openMonitor} style={{ background: '#10b981' }}>
           📊 Monitor
         </button>
-        <button className="start-btn" onClick={openGit} style={{ background: '#f59e0b' }}>
+        <button className="start-btn" onClick={()=> openGit()} style={{ background: '#f59e0b' }}>
           🔧 Git
         </button>
         <button className="start-btn" onClick={openPackages} style={{ background: '#06b6d4' }}>
@@ -277,6 +298,9 @@ export function DesktopCanvas() {
         </button>
         <button className="start-btn" onClick={openShare} style={{ background: '#8b5cf6' }}>
           🔗 Share
+        </button>
+        <button className="start-btn" onClick={()=>openBrowser()} style={{ background: '#ef4444' }}>
+          🌐 Browser
         </button>
 
         <div className="taskbar-items">
