@@ -56,6 +56,10 @@ export function BrowserView() {
 
   return (
     <div style={{ display: 'flex', flexDirection: 'column', width: '100%', height: '100%', background: '#0f172a' }}>
+      {/* Preview banner - will do later */}
+      <div style={{ padding: '4px 8px', background: 'rgba(245,158,11,0.15)', borderBottom: '1px solid rgba(245,158,11,0.3)', color: '#fbbf24', fontSize: '11px', textAlign: 'center' }}>
+        🌐 Browser Preview — Basic browsing works, full features (downloads, extensions) will do later
+      </div>
       {/* Tab bar */}
       <div style={{ display: 'flex', background: '#1e293b', borderBottom: '1px solid #334155', overflowX: 'auto' }}>
         {tabs.map((t)=> (

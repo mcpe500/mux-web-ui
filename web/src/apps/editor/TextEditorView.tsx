@@ -52,6 +52,7 @@ export function TextEditorView({ rootId: propRootId, filePath: propFilePath, ini
   const [replaceQuery, setReplaceQuery] = useState('');
   const [showTerminal, setShowTerminal] = useState(false);
   const [highlight, setHighlight] = useState(false);
+  const [menuOpen, setMenuOpen] = useState<string|null>(null);
 
   // Load roots
   useEffect(() => {
@@ -392,6 +393,36 @@ export function TextEditorView({ rootId: propRootId, filePath: propFilePath, ini
 
       {/* Main Editor Area */}
       <div style={{ flex: 1, display: 'flex', flexDirection: 'column', overflow: 'hidden' }}>
+        {/* Notepad Menu Bar - Windows 11 */}
+        <div style={{ display: 'flex', gap: '2px', padding: '4px 8px', background: '#0c1222', borderBottom: '1px solid rgba(255,255,255,0.06)', fontSize: '13px', alignItems: 'center' }}>
+          {['File','Edit','View'].map((m)=> (
+            <div key={m} onClick={()=> setMenuOpen(menuOpen===m?null:m)} style={{ padding: '4px 8px', borderRadius: '4px', cursor: 'pointer', background: menuOpen===m?'#1e293b':'transparent', color: '#e2e8f0' }}>{m}</div>
+          ))}
+          <div style={{ marginLeft: 'auto', display: 'flex', gap: '6px', alignItems: 'center' }}>
+            <span style={{ color: '#64748b', fontSize: '11px' }}>Notepad</span>
+            <span style={{ width: '8px', height: '8px', borderRadius: '4px', background: highlight?'#10b981':'#64748b' }} title="Highlight"></span>
+          </div>
+        </div>
+        {menuOpen && (
+          <div style={{ position: 'absolute', top: '72px', left: menuOpen==='File'? '260px' : menuOpen==='Edit'? '300px' : '340px', background: '#1e293b', border: '1px solid #334155', borderRadius: '6px', boxShadow: '0 8px 24px rgba(0,0,0,0.4)', zIndex: 10, minWidth: '180px', padding: '4px 0', fontSize: '13px' }} onMouseLeave={()=> setMenuOpen(null)}>
+            {menuOpen==='File' && (<>
+              <div style={{ padding: '6px 12px', hover: 'background: #334155', cursor: 'pointer' }} onClick={()=>{ setMenuOpen(null); if(activeTab) handleSave(); }}>💾 Save Ctrl+S</div>
+              <div style={{ padding: '6px 12px', cursor: 'pointer' }} onClick={()=> setMenuOpen(null)}>📄 New Tab Ctrl+N</div>
+              <div style={{ padding: '6px 12px', cursor: 'pointer' }} onClick={()=> setMenuOpen(null)}>📂 Open Ctrl+O</div>
+            </>)}
+            {menuOpen==='Edit' && (<>
+              <div style={{ padding: '6px 12px', cursor: 'pointer' }} onClick={()=>{ setMenuOpen(null); setShowFind(true); }}>🔍 Find Ctrl+F</div>
+              <div style={{ padding: '6px 12px', cursor: 'pointer' }} onClick={()=>{ setMenuOpen(null); setShowFind(true); }}>🔄 Replace Ctrl+H</div>
+              <div style={{ height: '1px', background: '#334155', margin: '4px 0' }} />
+              <div style={{ padding: '6px 12px', cursor: 'pointer' }} onClick={()=> document.execCommand('undo')}>↩️ Undo</div>
+            </>)}
+            {menuOpen==='View' && (<>
+              <div style={{ padding: '6px 12px', cursor: 'pointer' }} onClick={()=> setHighlight(!highlight)}>✨ Syntax Highlight {highlight?'ON':'OFF'}</div>
+              <div style={{ padding: '6px 12px', cursor: 'pointer' }} onClick={()=> setShowTerminal(!showTerminal)}>💻 Terminal {showTerminal?'ON':'OFF'}</div>
+              <div style={{ padding: '6px 12px', cursor: 'pointer' }}>🔍 Zoom In Ctrl++</div>
+            </>)}
+          </div>
+        )}
         {/* Tab Bar */}
         <div style={{ display: 'flex', backgroundColor: '#1e293b', overflowX: 'auto', flexShrink: 0, height: '36px' }}>
           {tabs.map(tab => {

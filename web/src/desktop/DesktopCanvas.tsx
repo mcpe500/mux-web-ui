@@ -1,4 +1,4 @@
-import { useReducer, useEffect, useRef } from 'preact/hooks';
+import { useReducer, useEffect, useRef, useState } from 'preact/hooks';
 import { windowReducer, WindowState } from './windowStore';
 import { WindowFrame } from './WindowFrame';
 import { TerminalView } from '../apps/terminal/TerminalView';
@@ -9,15 +9,43 @@ import { GitView } from '../apps/git/GitView';
 import { PackageCenterView } from '../apps/packages/PackageCenterView';
 import { ShareModal } from '../apps/share/ShareModal';
 import { BrowserView } from '../apps/browser/BrowserView';
+import { Toolbar } from './Toolbar';
+import { StartMenu } from './StartMenu';
+import { SearchApp } from './SearchApp';
 
 export function DesktopCanvas() {
   const [windows, dispatch] = useReducer(windowReducer, []);
   const canvasRef = useRef<HTMLDivElement>(null);
+  const [startOpen, setStartOpen] = useState(false);
+  const [searchOpen, setSearchOpen] = useState(false);
+  const [timeStr, setTimeStr] = useState(() => new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) + ' ' + new Date().toLocaleDateString([], { month: 'short', day: 'numeric' }));
 
   // Open default terminal on initial load
   useEffect(() => {
     openTerminal();
   }, []);
+
+  // Clock + global search shortcut
+  useEffect(() => {
+    const t = setInterval(() => setTimeStr(new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) + ' ' + new Date().toLocaleDateString([], { month: 'short', day: 'numeric' })), 60000);
+    const onKey = (e: KeyboardEvent) => {
+      if ((e.ctrlKey || e.metaKey) && (e.key.toLowerCase() === 'k')) { e.preventDefault(); setSearchOpen(true); }
+      if (e.key === 'Escape') { setStartOpen(false); setSearchOpen(false); }
+    };
+    window.addEventListener('keydown', onKey as any);
+    return () => { clearInterval(t); window.removeEventListener('keydown', onKey as any); };
+  }, []);
+
+  const openApp = (appId: string) => {
+    if (appId === 'terminal') openTerminal();
+    else if (appId === 'files') openFileExplorer();
+    else if (appId === 'editor') openEditor();
+    else if (appId === 'browser') openBrowser();
+    else if (appId === 'git') openGit();
+    else if (appId === 'packages') openPackages();
+    else if (appId === 'share') openShare();
+    else if (appId === 'monitor') openMonitor();
+  };
 
   const getCanvasBounds = () => {
     if (canvasRef.current) {
@@ -231,8 +259,8 @@ export function DesktopCanvas() {
   };
 
   return (
-    <div className="desktop-viewport">
-      <div className="desktop-canvas" ref={canvasRef}>
+    <div className="desktop-viewport" onClick={()=> { setStartOpen(false); setSearchOpen(false); }}>
+      <div className="desktop-canvas" ref={canvasRef} onClick={()=> { setStartOpen(false); setSearchOpen(false); }}>
         {windows.map((win) => (
           <WindowFrame
             key={win.id}
@@ -267,60 +295,32 @@ export function DesktopCanvas() {
         ))}
       </div>
 
-      {/* Taskbar */}
-      <div className="taskbar">
-        <button className="start-btn" onClick={() => openTerminal()}>
-          ⚡ New Terminal
-        </button>
-        <button className="start-btn" onClick={() => spawnMultipleTerminals(4)} style={{ background: '#4f46e5' }}>
-          🔲 4 Terminals (2x2)
-        </button>
-        <button className="start-btn" onClick={() => spawnMultipleTerminals(16)} style={{ background: '#0284c7' }}>
-          🔲 16 Terminals (4x4)
-        </button>
-        <button className="start-btn" onClick={handleTileGrid} style={{ background: '#059669' }}>
-          📐 Tile Grid
-        </button>
-        <button className="start-btn" onClick={openFileExplorer} style={{ background: '#3b82f6' }}>
-          📁 Files
-        </button>
-        <button className="start-btn" onClick={() => openEditor()} style={{ background: '#8b5cf6' }}>
-          📝 Editor
-        </button>
-        <button className="start-btn" onClick={openMonitor} style={{ background: '#10b981' }}>
-          📊 Monitor
-        </button>
-        <button className="start-btn" onClick={()=> openGit()} style={{ background: '#f59e0b' }}>
-          🔧 Git
-        </button>
-        <button className="start-btn" onClick={openPackages} style={{ background: '#06b6d4' }}>
-          📦 Packages
-        </button>
-        <button className="start-btn" onClick={openShare} style={{ background: '#8b5cf6' }}>
-          🔗 Share
-        </button>
-        <button className="start-btn" onClick={()=>openBrowser()} style={{ background: '#ef4444' }}>
-          🌐 Browser
-        </button>
+      {/* Windows 11 Taskbar + Search + Start */}
+      <Toolbar onOpenApp={openApp} onSearch={()=> setSearchOpen(true)} onToggleStart={()=> setStartOpen(v=>!v)} startOpen={startOpen} timeStr={timeStr} />
+      <StartMenu open={startOpen} onClose={()=> setStartOpen(false)} onOpenApp={openApp} />
+      <SearchApp open={searchOpen} onClose={()=> setSearchOpen(false)} onOpenApp={openApp} />
 
-        <div className="taskbar-items">
-          {windows.map((win) => (
-            <button
-              key={win.id}
-              className={`taskbar-item ${!win.isMinimized ? 'active' : ''} ${win.isMinimized ? 'minimized' : ''}`}
-              onClick={() => {
-                if (win.isMinimized) {
-                  dispatch({ type: 'RESTORE_WINDOW', id: win.id });
-                } else {
-                  dispatch({ type: 'FOCUS_WINDOW', id: win.id });
-                }
-              }}
-            >
-              <span>{win.icon}</span>
-              <span>{win.title}</span>
-            </button>
-          ))}
-        </div>
+      {/* Running apps + quick actions - Windows taskbar items */}
+      <div style={{ height: '40px', background: 'rgba(32,32,32,0.92)', backdropFilter: 'blur(16px)', borderTop: '1px solid rgba(255,255,255,0.08)', display: 'flex', alignItems: 'center', gap: '6px', padding: '0 10px', overflowX: 'auto' }}>
+        <button onClick={() => spawnMultipleTerminals(4)} title="4 Terminals" style={{ padding: '6px 8px', background: '#4f46e5', color: 'white', borderRadius: '6px', fontSize: '12px' }}>⊞ 4</button>
+        <button onClick={() => spawnMultipleTerminals(16)} title="16 Terminals" style={{ padding: '6px 8px', background: '#0284c7', color: 'white', borderRadius: '6px', fontSize: '12px' }}>⊞ 16</button>
+        <button onClick={handleTileGrid} title="Tile Grid" style={{ padding: '6px 8px', background: '#059669', color: 'white', borderRadius: '6px', fontSize: '12px' }}>📐 Tile</button>
+        <div style={{ width: '1px', height: '20px', background: 'rgba(255,255,255,0.1)' }} />
+        {windows.map((win) => (
+          <button
+            key={win.id}
+            className={`taskbar-item ${!win.isMinimized ? 'active' : ''} ${win.isMinimized ? 'minimized' : ''}`}
+            onClick={() => {
+              if (win.isMinimized) dispatch({ type: 'RESTORE_WINDOW', id: win.id });
+              else dispatch({ type: 'FOCUS_WINDOW', id: win.id });
+            }}
+            title={win.title}
+          >
+            <span>{win.icon}</span>
+            <span>{win.title}</span>
+          </button>
+        ))}
+        {windows.length===0 && <span style={{ color: '#64748b', fontSize: '12px' }}>No windows • Press ⊞ or Ctrl+K to search apps</span>}
       </div>
     </div>
   );

@@ -95,8 +95,8 @@
     "semantic_hash": "b200590443cb590d2d4911b46bba4b1d"
   },
   "web/src/apps/editor/TextEditorView.tsx": {
-    "mtime": 1787313012.5603416,
-    "ast_hash": "260f32140dd0c20f90eba5626ea2f6a8",
+    "mtime": 1787315064.051638,
+    "ast_hash": "2cd358728aedb1a2fa92ea146269a6ab",
     "semantic_hash": ""
   },
   "web/src/apps/files/FileExplorerView.tsx": {
@@ -115,8 +115,8 @@
     "semantic_hash": ""
   },
   "web/src/desktop/DesktopCanvas.tsx": {
-    "mtime": 1787313016.8198514,
-    "ast_hash": "1aa8949ad3b639e6fc066f0ce9cd9c3d",
+    "mtime": 1787315142.4069579,
+    "ast_hash": "bc2b545ab35f0f270381d2d35a76ed9f",
     "semantic_hash": ""
   },
   "web/src/desktop/WindowFrame.tsx": {
@@ -335,18 +335,33 @@
     "semantic_hash": ""
   },
   "web/src/apps/browser/BrowserView.tsx": {
-    "mtime": 1787312890.9750326,
-    "ast_hash": "273bf7343f614a412c5e8a4af2a231b2",
+    "mtime": 1787315091.376279,
+    "ast_hash": "6852611950703f7c10c9be207d6d36b8",
     "semantic_hash": ""
   },
   "spec/specs/005.plan-v0.5-workspace-desktop-filemanager.md": {
-    "mtime": 1787312751.1032264,
-    "ast_hash": "d86c061541b9a25ec1c5394d9a310466",
+    "mtime": 1787314101.4506357,
+    "ast_hash": "1c50e182e212d6b288ad4f9d5a76e44d",
     "semantic_hash": ""
   },
   "spec/specs/005b.plan-checklist.md": {
-    "mtime": 1787312768.5192127,
-    "ast_hash": "4928ae3c3b67b1c9d77e773a2c6ab4c6",
+    "mtime": 1787314135.637567,
+    "ast_hash": "d8572440509c561fcc9f5bde1a39b851",
+    "semantic_hash": ""
+  },
+  "web/src/desktop/SearchApp.tsx": {
+    "mtime": 1787314972.778089,
+    "ast_hash": "105b3ed891e147f91fc320db52c09b4b",
+    "semantic_hash": ""
+  },
+  "web/src/desktop/StartMenu.tsx": {
+    "mtime": 1787314962.1551237,
+    "ast_hash": "c1d252e7fe3a3ae263e08fff121af223",
+    "semantic_hash": ""
+  },
+  "web/src/desktop/Toolbar.tsx": {
+    "mtime": 1787315133.9923635,
+    "ast_hash": "fc15147776f21fb57d8a86f04608c185",
     "semantic_hash": ""
   }
 }

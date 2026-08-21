@@ -992,7 +992,7 @@
       "_origin": "ast",
       "id": "src_config",
       "community": 11,
-      "community_name": "Config",
+      "community_name": "start_server",
       "norm_label": "config.rs"
     },
     {
@@ -1003,7 +1003,7 @@
       "_origin": "ast",
       "id": "src_config_config",
       "community": 11,
-      "community_name": "Config",
+      "community_name": "start_server",
       "norm_label": "config"
     },
     {
@@ -1014,7 +1014,7 @@
       "_origin": "ast",
       "id": "src_config_rs_ipaddr",
       "community": 11,
-      "community_name": "Config",
+      "community_name": "start_server",
       "norm_label": "ipaddr"
     },
     {
@@ -1025,7 +1025,7 @@
       "_origin": "ast",
       "id": "src_config_rs_option",
       "community": 11,
-      "community_name": "Config",
+      "community_name": "start_server",
       "norm_label": "option"
     },
     {
@@ -1036,7 +1036,7 @@
       "_origin": "ast",
       "id": "src_config_rs_pathbuf",
       "community": 11,
-      "community_name": "Config",
+      "community_name": "start_server",
       "norm_label": "pathbuf"
     },
     {
@@ -1047,7 +1047,7 @@
       "_origin": "ast",
       "id": "src_config_rs_string",
       "community": 11,
-      "community_name": "Config",
+      "community_name": "start_server",
       "norm_label": "string"
     },
     {
@@ -1058,7 +1058,7 @@
       "_origin": "ast",
       "id": "src_config_config_effective_bind",
       "community": 11,
-      "community_name": "Config",
+      "community_name": "start_server",
       "norm_label": ".effective_bind()"
     },
     {
@@ -1069,7 +1069,7 @@
       "_origin": "ast",
       "id": "src_config_config_tls_enabled",
       "community": 11,
-      "community_name": "Config",
+      "community_name": "start_server",
       "norm_label": ".tls_enabled()"
     },
     {
@@ -1080,7 +1080,7 @@
       "_origin": "ast",
       "id": "src_config_config_data_dir",
       "community": 11,
-      "community_name": "Config",
+      "community_name": "start_server",
       "norm_label": ".data_dir()"
     },
     {
@@ -1420,8 +1420,8 @@
       "source_location": "L64",
       "_origin": "ast",
       "id": "src_http_create_router",
-      "community": 0,
-      "community_name": "http.rs",
+      "community": 11,
+      "community_name": "start_server",
       "norm_label": "create_router()"
     },
     {
@@ -1431,8 +1431,8 @@
       "source_location": "",
       "_origin": "ast",
       "id": "router",
-      "community": 0,
-      "community_name": "http.rs",
+      "community": 11,
+      "community_name": "start_server",
       "norm_label": "router"
     },
     {
@@ -1970,8 +1970,8 @@
       "source_location": "",
       "_origin": "ast",
       "id": "bytes",
-      "community": 23,
-      "community_name": "protocol.rs",
+      "community": 49,
+      "community_name": "start_health_server",
       "norm_label": "bytes"
     },
     {
@@ -2301,7 +2301,7 @@
       "_origin": "ast",
       "id": "src_main",
       "community": 11,
-      "community_name": "Config",
+      "community_name": "start_server",
       "norm_label": "main.rs"
     },
     {
@@ -2312,7 +2312,7 @@
       "_origin": "ast",
       "id": "src_main_private_ips",
       "community": 11,
-      "community_name": "Config",
+      "community_name": "start_server",
       "norm_label": "private_ips()"
     },
     {
@@ -2323,7 +2323,7 @@
       "_origin": "ast",
       "id": "src_main_rs_vec",
       "community": 11,
-      "community_name": "Config",
+      "community_name": "start_server",
       "norm_label": "vec"
     },
     {
@@ -2334,7 +2334,7 @@
       "_origin": "ast",
       "id": "src_main_rs_ipaddr",
       "community": 11,
-      "community_name": "Config",
+      "community_name": "start_server",
       "norm_label": "ipaddr"
     },
     {
@@ -2345,7 +2345,7 @@
       "_origin": "ast",
       "id": "src_main_generate_self_signed_cert",
       "community": 11,
-      "community_name": "Config",
+      "community_name": "start_server",
       "norm_label": "generate_self_signed_cert()"
     },
     {
@@ -2356,7 +2356,7 @@
       "_origin": "ast",
       "id": "src_main_rs_path",
       "community": 11,
-      "community_name": "Config",
+      "community_name": "start_server",
       "norm_label": "path"
     },
     {
@@ -2367,7 +2367,7 @@
       "_origin": "ast",
       "id": "src_main_rs_result",
       "community": 11,
-      "community_name": "Config",
+      "community_name": "start_server",
       "norm_label": "result"
     },
     {
@@ -2378,7 +2378,7 @@
       "_origin": "ast",
       "id": "src_main_rs_pathbuf",
       "community": 11,
-      "community_name": "Config",
+      "community_name": "start_server",
       "norm_label": "pathbuf"
     },
     {
@@ -2389,7 +2389,7 @@
       "_origin": "ast",
       "id": "box",
       "community": 11,
-      "community_name": "Config",
+      "community_name": "start_server",
       "norm_label": "box"
     },
     {
@@ -2400,7 +2400,7 @@
       "_origin": "ast",
       "id": "src_main_rs_error",
       "community": 11,
-      "community_name": "Config",
+      "community_name": "start_server",
       "norm_label": "error"
     },
     {
@@ -2411,7 +2411,7 @@
       "_origin": "ast",
       "id": "src_main_main",
       "community": 11,
-      "community_name": "Config",
+      "community_name": "start_server",
       "norm_label": "main()"
     },
     {
@@ -2554,7 +2554,7 @@
       "_origin": "ast",
       "id": "src_paths",
       "community": 11,
-      "community_name": "Config",
+      "community_name": "start_server",
       "norm_label": "paths.rs"
     },
     {
@@ -2565,7 +2565,7 @@
       "_origin": "ast",
       "id": "src_paths_patherror",
       "community": 11,
-      "community_name": "Config",
+      "community_name": "start_server",
       "norm_label": "patherror"
     },
     {
@@ -2576,7 +2576,7 @@
       "_origin": "ast",
       "id": "src_paths_rs_string",
       "community": 11,
-      "community_name": "Config",
+      "community_name": "start_server",
       "norm_label": "string"
     },
     {
@@ -2587,7 +2587,7 @@
       "_origin": "ast",
       "id": "src_paths_rs_display",
       "community": 11,
-      "community_name": "Config",
+      "community_name": "start_server",
       "norm_label": "display"
     },
     {
@@ -2598,7 +2598,7 @@
       "_origin": "ast",
       "id": "src_paths_patherror_fmt",
       "community": 11,
-      "community_name": "Config",
+      "community_name": "start_server",
       "norm_label": ".fmt()"
     },
     {
@@ -2609,7 +2609,7 @@
       "_origin": "ast",
       "id": "src_paths_rs_formatter",
       "community": 11,
-      "community_name": "Config",
+      "community_name": "start_server",
       "norm_label": "formatter"
     },
     {
@@ -2620,7 +2620,7 @@
       "_origin": "ast",
       "id": "src_paths_rs_result",
       "community": 11,
-      "community_name": "Config",
+      "community_name": "start_server",
       "norm_label": "result"
     },
     {
@@ -2631,7 +2631,7 @@
       "_origin": "ast",
       "id": "src_paths_rs_error",
       "community": 11,
-      "community_name": "Config",
+      "community_name": "start_server",
       "norm_label": "error"
     },
     {
@@ -2642,7 +2642,7 @@
       "_origin": "ast",
       "id": "src_paths_allowedroots",
       "community": 11,
-      "community_name": "Config",
+      "community_name": "start_server",
       "norm_label": "allowedroots"
     },
     {
@@ -2653,7 +2653,7 @@
       "_origin": "ast",
       "id": "src_paths_rs_hashmap",
       "community": 11,
-      "community_name": "Config",
+      "community_name": "start_server",
       "norm_label": "hashmap"
     },
     {
@@ -2664,7 +2664,7 @@
       "_origin": "ast",
       "id": "src_paths_rs_pathbuf",
       "community": 11,
-      "community_name": "Config",
+      "community_name": "start_server",
       "norm_label": "pathbuf"
     },
     {
@@ -2675,7 +2675,7 @@
       "_origin": "ast",
       "id": "src_paths_allowedroots_new",
       "community": 11,
-      "community_name": "Config",
+      "community_name": "start_server",
       "norm_label": ".new()"
     },
     {
@@ -2686,7 +2686,7 @@
       "_origin": "ast",
       "id": "src_paths_rs_vec",
       "community": 11,
-      "community_name": "Config",
+      "community_name": "start_server",
       "norm_label": "vec"
     },
     {
@@ -2697,7 +2697,7 @@
       "_origin": "ast",
       "id": "src_paths_rs_self",
       "community": 11,
-      "community_name": "Config",
+      "community_name": "start_server",
       "norm_label": "self"
     },
     {
@@ -2708,7 +2708,7 @@
       "_origin": "ast",
       "id": "src_paths_allowedroots_get_root",
       "community": 11,
-      "community_name": "Config",
+      "community_name": "start_server",
       "norm_label": ".get_root()"
     },
     {
@@ -2719,7 +2719,7 @@
       "_origin": "ast",
       "id": "src_paths_allowedroots_list_roots",
       "community": 11,
-      "community_name": "Config",
+      "community_name": "start_server",
       "norm_label": ".list_roots()"
     },
     {
@@ -2730,7 +2730,7 @@
       "_origin": "ast",
       "id": "src_paths_allowedroots_resolve_path",
       "community": 11,
-      "community_name": "Config",
+      "community_name": "start_server",
       "norm_label": ".resolve_path()"
     },
     {
@@ -2741,7 +2741,7 @@
       "_origin": "ast",
       "id": "src_paths_test_fs_001_allowed_roots_resolution",
       "community": 11,
-      "community_name": "Config",
+      "community_name": "start_server",
       "norm_label": "test_fs_001_allowed_roots_resolution()"
     },
     {
@@ -2752,7 +2752,7 @@
       "_origin": "ast",
       "id": "src_paths_test_fs_002_path_traversal_defense",
       "community": 11,
-      "community_name": "Config",
+      "community_name": "start_server",
       "norm_label": "test_fs_002_path_traversal_defense()"
     },
     {
@@ -2763,7 +2763,7 @@
       "_origin": "ast",
       "id": "src_paths_test_fs_003_symlink_containment",
       "community": 11,
-      "community_name": "Config",
+      "community_name": "start_server",
       "norm_label": "test_fs_003_symlink_containment()"
     },
     {
@@ -2774,7 +2774,7 @@
       "_origin": "ast",
       "id": "src_paths_test_fs_014_independent_root_validation",
       "community": 11,
-      "community_name": "Config",
+      "community_name": "start_server",
       "norm_label": "test_fs_014_independent_root_validation()"
     },
     {
@@ -2785,7 +2785,7 @@
       "_origin": "ast",
       "id": "src_paths_test_fs_016_hardlink_escape_rejected",
       "community": 11,
-      "community_name": "Config",
+      "community_name": "start_server",
       "norm_label": "test_fs_016_hardlink_escape_rejected()"
     },
     {
@@ -2796,7 +2796,7 @@
       "_origin": "ast",
       "id": "src_paths_test_fs_017_encoding_and_literal_matrix",
       "community": 11,
-      "community_name": "Config",
+      "community_name": "start_server",
       "norm_label": "test_fs_017_encoding_and_literal_matrix()"
     },
     {
@@ -2806,8 +2806,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_protocol",
-      "community": 23,
-      "community_name": "protocol.rs",
+      "community": 49,
+      "community_name": "start_health_server",
       "norm_label": "protocol.rs"
     },
     {
@@ -2817,8 +2817,8 @@
       "source_location": "L5",
       "_origin": "ast",
       "id": "src_protocol_frame",
-      "community": 23,
-      "community_name": "protocol.rs",
+      "community": 49,
+      "community_name": "start_health_server",
       "norm_label": "frame"
     },
     {
@@ -2828,8 +2828,8 @@
       "source_location": "",
       "_origin": "ast",
       "id": "src_protocol_rs_vec",
-      "community": 23,
-      "community_name": "protocol.rs",
+      "community": 49,
+      "community_name": "start_health_server",
       "norm_label": "vec"
     },
     {
@@ -2839,8 +2839,8 @@
       "source_location": "",
       "_origin": "ast",
       "id": "src_protocol_rs_string",
-      "community": 23,
-      "community_name": "protocol.rs",
+      "community": 49,
+      "community_name": "start_health_server",
       "norm_label": "string"
     },
     {
@@ -2850,8 +2850,8 @@
       "source_location": "L16",
       "_origin": "ast",
       "id": "src_protocol_codecerror",
-      "community": 23,
-      "community_name": "protocol.rs",
+      "community": 49,
+      "community_name": "start_health_server",
       "norm_label": "codecerror"
     },
     {
@@ -2861,8 +2861,8 @@
       "source_location": "",
       "_origin": "ast",
       "id": "src_protocol_rs_display",
-      "community": 23,
-      "community_name": "protocol.rs",
+      "community": 49,
+      "community_name": "start_health_server",
       "norm_label": "display"
     },
     {
@@ -2872,8 +2872,8 @@
       "source_location": "L25",
       "_origin": "ast",
       "id": "src_protocol_codecerror_fmt",
-      "community": 23,
-      "community_name": "protocol.rs",
+      "community": 49,
+      "community_name": "start_health_server",
       "norm_label": ".fmt()"
     },
     {
@@ -2883,8 +2883,8 @@
       "source_location": "",
       "_origin": "ast",
       "id": "src_protocol_rs_formatter",
-      "community": 23,
-      "community_name": "protocol.rs",
+      "community": 49,
+      "community_name": "start_health_server",
       "norm_label": "formatter"
     },
     {
@@ -2894,8 +2894,8 @@
       "source_location": "",
       "_origin": "ast",
       "id": "src_protocol_rs_result",
-      "community": 23,
-      "community_name": "protocol.rs",
+      "community": 49,
+      "community_name": "start_health_server",
       "norm_label": "result"
     },
     {
@@ -2905,8 +2905,8 @@
       "source_location": "",
       "_origin": "ast",
       "id": "src_protocol_rs_error",
-      "community": 23,
-      "community_name": "protocol.rs",
+      "community": 49,
+      "community_name": "start_health_server",
       "norm_label": "error"
     },
     {
@@ -2916,8 +2916,8 @@
       "source_location": "L50",
       "_origin": "ast",
       "id": "src_protocol_encode_frame",
-      "community": 23,
-      "community_name": "protocol.rs",
+      "community": 49,
+      "community_name": "start_health_server",
       "norm_label": "encode_frame()"
     },
     {
@@ -2927,8 +2927,8 @@
       "source_location": "L89",
       "_origin": "ast",
       "id": "src_protocol_decode_frame",
-      "community": 23,
-      "community_name": "protocol.rs",
+      "community": 49,
+      "community_name": "start_health_server",
       "norm_label": "decode_frame()"
     },
     {
@@ -2938,8 +2938,8 @@
       "source_location": "L136",
       "_origin": "ast",
       "id": "src_protocol_test_term_001_codec_encode_decode_roundtrip",
-      "community": 23,
-      "community_name": "protocol.rs",
+      "community": 49,
+      "community_name": "start_health_server",
       "norm_label": "test_term_001_codec_encode_decode_roundtrip()"
     },
     {
@@ -2949,8 +2949,8 @@
       "source_location": "L159",
       "_origin": "ast",
       "id": "src_protocol_test_term_002_codec_invalid_inputs",
-      "community": 23,
-      "community_name": "protocol.rs",
+      "community": 49,
+      "community_name": "start_health_server",
       "norm_label": "test_term_002_codec_invalid_inputs()"
     },
     {
@@ -4533,8 +4533,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "tests_common_mod",
-      "community": 2,
-      "community_name": "TestServer",
+      "community": 11,
+      "community_name": "start_server",
       "norm_label": "mod.rs"
     },
     {
@@ -4544,8 +4544,8 @@
       "source_location": "L13",
       "_origin": "ast",
       "id": "tests_common_mod_test_auth",
-      "community": 2,
-      "community_name": "TestServer",
+      "community": 11,
+      "community_name": "start_server",
       "norm_label": "test_auth()"
     },
     {
@@ -4555,8 +4555,8 @@
       "source_location": "L17",
       "_origin": "ast",
       "id": "tests_common_mod_testserver",
-      "community": 2,
-      "community_name": "TestServer",
+      "community": 49,
+      "community_name": "start_health_server",
       "norm_label": "testserver"
     },
     {
@@ -4566,8 +4566,8 @@
       "source_location": "",
       "_origin": "ast",
       "id": "tests_common_mod_rs_string",
-      "community": 2,
-      "community_name": "TestServer",
+      "community": 49,
+      "community_name": "start_health_server",
       "norm_label": "string"
     },
     {
@@ -4577,8 +4577,8 @@
       "source_location": "",
       "_origin": "ast",
       "id": "client",
-      "community": 2,
-      "community_name": "TestServer",
+      "community": 49,
+      "community_name": "start_health_server",
       "norm_label": "client"
     },
     {
@@ -4588,8 +4588,8 @@
       "source_location": "",
       "_origin": "ast",
       "id": "tests_common_mod_rs_option",
-      "community": 2,
-      "community_name": "TestServer",
+      "community": 49,
+      "community_name": "start_health_server",
       "norm_label": "option"
     },
     {
@@ -4599,8 +4599,8 @@
       "source_location": "",
       "_origin": "ast",
       "id": "joinhandle",
-      "community": 2,
-      "community_name": "TestServer",
+      "community": 49,
+      "community_name": "start_health_server",
       "norm_label": "joinhandle"
     },
     {
@@ -4610,8 +4610,8 @@
       "source_location": "L26",
       "_origin": "ast",
       "id": "tests_common_mod_testserver_url",
-      "community": 2,
-      "community_name": "TestServer",
+      "community": 49,
+      "community_name": "start_health_server",
       "norm_label": ".url()"
     },
     {
@@ -4621,8 +4621,8 @@
       "source_location": "L31",
       "_origin": "ast",
       "id": "tests_common_mod_testserver_shutdown",
-      "community": 2,
-      "community_name": "TestServer",
+      "community": 49,
+      "community_name": "start_health_server",
       "norm_label": ".shutdown()"
     },
     {
@@ -4632,8 +4632,8 @@
       "source_location": "",
       "_origin": "ast",
       "id": "tests_common_mod_rs_drop",
-      "community": 2,
-      "community_name": "TestServer",
+      "community": 49,
+      "community_name": "start_health_server",
       "norm_label": "drop"
     },
     {
@@ -4643,8 +4643,8 @@
       "source_location": "L38",
       "_origin": "ast",
       "id": "tests_common_mod_testserver_drop",
-      "community": 52,
-      "community_name": "session_tests.rs",
+      "community": 49,
+      "community_name": "start_health_server",
       "norm_label": ".drop()"
     },
     {
@@ -4654,8 +4654,8 @@
       "source_location": "L47",
       "_origin": "ast",
       "id": "tests_common_mod_start_server",
-      "community": 2,
-      "community_name": "TestServer",
+      "community": 11,
+      "community_name": "start_server",
       "norm_label": "start_server()"
     },
     {
@@ -4665,8 +4665,8 @@
       "source_location": "",
       "_origin": "ast",
       "id": "tests_common_mod_rs_vec",
-      "community": 2,
-      "community_name": "TestServer",
+      "community": 11,
+      "community_name": "start_server",
       "norm_label": "vec"
     },
     {
@@ -4676,8 +4676,8 @@
       "source_location": "",
       "_origin": "ast",
       "id": "tests_common_mod_rs_pathbuf",
-      "community": 2,
-      "community_name": "TestServer",
+      "community": 11,
+      "community_name": "start_server",
       "norm_label": "pathbuf"
     },
     {
@@ -4698,8 +4698,8 @@
       "source_location": "L72",
       "_origin": "ast",
       "id": "tests_common_mod_start_server_with_state",
-      "community": 0,
-      "community_name": "http.rs",
+      "community": 11,
+      "community_name": "start_server",
       "norm_label": "start_server_with_state()"
     },
     {
@@ -4709,8 +4709,8 @@
       "source_location": "L104",
       "_origin": "ast",
       "id": "tests_common_mod_testserver_auto_pair",
-      "community": 2,
-      "community_name": "TestServer",
+      "community": 49,
+      "community_name": "start_health_server",
       "norm_label": ".auto_pair()"
     },
     {
@@ -4720,8 +4720,8 @@
       "source_location": "L135",
       "_origin": "ast",
       "id": "tests_common_mod_authed_ws_connect",
-      "community": 2,
-      "community_name": "TestServer",
+      "community": 49,
+      "community_name": "start_health_server",
       "norm_label": "authed_ws_connect()"
     },
     {
@@ -4731,8 +4731,8 @@
       "source_location": "",
       "_origin": "ast",
       "id": "tests_common_mod_rs_result",
-      "community": 2,
-      "community_name": "TestServer",
+      "community": 49,
+      "community_name": "start_health_server",
       "norm_label": "result"
     },
     {
@@ -4742,8 +4742,8 @@
       "source_location": "",
       "_origin": "ast",
       "id": "websocketstream",
-      "community": 2,
-      "community_name": "TestServer",
+      "community": 49,
+      "community_name": "start_health_server",
       "norm_label": "websocketstream"
     },
     {
@@ -4753,8 +4753,8 @@
       "source_location": "",
       "_origin": "ast",
       "id": "maybetlsstream",
-      "community": 2,
-      "community_name": "TestServer",
+      "community": 49,
+      "community_name": "start_health_server",
       "norm_label": "maybetlsstream"
     },
     {
@@ -4764,8 +4764,8 @@
       "source_location": "",
       "_origin": "ast",
       "id": "tcpstream",
-      "community": 2,
-      "community_name": "TestServer",
+      "community": 49,
+      "community_name": "start_health_server",
       "norm_label": "tcpstream"
     },
     {
@@ -4776,7 +4776,7 @@
       "_origin": "ast",
       "id": "tests_editor_tests",
       "community": 11,
-      "community_name": "Config",
+      "community_name": "start_server",
       "norm_label": "editor_tests.rs"
     },
     {
@@ -4787,7 +4787,7 @@
       "_origin": "ast",
       "id": "tests_editor_tests_test_edit_001_file_read_and_atomic_write",
       "community": 11,
-      "community_name": "Config",
+      "community_name": "start_server",
       "norm_label": "test_edit_001_file_read_and_atomic_write()"
     },
     {
@@ -4797,8 +4797,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "tests_fs_tests",
-      "community": 2,
-      "community_name": "TestServer",
+      "community": 11,
+      "community_name": "start_server",
       "norm_label": "fs_tests.rs"
     },
     {
@@ -4808,8 +4808,8 @@
       "source_location": "L8",
       "_origin": "ast",
       "id": "tests_fs_tests_expect_rejected",
-      "community": 2,
-      "community_name": "TestServer",
+      "community": 11,
+      "community_name": "start_server",
       "norm_label": "expect_rejected()"
     },
     {
@@ -4819,8 +4819,8 @@
       "source_location": "L29",
       "_origin": "ast",
       "id": "tests_fs_tests_test_fs_002_traversal_dotdot_rejected",
-      "community": 2,
-      "community_name": "TestServer",
+      "community": 11,
+      "community_name": "start_server",
       "norm_label": "test_fs_002_traversal_dotdot_rejected()"
     },
     {
@@ -4830,8 +4830,8 @@
       "source_location": "L36",
       "_origin": "ast",
       "id": "tests_fs_tests_test_fs_017_encoded_slash_and_dots_rejected",
-      "community": 2,
-      "community_name": "TestServer",
+      "community": 11,
+      "community_name": "start_server",
       "norm_label": "test_fs_017_encoded_slash_and_dots_rejected()"
     },
     {
@@ -4841,8 +4841,8 @@
       "source_location": "L74",
       "_origin": "ast",
       "id": "tests_fs_tests_test_fs_017_overlong_utf8_and_nul_rejected",
-      "community": 2,
-      "community_name": "TestServer",
+      "community": 11,
+      "community_name": "start_server",
       "norm_label": "test_fs_017_overlong_utf8_and_nul_rejected()"
     },
     {
@@ -4852,8 +4852,8 @@
       "source_location": "L102",
       "_origin": "ast",
       "id": "tests_fs_tests_test_fs_003_symlink_escape_rejected",
-      "community": 2,
-      "community_name": "TestServer",
+      "community": 11,
+      "community_name": "start_server",
       "norm_label": "test_fs_003_symlink_escape_rejected()"
     },
     {
@@ -4863,8 +4863,8 @@
       "source_location": "L128",
       "_origin": "ast",
       "id": "tests_fs_tests_test_fs_016_hardlink_escape_rejected",
-      "community": 2,
-      "community_name": "TestServer",
+      "community": 11,
+      "community_name": "start_server",
       "norm_label": "test_fs_016_hardlink_escape_rejected()"
     },
     {
@@ -4874,8 +4874,8 @@
       "source_location": "L155",
       "_origin": "ast",
       "id": "tests_fs_tests_test_fs_002_normal_file_still_served",
-      "community": 2,
-      "community_name": "TestServer",
+      "community": 11,
+      "community_name": "start_server",
       "norm_label": "test_fs_002_normal_file_still_served()"
     },
     {
@@ -5050,8 +5050,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "tests_resize_tests",
-      "community": 50,
-      "community_name": "resize_tests.rs",
+      "community": 49,
+      "community_name": "start_health_server",
       "norm_label": "resize_tests.rs"
     },
     {
@@ -5061,8 +5061,8 @@
       "source_location": "L13",
       "_origin": "ast",
       "id": "tests_resize_tests_create_terminal_with_size",
-      "community": 50,
-      "community_name": "resize_tests.rs",
+      "community": 49,
+      "community_name": "start_health_server",
       "norm_label": "create_terminal_with_size()"
     },
     {
@@ -5072,8 +5072,8 @@
       "source_location": "",
       "_origin": "ast",
       "id": "tests_resize_tests_rs_option",
-      "community": 50,
-      "community_name": "resize_tests.rs",
+      "community": 49,
+      "community_name": "start_health_server",
       "norm_label": "option"
     },
     {
@@ -5083,8 +5083,8 @@
       "source_location": "",
       "_origin": "ast",
       "id": "tests_resize_tests_rs_value",
-      "community": 50,
-      "community_name": "resize_tests.rs",
+      "community": 49,
+      "community_name": "start_health_server",
       "norm_label": "value"
     },
     {
@@ -5094,8 +5094,8 @@
       "source_location": "L38",
       "_origin": "ast",
       "id": "tests_resize_tests_request_attach",
-      "community": 50,
-      "community_name": "resize_tests.rs",
+      "community": 49,
+      "community_name": "start_health_server",
       "norm_label": "request_attach()"
     },
     {
@@ -5105,8 +5105,8 @@
       "source_location": "L49",
       "_origin": "ast",
       "id": "tests_resize_tests_connect_ws",
-      "community": 50,
-      "community_name": "resize_tests.rs",
+      "community": 49,
+      "community_name": "start_health_server",
       "norm_label": "connect_ws()"
     },
     {
@@ -5116,8 +5116,8 @@
       "source_location": "",
       "_origin": "ast",
       "id": "tests_resize_tests_rs_ws",
-      "community": 50,
-      "community_name": "resize_tests.rs",
+      "community": 49,
+      "community_name": "start_health_server",
       "norm_label": "ws"
     },
     {
@@ -5127,8 +5127,8 @@
       "source_location": "L54",
       "_origin": "ast",
       "id": "tests_resize_tests_send_resize",
-      "community": 50,
-      "community_name": "resize_tests.rs",
+      "community": 49,
+      "community_name": "start_health_server",
       "norm_label": "send_resize()"
     },
     {
@@ -5138,8 +5138,8 @@
       "source_location": "L60",
       "_origin": "ast",
       "id": "tests_resize_tests_get_terminal_metadata",
-      "community": 50,
-      "community_name": "resize_tests.rs",
+      "community": 49,
+      "community_name": "start_health_server",
       "norm_label": "get_terminal_metadata()"
     },
     {
@@ -5149,8 +5149,8 @@
       "source_location": "L74",
       "_origin": "ast",
       "id": "tests_resize_tests_test_rsz_003_initial_terminal_creation_clamps_dimensions",
-      "community": 50,
-      "community_name": "resize_tests.rs",
+      "community": 49,
+      "community_name": "start_health_server",
       "norm_label": "test_rsz_003_initial_terminal_creation_clamps_dimensions()"
     },
     {
@@ -5160,8 +5160,8 @@
       "source_location": "L94",
       "_origin": "ast",
       "id": "tests_resize_tests_test_rsz_002_and_009_ws_resize_frame_updates_metadata",
-      "community": 50,
-      "community_name": "resize_tests.rs",
+      "community": 49,
+      "community_name": "start_health_server",
       "norm_label": "test_rsz_002_and_009_ws_resize_frame_updates_metadata()"
     },
     {
@@ -5171,8 +5171,8 @@
       "source_location": "L120",
       "_origin": "ast",
       "id": "tests_resize_tests_test_rsz_002_ws_resize_frame_clamps_extreme_values",
-      "community": 50,
-      "community_name": "resize_tests.rs",
+      "community": 49,
+      "community_name": "start_health_server",
       "norm_label": "test_rsz_002_ws_resize_frame_clamps_extreme_values()"
     },
     {
@@ -5182,8 +5182,8 @@
       "source_location": "L153",
       "_origin": "ast",
       "id": "tests_resize_tests_test_rsz_004_and_010_rapid_resize_flood_stability",
-      "community": 50,
-      "community_name": "resize_tests.rs",
+      "community": 49,
+      "community_name": "start_health_server",
       "norm_label": "test_rsz_004_and_010_rapid_resize_flood_stability()"
     },
     {
@@ -5193,8 +5193,8 @@
       "source_location": "L181",
       "_origin": "ast",
       "id": "tests_resize_tests_test_rsz_005_and_006_resize_on_closed_session_is_safe",
-      "community": 50,
-      "community_name": "resize_tests.rs",
+      "community": 49,
+      "community_name": "start_health_server",
       "norm_label": "test_rsz_005_and_006_resize_on_closed_session_is_safe()"
     },
     {
@@ -5270,8 +5270,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "tests_session_tests",
-      "community": 52,
-      "community_name": "session_tests.rs",
+      "community": 49,
+      "community_name": "start_health_server",
       "norm_label": "session_tests.rs"
     },
     {
@@ -5281,8 +5281,8 @@
       "source_location": "L14",
       "_origin": "ast",
       "id": "tests_session_tests_read_until",
-      "community": 52,
-      "community_name": "session_tests.rs",
+      "community": 49,
+      "community_name": "start_health_server",
       "norm_label": "read_until()"
     },
     {
@@ -5292,8 +5292,8 @@
       "source_location": "",
       "_origin": "ast",
       "id": "tests_session_tests_rs_ws",
-      "community": 52,
-      "community_name": "session_tests.rs",
+      "community": 49,
+      "community_name": "start_health_server",
       "norm_label": "ws"
     },
     {
@@ -5303,8 +5303,8 @@
       "source_location": "",
       "_origin": "ast",
       "id": "tests_session_tests_rs_string",
-      "community": 52,
-      "community_name": "session_tests.rs",
+      "community": 49,
+      "community_name": "start_health_server",
       "norm_label": "string"
     },
     {
@@ -5314,8 +5314,8 @@
       "source_location": "L41",
       "_origin": "ast",
       "id": "tests_session_tests_send_input",
-      "community": 52,
-      "community_name": "session_tests.rs",
+      "community": 49,
+      "community_name": "start_health_server",
       "norm_label": "send_input()"
     },
     {
@@ -5325,8 +5325,8 @@
       "source_location": "L50",
       "_origin": "ast",
       "id": "tests_session_tests_read_until_exit",
-      "community": 52,
-      "community_name": "session_tests.rs",
+      "community": 49,
+      "community_name": "start_health_server",
       "norm_label": "read_until_exit()"
     },
     {
@@ -5336,8 +5336,8 @@
       "source_location": "L74",
       "_origin": "ast",
       "id": "tests_session_tests_read_kick_message",
-      "community": 52,
-      "community_name": "session_tests.rs",
+      "community": 49,
+      "community_name": "start_health_server",
       "norm_label": "read_kick_message()"
     },
     {
@@ -5347,8 +5347,8 @@
       "source_location": "L95",
       "_origin": "ast",
       "id": "tests_session_tests_create_terminal",
-      "community": 52,
-      "community_name": "session_tests.rs",
+      "community": 49,
+      "community_name": "start_health_server",
       "norm_label": "create_terminal()"
     },
     {
@@ -5358,8 +5358,8 @@
       "source_location": "L109",
       "_origin": "ast",
       "id": "tests_session_tests_request_attach",
-      "community": 52,
-      "community_name": "session_tests.rs",
+      "community": 49,
+      "community_name": "start_health_server",
       "norm_label": "request_attach()"
     },
     {
@@ -5369,8 +5369,8 @@
       "source_location": "",
       "_origin": "ast",
       "id": "tests_session_tests_rs_value",
-      "community": 52,
-      "community_name": "session_tests.rs",
+      "community": 49,
+      "community_name": "start_health_server",
       "norm_label": "value"
     },
     {
@@ -5380,8 +5380,8 @@
       "source_location": "L120",
       "_origin": "ast",
       "id": "tests_session_tests_connect",
-      "community": 52,
-      "community_name": "session_tests.rs",
+      "community": 49,
+      "community_name": "start_health_server",
       "norm_label": "connect()"
     },
     {
@@ -5391,8 +5391,8 @@
       "source_location": "L128",
       "_origin": "ast",
       "id": "tests_session_tests_test_sess_001_detach_keeps_pty_alive_and_reattach",
-      "community": 52,
-      "community_name": "session_tests.rs",
+      "community": 49,
+      "community_name": "start_health_server",
       "norm_label": "test_sess_001_detach_keeps_pty_alive_and_reattach()"
     },
     {
@@ -5402,8 +5402,8 @@
       "source_location": "L157",
       "_origin": "ast",
       "id": "tests_session_tests_test_sess_002_reattach_replays_detached_output",
-      "community": 52,
-      "community_name": "session_tests.rs",
+      "community": 49,
+      "community_name": "start_health_server",
       "norm_label": "test_sess_002_reattach_replays_detached_output()"
     },
     {
@@ -5413,8 +5413,8 @@
       "source_location": "L195",
       "_origin": "ast",
       "id": "tests_session_tests_test_sess_006_reconnect_no_duplicate_stream",
-      "community": 52,
-      "community_name": "session_tests.rs",
+      "community": 49,
+      "community_name": "start_health_server",
       "norm_label": "test_sess_006_reconnect_no_duplicate_stream()"
     },
     {
@@ -5424,8 +5424,8 @@
       "source_location": "L219",
       "_origin": "ast",
       "id": "tests_session_tests_test_sess_008_reattach_kicks_old_client",
-      "community": 52,
-      "community_name": "session_tests.rs",
+      "community": 49,
+      "community_name": "start_health_server",
       "norm_label": "test_sess_008_reattach_kicks_old_client()"
     },
     {
@@ -5435,8 +5435,8 @@
       "source_location": "L250",
       "_origin": "ast",
       "id": "tests_session_tests_test_sess_003_exit_while_detached_reports_status",
-      "community": 52,
-      "community_name": "session_tests.rs",
+      "community": 49,
+      "community_name": "start_health_server",
       "norm_label": "test_sess_003_exit_while_detached_reports_status()"
     },
     {
@@ -5446,8 +5446,8 @@
       "source_location": "L285",
       "_origin": "ast",
       "id": "tests_session_tests_test_sess_004_idle_timeout_cleans_up",
-      "community": 52,
-      "community_name": "session_tests.rs",
+      "community": 49,
+      "community_name": "start_health_server",
       "norm_label": "test_sess_004_idle_timeout_cleans_up()"
     },
     {
@@ -5457,8 +5457,8 @@
       "source_location": "L314",
       "_origin": "ast",
       "id": "tests_session_tests_test_sess_005_attach_token_single_use",
-      "community": 52,
-      "community_name": "session_tests.rs",
+      "community": 49,
+      "community_name": "start_health_server",
       "norm_label": "test_sess_005_attach_token_single_use()"
     },
     {
@@ -5468,8 +5468,8 @@
       "source_location": "L336",
       "_origin": "ast",
       "id": "tests_session_tests_test_sess_009_no_orphan_children_after_shutdown",
-      "community": 52,
-      "community_name": "session_tests.rs",
+      "community": 49,
+      "community_name": "start_health_server",
       "norm_label": "test_sess_009_no_orphan_children_after_shutdown()"
     },
     {
@@ -6400,13 +6400,143 @@
       "label": "DesktopCanvas()",
       "file_type": "code",
       "source_file": "web/src/desktop/DesktopCanvas.tsx",
-      "source_location": "L13",
+      "source_location": "L16",
       "_callable": true,
       "_origin": "ast",
       "id": "web_src_desktop_desktopcanvas_desktopcanvas",
       "community": 6,
       "community_name": "DesktopCanvas.tsx",
       "norm_label": "desktopcanvas()"
+    },
+    {
+      "label": "SearchApp.tsx",
+      "file_type": "code",
+      "source_file": "web/src/desktop/SearchApp.tsx",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "web_src_desktop_searchapp",
+      "community": 6,
+      "community_name": "DesktopCanvas.tsx",
+      "norm_label": "searchapp.tsx"
+    },
+    {
+      "label": "SearchAppProps",
+      "file_type": "code",
+      "source_file": "web/src/desktop/SearchApp.tsx",
+      "source_location": "L3",
+      "_callable": true,
+      "_callable_class": true,
+      "_origin": "ast",
+      "id": "web_src_desktop_searchapp_searchappprops",
+      "community": 6,
+      "community_name": "DesktopCanvas.tsx",
+      "norm_label": "searchappprops"
+    },
+    {
+      "label": "SEARCHABLE",
+      "file_type": "code",
+      "source_file": "web/src/desktop/SearchApp.tsx",
+      "source_location": "L9",
+      "_origin": "ast",
+      "id": "web_src_desktop_searchapp_searchable",
+      "community": 6,
+      "community_name": "DesktopCanvas.tsx",
+      "norm_label": "searchable"
+    },
+    {
+      "label": "SearchApp()",
+      "file_type": "code",
+      "source_file": "web/src/desktop/SearchApp.tsx",
+      "source_location": "L20",
+      "_callable": true,
+      "_origin": "ast",
+      "id": "web_src_desktop_searchapp_searchapp",
+      "community": 6,
+      "community_name": "DesktopCanvas.tsx",
+      "norm_label": "searchapp()"
+    },
+    {
+      "label": "StartMenu.tsx",
+      "file_type": "code",
+      "source_file": "web/src/desktop/StartMenu.tsx",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "web_src_desktop_startmenu",
+      "community": 6,
+      "community_name": "DesktopCanvas.tsx",
+      "norm_label": "startmenu.tsx"
+    },
+    {
+      "label": "StartMenuProps",
+      "file_type": "code",
+      "source_file": "web/src/desktop/StartMenu.tsx",
+      "source_location": "L3",
+      "_callable": true,
+      "_callable_class": true,
+      "_origin": "ast",
+      "id": "web_src_desktop_startmenu_startmenuprops",
+      "community": 6,
+      "community_name": "DesktopCanvas.tsx",
+      "norm_label": "startmenuprops"
+    },
+    {
+      "label": "APPS",
+      "file_type": "code",
+      "source_file": "web/src/desktop/StartMenu.tsx",
+      "source_location": "L10",
+      "_origin": "ast",
+      "id": "web_src_desktop_startmenu_apps",
+      "community": 6,
+      "community_name": "DesktopCanvas.tsx",
+      "norm_label": "apps"
+    },
+    {
+      "label": "StartMenu()",
+      "file_type": "code",
+      "source_file": "web/src/desktop/StartMenu.tsx",
+      "source_location": "L21",
+      "_callable": true,
+      "_origin": "ast",
+      "id": "web_src_desktop_startmenu_startmenu",
+      "community": 6,
+      "community_name": "DesktopCanvas.tsx",
+      "norm_label": "startmenu()"
+    },
+    {
+      "label": "Toolbar.tsx",
+      "file_type": "code",
+      "source_file": "web/src/desktop/Toolbar.tsx",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "web_src_desktop_toolbar",
+      "community": 6,
+      "community_name": "DesktopCanvas.tsx",
+      "norm_label": "toolbar.tsx"
+    },
+    {
+      "label": "ToolbarProps",
+      "file_type": "code",
+      "source_file": "web/src/desktop/Toolbar.tsx",
+      "source_location": "L3",
+      "_callable": true,
+      "_callable_class": true,
+      "_origin": "ast",
+      "id": "web_src_desktop_toolbar_toolbarprops",
+      "community": 6,
+      "community_name": "DesktopCanvas.tsx",
+      "norm_label": "toolbarprops"
+    },
+    {
+      "label": "Toolbar()",
+      "file_type": "code",
+      "source_file": "web/src/desktop/Toolbar.tsx",
+      "source_location": "L11",
+      "_callable": true,
+      "_origin": "ast",
+      "id": "web_src_desktop_toolbar_toolbar",
+      "community": 6,
+      "community_name": "DesktopCanvas.tsx",
+      "norm_label": "toolbar()"
     },
     {
       "label": "WindowFrame.tsx",
@@ -6988,7 +7118,7 @@
       "_origin": "ast",
       "id": "spec_specs_000_plan",
       "community": 44,
-      "community_name": "000a.plan-test.md",
+      "community_name": "v0.2 Implementation Checklist & Verification Matrix",
       "norm_label": "000.plan.md"
     },
     {
@@ -7340,7 +7470,7 @@
       "_origin": "ast",
       "id": "spec_specs_000a_plan_test",
       "community": 44,
-      "community_name": "000a.plan-test.md",
+      "community_name": "v0.2 Implementation Checklist & Verification Matrix",
       "norm_label": "000a.plan-test.md"
     },
     {
@@ -7802,7 +7932,7 @@
       "_origin": "ast",
       "id": "spec_specs_000b_plan_checklist",
       "community": 44,
-      "community_name": "000a.plan-test.md",
+      "community_name": "v0.2 Implementation Checklist & Verification Matrix",
       "norm_label": "000b.plan-checklist.md"
     },
     {
@@ -7912,7 +8042,7 @@
       "_origin": "ast",
       "id": "spec_specs_001_plan_v0_2",
       "community": 44,
-      "community_name": "000a.plan-test.md",
+      "community_name": "v0.2 Implementation Checklist & Verification Matrix",
       "norm_label": "001.plan-v0.2.md"
     },
     {
@@ -9242,229 +9372,295 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "spec_specs_005_plan_v0_5_workspace_desktop_filemanager",
-      "community": 12,
-      "community_name": "Mux Web UI \u2014 v0.5 plan: Workspace & Desktop System + File Manager (Windows Explorer) + Editor (VS Code) + Browser",
+      "community": 23,
+      "community_name": "Companion Checklist \u2014 v0.5 Workspace, Desktop & File Manager Sempurna (Windows Explorer + VS Code + Browser) \u2014 Lebih Baik & Tidak Ngelag",
       "norm_label": "005.plan-v0.5-workspace-desktop-filemanager.md"
     },
     {
-      "label": "Mux Web UI \u2014 v0.5 plan: Workspace & Desktop System + File Manager (Windows Explorer) + Editor (VS Code) + Browser",
+      "label": "Mux Web UI \u2014 v0.5 plan: Workspace & Desktop System + File Manager (Windows Explorer Sempurna) + Editor (VS Code Sempurna) + Browser \u2014 Lebih Baik & Tidak Ngelag",
       "file_type": "document",
       "source_file": "spec/specs/005.plan-v0.5-workspace-desktop-filemanager.md",
       "source_location": "L1",
       "_origin": "ast",
-      "id": "spec_specs_005_plan_v0_5_workspace_desktop_filemanager_mux_web_ui_v0_5_plan_workspace_desktop_system_file_manager_windows_explorer_editor_vs_code_browser",
+      "id": "spec_specs_005_plan_v0_5_workspace_desktop_filemanager_mux_web_ui_v0_5_plan_workspace_desktop_system_file_manager_windows_explorer_sempurna_editor_vs_code_sempurna_browser_lebih_baik_tidak_ngelag",
       "community": 12,
-      "community_name": "Mux Web UI \u2014 v0.5 plan: Workspace & Desktop System + File Manager (Windows Explorer) + Editor (VS Code) + Browser",
-      "norm_label": "mux web ui \u2014 v0.5 plan: workspace & desktop system + file manager (windows explorer) + editor (vs code) + browser"
+      "community_name": "Mux Web UI \u2014 v0.5 plan: Workspace & Desktop System + File Manager (Windows Explorer Sempurna) + Editor (VS Code Sempurna) + Browser \u2014 Lebih Baik & Tidak Ngelag",
+      "norm_label": "mux web ui \u2014 v0.5 plan: workspace & desktop system + file manager (windows explorer sempurna) + editor (vs code sempurna) + browser \u2014 lebih baik & tidak ngelag"
     },
     {
-      "label": "1. Latar Belakang dan Risiko",
+      "label": "1. Latar Belakang, Risiko, dan Prinsip \u201cLebih Baik & Tidak Ngelag\u201d",
       "file_type": "document",
       "source_file": "spec/specs/005.plan-v0.5-workspace-desktop-filemanager.md",
-      "source_location": "L16",
+      "source_location": "L13",
       "_origin": "ast",
-      "id": "spec_specs_005_plan_v0_5_workspace_desktop_filemanager_1_latar_belakang_dan_risiko",
-      "community": 12,
-      "community_name": "Mux Web UI \u2014 v0.5 plan: Workspace & Desktop System + File Manager (Windows Explorer) + Editor (VS Code) + Browser",
-      "norm_label": "1. latar belakang dan risiko"
+      "id": "spec_specs_005_plan_v0_5_workspace_desktop_filemanager_1_latar_belakang_risiko_dan_prinsip_lebih_baik_tidak_ngelag",
+      "community": 52,
+      "community_name": "1. Latar Belakang, Risiko, dan Prinsip \u201cLebih Baik & Tidak Ngelag\u201d",
+      "norm_label": "1. latar belakang, risiko, dan prinsip \u201clebih baik & tidak ngelag\u201d"
     },
     {
-      "label": "1.1 Fakta Kode v0.4 sebagai Titik Awal",
+      "label": "1.1 Kenapa Harus Sempurna",
       "file_type": "document",
       "source_file": "spec/specs/005.plan-v0.5-workspace-desktop-filemanager.md",
-      "source_location": "L26",
+      "source_location": "L15",
       "_origin": "ast",
-      "id": "spec_specs_005_plan_v0_5_workspace_desktop_filemanager_1_1_fakta_kode_v0_4_sebagai_titik_awal",
-      "community": 12,
-      "community_name": "Mux Web UI \u2014 v0.5 plan: Workspace & Desktop System + File Manager (Windows Explorer) + Editor (VS Code) + Browser",
-      "norm_label": "1.1 fakta kode v0.4 sebagai titik awal"
+      "id": "spec_specs_005_plan_v0_5_workspace_desktop_filemanager_1_1_kenapa_harus_sempurna",
+      "community": 52,
+      "community_name": "1. Latar Belakang, Risiko, dan Prinsip \u201cLebih Baik & Tidak Ngelag\u201d",
+      "norm_label": "1.1 kenapa harus sempurna"
+    },
+    {
+      "label": "1.2 Fakta Kode v0.4/v0.5 Saat Ini (Titik Awal)",
+      "file_type": "document",
+      "source_file": "spec/specs/005.plan-v0.5-workspace-desktop-filemanager.md",
+      "source_location": "L27",
+      "_origin": "ast",
+      "id": "spec_specs_005_plan_v0_5_workspace_desktop_filemanager_1_2_fakta_kode_v0_4_v0_5_saat_ini_titik_awal",
+      "community": 52,
+      "community_name": "1. Latar Belakang, Risiko, dan Prinsip \u201cLebih Baik & Tidak Ngelag\u201d",
+      "norm_label": "1.2 fakta kode v0.4/v0.5 saat ini (titik awal)"
+    },
+    {
+      "label": "1.3 Prinsip \u201cLebih Baik & Tidak Ngelag\u201d \u2014 Arsitektur Performance (Wajib)",
+      "file_type": "document",
+      "source_file": "spec/specs/005.plan-v0.5-workspace-desktop-filemanager.md",
+      "source_location": "L37",
+      "_origin": "ast",
+      "id": "spec_specs_005_plan_v0_5_workspace_desktop_filemanager_1_3_prinsip_lebih_baik_tidak_ngelag_arsitektur_performance_wajib",
+      "community": 52,
+      "community_name": "1. Latar Belakang, Risiko, dan Prinsip \u201cLebih Baik & Tidak Ngelag\u201d",
+      "norm_label": "1.3 prinsip \u201clebih baik & tidak ngelag\u201d \u2014 arsitektur performance (wajib)"
     },
     {
       "label": "2. Hubungan dengan Rencana dan Requirement",
       "file_type": "document",
       "source_file": "spec/specs/005.plan-v0.5-workspace-desktop-filemanager.md",
-      "source_location": "L36",
+      "source_location": "L56",
       "_origin": "ast",
       "id": "spec_specs_005_plan_v0_5_workspace_desktop_filemanager_2_hubungan_dengan_rencana_dan_requirement",
       "community": 12,
-      "community_name": "Mux Web UI \u2014 v0.5 plan: Workspace & Desktop System + File Manager (Windows Explorer) + Editor (VS Code) + Browser",
+      "community_name": "Mux Web UI \u2014 v0.5 plan: Workspace & Desktop System + File Manager (Windows Explorer Sempurna) + Editor (VS Code Sempurna) + Browser \u2014 Lebih Baik & Tidak Ngelag",
       "norm_label": "2. hubungan dengan rencana dan requirement"
     },
     {
-      "label": "3. Threat Model",
+      "label": "3. Threat Model \u2014 Diperluas untuk Explorer/Editor/Browser",
       "file_type": "document",
       "source_file": "spec/specs/005.plan-v0.5-workspace-desktop-filemanager.md",
-      "source_location": "L50",
+      "source_location": "L70",
       "_origin": "ast",
-      "id": "spec_specs_005_plan_v0_5_workspace_desktop_filemanager_3_threat_model",
+      "id": "spec_specs_005_plan_v0_5_workspace_desktop_filemanager_3_threat_model_diperluas_untuk_explorer_editor_browser",
       "community": 12,
-      "community_name": "Mux Web UI \u2014 v0.5 plan: Workspace & Desktop System + File Manager (Windows Explorer) + Editor (VS Code) + Browser",
-      "norm_label": "3. threat model"
+      "community_name": "Mux Web UI \u2014 v0.5 plan: Workspace & Desktop System + File Manager (Windows Explorer Sempurna) + Editor (VS Code Sempurna) + Browser \u2014 Lebih Baik & Tidak Ngelag",
+      "norm_label": "3. threat model \u2014 diperluas untuk explorer/editor/browser"
     },
     {
-      "label": "4. Milestone A \u2014 Workspace System (`WS-001..006`)",
+      "label": "4. Milestone A \u2014 Workspace System (`WS-001..008`) \u2014 Sempurna",
       "file_type": "document",
       "source_file": "spec/specs/005.plan-v0.5-workspace-desktop-filemanager.md",
-      "source_location": "L62",
+      "source_location": "L83",
       "_origin": "ast",
-      "id": "spec_specs_005_plan_v0_5_workspace_desktop_filemanager_4_milestone_a_workspace_system_ws_001_006",
+      "id": "spec_specs_005_plan_v0_5_workspace_desktop_filemanager_4_milestone_a_workspace_system_ws_001_008_sempurna",
       "community": 12,
-      "community_name": "Mux Web UI \u2014 v0.5 plan: Workspace & Desktop System + File Manager (Windows Explorer) + Editor (VS Code) + Browser",
-      "norm_label": "4. milestone a \u2014 workspace system (`ws-001..006`)"
+      "community_name": "Mux Web UI \u2014 v0.5 plan: Workspace & Desktop System + File Manager (Windows Explorer Sempurna) + Editor (VS Code Sempurna) + Browser \u2014 Lebih Baik & Tidak Ngelag",
+      "norm_label": "4. milestone a \u2014 workspace system (`ws-001..008`) \u2014 sempurna"
+    },
+    {
+      "label": "Acceptance (TDD):",
+      "file_type": "document",
+      "source_file": "spec/specs/005.plan-v0.5-workspace-desktop-filemanager.md",
+      "source_location": "L99",
+      "_origin": "ast",
+      "id": "spec_specs_005_plan_v0_5_workspace_desktop_filemanager_acceptance_tdd",
+      "community": 12,
+      "community_name": "Mux Web UI \u2014 v0.5 plan: Workspace & Desktop System + File Manager (Windows Explorer Sempurna) + Editor (VS Code Sempurna) + Browser \u2014 Lebih Baik & Tidak Ngelag",
+      "norm_label": "acceptance (tdd):"
+    },
+    {
+      "label": "5. Milestone B \u2014 Desktop System (`DESK-001..008`) \u2014 Sempurna",
+      "file_type": "document",
+      "source_file": "spec/specs/005.plan-v0.5-workspace-desktop-filemanager.md",
+      "source_location": "L107",
+      "_origin": "ast",
+      "id": "spec_specs_005_plan_v0_5_workspace_desktop_filemanager_5_milestone_b_desktop_system_desk_001_008_sempurna",
+      "community": 12,
+      "community_name": "Mux Web UI \u2014 v0.5 plan: Workspace & Desktop System + File Manager (Windows Explorer Sempurna) + Editor (VS Code Sempurna) + Browser \u2014 Lebih Baik & Tidak Ngelag",
+      "norm_label": "5. milestone b \u2014 desktop system (`desk-001..008`) \u2014 sempurna"
     },
     {
       "label": "Acceptance:",
       "file_type": "document",
       "source_file": "spec/specs/005.plan-v0.5-workspace-desktop-filemanager.md",
-      "source_location": "L81",
+      "source_location": "L118",
       "_origin": "ast",
       "id": "spec_specs_005_plan_v0_5_workspace_desktop_filemanager_acceptance",
       "community": 12,
-      "community_name": "Mux Web UI \u2014 v0.5 plan: Workspace & Desktop System + File Manager (Windows Explorer) + Editor (VS Code) + Browser",
+      "community_name": "Mux Web UI \u2014 v0.5 plan: Workspace & Desktop System + File Manager (Windows Explorer Sempurna) + Editor (VS Code Sempurna) + Browser \u2014 Lebih Baik & Tidak Ngelag",
       "norm_label": "acceptance:"
     },
     {
-      "label": "5. Milestone B \u2014 Desktop System (`DESK-001..006`)",
+      "label": "6. Milestone C \u2014 File Manager Windows-like **Sempurna** (`FM-001..018`) \u2014 Lebih Baik dari Windows",
       "file_type": "document",
       "source_file": "spec/specs/005.plan-v0.5-workspace-desktop-filemanager.md",
-      "source_location": "L88",
+      "source_location": "L124",
       "_origin": "ast",
-      "id": "spec_specs_005_plan_v0_5_workspace_desktop_filemanager_5_milestone_b_desktop_system_desk_001_006",
+      "id": "spec_specs_005_plan_v0_5_workspace_desktop_filemanager_6_milestone_c_file_manager_windows_like_sempurna_fm_001_018_lebih_baik_dari_windows",
       "community": 12,
-      "community_name": "Mux Web UI \u2014 v0.5 plan: Workspace & Desktop System + File Manager (Windows Explorer) + Editor (VS Code) + Browser",
-      "norm_label": "5. milestone b \u2014 desktop system (`desk-001..006`)"
+      "community_name": "Mux Web UI \u2014 v0.5 plan: Workspace & Desktop System + File Manager (Windows Explorer Sempurna) + Editor (VS Code Sempurna) + Browser \u2014 Lebih Baik & Tidak Ngelag",
+      "norm_label": "6. milestone c \u2014 file manager windows-like **sempurna** (`fm-001..018`) \u2014 lebih baik dari windows"
     },
     {
-      "label": "Acceptance:",
+      "label": "Acceptance Windows:",
       "file_type": "document",
       "source_file": "spec/specs/005.plan-v0.5-workspace-desktop-filemanager.md",
-      "source_location": "L97",
+      "source_location": "L154",
       "_origin": "ast",
-      "id": "spec_specs_005_plan_v0_5_workspace_desktop_filemanager_acceptance_97",
+      "id": "spec_specs_005_plan_v0_5_workspace_desktop_filemanager_acceptance_windows",
       "community": 12,
-      "community_name": "Mux Web UI \u2014 v0.5 plan: Workspace & Desktop System + File Manager (Windows Explorer) + Editor (VS Code) + Browser",
-      "norm_label": "acceptance:"
+      "community_name": "Mux Web UI \u2014 v0.5 plan: Workspace & Desktop System + File Manager (Windows Explorer Sempurna) + Editor (VS Code Sempurna) + Browser \u2014 Lebih Baik & Tidak Ngelag",
+      "norm_label": "acceptance windows:"
     },
     {
-      "label": "6. Milestone C \u2014 File Manager Windows-like (`FM-001..015`)",
+      "label": "6a. Milestone D \u2014 Editor VS Code **Sempurna** (`ED-001..010`) \u2014 Lebih Baik dari VS Code",
       "file_type": "document",
       "source_file": "spec/specs/005.plan-v0.5-workspace-desktop-filemanager.md",
-      "source_location": "L103",
+      "source_location": "L163",
       "_origin": "ast",
-      "id": "spec_specs_005_plan_v0_5_workspace_desktop_filemanager_6_milestone_c_file_manager_windows_like_fm_001_015",
+      "id": "spec_specs_005_plan_v0_5_workspace_desktop_filemanager_6a_milestone_d_editor_vs_code_sempurna_ed_001_010_lebih_baik_dari_vs_code",
       "community": 12,
-      "community_name": "Mux Web UI \u2014 v0.5 plan: Workspace & Desktop System + File Manager (Windows Explorer) + Editor (VS Code) + Browser",
-      "norm_label": "6. milestone c \u2014 file manager windows-like (`fm-001..015`)"
+      "community_name": "Mux Web UI \u2014 v0.5 plan: Workspace & Desktop System + File Manager (Windows Explorer Sempurna) + Editor (VS Code Sempurna) + Browser \u2014 Lebih Baik & Tidak Ngelag",
+      "norm_label": "6a. milestone d \u2014 editor vs code **sempurna** (`ed-001..010`) \u2014 lebih baik dari vs code"
     },
     {
-      "label": "Acceptance:",
+      "label": "Acceptance VS Code:",
       "file_type": "document",
       "source_file": "spec/specs/005.plan-v0.5-workspace-desktop-filemanager.md",
-      "source_location": "L127",
+      "source_location": "L185",
       "_origin": "ast",
-      "id": "spec_specs_005_plan_v0_5_workspace_desktop_filemanager_acceptance_127",
+      "id": "spec_specs_005_plan_v0_5_workspace_desktop_filemanager_acceptance_vs_code",
       "community": 12,
-      "community_name": "Mux Web UI \u2014 v0.5 plan: Workspace & Desktop System + File Manager (Windows Explorer) + Editor (VS Code) + Browser",
-      "norm_label": "acceptance:"
+      "community_name": "Mux Web UI \u2014 v0.5 plan: Workspace & Desktop System + File Manager (Windows Explorer Sempurna) + Editor (VS Code Sempurna) + Browser \u2014 Lebih Baik & Tidak Ngelag",
+      "norm_label": "acceptance vs code:"
     },
     {
-      "label": "6a. Milestone D \u2014 Editor VS Code-like (`ED-001..006`)",
+      "label": "6b. Milestone E \u2014 Browser Inside Desktop **Sempurna** (`BR-001..006`) \u2014 Chrome-like",
       "file_type": "document",
       "source_file": "spec/specs/005.plan-v0.5-workspace-desktop-filemanager.md",
-      "source_location": "L133",
+      "source_location": "L192",
       "_origin": "ast",
-      "id": "spec_specs_005_plan_v0_5_workspace_desktop_filemanager_6a_milestone_d_editor_vs_code_like_ed_001_006",
+      "id": "spec_specs_005_plan_v0_5_workspace_desktop_filemanager_6b_milestone_e_browser_inside_desktop_sempurna_br_001_006_chrome_like",
       "community": 12,
-      "community_name": "Mux Web UI \u2014 v0.5 plan: Workspace & Desktop System + File Manager (Windows Explorer) + Editor (VS Code) + Browser",
-      "norm_label": "6a. milestone d \u2014 editor vs code-like (`ed-001..006`)"
+      "community_name": "Mux Web UI \u2014 v0.5 plan: Workspace & Desktop System + File Manager (Windows Explorer Sempurna) + Editor (VS Code Sempurna) + Browser \u2014 Lebih Baik & Tidak Ngelag",
+      "norm_label": "6b. milestone e \u2014 browser inside desktop **sempurna** (`br-001..006`) \u2014 chrome-like"
     },
     {
-      "label": "Acceptance:",
+      "label": "Acceptance Chrome:",
       "file_type": "document",
       "source_file": "spec/specs/005.plan-v0.5-workspace-desktop-filemanager.md",
-      "source_location": "L148",
+      "source_location": "L207",
       "_origin": "ast",
-      "id": "spec_specs_005_plan_v0_5_workspace_desktop_filemanager_acceptance_148",
+      "id": "spec_specs_005_plan_v0_5_workspace_desktop_filemanager_acceptance_chrome",
       "community": 12,
-      "community_name": "Mux Web UI \u2014 v0.5 plan: Workspace & Desktop System + File Manager (Windows Explorer) + Editor (VS Code) + Browser",
-      "norm_label": "acceptance:"
+      "community_name": "Mux Web UI \u2014 v0.5 plan: Workspace & Desktop System + File Manager (Windows Explorer Sempurna) + Editor (VS Code Sempurna) + Browser \u2014 Lebih Baik & Tidak Ngelag",
+      "norm_label": "acceptance chrome:"
     },
     {
-      "label": "6b. Milestone E \u2014 Browser App Inside Desktop (`BR-001..004`)",
+      "label": "7. Konfigurasi Baru (Lengkap)",
       "file_type": "document",
       "source_file": "spec/specs/005.plan-v0.5-workspace-desktop-filemanager.md",
-      "source_location": "L153",
+      "source_location": "L214",
       "_origin": "ast",
-      "id": "spec_specs_005_plan_v0_5_workspace_desktop_filemanager_6b_milestone_e_browser_app_inside_desktop_br_001_004",
+      "id": "spec_specs_005_plan_v0_5_workspace_desktop_filemanager_7_konfigurasi_baru_lengkap",
       "community": 12,
-      "community_name": "Mux Web UI \u2014 v0.5 plan: Workspace & Desktop System + File Manager (Windows Explorer) + Editor (VS Code) + Browser",
-      "norm_label": "6b. milestone e \u2014 browser app inside desktop (`br-001..004`)"
+      "community_name": "Mux Web UI \u2014 v0.5 plan: Workspace & Desktop System + File Manager (Windows Explorer Sempurna) + Editor (VS Code Sempurna) + Browser \u2014 Lebih Baik & Tidak Ngelag",
+      "norm_label": "7. konfigurasi baru (lengkap)"
     },
     {
-      "label": "Acceptance:",
+      "label": "8. Bukan Scope v0.5 \u2014 Sempurna tapi Batas Jelas",
       "file_type": "document",
       "source_file": "spec/specs/005.plan-v0.5-workspace-desktop-filemanager.md",
-      "source_location": "L166",
+      "source_location": "L228",
       "_origin": "ast",
-      "id": "spec_specs_005_plan_v0_5_workspace_desktop_filemanager_acceptance_166",
+      "id": "spec_specs_005_plan_v0_5_workspace_desktop_filemanager_8_bukan_scope_v0_5_sempurna_tapi_batas_jelas",
       "community": 12,
-      "community_name": "Mux Web UI \u2014 v0.5 plan: Workspace & Desktop System + File Manager (Windows Explorer) + Editor (VS Code) + Browser",
-      "norm_label": "acceptance:"
+      "community_name": "Mux Web UI \u2014 v0.5 plan: Workspace & Desktop System + File Manager (Windows Explorer Sempurna) + Editor (VS Code Sempurna) + Browser \u2014 Lebih Baik & Tidak Ngelag",
+      "norm_label": "8. bukan scope v0.5 \u2014 sempurna tapi batas jelas"
     },
     {
-      "label": "7. Konfigurasi Baru",
+      "label": "9. Pertanyaan Diskusi untuk User \u2014 Sudah Dijawab Partial, Konfirmasi Final",
       "file_type": "document",
       "source_file": "spec/specs/005.plan-v0.5-workspace-desktop-filemanager.md",
-      "source_location": "L173",
+      "source_location": "L242",
       "_origin": "ast",
-      "id": "spec_specs_005_plan_v0_5_workspace_desktop_filemanager_7_konfigurasi_baru",
+      "id": "spec_specs_005_plan_v0_5_workspace_desktop_filemanager_9_pertanyaan_diskusi_untuk_user_sudah_dijawab_partial_konfirmasi_final",
       "community": 12,
-      "community_name": "Mux Web UI \u2014 v0.5 plan: Workspace & Desktop System + File Manager (Windows Explorer) + Editor (VS Code) + Browser",
-      "norm_label": "7. konfigurasi baru"
+      "community_name": "Mux Web UI \u2014 v0.5 plan: Workspace & Desktop System + File Manager (Windows Explorer Sempurna) + Editor (VS Code Sempurna) + Browser \u2014 Lebih Baik & Tidak Ngelag",
+      "norm_label": "9. pertanyaan diskusi untuk user \u2014 sudah dijawab partial, konfirmasi final"
     },
     {
-      "label": "8. Bukan Scope v0.5",
+      "label": "10. Urutan TDD \u2014 Sempurna & Tidak Ngelag (Setelah Approve Final)",
       "file_type": "document",
       "source_file": "spec/specs/005.plan-v0.5-workspace-desktop-filemanager.md",
-      "source_location": "L182",
+      "source_location": "L258",
       "_origin": "ast",
-      "id": "spec_specs_005_plan_v0_5_workspace_desktop_filemanager_8_bukan_scope_v0_5",
+      "id": "spec_specs_005_plan_v0_5_workspace_desktop_filemanager_10_urutan_tdd_sempurna_tidak_ngelag_setelah_approve_final",
       "community": 12,
-      "community_name": "Mux Web UI \u2014 v0.5 plan: Workspace & Desktop System + File Manager (Windows Explorer) + Editor (VS Code) + Browser",
-      "norm_label": "8. bukan scope v0.5"
+      "community_name": "Mux Web UI \u2014 v0.5 plan: Workspace & Desktop System + File Manager (Windows Explorer Sempurna) + Editor (VS Code Sempurna) + Browser \u2014 Lebih Baik & Tidak Ngelag",
+      "norm_label": "10. urutan tdd \u2014 sempurna & tidak ngelag (setelah approve final)"
     },
     {
-      "label": "9. Pertanyaan Diskusi untuk User (Sebelum Build)",
+      "label": "11. Definition of Done \u2014 Sempurna = Lengkap + Lebih Baik + Tidak Ngelag",
       "file_type": "document",
       "source_file": "spec/specs/005.plan-v0.5-workspace-desktop-filemanager.md",
-      "source_location": "L190",
+      "source_location": "L271",
       "_origin": "ast",
-      "id": "spec_specs_005_plan_v0_5_workspace_desktop_filemanager_9_pertanyaan_diskusi_untuk_user_sebelum_build",
-      "community": 12,
-      "community_name": "Mux Web UI \u2014 v0.5 plan: Workspace & Desktop System + File Manager (Windows Explorer) + Editor (VS Code) + Browser",
-      "norm_label": "9. pertanyaan diskusi untuk user (sebelum build)"
+      "id": "spec_specs_005_plan_v0_5_workspace_desktop_filemanager_11_definition_of_done_sempurna_lengkap_lebih_baik_tidak_ngelag",
+      "community": 50,
+      "community_name": "11. Definition of Done \u2014 Sempurna = Lengkap + Lebih Baik + Tidak Ngelag",
+      "norm_label": "11. definition of done \u2014 sempurna = lengkap + lebih baik + tidak ngelag"
     },
     {
-      "label": "10. Urutan TDD (Setelah Approve)",
+      "label": "Lampiran A \u2014 API Contract Lengkap (Baru vs Reuse)",
       "file_type": "document",
       "source_file": "spec/specs/005.plan-v0.5-workspace-desktop-filemanager.md",
-      "source_location": "L203",
+      "source_location": "L287",
       "_origin": "ast",
-      "id": "spec_specs_005_plan_v0_5_workspace_desktop_filemanager_10_urutan_tdd_setelah_approve",
-      "community": 12,
-      "community_name": "Mux Web UI \u2014 v0.5 plan: Workspace & Desktop System + File Manager (Windows Explorer) + Editor (VS Code) + Browser",
-      "norm_label": "10. urutan tdd (setelah approve)"
+      "id": "spec_specs_005_plan_v0_5_workspace_desktop_filemanager_lampiran_a_api_contract_lengkap_baru_vs_reuse",
+      "community": 50,
+      "community_name": "11. Definition of Done \u2014 Sempurna = Lengkap + Lebih Baik + Tidak Ngelag",
+      "norm_label": "lampiran a \u2014 api contract lengkap (baru vs reuse)"
     },
     {
-      "label": "11. DoD v0.5",
+      "label": "Lampiran B \u2014 Component Map (File \u2192 Spec)",
       "file_type": "document",
       "source_file": "spec/specs/005.plan-v0.5-workspace-desktop-filemanager.md",
-      "source_location": "L210",
+      "source_location": "L302",
       "_origin": "ast",
-      "id": "spec_specs_005_plan_v0_5_workspace_desktop_filemanager_11_dod_v0_5",
-      "community": 12,
-      "community_name": "Mux Web UI \u2014 v0.5 plan: Workspace & Desktop System + File Manager (Windows Explorer) + Editor (VS Code) + Browser",
-      "norm_label": "11. dod v0.5"
+      "id": "spec_specs_005_plan_v0_5_workspace_desktop_filemanager_lampiran_b_component_map_file_spec",
+      "community": 50,
+      "community_name": "11. Definition of Done \u2014 Sempurna = Lengkap + Lebih Baik + Tidak Ngelag",
+      "norm_label": "lampiran b \u2014 component map (file \u2192 spec)"
+    },
+    {
+      "label": "Lampiran C \u2014 Performance Budget (Tidak Ngelag)",
+      "file_type": "document",
+      "source_file": "spec/specs/005.plan-v0.5-workspace-desktop-filemanager.md",
+      "source_location": "L314",
+      "_origin": "ast",
+      "id": "spec_specs_005_plan_v0_5_workspace_desktop_filemanager_lampiran_c_performance_budget_tidak_ngelag",
+      "community": 50,
+      "community_name": "11. Definition of Done \u2014 Sempurna = Lengkap + Lebih Baik + Tidak Ngelag",
+      "norm_label": "lampiran c \u2014 performance budget (tidak ngelag)"
+    },
+    {
+      "label": "Lampiran D \u2014 Traceability Baru",
+      "file_type": "document",
+      "source_file": "spec/specs/005.plan-v0.5-workspace-desktop-filemanager.md",
+      "source_location": "L324",
+      "_origin": "ast",
+      "id": "spec_specs_005_plan_v0_5_workspace_desktop_filemanager_lampiran_d_traceability_baru",
+      "community": 50,
+      "community_name": "11. Definition of Done \u2014 Sempurna = Lengkap + Lebih Baik + Tidak Ngelag",
+      "norm_label": "lampiran d \u2014 traceability baru"
     },
     {
       "label": "005b.plan-checklist.md",
@@ -9473,97 +9669,262 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "spec_specs_005b_plan_checklist",
-      "community": 12,
-      "community_name": "Mux Web UI \u2014 v0.5 plan: Workspace & Desktop System + File Manager (Windows Explorer) + Editor (VS Code) + Browser",
+      "community": 23,
+      "community_name": "Companion Checklist \u2014 v0.5 Workspace, Desktop & File Manager Sempurna (Windows Explorer + VS Code + Browser) \u2014 Lebih Baik & Tidak Ngelag",
       "norm_label": "005b.plan-checklist.md"
     },
     {
-      "label": "Companion Checklist \u2014 v0.5 Workspace, Desktop & File Manager (Windows Explorer + VS Code + Browser)",
+      "label": "Companion Checklist \u2014 v0.5 Workspace, Desktop & File Manager Sempurna (Windows Explorer + VS Code + Browser) \u2014 Lebih Baik & Tidak Ngelag",
       "file_type": "document",
       "source_file": "spec/specs/005b.plan-checklist.md",
       "source_location": "L1",
       "_origin": "ast",
-      "id": "spec_specs_005b_plan_checklist_companion_checklist_v0_5_workspace_desktop_file_manager_windows_explorer_vs_code_browser",
-      "community": 12,
-      "community_name": "Mux Web UI \u2014 v0.5 plan: Workspace & Desktop System + File Manager (Windows Explorer) + Editor (VS Code) + Browser",
-      "norm_label": "companion checklist \u2014 v0.5 workspace, desktop & file manager (windows explorer + vs code + browser)"
+      "id": "spec_specs_005b_plan_checklist_companion_checklist_v0_5_workspace_desktop_file_manager_sempurna_windows_explorer_vs_code_browser_lebih_baik_tidak_ngelag",
+      "community": 23,
+      "community_name": "Companion Checklist \u2014 v0.5 Workspace, Desktop & File Manager Sempurna (Windows Explorer + VS Code + Browser) \u2014 Lebih Baik & Tidak Ngelag",
+      "norm_label": "companion checklist \u2014 v0.5 workspace, desktop & file manager sempurna (windows explorer + vs code + browser) \u2014 lebih baik & tidak ngelag"
     },
     {
-      "label": "0. Keputusan Desain (Selesai \u2014 dari diskusi user)",
+      "label": "0. Keputusan Desain Final (Sudah Dijawab \u2014 Konfirmasi)",
       "file_type": "document",
       "source_file": "spec/specs/005b.plan-checklist.md",
       "source_location": "L10",
       "_origin": "ast",
-      "id": "spec_specs_005b_plan_checklist_0_keputusan_desain_selesai_dari_diskusi_user",
-      "community": 12,
-      "community_name": "Mux Web UI \u2014 v0.5 plan: Workspace & Desktop System + File Manager (Windows Explorer) + Editor (VS Code) + Browser",
-      "norm_label": "0. keputusan desain (selesai \u2014 dari diskusi user)"
+      "id": "spec_specs_005b_plan_checklist_0_keputusan_desain_final_sudah_dijawab_konfirmasi",
+      "community": 23,
+      "community_name": "Companion Checklist \u2014 v0.5 Workspace, Desktop & File Manager Sempurna (Windows Explorer + VS Code + Browser) \u2014 Lebih Baik & Tidak Ngelag",
+      "norm_label": "0. keputusan desain final (sudah dijawab \u2014 konfirmasi)"
     },
     {
-      "label": "1. Workspace System (`WS-001..006`)",
+      "label": "1. Workspace System \u2014 Sempurna (`WS-001..008`)",
       "file_type": "document",
       "source_file": "spec/specs/005b.plan-checklist.md",
       "source_location": "L23",
       "_origin": "ast",
-      "id": "spec_specs_005b_plan_checklist_1_workspace_system_ws_001_006",
-      "community": 12,
-      "community_name": "Mux Web UI \u2014 v0.5 plan: Workspace & Desktop System + File Manager (Windows Explorer) + Editor (VS Code) + Browser",
-      "norm_label": "1. workspace system (`ws-001..006`)"
+      "id": "spec_specs_005b_plan_checklist_1_workspace_system_sempurna_ws_001_008",
+      "community": 53,
+      "community_name": "1. Workspace System \u2014 Sempurna (`WS-001..008`)",
+      "norm_label": "1. workspace system \u2014 sempurna (`ws-001..008`)"
     },
     {
-      "label": "2. Desktop System (`DESK-001..006`)",
+      "label": "Red Tests (`tests/workspace_tests.rs`)",
       "file_type": "document",
       "source_file": "spec/specs/005b.plan-checklist.md",
-      "source_location": "L32",
+      "source_location": "L25",
       "_origin": "ast",
-      "id": "spec_specs_005b_plan_checklist_2_desktop_system_desk_001_006",
-      "community": 12,
-      "community_name": "Mux Web UI \u2014 v0.5 plan: Workspace & Desktop System + File Manager (Windows Explorer) + Editor (VS Code) + Browser",
-      "norm_label": "2. desktop system (`desk-001..006`)"
+      "id": "spec_specs_005b_plan_checklist_red_tests_tests_workspace_tests_rs",
+      "community": 53,
+      "community_name": "1. Workspace System \u2014 Sempurna (`WS-001..008`)",
+      "norm_label": "red tests (`tests/workspace_tests.rs`)"
     },
     {
-      "label": "3. File Manager Windows-like (`FM-001..015`)",
+      "label": "Impl",
+      "file_type": "document",
+      "source_file": "spec/specs/005b.plan-checklist.md",
+      "source_location": "L35",
+      "_origin": "ast",
+      "id": "spec_specs_005b_plan_checklist_impl",
+      "community": 53,
+      "community_name": "1. Workspace System \u2014 Sempurna (`WS-001..008`)",
+      "norm_label": "impl"
+    },
+    {
+      "label": "Green",
       "file_type": "document",
       "source_file": "spec/specs/005b.plan-checklist.md",
       "source_location": "L40",
       "_origin": "ast",
-      "id": "spec_specs_005b_plan_checklist_3_file_manager_windows_like_fm_001_015",
-      "community": 12,
-      "community_name": "Mux Web UI \u2014 v0.5 plan: Workspace & Desktop System + File Manager (Windows Explorer) + Editor (VS Code) + Browser",
-      "norm_label": "3. file manager windows-like (`fm-001..015`)"
+      "id": "spec_specs_005b_plan_checklist_green",
+      "community": 53,
+      "community_name": "1. Workspace System \u2014 Sempurna (`WS-001..008`)",
+      "norm_label": "green"
     },
     {
-      "label": "3a. Editor VS Code-like (`ED-001..006`)",
+      "label": "2. Desktop System \u2014 Sempurna (`DESK-001..008`) \u2014 Lebih Baik dari Windows",
       "file_type": "document",
       "source_file": "spec/specs/005b.plan-checklist.md",
-      "source_location": "L55",
+      "source_location": "L46",
       "_origin": "ast",
-      "id": "spec_specs_005b_plan_checklist_3a_editor_vs_code_like_ed_001_006",
-      "community": 12,
-      "community_name": "Mux Web UI \u2014 v0.5 plan: Workspace & Desktop System + File Manager (Windows Explorer) + Editor (VS Code) + Browser",
-      "norm_label": "3a. editor vs code-like (`ed-001..006`)"
+      "id": "spec_specs_005b_plan_checklist_2_desktop_system_sempurna_desk_001_008_lebih_baik_dari_windows",
+      "community": 54,
+      "community_name": "2. Desktop System \u2014 Sempurna (`DESK-001..008`) \u2014 Lebih Baik dari Windows",
+      "norm_label": "2. desktop system \u2014 sempurna (`desk-001..008`) \u2014 lebih baik dari windows"
     },
     {
-      "label": "3b. Browser Inside Desktop (`BR-001..004`)",
+      "label": "Red Tests",
       "file_type": "document",
       "source_file": "spec/specs/005b.plan-checklist.md",
-      "source_location": "L61",
+      "source_location": "L48",
       "_origin": "ast",
-      "id": "spec_specs_005b_plan_checklist_3b_browser_inside_desktop_br_001_004",
-      "community": 12,
-      "community_name": "Mux Web UI \u2014 v0.5 plan: Workspace & Desktop System + File Manager (Windows Explorer) + Editor (VS Code) + Browser",
-      "norm_label": "3b. browser inside desktop (`br-001..004`)"
+      "id": "spec_specs_005b_plan_checklist_red_tests",
+      "community": 54,
+      "community_name": "2. Desktop System \u2014 Sempurna (`DESK-001..008`) \u2014 Lebih Baik dari Windows",
+      "norm_label": "red tests"
     },
     {
-      "label": "4. DoD & Quality Gates",
+      "label": "Impl",
       "file_type": "document",
       "source_file": "spec/specs/005b.plan-checklist.md",
-      "source_location": "L67",
+      "source_location": "L57",
       "_origin": "ast",
-      "id": "spec_specs_005b_plan_checklist_4_dod_quality_gates",
-      "community": 12,
-      "community_name": "Mux Web UI \u2014 v0.5 plan: Workspace & Desktop System + File Manager (Windows Explorer) + Editor (VS Code) + Browser",
-      "norm_label": "4. dod & quality gates"
+      "id": "spec_specs_005b_plan_checklist_impl_57",
+      "community": 54,
+      "community_name": "2. Desktop System \u2014 Sempurna (`DESK-001..008`) \u2014 Lebih Baik dari Windows",
+      "norm_label": "impl"
+    },
+    {
+      "label": "Green",
+      "file_type": "document",
+      "source_file": "spec/specs/005b.plan-checklist.md",
+      "source_location": "L64",
+      "_origin": "ast",
+      "id": "spec_specs_005b_plan_checklist_green_64",
+      "community": 54,
+      "community_name": "2. Desktop System \u2014 Sempurna (`DESK-001..008`) \u2014 Lebih Baik dari Windows",
+      "norm_label": "green"
+    },
+    {
+      "label": "3. File Manager Windows-like \u2014 Sempurna (`FM-001..018`) \u2014 Recreation + Lebih Baik",
+      "file_type": "document",
+      "source_file": "spec/specs/005b.plan-checklist.md",
+      "source_location": "L70",
+      "_origin": "ast",
+      "id": "spec_specs_005b_plan_checklist_3_file_manager_windows_like_sempurna_fm_001_018_recreation_lebih_baik",
+      "community": 55,
+      "community_name": "3. File Manager Windows-like \u2014 Sempurna (`FM-001..018`) \u2014 Recreation + Lebih Baik",
+      "norm_label": "3. file manager windows-like \u2014 sempurna (`fm-001..018`) \u2014 recreation + lebih baik"
+    },
+    {
+      "label": "Red Tests (`tests/fs_tests.rs` + `web/src/apps/files/FileExplorerView.test.tsx`)",
+      "file_type": "document",
+      "source_file": "spec/specs/005b.plan-checklist.md",
+      "source_location": "L74",
+      "_origin": "ast",
+      "id": "spec_specs_005b_plan_checklist_red_tests_tests_fs_tests_rs_web_src_apps_files_fileexplorerview_test_tsx",
+      "community": 55,
+      "community_name": "3. File Manager Windows-like \u2014 Sempurna (`FM-001..018`) \u2014 Recreation + Lebih Baik",
+      "norm_label": "red tests (`tests/fs_tests.rs` + `web/src/apps/files/fileexplorerview.test.tsx`)"
+    },
+    {
+      "label": "Impl",
+      "file_type": "document",
+      "source_file": "spec/specs/005b.plan-checklist.md",
+      "source_location": "L95",
+      "_origin": "ast",
+      "id": "spec_specs_005b_plan_checklist_impl_95",
+      "community": 55,
+      "community_name": "3. File Manager Windows-like \u2014 Sempurna (`FM-001..018`) \u2014 Recreation + Lebih Baik",
+      "norm_label": "impl"
+    },
+    {
+      "label": "Green",
+      "file_type": "document",
+      "source_file": "spec/specs/005b.plan-checklist.md",
+      "source_location": "L100",
+      "_origin": "ast",
+      "id": "spec_specs_005b_plan_checklist_green_100",
+      "community": 55,
+      "community_name": "3. File Manager Windows-like \u2014 Sempurna (`FM-001..018`) \u2014 Recreation + Lebih Baik",
+      "norm_label": "green"
+    },
+    {
+      "label": "3a. Editor VS Code-like \u2014 Sempurna (`ED-001..010`) \u2014 Lebih Baik & Tidak Ngelag",
+      "file_type": "document",
+      "source_file": "spec/specs/005b.plan-checklist.md",
+      "source_location": "L106",
+      "_origin": "ast",
+      "id": "spec_specs_005b_plan_checklist_3a_editor_vs_code_like_sempurna_ed_001_010_lebih_baik_tidak_ngelag",
+      "community": 23,
+      "community_name": "Companion Checklist \u2014 v0.5 Workspace, Desktop & File Manager Sempurna (Windows Explorer + VS Code + Browser) \u2014 Lebih Baik & Tidak Ngelag",
+      "norm_label": "3a. editor vs code-like \u2014 sempurna (`ed-001..010`) \u2014 lebih baik & tidak ngelag"
+    },
+    {
+      "label": "Red Tests (`web/src/apps/editor/*.test.tsx`)",
+      "file_type": "document",
+      "source_file": "spec/specs/005b.plan-checklist.md",
+      "source_location": "L108",
+      "_origin": "ast",
+      "id": "spec_specs_005b_plan_checklist_red_tests_web_src_apps_editor_test_tsx",
+      "community": 23,
+      "community_name": "Companion Checklist \u2014 v0.5 Workspace, Desktop & File Manager Sempurna (Windows Explorer + VS Code + Browser) \u2014 Lebih Baik & Tidak Ngelag",
+      "norm_label": "red tests (`web/src/apps/editor/*.test.tsx`)"
+    },
+    {
+      "label": "Impl",
+      "file_type": "document",
+      "source_file": "spec/specs/005b.plan-checklist.md",
+      "source_location": "L121",
+      "_origin": "ast",
+      "id": "spec_specs_005b_plan_checklist_impl_121",
+      "community": 23,
+      "community_name": "Companion Checklist \u2014 v0.5 Workspace, Desktop & File Manager Sempurna (Windows Explorer + VS Code + Browser) \u2014 Lebih Baik & Tidak Ngelag",
+      "norm_label": "impl"
+    },
+    {
+      "label": "Green",
+      "file_type": "document",
+      "source_file": "spec/specs/005b.plan-checklist.md",
+      "source_location": "L126",
+      "_origin": "ast",
+      "id": "spec_specs_005b_plan_checklist_green_126",
+      "community": 23,
+      "community_name": "Companion Checklist \u2014 v0.5 Workspace, Desktop & File Manager Sempurna (Windows Explorer + VS Code + Browser) \u2014 Lebih Baik & Tidak Ngelag",
+      "norm_label": "green"
+    },
+    {
+      "label": "3b. Browser Inside Desktop \u2014 Sempurna (`BR-001..006`) \u2014 Chrome-like",
+      "file_type": "document",
+      "source_file": "spec/specs/005b.plan-checklist.md",
+      "source_location": "L131",
+      "_origin": "ast",
+      "id": "spec_specs_005b_plan_checklist_3b_browser_inside_desktop_sempurna_br_001_006_chrome_like",
+      "community": 56,
+      "community_name": "3b. Browser Inside Desktop \u2014 Sempurna (`BR-001..006`) \u2014 Chrome-like",
+      "norm_label": "3b. browser inside desktop \u2014 sempurna (`br-001..006`) \u2014 chrome-like"
+    },
+    {
+      "label": "Red Tests (`web/src/apps/browser/*.test.tsx`)",
+      "file_type": "document",
+      "source_file": "spec/specs/005b.plan-checklist.md",
+      "source_location": "L133",
+      "_origin": "ast",
+      "id": "spec_specs_005b_plan_checklist_red_tests_web_src_apps_browser_test_tsx",
+      "community": 56,
+      "community_name": "3b. Browser Inside Desktop \u2014 Sempurna (`BR-001..006`) \u2014 Chrome-like",
+      "norm_label": "red tests (`web/src/apps/browser/*.test.tsx`)"
+    },
+    {
+      "label": "Impl",
+      "file_type": "document",
+      "source_file": "spec/specs/005b.plan-checklist.md",
+      "source_location": "L141",
+      "_origin": "ast",
+      "id": "spec_specs_005b_plan_checklist_impl_141",
+      "community": 56,
+      "community_name": "3b. Browser Inside Desktop \u2014 Sempurna (`BR-001..006`) \u2014 Chrome-like",
+      "norm_label": "impl"
+    },
+    {
+      "label": "Green",
+      "file_type": "document",
+      "source_file": "spec/specs/005b.plan-checklist.md",
+      "source_location": "L145",
+      "_origin": "ast",
+      "id": "spec_specs_005b_plan_checklist_green_145",
+      "community": 56,
+      "community_name": "3b. Browser Inside Desktop \u2014 Sempurna (`BR-001..006`) \u2014 Chrome-like",
+      "norm_label": "green"
+    },
+    {
+      "label": "4. DoD & Quality Gates \u2014 Sempurna = Lengkap + Lebih Baik + Tidak Ngelag",
+      "file_type": "document",
+      "source_file": "spec/specs/005b.plan-checklist.md",
+      "source_location": "L150",
+      "_origin": "ast",
+      "id": "spec_specs_005b_plan_checklist_4_dod_quality_gates_sempurna_lengkap_lebih_baik_tidak_ngelag",
+      "community": 23,
+      "community_name": "Companion Checklist \u2014 v0.5 Workspace, Desktop & File Manager Sempurna (Windows Explorer + VS Code + Browser) \u2014 Lebih Baik & Tidak Ngelag",
+      "norm_label": "4. dod & quality gates \u2014 sempurna = lengkap + lebih baik + tidak ngelag"
     },
     {
       "label": "README.md",
@@ -10621,8 +10982,8 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 1,
-      "community_name": "SessionRegistry",
+      "community": 44,
+      "community_name": "v0.2 Implementation Checklist & Verification Matrix",
       "norm_label": "handoff 001 - progress & backlog (v0.2)",
       "_origin": "semantic",
       "id": "spec_handoff_001_progress_and_backlog_doc"
@@ -10651,8 +11012,8 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 1,
-      "community_name": "SessionRegistry",
+      "community": 44,
+      "community_name": "v0.2 Implementation Checklist & Verification Matrix",
       "norm_label": "milestone b: session persistence",
       "_origin": "semantic",
       "id": "spec_handoff_001_progress_and_backlog_milestone_b"
@@ -10696,8 +11057,8 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 1,
-      "community_name": "SessionRegistry",
+      "community": 44,
+      "community_name": "v0.2 Implementation Checklist & Verification Matrix",
       "norm_label": "life-002 orphan child cleanup",
       "_origin": "semantic",
       "id": "spec_handoff_001_progress_and_backlog_life_002_orphan_cleanup"
@@ -10711,8 +11072,8 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 22,
-      "community_name": "v0.2.1 Plan: Distribution (prebuilt binary + installer)",
+      "community": 44,
+      "community_name": "v0.2 Implementation Checklist & Verification Matrix",
       "norm_label": "v0.2 implementation checklist & verification matrix",
       "_origin": "semantic",
       "id": "spec_specs_001b_plan_checklist_doc"
@@ -10726,8 +11087,8 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 22,
-      "community_name": "v0.2.1 Plan: Distribution (prebuilt binary + installer)",
+      "community": 44,
+      "community_name": "v0.2 Implementation Checklist & Verification Matrix",
       "norm_label": "tdd execution loop (red-green-refactor)",
       "_origin": "semantic",
       "id": "spec_specs_001b_plan_checklist_tdd_loop"
@@ -10756,8 +11117,8 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 1,
-      "community_name": "SessionRegistry",
+      "community": 44,
+      "community_name": "v0.2 Implementation Checklist & Verification Matrix",
       "norm_label": "checklist milestone b: session persistence (b.1-b.9)",
       "_origin": "semantic",
       "id": "spec_specs_001b_plan_checklist_milestone_b_session_persistence"
@@ -11026,8 +11387,8 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 1,
-      "community_name": "SessionRegistry",
+      "community": 41,
+      "community_name": "Requirement Traceability Matrix",
       "norm_label": "life requirement family",
       "_origin": "semantic",
       "id": "tests_traceability_life_family"
@@ -26216,11 +26577,83 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "web/src/desktop/DesktopCanvas.tsx",
-      "source_location": "L13",
+      "source_location": "L16",
       "weight": 1.0,
       "_origin": "ast",
       "source": "web_src_desktop_desktopcanvas",
       "target": "web_src_desktop_desktopcanvas_desktopcanvas",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "web/src/desktop/DesktopCanvas.tsx",
+      "source_location": "L14",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "web_src_desktop_desktopcanvas",
+      "target": "web_src_desktop_searchapp",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "web/src/desktop/DesktopCanvas.tsx",
+      "source_location": "L14",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "web_src_desktop_desktopcanvas",
+      "target": "web_src_desktop_searchapp_searchapp",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "web/src/desktop/DesktopCanvas.tsx",
+      "source_location": "L13",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "web_src_desktop_desktopcanvas",
+      "target": "web_src_desktop_startmenu",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "web/src/desktop/DesktopCanvas.tsx",
+      "source_location": "L13",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "web_src_desktop_desktopcanvas",
+      "target": "web_src_desktop_startmenu_startmenu",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "web/src/desktop/DesktopCanvas.tsx",
+      "source_location": "L12",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "web_src_desktop_desktopcanvas",
+      "target": "web_src_desktop_toolbar",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "web/src/desktop/DesktopCanvas.tsx",
+      "source_location": "L12",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "web_src_desktop_desktopcanvas",
+      "target": "web_src_desktop_toolbar_toolbar",
       "confidence_score": 1.0
     },
     {
@@ -26289,11 +26722,111 @@
       "confidence": "INFERRED",
       "confidence_score": 0.8,
       "source_file": "web/src/desktop/DesktopCanvas.tsx",
-      "source_location": "L14",
+      "source_location": "L17",
       "weight": 1.0,
       "_origin": "ast",
       "source": "web_src_desktop_desktopcanvas_desktopcanvas",
       "target": "web_src_desktop_windowstore_windowreducer"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "web/src/desktop/SearchApp.tsx",
+      "source_location": "L9",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "web_src_desktop_searchapp",
+      "target": "web_src_desktop_searchapp_searchable",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "web/src/desktop/SearchApp.tsx",
+      "source_location": "L20",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "web_src_desktop_searchapp",
+      "target": "web_src_desktop_searchapp_searchapp",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "web/src/desktop/SearchApp.tsx",
+      "source_location": "L3",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "web_src_desktop_searchapp",
+      "target": "web_src_desktop_searchapp_searchappprops",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "references",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "web/src/desktop/SearchApp.tsx",
+      "source_location": "L25",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "web_src_desktop_searchapp_searchapp",
+      "target": "web_src_desktop_searchapp_searchable"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "web/src/desktop/StartMenu.tsx",
+      "source_location": "L10",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "web_src_desktop_startmenu",
+      "target": "web_src_desktop_startmenu_apps",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "web/src/desktop/StartMenu.tsx",
+      "source_location": "L21",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "web_src_desktop_startmenu",
+      "target": "web_src_desktop_startmenu_startmenu",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "web/src/desktop/StartMenu.tsx",
+      "source_location": "L3",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "web_src_desktop_startmenu",
+      "target": "web_src_desktop_startmenu_startmenuprops",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "web/src/desktop/Toolbar.tsx",
+      "source_location": "L11",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "web_src_desktop_toolbar",
+      "target": "web_src_desktop_toolbar_toolbar",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "web/src/desktop/Toolbar.tsx",
+      "source_location": "L3",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "web_src_desktop_toolbar",
+      "target": "web_src_desktop_toolbar_toolbarprops",
+      "confidence_score": 1.0
     },
     {
       "relation": "contains",
@@ -27412,7 +27945,7 @@
       "relation": "references",
       "confidence": "EXTRACTED",
       "source_file": "spec/specs/005.plan-v0.5-workspace-desktop-filemanager.md",
-      "source_location": "L12",
+      "source_location": "L9",
       "weight": 1.0,
       "_origin": "ast",
       "source": "spec_specs_005_plan_v0_5_workspace_desktop_filemanager",
@@ -29330,14 +29863,14 @@
       "weight": 1.0,
       "_origin": "ast",
       "source": "spec_specs_005_plan_v0_5_workspace_desktop_filemanager",
-      "target": "spec_specs_005_plan_v0_5_workspace_desktop_filemanager_mux_web_ui_v0_5_plan_workspace_desktop_system_file_manager_windows_explorer_editor_vs_code_browser",
+      "target": "spec_specs_005_plan_v0_5_workspace_desktop_filemanager_mux_web_ui_v0_5_plan_workspace_desktop_system_file_manager_windows_explorer_sempurna_editor_vs_code_sempurna_browser_lebih_baik_tidak_ngelag",
       "confidence_score": 1.0
     },
     {
       "relation": "references",
       "confidence": "EXTRACTED",
       "source_file": "spec/specs/005.plan-v0.5-workspace-desktop-filemanager.md",
-      "source_location": "L12",
+      "source_location": "L9",
       "weight": 1.0,
       "_origin": "ast",
       "source": "spec_specs_005_plan_v0_5_workspace_desktop_filemanager",
@@ -29348,43 +29881,43 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "spec/specs/005.plan-v0.5-workspace-desktop-filemanager.md",
-      "source_location": "L203",
+      "source_location": "L258",
       "weight": 1.0,
       "_origin": "ast",
-      "source": "spec_specs_005_plan_v0_5_workspace_desktop_filemanager_mux_web_ui_v0_5_plan_workspace_desktop_system_file_manager_windows_explorer_editor_vs_code_browser",
-      "target": "spec_specs_005_plan_v0_5_workspace_desktop_filemanager_10_urutan_tdd_setelah_approve",
+      "source": "spec_specs_005_plan_v0_5_workspace_desktop_filemanager_mux_web_ui_v0_5_plan_workspace_desktop_system_file_manager_windows_explorer_sempurna_editor_vs_code_sempurna_browser_lebih_baik_tidak_ngelag",
+      "target": "spec_specs_005_plan_v0_5_workspace_desktop_filemanager_10_urutan_tdd_sempurna_tidak_ngelag_setelah_approve_final",
       "confidence_score": 1.0
     },
     {
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "spec/specs/005.plan-v0.5-workspace-desktop-filemanager.md",
-      "source_location": "L210",
+      "source_location": "L271",
       "weight": 1.0,
       "_origin": "ast",
-      "source": "spec_specs_005_plan_v0_5_workspace_desktop_filemanager_mux_web_ui_v0_5_plan_workspace_desktop_system_file_manager_windows_explorer_editor_vs_code_browser",
-      "target": "spec_specs_005_plan_v0_5_workspace_desktop_filemanager_11_dod_v0_5",
+      "source": "spec_specs_005_plan_v0_5_workspace_desktop_filemanager_mux_web_ui_v0_5_plan_workspace_desktop_system_file_manager_windows_explorer_sempurna_editor_vs_code_sempurna_browser_lebih_baik_tidak_ngelag",
+      "target": "spec_specs_005_plan_v0_5_workspace_desktop_filemanager_11_definition_of_done_sempurna_lengkap_lebih_baik_tidak_ngelag",
       "confidence_score": 1.0
     },
     {
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "spec/specs/005.plan-v0.5-workspace-desktop-filemanager.md",
-      "source_location": "L16",
+      "source_location": "L13",
       "weight": 1.0,
       "_origin": "ast",
-      "source": "spec_specs_005_plan_v0_5_workspace_desktop_filemanager_mux_web_ui_v0_5_plan_workspace_desktop_system_file_manager_windows_explorer_editor_vs_code_browser",
-      "target": "spec_specs_005_plan_v0_5_workspace_desktop_filemanager_1_latar_belakang_dan_risiko",
+      "source": "spec_specs_005_plan_v0_5_workspace_desktop_filemanager_mux_web_ui_v0_5_plan_workspace_desktop_system_file_manager_windows_explorer_sempurna_editor_vs_code_sempurna_browser_lebih_baik_tidak_ngelag",
+      "target": "spec_specs_005_plan_v0_5_workspace_desktop_filemanager_1_latar_belakang_risiko_dan_prinsip_lebih_baik_tidak_ngelag",
       "confidence_score": 1.0
     },
     {
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "spec/specs/005.plan-v0.5-workspace-desktop-filemanager.md",
-      "source_location": "L36",
+      "source_location": "L56",
       "weight": 1.0,
       "_origin": "ast",
-      "source": "spec_specs_005_plan_v0_5_workspace_desktop_filemanager_mux_web_ui_v0_5_plan_workspace_desktop_system_file_manager_windows_explorer_editor_vs_code_browser",
+      "source": "spec_specs_005_plan_v0_5_workspace_desktop_filemanager_mux_web_ui_v0_5_plan_workspace_desktop_system_file_manager_windows_explorer_sempurna_editor_vs_code_sempurna_browser_lebih_baik_tidak_ngelag",
       "target": "spec_specs_005_plan_v0_5_workspace_desktop_filemanager_2_hubungan_dengan_rencana_dan_requirement",
       "confidence_score": 1.0
     },
@@ -29392,120 +29925,153 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "spec/specs/005.plan-v0.5-workspace-desktop-filemanager.md",
-      "source_location": "L50",
+      "source_location": "L70",
       "weight": 1.0,
       "_origin": "ast",
-      "source": "spec_specs_005_plan_v0_5_workspace_desktop_filemanager_mux_web_ui_v0_5_plan_workspace_desktop_system_file_manager_windows_explorer_editor_vs_code_browser",
-      "target": "spec_specs_005_plan_v0_5_workspace_desktop_filemanager_3_threat_model",
+      "source": "spec_specs_005_plan_v0_5_workspace_desktop_filemanager_mux_web_ui_v0_5_plan_workspace_desktop_system_file_manager_windows_explorer_sempurna_editor_vs_code_sempurna_browser_lebih_baik_tidak_ngelag",
+      "target": "spec_specs_005_plan_v0_5_workspace_desktop_filemanager_3_threat_model_diperluas_untuk_explorer_editor_browser",
       "confidence_score": 1.0
     },
     {
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "spec/specs/005.plan-v0.5-workspace-desktop-filemanager.md",
-      "source_location": "L62",
+      "source_location": "L83",
       "weight": 1.0,
       "_origin": "ast",
-      "source": "spec_specs_005_plan_v0_5_workspace_desktop_filemanager_mux_web_ui_v0_5_plan_workspace_desktop_system_file_manager_windows_explorer_editor_vs_code_browser",
-      "target": "spec_specs_005_plan_v0_5_workspace_desktop_filemanager_4_milestone_a_workspace_system_ws_001_006",
+      "source": "spec_specs_005_plan_v0_5_workspace_desktop_filemanager_mux_web_ui_v0_5_plan_workspace_desktop_system_file_manager_windows_explorer_sempurna_editor_vs_code_sempurna_browser_lebih_baik_tidak_ngelag",
+      "target": "spec_specs_005_plan_v0_5_workspace_desktop_filemanager_4_milestone_a_workspace_system_ws_001_008_sempurna",
       "confidence_score": 1.0
     },
     {
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "spec/specs/005.plan-v0.5-workspace-desktop-filemanager.md",
-      "source_location": "L88",
+      "source_location": "L107",
       "weight": 1.0,
       "_origin": "ast",
-      "source": "spec_specs_005_plan_v0_5_workspace_desktop_filemanager_mux_web_ui_v0_5_plan_workspace_desktop_system_file_manager_windows_explorer_editor_vs_code_browser",
-      "target": "spec_specs_005_plan_v0_5_workspace_desktop_filemanager_5_milestone_b_desktop_system_desk_001_006",
+      "source": "spec_specs_005_plan_v0_5_workspace_desktop_filemanager_mux_web_ui_v0_5_plan_workspace_desktop_system_file_manager_windows_explorer_sempurna_editor_vs_code_sempurna_browser_lebih_baik_tidak_ngelag",
+      "target": "spec_specs_005_plan_v0_5_workspace_desktop_filemanager_5_milestone_b_desktop_system_desk_001_008_sempurna",
       "confidence_score": 1.0
     },
     {
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "spec/specs/005.plan-v0.5-workspace-desktop-filemanager.md",
-      "source_location": "L103",
+      "source_location": "L124",
       "weight": 1.0,
       "_origin": "ast",
-      "source": "spec_specs_005_plan_v0_5_workspace_desktop_filemanager_mux_web_ui_v0_5_plan_workspace_desktop_system_file_manager_windows_explorer_editor_vs_code_browser",
-      "target": "spec_specs_005_plan_v0_5_workspace_desktop_filemanager_6_milestone_c_file_manager_windows_like_fm_001_015",
+      "source": "spec_specs_005_plan_v0_5_workspace_desktop_filemanager_mux_web_ui_v0_5_plan_workspace_desktop_system_file_manager_windows_explorer_sempurna_editor_vs_code_sempurna_browser_lebih_baik_tidak_ngelag",
+      "target": "spec_specs_005_plan_v0_5_workspace_desktop_filemanager_6_milestone_c_file_manager_windows_like_sempurna_fm_001_018_lebih_baik_dari_windows",
       "confidence_score": 1.0
     },
     {
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "spec/specs/005.plan-v0.5-workspace-desktop-filemanager.md",
-      "source_location": "L133",
+      "source_location": "L163",
       "weight": 1.0,
       "_origin": "ast",
-      "source": "spec_specs_005_plan_v0_5_workspace_desktop_filemanager_mux_web_ui_v0_5_plan_workspace_desktop_system_file_manager_windows_explorer_editor_vs_code_browser",
-      "target": "spec_specs_005_plan_v0_5_workspace_desktop_filemanager_6a_milestone_d_editor_vs_code_like_ed_001_006",
+      "source": "spec_specs_005_plan_v0_5_workspace_desktop_filemanager_mux_web_ui_v0_5_plan_workspace_desktop_system_file_manager_windows_explorer_sempurna_editor_vs_code_sempurna_browser_lebih_baik_tidak_ngelag",
+      "target": "spec_specs_005_plan_v0_5_workspace_desktop_filemanager_6a_milestone_d_editor_vs_code_sempurna_ed_001_010_lebih_baik_dari_vs_code",
       "confidence_score": 1.0
     },
     {
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "spec/specs/005.plan-v0.5-workspace-desktop-filemanager.md",
-      "source_location": "L153",
+      "source_location": "L192",
       "weight": 1.0,
       "_origin": "ast",
-      "source": "spec_specs_005_plan_v0_5_workspace_desktop_filemanager_mux_web_ui_v0_5_plan_workspace_desktop_system_file_manager_windows_explorer_editor_vs_code_browser",
-      "target": "spec_specs_005_plan_v0_5_workspace_desktop_filemanager_6b_milestone_e_browser_app_inside_desktop_br_001_004",
+      "source": "spec_specs_005_plan_v0_5_workspace_desktop_filemanager_mux_web_ui_v0_5_plan_workspace_desktop_system_file_manager_windows_explorer_sempurna_editor_vs_code_sempurna_browser_lebih_baik_tidak_ngelag",
+      "target": "spec_specs_005_plan_v0_5_workspace_desktop_filemanager_6b_milestone_e_browser_inside_desktop_sempurna_br_001_006_chrome_like",
       "confidence_score": 1.0
     },
     {
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "spec/specs/005.plan-v0.5-workspace-desktop-filemanager.md",
-      "source_location": "L173",
+      "source_location": "L214",
       "weight": 1.0,
       "_origin": "ast",
-      "source": "spec_specs_005_plan_v0_5_workspace_desktop_filemanager_mux_web_ui_v0_5_plan_workspace_desktop_system_file_manager_windows_explorer_editor_vs_code_browser",
-      "target": "spec_specs_005_plan_v0_5_workspace_desktop_filemanager_7_konfigurasi_baru",
+      "source": "spec_specs_005_plan_v0_5_workspace_desktop_filemanager_mux_web_ui_v0_5_plan_workspace_desktop_system_file_manager_windows_explorer_sempurna_editor_vs_code_sempurna_browser_lebih_baik_tidak_ngelag",
+      "target": "spec_specs_005_plan_v0_5_workspace_desktop_filemanager_7_konfigurasi_baru_lengkap",
       "confidence_score": 1.0
     },
     {
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "spec/specs/005.plan-v0.5-workspace-desktop-filemanager.md",
-      "source_location": "L182",
+      "source_location": "L228",
       "weight": 1.0,
       "_origin": "ast",
-      "source": "spec_specs_005_plan_v0_5_workspace_desktop_filemanager_mux_web_ui_v0_5_plan_workspace_desktop_system_file_manager_windows_explorer_editor_vs_code_browser",
-      "target": "spec_specs_005_plan_v0_5_workspace_desktop_filemanager_8_bukan_scope_v0_5",
+      "source": "spec_specs_005_plan_v0_5_workspace_desktop_filemanager_mux_web_ui_v0_5_plan_workspace_desktop_system_file_manager_windows_explorer_sempurna_editor_vs_code_sempurna_browser_lebih_baik_tidak_ngelag",
+      "target": "spec_specs_005_plan_v0_5_workspace_desktop_filemanager_8_bukan_scope_v0_5_sempurna_tapi_batas_jelas",
       "confidence_score": 1.0
     },
     {
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "spec/specs/005.plan-v0.5-workspace-desktop-filemanager.md",
-      "source_location": "L190",
+      "source_location": "L242",
       "weight": 1.0,
       "_origin": "ast",
-      "source": "spec_specs_005_plan_v0_5_workspace_desktop_filemanager_mux_web_ui_v0_5_plan_workspace_desktop_system_file_manager_windows_explorer_editor_vs_code_browser",
-      "target": "spec_specs_005_plan_v0_5_workspace_desktop_filemanager_9_pertanyaan_diskusi_untuk_user_sebelum_build",
+      "source": "spec_specs_005_plan_v0_5_workspace_desktop_filemanager_mux_web_ui_v0_5_plan_workspace_desktop_system_file_manager_windows_explorer_sempurna_editor_vs_code_sempurna_browser_lebih_baik_tidak_ngelag",
+      "target": "spec_specs_005_plan_v0_5_workspace_desktop_filemanager_9_pertanyaan_diskusi_untuk_user_sudah_dijawab_partial_konfirmasi_final",
       "confidence_score": 1.0
     },
     {
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "spec/specs/005.plan-v0.5-workspace-desktop-filemanager.md",
-      "source_location": "L26",
+      "source_location": "L15",
       "weight": 1.0,
       "_origin": "ast",
-      "source": "spec_specs_005_plan_v0_5_workspace_desktop_filemanager_1_latar_belakang_dan_risiko",
-      "target": "spec_specs_005_plan_v0_5_workspace_desktop_filemanager_1_1_fakta_kode_v0_4_sebagai_titik_awal",
+      "source": "spec_specs_005_plan_v0_5_workspace_desktop_filemanager_1_latar_belakang_risiko_dan_prinsip_lebih_baik_tidak_ngelag",
+      "target": "spec_specs_005_plan_v0_5_workspace_desktop_filemanager_1_1_kenapa_harus_sempurna",
       "confidence_score": 1.0
     },
     {
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "spec/specs/005.plan-v0.5-workspace-desktop-filemanager.md",
-      "source_location": "L81",
+      "source_location": "L27",
       "weight": 1.0,
       "_origin": "ast",
-      "source": "spec_specs_005_plan_v0_5_workspace_desktop_filemanager_4_milestone_a_workspace_system_ws_001_006",
+      "source": "spec_specs_005_plan_v0_5_workspace_desktop_filemanager_1_latar_belakang_risiko_dan_prinsip_lebih_baik_tidak_ngelag",
+      "target": "spec_specs_005_plan_v0_5_workspace_desktop_filemanager_1_2_fakta_kode_v0_4_v0_5_saat_ini_titik_awal",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "spec/specs/005.plan-v0.5-workspace-desktop-filemanager.md",
+      "source_location": "L37",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "spec_specs_005_plan_v0_5_workspace_desktop_filemanager_1_latar_belakang_risiko_dan_prinsip_lebih_baik_tidak_ngelag",
+      "target": "spec_specs_005_plan_v0_5_workspace_desktop_filemanager_1_3_prinsip_lebih_baik_tidak_ngelag_arsitektur_performance_wajib",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "spec/specs/005.plan-v0.5-workspace-desktop-filemanager.md",
+      "source_location": "L99",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "spec_specs_005_plan_v0_5_workspace_desktop_filemanager_4_milestone_a_workspace_system_ws_001_008_sempurna",
+      "target": "spec_specs_005_plan_v0_5_workspace_desktop_filemanager_acceptance_tdd",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "spec/specs/005.plan-v0.5-workspace-desktop-filemanager.md",
+      "source_location": "L118",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "spec_specs_005_plan_v0_5_workspace_desktop_filemanager_5_milestone_b_desktop_system_desk_001_008_sempurna",
       "target": "spec_specs_005_plan_v0_5_workspace_desktop_filemanager_acceptance",
       "confidence_score": 1.0
     },
@@ -29513,44 +30079,77 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "spec/specs/005.plan-v0.5-workspace-desktop-filemanager.md",
-      "source_location": "L97",
+      "source_location": "L154",
       "weight": 1.0,
       "_origin": "ast",
-      "source": "spec_specs_005_plan_v0_5_workspace_desktop_filemanager_5_milestone_b_desktop_system_desk_001_006",
-      "target": "spec_specs_005_plan_v0_5_workspace_desktop_filemanager_acceptance_97",
+      "source": "spec_specs_005_plan_v0_5_workspace_desktop_filemanager_6_milestone_c_file_manager_windows_like_sempurna_fm_001_018_lebih_baik_dari_windows",
+      "target": "spec_specs_005_plan_v0_5_workspace_desktop_filemanager_acceptance_windows",
       "confidence_score": 1.0
     },
     {
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "spec/specs/005.plan-v0.5-workspace-desktop-filemanager.md",
-      "source_location": "L127",
+      "source_location": "L185",
       "weight": 1.0,
       "_origin": "ast",
-      "source": "spec_specs_005_plan_v0_5_workspace_desktop_filemanager_6_milestone_c_file_manager_windows_like_fm_001_015",
-      "target": "spec_specs_005_plan_v0_5_workspace_desktop_filemanager_acceptance_127",
+      "source": "spec_specs_005_plan_v0_5_workspace_desktop_filemanager_6a_milestone_d_editor_vs_code_sempurna_ed_001_010_lebih_baik_dari_vs_code",
+      "target": "spec_specs_005_plan_v0_5_workspace_desktop_filemanager_acceptance_vs_code",
       "confidence_score": 1.0
     },
     {
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "spec/specs/005.plan-v0.5-workspace-desktop-filemanager.md",
-      "source_location": "L148",
+      "source_location": "L207",
       "weight": 1.0,
       "_origin": "ast",
-      "source": "spec_specs_005_plan_v0_5_workspace_desktop_filemanager_6a_milestone_d_editor_vs_code_like_ed_001_006",
-      "target": "spec_specs_005_plan_v0_5_workspace_desktop_filemanager_acceptance_148",
+      "source": "spec_specs_005_plan_v0_5_workspace_desktop_filemanager_6b_milestone_e_browser_inside_desktop_sempurna_br_001_006_chrome_like",
+      "target": "spec_specs_005_plan_v0_5_workspace_desktop_filemanager_acceptance_chrome",
       "confidence_score": 1.0
     },
     {
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "spec/specs/005.plan-v0.5-workspace-desktop-filemanager.md",
-      "source_location": "L166",
+      "source_location": "L287",
       "weight": 1.0,
       "_origin": "ast",
-      "source": "spec_specs_005_plan_v0_5_workspace_desktop_filemanager_6b_milestone_e_browser_app_inside_desktop_br_001_004",
-      "target": "spec_specs_005_plan_v0_5_workspace_desktop_filemanager_acceptance_166",
+      "source": "spec_specs_005_plan_v0_5_workspace_desktop_filemanager_11_definition_of_done_sempurna_lengkap_lebih_baik_tidak_ngelag",
+      "target": "spec_specs_005_plan_v0_5_workspace_desktop_filemanager_lampiran_a_api_contract_lengkap_baru_vs_reuse",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "spec/specs/005.plan-v0.5-workspace-desktop-filemanager.md",
+      "source_location": "L302",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "spec_specs_005_plan_v0_5_workspace_desktop_filemanager_11_definition_of_done_sempurna_lengkap_lebih_baik_tidak_ngelag",
+      "target": "spec_specs_005_plan_v0_5_workspace_desktop_filemanager_lampiran_b_component_map_file_spec",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "spec/specs/005.plan-v0.5-workspace-desktop-filemanager.md",
+      "source_location": "L314",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "spec_specs_005_plan_v0_5_workspace_desktop_filemanager_11_definition_of_done_sempurna_lengkap_lebih_baik_tidak_ngelag",
+      "target": "spec_specs_005_plan_v0_5_workspace_desktop_filemanager_lampiran_c_performance_budget_tidak_ngelag",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "spec/specs/005.plan-v0.5-workspace-desktop-filemanager.md",
+      "source_location": "L324",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "spec_specs_005_plan_v0_5_workspace_desktop_filemanager_11_definition_of_done_sempurna_lengkap_lebih_baik_tidak_ngelag",
+      "target": "spec_specs_005_plan_v0_5_workspace_desktop_filemanager_lampiran_d_traceability_baru",
       "confidence_score": 1.0
     },
     {
@@ -29561,7 +30160,7 @@
       "weight": 1.0,
       "_origin": "ast",
       "source": "spec_specs_005b_plan_checklist",
-      "target": "spec_specs_005b_plan_checklist_companion_checklist_v0_5_workspace_desktop_file_manager_windows_explorer_vs_code_browser",
+      "target": "spec_specs_005b_plan_checklist_companion_checklist_v0_5_workspace_desktop_file_manager_sempurna_windows_explorer_vs_code_browser_lebih_baik_tidak_ngelag",
       "confidence_score": 1.0
     },
     {
@@ -29571,8 +30170,8 @@
       "source_location": "L10",
       "weight": 1.0,
       "_origin": "ast",
-      "source": "spec_specs_005b_plan_checklist_companion_checklist_v0_5_workspace_desktop_file_manager_windows_explorer_vs_code_browser",
-      "target": "spec_specs_005b_plan_checklist_0_keputusan_desain_selesai_dari_diskusi_user",
+      "source": "spec_specs_005b_plan_checklist_companion_checklist_v0_5_workspace_desktop_file_manager_sempurna_windows_explorer_vs_code_browser_lebih_baik_tidak_ngelag",
+      "target": "spec_specs_005b_plan_checklist_0_keputusan_desain_final_sudah_dijawab_konfirmasi",
       "confidence_score": 1.0
     },
     {
@@ -29582,19 +30181,63 @@
       "source_location": "L23",
       "weight": 1.0,
       "_origin": "ast",
-      "source": "spec_specs_005b_plan_checklist_companion_checklist_v0_5_workspace_desktop_file_manager_windows_explorer_vs_code_browser",
-      "target": "spec_specs_005b_plan_checklist_1_workspace_system_ws_001_006",
+      "source": "spec_specs_005b_plan_checklist_companion_checklist_v0_5_workspace_desktop_file_manager_sempurna_windows_explorer_vs_code_browser_lebih_baik_tidak_ngelag",
+      "target": "spec_specs_005b_plan_checklist_1_workspace_system_sempurna_ws_001_008",
       "confidence_score": 1.0
     },
     {
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "spec/specs/005b.plan-checklist.md",
-      "source_location": "L32",
+      "source_location": "L46",
       "weight": 1.0,
       "_origin": "ast",
-      "source": "spec_specs_005b_plan_checklist_companion_checklist_v0_5_workspace_desktop_file_manager_windows_explorer_vs_code_browser",
-      "target": "spec_specs_005b_plan_checklist_2_desktop_system_desk_001_006",
+      "source": "spec_specs_005b_plan_checklist_companion_checklist_v0_5_workspace_desktop_file_manager_sempurna_windows_explorer_vs_code_browser_lebih_baik_tidak_ngelag",
+      "target": "spec_specs_005b_plan_checklist_2_desktop_system_sempurna_desk_001_008_lebih_baik_dari_windows",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "spec/specs/005b.plan-checklist.md",
+      "source_location": "L70",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "spec_specs_005b_plan_checklist_companion_checklist_v0_5_workspace_desktop_file_manager_sempurna_windows_explorer_vs_code_browser_lebih_baik_tidak_ngelag",
+      "target": "spec_specs_005b_plan_checklist_3_file_manager_windows_like_sempurna_fm_001_018_recreation_lebih_baik",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "spec/specs/005b.plan-checklist.md",
+      "source_location": "L106",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "spec_specs_005b_plan_checklist_companion_checklist_v0_5_workspace_desktop_file_manager_sempurna_windows_explorer_vs_code_browser_lebih_baik_tidak_ngelag",
+      "target": "spec_specs_005b_plan_checklist_3a_editor_vs_code_like_sempurna_ed_001_010_lebih_baik_tidak_ngelag",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "spec/specs/005b.plan-checklist.md",
+      "source_location": "L131",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "spec_specs_005b_plan_checklist_companion_checklist_v0_5_workspace_desktop_file_manager_sempurna_windows_explorer_vs_code_browser_lebih_baik_tidak_ngelag",
+      "target": "spec_specs_005b_plan_checklist_3b_browser_inside_desktop_sempurna_br_001_006_chrome_like",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "spec/specs/005b.plan-checklist.md",
+      "source_location": "L150",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "spec_specs_005b_plan_checklist_companion_checklist_v0_5_workspace_desktop_file_manager_sempurna_windows_explorer_vs_code_browser_lebih_baik_tidak_ngelag",
+      "target": "spec_specs_005b_plan_checklist_4_dod_quality_gates_sempurna_lengkap_lebih_baik_tidak_ngelag",
       "confidence_score": 1.0
     },
     {
@@ -29604,41 +30247,162 @@
       "source_location": "L40",
       "weight": 1.0,
       "_origin": "ast",
-      "source": "spec_specs_005b_plan_checklist_companion_checklist_v0_5_workspace_desktop_file_manager_windows_explorer_vs_code_browser",
-      "target": "spec_specs_005b_plan_checklist_3_file_manager_windows_like_fm_001_015",
+      "source": "spec_specs_005b_plan_checklist_1_workspace_system_sempurna_ws_001_008",
+      "target": "spec_specs_005b_plan_checklist_green",
       "confidence_score": 1.0
     },
     {
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "spec/specs/005b.plan-checklist.md",
-      "source_location": "L55",
+      "source_location": "L35",
       "weight": 1.0,
       "_origin": "ast",
-      "source": "spec_specs_005b_plan_checklist_companion_checklist_v0_5_workspace_desktop_file_manager_windows_explorer_vs_code_browser",
-      "target": "spec_specs_005b_plan_checklist_3a_editor_vs_code_like_ed_001_006",
+      "source": "spec_specs_005b_plan_checklist_1_workspace_system_sempurna_ws_001_008",
+      "target": "spec_specs_005b_plan_checklist_impl",
       "confidence_score": 1.0
     },
     {
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "spec/specs/005b.plan-checklist.md",
-      "source_location": "L61",
+      "source_location": "L25",
       "weight": 1.0,
       "_origin": "ast",
-      "source": "spec_specs_005b_plan_checklist_companion_checklist_v0_5_workspace_desktop_file_manager_windows_explorer_vs_code_browser",
-      "target": "spec_specs_005b_plan_checklist_3b_browser_inside_desktop_br_001_004",
+      "source": "spec_specs_005b_plan_checklist_1_workspace_system_sempurna_ws_001_008",
+      "target": "spec_specs_005b_plan_checklist_red_tests_tests_workspace_tests_rs",
       "confidence_score": 1.0
     },
     {
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "spec/specs/005b.plan-checklist.md",
-      "source_location": "L67",
+      "source_location": "L64",
       "weight": 1.0,
       "_origin": "ast",
-      "source": "spec_specs_005b_plan_checklist_companion_checklist_v0_5_workspace_desktop_file_manager_windows_explorer_vs_code_browser",
-      "target": "spec_specs_005b_plan_checklist_4_dod_quality_gates",
+      "source": "spec_specs_005b_plan_checklist_2_desktop_system_sempurna_desk_001_008_lebih_baik_dari_windows",
+      "target": "spec_specs_005b_plan_checklist_green_64",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "spec/specs/005b.plan-checklist.md",
+      "source_location": "L57",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "spec_specs_005b_plan_checklist_2_desktop_system_sempurna_desk_001_008_lebih_baik_dari_windows",
+      "target": "spec_specs_005b_plan_checklist_impl_57",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "spec/specs/005b.plan-checklist.md",
+      "source_location": "L48",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "spec_specs_005b_plan_checklist_2_desktop_system_sempurna_desk_001_008_lebih_baik_dari_windows",
+      "target": "spec_specs_005b_plan_checklist_red_tests",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "spec/specs/005b.plan-checklist.md",
+      "source_location": "L100",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "spec_specs_005b_plan_checklist_3_file_manager_windows_like_sempurna_fm_001_018_recreation_lebih_baik",
+      "target": "spec_specs_005b_plan_checklist_green_100",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "spec/specs/005b.plan-checklist.md",
+      "source_location": "L95",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "spec_specs_005b_plan_checklist_3_file_manager_windows_like_sempurna_fm_001_018_recreation_lebih_baik",
+      "target": "spec_specs_005b_plan_checklist_impl_95",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "spec/specs/005b.plan-checklist.md",
+      "source_location": "L74",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "spec_specs_005b_plan_checklist_3_file_manager_windows_like_sempurna_fm_001_018_recreation_lebih_baik",
+      "target": "spec_specs_005b_plan_checklist_red_tests_tests_fs_tests_rs_web_src_apps_files_fileexplorerview_test_tsx",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "spec/specs/005b.plan-checklist.md",
+      "source_location": "L126",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "spec_specs_005b_plan_checklist_3a_editor_vs_code_like_sempurna_ed_001_010_lebih_baik_tidak_ngelag",
+      "target": "spec_specs_005b_plan_checklist_green_126",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "spec/specs/005b.plan-checklist.md",
+      "source_location": "L121",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "spec_specs_005b_plan_checklist_3a_editor_vs_code_like_sempurna_ed_001_010_lebih_baik_tidak_ngelag",
+      "target": "spec_specs_005b_plan_checklist_impl_121",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "spec/specs/005b.plan-checklist.md",
+      "source_location": "L108",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "spec_specs_005b_plan_checklist_3a_editor_vs_code_like_sempurna_ed_001_010_lebih_baik_tidak_ngelag",
+      "target": "spec_specs_005b_plan_checklist_red_tests_web_src_apps_editor_test_tsx",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "spec/specs/005b.plan-checklist.md",
+      "source_location": "L145",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "spec_specs_005b_plan_checklist_3b_browser_inside_desktop_sempurna_br_001_006_chrome_like",
+      "target": "spec_specs_005b_plan_checklist_green_145",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "spec/specs/005b.plan-checklist.md",
+      "source_location": "L141",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "spec_specs_005b_plan_checklist_3b_browser_inside_desktop_sempurna_br_001_006_chrome_like",
+      "target": "spec_specs_005b_plan_checklist_impl_141",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "spec/specs/005b.plan-checklist.md",
+      "source_location": "L133",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "spec_specs_005b_plan_checklist_3b_browser_inside_desktop_sempurna_br_001_006_chrome_like",
+      "target": "spec_specs_005b_plan_checklist_red_tests_web_src_apps_browser_test_tsx",
       "confidence_score": 1.0
     },
     {
@@ -31514,5 +32278,5 @@
       "source_file": ".github/workflows/ci.yml"
     }
   ],
-  "built_at_commit": "9e77d30eec878b595ea5b736bb1eb3b92163e0c0"
+  "built_at_commit": "70f1540d83026947bad274306d8c622ea6fadbf9"
 }
