@@ -24,6 +24,9 @@ export function TerminalView({ terminalId }: TerminalViewProps) {
       cursorBlink: true,
       fontFamily: TERMINAL_FONT_STACK,
       fontSize: 14,
+      // V051-004: term.unicode.register/activeVersion (dipakai Unicode11Addon)
+      // adalah proposed API — wajib true atau activate() melempar Error.
+      allowProposedApi: true,
       theme: {
         background: '#0f172a',
         foreground: '#f8fafc',

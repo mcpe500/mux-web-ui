@@ -15,7 +15,12 @@ interface TerminalLike {
   unicode: { activeVersion: string };
 }
 
-/** Wide-char/combining correctness (emoji, CJK punctuation in prompts). */
+/**
+ * Wide-char/combining correctness (emoji, CJK punctuation in prompts).
+ * WAJIB: Terminal dibuat dengan `allowProposedApi: true` — accessor
+ * `term.unicode` adalah proposed API di @xterm/xterm 5.x; tanpa itu
+ * loadAddon melempar Error saat activate() mengakses term.unicode.
+ */
 export function applyTerminalAddons(term: TerminalLike): void {
   term.loadAddon(new Unicode11Addon());
   term.unicode.activeVersion = '11';
