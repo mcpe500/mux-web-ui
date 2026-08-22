@@ -100,7 +100,10 @@ jobs:
             # "--fix-cortex-a53-843419 is only supported on AArch64". Drive the
             # real cross gcc + GNU ld instead.
             linker: aarch64-linux-gnu-gcc
-            rustflags: "-Clink-self-contained=-linker"
+            # Stable only allows y/n for this target; 'no' disables the bundled
+            # rust-lld default so the cross gcc drives GNU ld, which natively
+            # supports --fix-cortex-a53-843419 emitted by ring/aws-lc-sys.
+            rustflags: "-Clink-self-contained=no"
           - target: aarch64-linux-android
             android: true
     steps:
