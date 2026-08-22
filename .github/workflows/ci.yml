@@ -48,18 +48,19 @@ jobs:
       - name: Rust Cache
         uses: Swatinem/rust-cache@v2
 
-      # zstd-sys (C dep via cc-rs) needs the NDK clang wrappers on PATH;
-      # a bare `cargo check --target` fails with ToolNotFound without them.
-      # Use the runner-preinstalled NDK (ANDROID_NDK_ROOT) — downloading our
-      # own copy makes cargo-ndk panic on HOME vs ROOT mismatch.
-      - name: Install cargo-ndk
-        run: cargo install cargo-ndk --locked
-
+      # zstd-sys (C dep via cc-rs) needs an Android-capable clang; point cc
+      # and rustc straight at the runner-preinstalled NDK toolchain wrappers.
+      # (cargo-ndk dropped: it panics at startup with current stable cargo.)
       - name: Check Android ARM64 Build (preinstalled NDK)
         run: |
-          export ANDROID_NDK_HOME="${ANDROID_NDK_ROOT:-$(ls -d /usr/local/lib/android/sdk/ndk/* | head -1)}"
-          echo "Using NDK: $ANDROID_NDK_HOME"
-          cargo ndk -t arm64-v8a -p 24 check
+          NDK="${ANDROID_NDK_ROOT:-$(ls -d /usr/local/lib/android/sdk/ndk/* | head -1)}"
+          TOOLCHAIN="$NDK/toolchains/llvm/prebuilt/linux-x86_64/bin"
+          echo "Using NDK: $NDK"
+          export PATH="$TOOLCHAIN:$PATH"
+          export CC_aarch64_linux_android="$TOOLCHAIN/aarch64-linux-android24-clang"
+          export AR_aarch64_linux_android="$TOOLCHAIN/llvm-ar"
+          export CARGO_TARGET_AARCH64_LINUX_ANDROID_LINKER="$TOOLCHAIN/aarch64-linux-android24-clang"
+          cargo check --target aarch64-linux-android
 
   budget-check:
     name: Budget & Metric Verification
@@ -113,16 +114,19 @@ jobs:
         if: matrix.apt
         run: sudo apt-get update && sudo apt-get install -y ${{ matrix.apt }}
 
-      - name: Install cargo-ndk
-        if: matrix.android
-        run: cargo install cargo-ndk --locked
-
+      # cargo-ndk dropped (panics at startup with current stable cargo); wire
+      # cc + rustc directly to the runner-preinstalled NDK wrappers instead.
       - name: Build Release (Android ARM64, API 24, preinstalled NDK)
         if: matrix.android
         run: |
-          export ANDROID_NDK_HOME="${ANDROID_NDK_ROOT:-$(ls -d /usr/local/lib/android/sdk/ndk/* | head -1)}"
-          echo "Using NDK: $ANDROID_NDK_HOME"
-          cargo ndk -t arm64-v8a -p 24 build --release
+          NDK="${ANDROID_NDK_ROOT:-$(ls -d /usr/local/lib/android/sdk/ndk/* | head -1)}"
+          TOOLCHAIN="$NDK/toolchains/llvm/prebuilt/linux-x86_64/bin"
+          echo "Using NDK: $NDK"
+          export PATH="$TOOLCHAIN:$PATH"
+          export CC_aarch64_linux_android="$TOOLCHAIN/aarch64-linux-android24-clang"
+          export AR_aarch64_linux_android="$TOOLCHAIN/llvm-ar"
+          export CARGO_TARGET_AARCH64_LINUX_ANDROID_LINKER="$TOOLCHAIN/aarch64-linux-android24-clang"
+          cargo build --release --target aarch64-linux-android
 
       - name: Build Release
         if: ${{ !matrix.android }}
