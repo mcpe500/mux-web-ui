@@ -50,16 +50,16 @@ jobs:
 
       # zstd-sys (C dep via cc-rs) needs the NDK clang wrappers on PATH;
       # a bare `cargo check --target` fails with ToolNotFound without them.
-      - name: Install NDK r27 + cargo-ndk
-        run: |
-          wget -q https://dl.google.com/android/repository/android-ndk-r27-linux.zip
-          unzip -q android-ndk-r27-linux.zip
-          cargo install cargo-ndk --locked
+      # Use the runner-preinstalled NDK (ANDROID_NDK_ROOT) — downloading our
+      # own copy makes cargo-ndk panic on HOME vs ROOT mismatch.
+      - name: Install cargo-ndk
+        run: cargo install cargo-ndk --locked
 
-      - name: Check Android ARM64 Build (NDK toolchain)
-        env:
-          ANDROID_NDK_HOME: ${{ github.workspace }}/android-ndk-r27
-        run: cargo ndk -t arm64-v8a -p 24 check
+      - name: Check Android ARM64 Build (preinstalled NDK)
+        run: |
+          export ANDROID_NDK_HOME="${ANDROID_NDK_ROOT:-$(ls -d /usr/local/lib/android/sdk/ndk/* | head -1)}"
+          echo "Using NDK: $ANDROID_NDK_HOME"
+          cargo ndk -t arm64-v8a -p 24 check
 
   budget-check:
     name: Budget & Metric Verification
@@ -113,18 +113,16 @@ jobs:
         if: matrix.apt
         run: sudo apt-get update && sudo apt-get install -y ${{ matrix.apt }}
 
-      - name: Install NDK r27 + cargo-ndk
+      - name: Install cargo-ndk
+        if: matrix.android
+        run: cargo install cargo-ndk --locked
+
+      - name: Build Release (Android ARM64, API 24, preinstalled NDK)
         if: matrix.android
         run: |
-          wget -q https://dl.google.com/android/repository/android-ndk-r27-linux.zip
-          unzip -q android-ndk-r27-linux.zip
-          cargo install cargo-ndk --locked
-
-      - name: Build Release (Android ARM64, API 24)
-        if: matrix.android
-        env:
-          ANDROID_NDK_HOME: ${{ github.workspace }}/android-ndk-r27
-        run: cargo ndk -t arm64-v8a -p 24 build --release
+          export ANDROID_NDK_HOME="${ANDROID_NDK_ROOT:-$(ls -d /usr/local/lib/android/sdk/ndk/* | head -1)}"
+          echo "Using NDK: $ANDROID_NDK_HOME"
+          cargo ndk -t arm64-v8a -p 24 build --release
 
       - name: Build Release
         if: ${{ !matrix.android }}
@@ -245,6 +243,9 @@ jobs:
             exit 1
           fi
           ./scen3/mux-web --version | grep -q "0.2.0"
+          # Restore the valid checksum so later scenarios stay hermetic.
+          TARGET="x86_64-unknown-linux-gnu"
+          (cd "dist/v0.2.0" && sha256sum "mux-web-0.2.0-$TARGET" > "mux-web-0.2.0-$TARGET.sha256")
 
       - name: Scenario 4a — update.sh upgrades version (DIST-011)
         run: |
@@ -260,8 +261,11 @@ jobs:
           export MUX_WEB_BASE_URL="file://$PWD/dist"
           export MUX_WEB_API_URL="file://$PWD/dist/latest.json"
           export MUX_WEB_INSTALL_DIR="$PWD/scen4b"
-          export MUX_WEB_SMOKE_FAIL=1
+          # Hermetic install: never fall back to source (would mask the fixture).
+          export MUX_WEB_NO_FALLBACK=1
           bash install.sh --version 0.2.0 >/dev/null
+          unset MUX_WEB_NO_FALLBACK
+          export MUX_WEB_SMOKE_FAIL=1
           if bash update.sh >/dev/null 2>&1; then
             echo "FAIL: update should have failed (smoke injected)"
             exit 1
