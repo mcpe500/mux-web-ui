@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'preact/hooks';
 import { Terminal } from '@xterm/xterm';
 import { FitAddon } from '@xterm/addon-fit';
+import { TERMINAL_FONT_STACK, applyTerminalAddons } from './terminalConfig';
 import '@xterm/xterm/css/xterm.css';
 
 interface TerminalViewProps {
@@ -21,7 +22,7 @@ export function TerminalView({ terminalId }: TerminalViewProps) {
 
     const term = new Terminal({
       cursorBlink: true,
-      fontFamily: "'JetBrains Mono', 'Fira Code', monospace",
+      fontFamily: TERMINAL_FONT_STACK,
       fontSize: 14,
       theme: {
         background: '#0f172a',
@@ -35,6 +36,8 @@ export function TerminalView({ terminalId }: TerminalViewProps) {
     term.loadAddon(fitAddon);
 
     term.open(containerRef.current);
+    // V051-004: unicode 11 width tables so prompt glyphs/emoji measure right.
+    applyTerminalAddons(term);
     if (containerRef.current.clientWidth > 0 && containerRef.current.clientHeight > 0) {
       try {
         fitAddon.fit();

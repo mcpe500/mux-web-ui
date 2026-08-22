@@ -1,3 +1,18 @@
+/* V051-004 (spec 007): Nerd Font subset for terminal prompt glyphs.
+   Source: JetBrainsMonoNerdFontMono-Regular.ttf (nerd-fonts v3.2.1)
+   sha256(source ttf): 276cf05fa44937c906a34ad5f7473cddbc220dcd9f7d335afa7511a0c603f0f9
+   sha256(subset woff2): cbe7f107b987fd13e811a241945f7709ef1ba0d72721ec7978527560a8899df1
+   Ranges: powerline E0A0-E0D7, FA-ext E5FA-E6B3, octicons F400-F42B,
+           box drawing 2500-259F, misc symbols 2600-26FF, dingbats 2700-27BF. */
+@font-face {
+  font-family: 'JetBrainsMono Nerd Font Mono';
+  src: url('/fonts/JetBrainsMonoNF-Mono-subset.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+  unicode-range: U+E0A0-E0D7, U+E5FA-E6B3, U+F400-F42B, U+2500-259F, U+2600-26FF, U+2700-27BF;
+}
+
 :root {
   --bg-dark: #0f172a;
   --bg-surface: #1e293b;
