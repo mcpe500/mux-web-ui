@@ -48,8 +48,18 @@ jobs:
       - name: Rust Cache
         uses: Swatinem/rust-cache@v2
 
-      - name: Check Android ARM64 Build
-        run: cargo check --target aarch64-linux-android
+      # zstd-sys (C dep via cc-rs) needs the NDK clang wrappers on PATH;
+      # a bare `cargo check --target` fails with ToolNotFound without them.
+      - name: Install NDK r27 + cargo-ndk
+        run: |
+          wget -q https://dl.google.com/android/repository/android-ndk-r27-linux.zip
+          unzip -q android-ndk-r27-linux.zip
+          cargo install cargo-ndk --locked
+
+      - name: Check Android ARM64 Build (NDK toolchain)
+        env:
+          ANDROID_NDK_HOME: ${{ github.workspace }}/android-ndk-r27
+        run: cargo ndk -t arm64-v8a -p 24 check
 
   budget-check:
     name: Budget & Metric Verification
@@ -196,7 +206,9 @@ jobs:
       - name: Prepare staging (two versions)
         run: |
           set -e
-          VERSION="0.3.0"
+          # Derive from Cargo.toml so the fixture never drifts from the app version.
+          VERSION="$(grep -m1 '^version' Cargo.toml | cut -d'"' -f2)"
+          echo "STAGED_VERSION=$VERSION" >> "$GITHUB_ENV"
           TARGET="x86_64-unknown-linux-gnu"
           mkdir -p "dist/v$VERSION" "dist/v0.2.0"
           cp target/release/mux-web "dist/v$VERSION/mux-web-$VERSION-$TARGET"
@@ -204,7 +216,7 @@ jobs:
           printf '#!/bin/sh\necho "mux-web 0.2.0"\n' > "dist/v0.2.0/mux-web-0.2.0-$TARGET"
           chmod +x "dist/v0.2.0/mux-web-0.2.0-$TARGET"
           (cd "dist/v0.2.0" && sha256sum "mux-web-0.2.0-$TARGET" > "mux-web-0.2.0-$TARGET.sha256")
-          printf '{"tag_name":"v0.3.0"}' > "dist/latest.json"
+          printf '{"tag_name":"v%s"}' "$VERSION" > "dist/latest.json"
 
       - name: Scenario 1 — clean install, latest via staging (DIST-007)
         run: |
@@ -212,7 +224,7 @@ jobs:
           export MUX_WEB_API_URL="file://$PWD/dist/latest.json"
           export MUX_WEB_INSTALL_DIR="$PWD/scen1"
           bash install.sh >/dev/null
-          ./scen1/mux-web --version | grep -q "0.3.0"
+          ./scen1/mux-web --version | grep -q "$STAGED_VERSION"
 
       - name: Scenario 2 — pinned version (DIST-008)
         run: |
@@ -241,7 +253,7 @@ jobs:
           export MUX_WEB_INSTALL_DIR="$PWD/scen4"
           bash install.sh --version 0.2.0 >/dev/null
           bash update.sh >/dev/null
-          ./scen4/mux-web --version | grep -q "0.3.0"
+          ./scen4/mux-web --version | grep -q "$STAGED_VERSION"
 
       - name: Scenario 4b — smoke failure rolls back to .bak (DIST-012)
         run: |
@@ -263,7 +275,7 @@ jobs:
           export MUX_WEB_INSTALL_DIR="$PWD/scen4c"
           bash install.sh --version 0.2.0 >/dev/null
           bash update.sh >/dev/null
-          ./scen4c/mux-web --version | grep -q "0.3.0"
+          ./scen4c/mux-web --version | grep -q "$STAGED_VERSION"
           bash update.sh --rollback >/dev/null
           ./scen4c/mux-web --version | grep -q "0.2.0"
           bash update.sh --rollback >/dev/null
