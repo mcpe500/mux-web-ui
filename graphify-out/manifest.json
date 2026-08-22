@@ -55,14 +55,14 @@
     "semantic_hash": ""
   },
   "src/session.rs": {
-    "mtime": 1787251151.8505914,
-    "ast_hash": "05a8e890d1ceccfa943024f678f29a85",
+    "mtime": 1787386730.641913,
+    "ast_hash": "1ea120c78f8e771be378841a56d0a855",
     "semantic_hash": ""
   },
   "tests/boot_tests.rs": {
-    "mtime": 1786119396.667131,
-    "ast_hash": "f278cc82b184015bf7f6609b97e4653f",
-    "semantic_hash": "f278cc82b184015bf7f6609b97e4653f"
+    "mtime": 1787386603.3043048,
+    "ast_hash": "5714eddb67c603d4e40d308d073415ec",
+    "semantic_hash": ""
   },
   "tests/editor_tests.rs": {
     "mtime": 1787252055.7289708,
@@ -85,8 +85,8 @@
     "semantic_hash": ""
   },
   "web/package.json": {
-    "mtime": 1787135412.734218,
-    "ast_hash": "a804724e883e2e16625fd9afd28f56e7",
+    "mtime": 1787387685.4192016,
+    "ast_hash": "eeb7ea6b7bb054a7e61bb1be77bb0ca9",
     "semantic_hash": ""
   },
   "web/src/app.tsx": {
@@ -95,8 +95,8 @@
     "semantic_hash": "b200590443cb590d2d4911b46bba4b1d"
   },
   "web/src/apps/editor/TextEditorView.tsx": {
-    "mtime": 1787326281.413227,
-    "ast_hash": "7bb91de72cf7d9994e5a54132d3cdb79",
+    "mtime": 1787387461.9950154,
+    "ast_hash": "584b41e7d9450e8d47a472fc9d38cfea",
     "semantic_hash": ""
   },
   "web/src/apps/files/FileExplorerView.tsx": {
@@ -110,8 +110,8 @@
     "semantic_hash": "a76a3bd0b96f6b399ee62dfafe845f73"
   },
   "web/src/apps/terminal/TerminalView.tsx": {
-    "mtime": 1787119132.9056435,
-    "ast_hash": "a45da8a360c554e8757c6a739867b74b",
+    "mtime": 1787388048.9571912,
+    "ast_hash": "19036b15294231eec4b01777b842efb3",
     "semantic_hash": ""
   },
   "web/src/desktop/DesktopCanvas.tsx": {
@@ -165,8 +165,8 @@
     "semantic_hash": "f8be80d7c0632a6c791e45f83c0a7c53"
   },
   "tests/traceability.md": {
-    "mtime": 1787326454.4879324,
-    "ast_hash": "56cfb5b66f0c34fb807e3b46c19e0099",
+    "mtime": 1787388354.5663562,
+    "ast_hash": "ccc4853de9d0c266841d1edd61b4b148",
     "semantic_hash": ""
   },
   "web/index.html": {
@@ -200,8 +200,8 @@
     "semantic_hash": ""
   },
   "tests/session_tests.rs": {
-    "mtime": 1787326400.2637856,
-    "ast_hash": "b3b0c8c0bbfd3c0e6aa398c2676dd837",
+    "mtime": 1787386855.6260464,
+    "ast_hash": "022992cbfc8a04a7473df30f4371de75",
     "semantic_hash": ""
   },
   "spec/specs/001b.plan-checklist.md": {
@@ -375,13 +375,13 @@
     "semantic_hash": ""
   },
   "web/src/apps/editor/editorLogic.test.ts": {
-    "mtime": 1787325732.7559776,
-    "ast_hash": "3cec407944c883e2c364399f7b5650c5",
+    "mtime": 1787387562.9242084,
+    "ast_hash": "1fba6f0003679d5275bc9946e9353746",
     "semantic_hash": ""
   },
   "web/src/apps/editor/editorLogic.ts": {
-    "mtime": 1787325770.7061214,
-    "ast_hash": "f7a19b7077870ee1bf42043600473bf1",
+    "mtime": 1787387021.9889748,
+    "ast_hash": "e9e19bf41683566549b85597799bd407",
     "semantic_hash": ""
   },
   "web/src/apps/files/FolderPicker.tsx": {
@@ -397,6 +397,31 @@
   "web/src/apps/files/pickerLogic.ts": {
     "mtime": 1787325800.7284515,
     "ast_hash": "6e194b9ca36e6cd93b8d080589bacde8",
+    "semantic_hash": ""
+  },
+  "spec/specs/007.plan-v0.5.1-terminal-cwd-hotfix.md": {
+    "mtime": 1787388377.5762348,
+    "ast_hash": "04f15cc4b3586a5d5c008598284e85b0",
+    "semantic_hash": ""
+  },
+  "spec/specs/007b.plan-checklist.md": {
+    "mtime": 1787388828.8698955,
+    "ast_hash": "0b7f3fe97c42cc04c8687fd924971c15",
+    "semantic_hash": ""
+  },
+  "web/src/apps/terminal/terminalConfig.test.ts": {
+    "mtime": 1787388269.9466348,
+    "ast_hash": "448ed298a6b596b9bf801b3cc3b2f8a2",
+    "semantic_hash": ""
+  },
+  "web/src/apps/terminal/terminalConfig.ts": {
+    "mtime": 1787387920.039406,
+    "ast_hash": "1a8681db717fd33e8d62ad8b05cdd1a7",
+    "semantic_hash": ""
+  },
+  "spec/handoff/004.v051-hotfix.md": {
+    "mtime": 1787388894.0817502,
+    "ast_hash": "19ff2038578974c787ddf32e27325f35",
     "semantic_hash": ""
   }
 }
