@@ -184,3 +184,9 @@
 | EDT-008 Menu File Open File/Open Folder + Ctrl+O and Ctrl+K O chord | EDT-008 | Frontend Component | Portable | Passed |
 | EDT-009 Terminal follows folder change with Replace/Keep dialog | EDT-009 | Integration | Portable | Passed |
 | EDT-010 Status bar folder active + git branch badge poll 30s | EDT-010 | Frontend Component | Portable | Passed |
+| V051-001 Create response exposes server-authoritative work_dir | V051-001 | Integration | Portable | Passed |
+| V051-002 Terminal header label from server work_dir with legacy fallback | V051-002 | Frontend Unit | Portable | Passed |
+| V051-003 Boot version gate vs /health + banner/chip | V051-003 | Integration / Frontend Unit | Portable | Passed |
+| V051-004 Prompt rendering: Nerd Font subset + unicode11 addon | V051-004 | Frontend Unit / Visual | Portable | Passed |
+| V051-005 Version bump 0.5.1 verifiable via health.version | V051-005 | Integration / Release | Portable | Passed |
+| V051-006 Regression gates green; git status works from editor cwd | V051-006 | Integration / Security | Portable | Passed |

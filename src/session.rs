@@ -26,6 +26,11 @@ pub struct SessionMetadata {
     pub rows: u16,
     pub state: SessionState,
     pub pid: u32,
+    /// V051-001 (spec 007): the resolved working directory this session was
+    /// spawned in, so clients can display the REAL cwd instead of guessing.
+    /// Absent when no explicit cwd applies (legacy wire format preserved).
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub work_dir: Option<PathBuf>,
 }
 
 #[derive(Debug, Clone)]
@@ -169,7 +174,7 @@ impl SessionRegistry {
         let (exit_tx, mut exit_rx) = mpsc::channel::<i32>(4);
 
         let (cols, rows) = crate::pty::clamp_dimensions(cols, rows);
-        let pty = PtySession::new(cols, rows, work_dir, shell, output_tx, exit_tx)
+        let pty = PtySession::new(cols, rows, work_dir.clone(), shell, output_tx, exit_tx)
             .map_err(SessionError::SpawnFailed)?;
 
         let metadata = SessionMetadata {
@@ -179,6 +184,7 @@ impl SessionRegistry {
             rows,
             state: SessionState::Running,
             pid: pty.pid(),
+            work_dir,
         };
 
         let (live_tx, _) = broadcast::channel::<Vec<u8>>(128);

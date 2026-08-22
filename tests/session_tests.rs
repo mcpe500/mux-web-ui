@@ -496,3 +496,143 @@ async fn test_edt_002_cwd_nul_400() {
         .unwrap();
     assert_eq!(resp.status(), 201, "legacy payload must stay compatible");
 }
+
+// ── V051-001: server-authoritative work_dir in create response (spec 007 §4) ──
+
+/// RED→GREEN: create response must expose the resolved work_dir so the UI can
+/// display the REAL cwd instead of guessing from client-side state (RC-02).
+#[tokio::test]
+async fn test_v051_001_work_dir_in_create_resp() {
+    let temp = tempfile::tempdir().expect("tempdir");
+    let sub = temp.path().join("sub");
+    std::fs::create_dir_all(&sub).expect("create sub");
+    let roots = vec![("home".to_string(), temp.path().to_path_buf())];
+    let server = start_server(roots).await;
+
+    let resp = server
+        .client
+        .post(server.url("/api/v1/terminals"))
+        .json(&serde_json::json!({"cols": 80, "rows": 24, "cwd_root": "home", "cwd_path": "/sub"}))
+        .send()
+        .await
+        .unwrap();
+    assert_eq!(resp.status(), 201);
+    let meta: serde_json::Value = resp.json().await.unwrap();
+    let wd = meta["work_dir"]
+        .as_str()
+        .expect("create response must expose work_dir (spec 007 V051-001)");
+    assert!(
+        wd.ends_with("/sub"),
+        "work_dir must be the resolved opened folder; got {wd:?}"
+    );
+    let id = meta["id"].as_str().unwrap().to_string();
+    let _ = server
+        .client
+        .delete(server.url(&format!("/api/v1/terminals/{id}")))
+        .send()
+        .await;
+}
+
+/// Legacy payload without cwd_* falls back to config.work_dir. The test harness
+/// leaves config.work_dir = None, so the field must be ABSENT — old wire format
+/// preserved exactly (additive-only change).
+#[tokio::test]
+async fn test_v051_001_work_dir_empty_is_config() {
+    let server = start_health_server().await;
+    let resp = server
+        .client
+        .post(server.url("/api/v1/terminals"))
+        .json(&serde_json::json!({"cols": 80, "rows": 24}))
+        .send()
+        .await
+        .unwrap();
+    assert_eq!(resp.status(), 201);
+    let meta: serde_json::Value = resp.json().await.unwrap();
+    assert!(
+        meta.get("work_dir").is_none(),
+        "without cwd_* and with config.work_dir=None the response must omit work_dir; got {:?}",
+        meta.get("work_dir")
+    );
+    let id = meta["id"].as_str().unwrap().to_string();
+    let _ = server
+        .client
+        .delete(server.url(&format!("/api/v1/terminals/{id}")))
+        .send()
+        .await;
+}
+
+/// Root-level cwd (path "") resolves to the root itself and is reported as-is.
+#[tokio::test]
+async fn test_v051_001_work_dir_root_is_reported() {
+    let temp = tempfile::tempdir().expect("tempdir");
+    let roots = vec![("home".to_string(), temp.path().to_path_buf())];
+    let server = start_server(roots).await;
+
+    let resp = server
+        .client
+        .post(server.url("/api/v1/terminals"))
+        .json(&serde_json::json!({"cols": 80, "rows": 24, "cwd_root": "home", "cwd_path": ""}))
+        .send()
+        .await
+        .unwrap();
+    assert_eq!(resp.status(), 201);
+    let meta: serde_json::Value = resp.json().await.unwrap();
+    let wd = meta["work_dir"]
+        .as_str()
+        .expect("root cwd must report work_dir");
+    let expected = temp.path().canonicalize().expect("canonicalize temp root");
+    assert_eq!(
+        std::path::Path::new(wd),
+        expected.as_path(),
+        "root-level cwd must report the canonicalized root"
+    );
+    let id = meta["id"].as_str().unwrap().to_string();
+    let _ = server
+        .client
+        .delete(server.url(&format!("/api/v1/terminals/{id}")))
+        .send()
+        .await;
+}
+
+/// Traversal rejection body must NOT contain work_dir and no session is created.
+#[tokio::test]
+async fn test_v051_001_traversal_no_work_dir() {
+    let server = start_health_server().await;
+    let before: serde_json::Value = server
+        .client
+        .get(server.url("/api/v1/terminals"))
+        .send()
+        .await
+        .unwrap()
+        .json()
+        .await
+        .unwrap();
+    let before_count = before["sessions"].as_array().map(|a| a.len()).unwrap_or(0);
+
+    let resp = server
+        .client
+        .post(server.url("/api/v1/terminals"))
+        .json(&serde_json::json!({"cols": 80, "rows": 24, "cwd_root": "home", "cwd_path": "../.."}))
+        .send()
+        .await
+        .unwrap();
+    assert_eq!(resp.status(), 400);
+    let body: serde_json::Value = resp.json().await.unwrap();
+    assert_eq!(body["error"]["code"], "PATH_TRAVERSAL");
+    assert!(
+        body.get("work_dir").is_none(),
+        "error body must not leak work_dir"
+    );
+
+    let after: serde_json::Value = server
+        .client
+        .get(server.url("/api/v1/terminals"))
+        .send()
+        .await
+        .unwrap()
+        .json()
+        .await
+        .unwrap();
+    let after_count = after["sessions"].as_array().map(|a| a.len()).unwrap_or(0);
+    assert_eq!(before_count, after_count);
+}

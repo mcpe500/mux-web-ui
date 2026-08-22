@@ -5,6 +5,8 @@ import {
   type EditorWS,
   clampRatio,
   cwdPayload,
+  displayWorkDir,
+  gateState,
   loadPersistedWorkspace,
   nextTerminalAction,
   parseGitBranch,
@@ -76,6 +78,12 @@ export function TextEditorView({ rootId: propRootId, filePath: propFilePath, ini
   const [termId, setTermId] = useState<string | null>(null);
   const [splitRatio, setSplitRatio] = useState(0.6);
   const [spawnErr, setSpawnErr] = useState<string | null>(null);
+  // V051-002: cwd confirmed by the server in the create response (null = legacy)
+  const [terminalWorkDir, setTerminalWorkDir] = useState<string | null>(null);
+  // V051-003: boot-time health gate (undefined = pending, null = no version field)
+  const [serverVersion, setServerVersion] = useState<string | null | undefined>(undefined);
+  const [healthFailed, setHealthFailed] = useState(false);
+  const [gateDismissed, setGateDismissed] = useState(false);
   const splitRef = useRef<HTMLDivElement>(null);
   const dragRaf = useRef<number | null>(null);
 
@@ -101,6 +109,23 @@ export function TextEditorView({ rootId: propRootId, filePath: propFilePath, ini
         }
       })
       .catch(err => console.error("Failed to load roots", err));
+  }, []);
+
+  // V051-003: boot-time version gate — detect an outdated backend loudly
+  // instead of letting the cwd feature look broken (RC-01/RC-03).
+  useEffect(() => {
+    let cancelled = false;
+    fetch('/api/v1/health')
+      .then(res => (res.ok ? res.json() : Promise.reject(new Error(String(res.status)))))
+      .then((body: { version?: string }) => {
+        if (!cancelled) setServerVersion(typeof body.version === 'string' ? body.version : null);
+      })
+      .catch(() => {
+        if (!cancelled) setHealthFailed(true);
+      });
+    return () => {
+      cancelled = true;
+    };
   }, []);
 
   // Load initial file if provided
@@ -168,6 +193,7 @@ export function TextEditorView({ rootId: propRootId, filePath: propFilePath, ini
   const killTerminal = useCallback(() => {
     const id = termId;
     setTermId(null);
+    setTerminalWorkDir(null);
     setShowTerminal(false);
     if (id) {
       fetch(`/api/v1/terminals/${id}`, { method: 'DELETE' }).catch(() => {});
@@ -193,6 +219,8 @@ export function TextEditorView({ rootId: propRootId, filePath: propFilePath, ini
         if (!meta) return;
         setSpawnErr(null);
         setTermId(meta.id as string);
+        // V051-002: remember the server-confirmed cwd (null on legacy backend)
+        setTerminalWorkDir(typeof meta.work_dir === 'string' && meta.work_dir ? meta.work_dir : null);
         setShowTerminal(true);
       })
       .catch(() => setSpawnErr('Spawn failed'));
@@ -418,6 +446,10 @@ export function TextEditorView({ rootId: propRootId, filePath: propFilePath, ini
 
   const selectedRootObj = roots.find(r => r.id === ws.rootId);
   const treeBase = ws.basePath || '/';
+
+  // V051-002/003: server-confirmed cwd label + boot version gate
+  const wdLabel = displayWorkDir(terminalWorkDir, ws);
+  const gate = gateState(serverVersion, healthFailed, gateDismissed);
 
   // Render tree recursively
   const renderTree = (dirPath: string, depth: number) => {
@@ -645,6 +677,28 @@ export function TextEditorView({ rootId: propRootId, filePath: propFilePath, ini
 
         {/* Workspace Split Area: editor on top, integrated terminal below */}
         <div ref={splitRef} style={{ flex: 1, display: 'flex', flexDirection: 'column', overflow: 'hidden', minHeight: 0 }}>
+          {/* V051-003: red gate banner when the backend is older than the frontend expects */}
+          {gate.banner === 'red' && (
+            <div
+              data-testid="version-gate-banner"
+              role="alert"
+              style={{ display: 'flex', alignItems: 'center', gap: '8px', padding: '5px 12px', background: 'rgba(239,68,68,0.18)', borderBottom: '1px solid rgba(239,68,68,0.45)', color: '#fecaca', fontSize: '12px', flexShrink: 0 }}
+            >
+              <span>⚠️ Server v{serverVersion} — fitur cwd terminal butuh ≥ v0.5.1. Jalankan `./update.sh` / reinstall.</span>
+              <button onClick={() => setGateDismissed(true)} title="Dismiss" style={{ marginLeft: 'auto', background: 'transparent', border: 'none', color: '#fecaca', cursor: 'pointer', fontSize: '12px' }}>✕</button>
+            </div>
+          )}
+          {/* V051-003: yellow hint when health answered but has no version field */}
+          {gate.banner === 'yellow' && (
+            <div
+              data-testid="version-gate-banner"
+              role="alert"
+              style={{ display: 'flex', alignItems: 'center', gap: '8px', padding: '5px 12px', background: 'rgba(234,179,8,0.14)', borderBottom: '1px solid rgba(234,179,8,0.4)', color: '#fde68a', fontSize: '12px', flexShrink: 0 }}
+            >
+              <span>⚠️ Server tidak melaporkan versi — kemungkinan backend lama; cwd terminal mungkin diabaikan.</span>
+              <button onClick={() => setGateDismissed(true)} title="Dismiss" style={{ marginLeft: 'auto', background: 'transparent', border: 'none', color: '#fde68a', cursor: 'pointer', fontSize: '12px' }}>✕</button>
+            </div>
+          )}
           {/* Editor / empty state */}
           <div style={{ height: showTerminal ? `${splitRatio * 100}%` : '100%', display: 'flex', flexDirection: 'column', overflow: 'hidden' }}>
             {activeTab ? (
@@ -716,8 +770,18 @@ export function TextEditorView({ rootId: propRootId, filePath: propFilePath, ini
                 title="Drag to resize"
               />
               <div style={{ flex: 1, minHeight: '60px', display: 'flex', flexDirection: 'column', background: '#0f172a' }}>
+                {/* V051-002: legacy backend did not confirm a cwd — never fake it */}
+                {termId && wdLabel.legacy && (
+                  <div
+                    data-testid="cwd-legacy-banner"
+                    role="alert"
+                    style={{ padding: '3px 10px', background: 'rgba(234,179,8,0.15)', borderBottom: '1px solid rgba(234,179,8,0.4)', color: '#fde68a', fontSize: '11px', flexShrink: 0 }}
+                  >
+                    ⚠️ Server lama tidak mengonfirmasi cwd — label di bawah tebakan klien. Jalankan update.sh ke ≥0.5.1.
+                  </div>
+                )}
                 <div style={{ display: 'flex', alignItems: 'center', gap: '8px', padding: '3px 8px', background: '#1e293b', borderBottom: '1px solid rgba(255,255,255,0.06)', fontSize: '11px', color: '#94a3b8', flexShrink: 0 }}>
-                  <span>💻 bash — {ws.rootId}:{ws.basePath || '/'}</span>
+                  <span title={wdLabel.title}>💻 bash — {wdLabel.label}</span>
                   {spawnErr && <span style={{ color: '#fca5a5' }}>⚠️ {spawnErr}</span>}
                   <button onClick={restartTerminal} title="Restart in the opened folder" style={{ marginLeft: 'auto', padding: '2px 8px', background: '#334155', color: 'white', border: 'none', borderRadius: '3px', cursor: 'pointer' }}>↻ Restart</button>
                   <button onClick={() => setShowTerminal(false)} title="Hide (Ctrl+`)" style={{ padding: '2px 8px', background: '#334155', color: 'white', border: 'none', borderRadius: '3px', cursor: 'pointer' }}>✕ Hide</button>
@@ -762,6 +826,20 @@ export function TextEditorView({ rootId: propRootId, filePath: propFilePath, ini
                 ⎇ {gitBranch}
               </span>
             )}
+            {/* V051-003: server version chip — green ≥0.5.1, red stale, yellow unknown */}
+            <span
+              data-testid="version-chip"
+              title={`Server ${serverVersion ? `v${serverVersion}` : 'version unknown'} (min v0.5.1)`}
+              style={{
+                padding: '0 6px',
+                borderRadius: '8px',
+                fontSize: '11px',
+                background: gate.chip === 'ok' ? 'rgba(16,185,129,0.18)' : gate.chip === 'bad' ? 'rgba(239,68,68,0.22)' : 'rgba(234,179,8,0.18)',
+                color: gate.chip === 'ok' ? '#6ee7b7' : gate.chip === 'bad' ? '#fca5a5' : '#fde68a',
+              }}
+            >
+              {serverVersion ? `v${serverVersion}` : 'v?'}
+            </span>
           </div>
         </div>
 

@@ -6,6 +6,10 @@ import {
   spawnErrorMessage,
   safeLoadWorkspace,
   parseGitBranch,
+  displayWorkDir,
+  isVersionAtLeast,
+  gateState,
+  MIN_SERVER_VERSION,
 } from './editorLogic';
 
 // EDT-001: toggle never duplicates the PTY session — 'spawn' is only ever
@@ -111,5 +115,97 @@ describe('test_edt_010_statusbar_branch', () => {
     expect(parseGitBranch('')).toBeNull();
     expect(parseGitBranch('1 M file.txt')).toBeNull();
     expect(parseGitBranch('# branch.head (detached)')).toBe('detached');
+  });
+});
+
+// ── V051-002: header label uses the server-authoritative work_dir (spec 007) ──
+
+describe('V051-002 displayWorkDir', () => {
+  it('prefers the server work_dir: basename label + absolute title', () => {
+    const out = displayWorkDir(
+      '/data/data/com.termux/files/home/printing-web-app',
+      { rootId: 'home', basePath: '/printing-web-app' },
+    );
+    expect(out).not.toBeNull();
+    expect(out!.label).toBe('printing-web-app');
+    expect(out!.title).toBe('/data/data/com.termux/files/home/printing-web-app');
+    expect(out!.legacy).toBe(false);
+  });
+
+  it('falls back to the client guess when the server omits work_dir (legacy)', () => {
+    const out = displayWorkDir(undefined, { rootId: 'home', basePath: '/printing-web-app' });
+    expect(out).not.toBeNull();
+    expect(out!.label).toBe('home:/printing-web-app');
+    expect(out!.title).toBe('');
+    expect(out!.legacy).toBe(true);
+  });
+
+  it('treats empty-string work_dir as absent', () => {
+    const out = displayWorkDir('', { rootId: 'home', basePath: '' });
+    expect(out!.label).toBe('home:/');
+    expect(out!.legacy).toBe(true);
+  });
+
+  it('handles trailing slash and nested depth', () => {
+    const deep = displayWorkDir('/home/ivan/work/app/sub/', { rootId: 'home', basePath: '/x' });
+    expect(deep!.label).toBe('sub');
+    expect(deep!.title).toBe('/home/ivan/work/app/sub');
+  });
+});
+
+// ── V051-003: version gate against GET /api/v1/health ──
+
+describe('V051-003 MIN_SERVER_VERSION', () => {
+  it('is pinned to the hotfix version (spec 007)', () => {
+    expect(MIN_SERVER_VERSION).toBe('0.5.1');
+  });
+});
+
+describe('V051-003 isVersionAtLeast', () => {
+  it.each([
+    ['0.5.1', '0.5.1', true],
+    ['0.6.0', '0.5.1', true],
+    ['1.0', '0.5.1', true],
+    ['0.3.0', '0.5.1', false],
+    ['0.4.9', '0.5.1', false],
+  ])('%s >= %s → %p', (v, min, want) => {
+    expect(isVersionAtLeast(v, min)).toBe(want);
+  });
+
+  it('garbage versions are stale-safe (false)', () => {
+    expect(isVersionAtLeast('', '0.5.1')).toBe(false);
+    expect(isVersionAtLeast('abc', '0.5.1')).toBe(false);
+    expect(isVersionAtLeast('0.x.y', '0.5.1')).toBe(false);
+  });
+});
+
+describe('V051-003 gateState', () => {
+  it('ok when server version meets the minimum', () => {
+    expect(gateState('0.5.1', false, false)).toEqual({
+      level: 'ok',
+      chip: 'ok',
+      banner: null,
+    });
+  });
+
+  it('stale → red banner + red chip', () => {
+    const g = gateState('0.3.0', false, false);
+    expect(g.level).toBe('stale');
+    expect(g.banner).toBe('red');
+    expect(g.chip).toBe('bad');
+  });
+
+  it('legacy-server hint when health has no version field', () => {
+    const g = gateState(null, false, false);
+    expect(g.level).toBe('unknown-version');
+    expect(g.banner).toBe('yellow');
+    expect(g.chip).toBe('warn');
+  });
+
+  it('health fetch failure degrades to warning chip only (no banner)', () => {
+    const g = gateState(undefined, true, false);
+    expect(g.level).toBe('unreachable');
+    expect(g.banner).toBeNull();
+    expect(g.chip).toBe('warn');
   });
 });

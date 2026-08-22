@@ -93,3 +93,84 @@ export function parseGitBranch(raw: string | null | undefined): string | null {
   if (!m) return null;
   return m[1] === '(detached)' ? 'detached' : m[1];
 }
+
+// ── V051-002: terminal header label from the server-authoritative work_dir ──
+// RC-02: the create response now carries the REAL working directory; the UI
+// must never claim a cwd the server did not confirm (issue: header said
+// home:/printing-web-app while pwd showed $HOME).
+
+export interface WorkDirLabel {
+  /** Short label for the terminal header bar. */
+  label: string;
+  /** Absolute path for the hover title; empty when unconfirmed. */
+  title: string;
+  /** True when the server did NOT confirm a cwd (legacy backend). */
+  legacy: boolean;
+}
+
+export function displayWorkDir(
+  workDir: string | null | undefined,
+  ws: EditorWS,
+): WorkDirLabel {
+  if (typeof workDir === 'string' && workDir.trim() !== '') {
+    const clean = workDir.replace(/\/+$/, '');
+    const base = clean.split('/').pop() || clean;
+    return { label: base, title: clean, legacy: false };
+  }
+  return { label: `${ws.rootId}:${ws.basePath || '/'}`, title: '', legacy: true };
+}
+
+// ── V051-003: boot-time version gate against GET /api/v1/health ──
+// RC-01/RC-03: an outdated backend silently ignores cwd_* and the bug looks
+// like a broken feature. Detect it loudly instead.
+
+export const MIN_SERVER_VERSION = '0.5.1';
+
+function parseSemver(v: string): number[] | null {
+  if (!v) return null;
+  const parts = v.trim().split('.');
+  if (parts.length === 0 || !parts.every(p => /^\d+$/.test(p))) return null;
+  return parts.map(p => parseInt(p, 10));
+}
+
+export function isVersionAtLeast(version: string, min: string): boolean {
+  const v = parseSemver(version);
+  const m = parseSemver(min);
+  if (!v || !m) return false;
+  const len = Math.max(v.length, m.length);
+  for (let i = 0; i < len; i++) {
+    const a = v[i] ?? 0;
+    const b = m[i] ?? 0;
+    if (a !== b) return a > b;
+  }
+  return true;
+}
+
+export interface GateState {
+  level: 'ok' | 'stale' | 'unknown-version' | 'unreachable' | 'pending';
+  chip: 'ok' | 'warn' | 'bad';
+  banner: 'red' | 'yellow' | null;
+}
+
+/**
+ * Decide banner/chip from the health endpoint result.
+ * - stale            : version present but < MIN → red banner + bad chip
+ * - unknown-version  : 200 but no version field (very old backend) → yellow
+ * - unreachable      : fetch failed / still loading → warn chip only
+ */
+export function gateState(
+  serverVersion: string | null | undefined,
+  healthFailed: boolean,
+  dismissed = false,
+): GateState {
+  if (healthFailed || serverVersion === undefined) {
+    return { level: healthFailed ? 'unreachable' : 'pending', chip: 'warn', banner: null };
+  }
+  if (serverVersion === null) {
+    return { level: 'unknown-version', chip: 'warn', banner: 'yellow' };
+  }
+  if (!isVersionAtLeast(serverVersion, MIN_SERVER_VERSION)) {
+    return { level: 'stale', chip: 'bad', banner: dismissed ? null : 'red' };
+  }
+  return { level: 'ok', chip: 'ok', banner: null };
+}
