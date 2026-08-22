@@ -95,6 +95,12 @@ jobs:
             apt: musl-tools
           - target: aarch64-unknown-linux-gnu
             apt: gcc-aarch64-linux-gnu
+            # Newer rustc defaults to bundled rust-lld for this target, but the
+            # gcc-ld shim resolves against the HOST bin dir -> x86_64 lld ->
+            # "--fix-cortex-a53-843419 is only supported on AArch64". Drive the
+            # real cross gcc + GNU ld instead.
+            linker: aarch64-linux-gnu-gcc
+            rustflags: "-Clink-self-contained=-lld"
           - target: aarch64-linux-android
             android: true
     steps:
@@ -133,6 +139,8 @@ jobs:
         env:
           CC_x86_64_unknown_linux_musl: musl-gcc
           CC_aarch64_unknown_linux_gnu: aarch64-linux-gnu-gcc
+          CARGO_TARGET_AARCH64_UNKNOWN_LINUX_GNU_LINKER: ${{ matrix.linker }}
+          RUSTFLAGS: ${{ matrix.rustflags }}
         run: cargo build --release --target ${{ matrix.target }}
 
       - name: Package, Checksum & Verify (DIST-005)
