@@ -63,6 +63,8 @@ pub struct MetricsResp {
     pub active_terminals: usize,
     pub allowed_roots_count: usize,
     pub uptime_seconds: u64,
+    /// TAB-009 (spec 008): effective global PTY limit for "N/max" guards.
+    pub max_sessions: usize,
 }
 
 static START_TIME: std::sync::LazyLock<std::time::Instant> =
@@ -724,6 +726,7 @@ async fn metrics_handler(State(state): State<AppState>) -> Json<MetricsResp> {
         active_terminals: sessions.len(),
         allowed_roots_count: roots.len(),
         uptime_seconds: uptime,
+        max_sessions: state.sessions.max_sessions(),
     })
 }
 

@@ -636,3 +636,136 @@ async fn test_v051_001_traversal_no_work_dir() {
     let after_count = after["sessions"].as_array().map(|a| a.len()).unwrap_or(0);
     assert_eq!(before_count, after_count);
 }
+
+// ── TAB-001/009: configurable global PTY limit + metrics exposure (spec 008 §4) ──
+
+/// RED→GREEN: default limit stays 4 — the 5th concurrent session is rejected
+/// with a friendly 409 MAX_SESSIONS envelope.
+#[tokio::test]
+async fn test_tab_001_default_limit_409_at_5() {
+    let server = start_health_server().await;
+    let mut created = 0;
+    for i in 0..5 {
+        let resp = server
+            .client
+            .post(server.url("/api/v1/terminals"))
+            .json(&serde_json::json!({"cols": 80, "rows": 24}))
+            .send()
+            .await
+            .unwrap();
+        if i < 4 {
+            assert_eq!(resp.status(), 201, "session {i} must be allowed");
+            created += 1;
+        } else {
+            assert_eq!(
+                resp.status(),
+                409,
+                "session beyond the default limit must be rejected"
+            );
+            let body: serde_json::Value = resp.json().await.unwrap();
+            assert_eq!(body["error"]["code"], "MAX_SESSIONS");
+        }
+    }
+    assert_eq!(created, 4);
+}
+
+fn start_server_with_session_limit(
+    limit: usize,
+) -> std::pin::Pin<Box<dyn std::future::Future<Output = common::TestServer>>> {
+    Box::pin(async move {
+        use clap::Parser as _;
+        use common::TEST_SECRET;
+        let temp = tempfile::tempdir().expect("tempdir");
+        let mut config = mux_web::config::Config::parse_from(["mux-web"]);
+        config.shell = Some("/bin/sh".to_string());
+        let roots = vec![("home".to_string(), temp.path().to_path_buf())];
+        let state = mux_web::http::AppState {
+            config,
+            allowed_roots: mux_web::paths::AllowedRoots::new(roots).expect("roots"),
+            sessions: mux_web::session::SessionRegistry::new_with(
+                mux_web::session::SessionConfig {
+                    max_sessions: limit,
+                    ..Default::default()
+                },
+            ),
+            auth: mux_web::auth::AuthState::with_secret(
+                mux_web::auth::AuthConfig::default(),
+                TEST_SECRET,
+            ),
+            share: mux_web::share::ShareRegistry::new(mux_web::share::ShareConfig::default()),
+        };
+        let mut server = common::start_server_with_state(state).await;
+        // auto_pair equivalent (mirror common::start_server)
+        {
+            let resp = server
+                .client
+                .post(server.url("/api/v1/auth/pair"))
+                .header("content-type", "application/json")
+                .body(format!(r#"{{"secret": "{TEST_SECRET}"}}"#))
+                .send()
+                .await
+                .expect("pair");
+            assert_eq!(resp.status(), 200);
+            let cookie = resp
+                .headers()
+                .get("set-cookie")
+                .and_then(|c| c.to_str().ok())
+                .map(String::from)
+                .expect("cookie");
+            let jar = reqwest::cookie::Jar::default();
+            jar.add_cookie_str(&cookie, &server.base_url.parse().unwrap());
+            server.client = reqwest::Client::builder()
+                .cookie_provider(std::sync::Arc::new(jar))
+                .redirect(reqwest::redirect::Policy::none())
+                .build()
+                .unwrap();
+        }
+        server
+    })
+}
+
+/// RED→GREEN: the registry honors a custom max_sessions (6) — sessions up to
+/// the limit succeed, the one after it is rejected.
+#[tokio::test]
+async fn test_tab_001_registry_configurable_limit() {
+    let server = start_server_with_session_limit(6).await;
+    let mut last_status = 0;
+    for i in 0..7 {
+        let resp = server
+            .client
+            .post(server.url("/api/v1/terminals"))
+            .json(&serde_json::json!({"cols": 80, "rows": 24}))
+            .send()
+            .await
+            .unwrap();
+        last_status = resp.status().as_u16();
+        if i < 6 {
+            assert_eq!(
+                last_status, 201,
+                "session {i} within custom limit must succeed"
+            );
+        } else {
+            assert_eq!(last_status, 409);
+        }
+    }
+    assert_eq!(last_status, 409);
+}
+
+/// RED→GREEN: metrics exposes the effective limit so the UI can render N/max.
+#[tokio::test]
+async fn test_tab_009_metrics_max_sessions() {
+    let server = start_health_server().await;
+    let body: serde_json::Value = server
+        .client
+        .get(server.url("/api/v1/metrics"))
+        .send()
+        .await
+        .unwrap()
+        .json()
+        .await
+        .unwrap();
+    assert_eq!(
+        body["max_sessions"], 4,
+        "default metrics must report max_sessions=4 (spec 008 TAB-009)"
+    );
+}

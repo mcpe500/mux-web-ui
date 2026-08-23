@@ -53,6 +53,10 @@ pub struct Config {
     #[arg(long)]
     pub shell: Option<String>,
 
+    /// TAB-001 (spec 008): maximum concurrent PTY sessions (clamped 1..=16)
+    #[arg(long, env = "MUX_WEB_MAX_SESSIONS", default_value_t = 4)]
+    pub max_sessions: usize,
+
     /// Grace period (seconds) before an unattached session is terminated
     #[arg(long, default_value_t = 60)]
     pub session_idle_timeout: u64,
@@ -83,6 +87,12 @@ pub struct Config {
 }
 
 impl Config {
+    /// TAB-001 (spec 008): clamp the configured limit to a safe range so a
+    /// typo cannot exhaust low-end devices nor disable the guard entirely.
+    pub fn effective_max_sessions(&self) -> usize {
+        self.max_sessions.clamp(1, 16)
+    }
+
     pub fn effective_bind(&self) -> IpAddr {
         if self.lan {
             IpAddr::V4(Ipv4Addr::UNSPECIFIED)

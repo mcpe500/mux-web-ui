@@ -190,3 +190,12 @@
 | V051-004 Prompt rendering: Nerd Font subset + unicode11 addon | V051-004 | Frontend Unit / Visual | Portable | Passed |
 | V051-005 Version bump 0.5.1 verifiable via health.version | V051-005 | Integration / Release | Portable | Passed |
 | V051-006 Regression gates green; git status works from editor cwd | V051-006 | Integration / Security | Portable | Passed |
+| TAB-001 Configurable global PTY limit default 4 via --max-sessions | TAB-001 | Integration / Config | Portable | Passed |
+| TAB-002 Tab strip with unique labels, close per-tab, active highlight | TAB-002 | Frontend Unit | Portable | Passed |
+| TAB-003 Switch keeps scrollback / mounted instances, refit on show | TAB-003 | Frontend Unit / Perf | Portable | Passed |
+| TAB-004 Per-tab exit handling and Restart respawns same cwd in-place | TAB-004 | Integration | Portable | Passed |
+| TAB-005 Side-by-side groups via split; divider draggable, clamp & normalize | TAB-005 | Frontend Unit | Portable | Passed |
+| TAB-006 Drag & drop tabs across/within groups, empty group collapses | TAB-006 | Frontend Unit | Portable | Passed |
+| TAB-007 Panel toggle/hide, last-tab closes panel, Ctrl+` and Ctrl+Shift+` | TAB-007 | Frontend Unit | Portable | Passed |
+| TAB-008 Folder change with many terminals: Replace closes all then spawns one | TAB-008 | Integration | Portable | Passed |
+| TAB-009 Metrics exposes max_sessions for guard "N/max" | TAB-009 | Integration | Portable | Passed |

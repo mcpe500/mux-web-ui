@@ -38,6 +38,10 @@ pub struct SessionConfig {
     pub grace_period: Duration,
     pub output_buffer: usize,
     pub ws_token_ttl: Duration,
+    /// TAB-001 (spec 008): configurable global PTY limit. Default keeps the
+    /// historic MAX_SESSIONS=4 behavior; operators may raise it via
+    /// `--max-sessions` (clamped 1..=16) on capable devices.
+    pub max_sessions: usize,
 }
 
 impl Default for SessionConfig {
@@ -46,6 +50,7 @@ impl Default for SessionConfig {
             grace_period: Duration::from_secs(60),
             output_buffer: 256 * 1024,
             ws_token_ttl: Duration::from_secs(10),
+            max_sessions: MAX_SESSIONS,
         }
     }
 }
@@ -164,7 +169,7 @@ impl SessionRegistry {
         shell: Option<String>,
     ) -> Result<SessionMetadata, SessionError> {
         let mut map = self.sessions.lock().unwrap();
-        if map.len() >= MAX_SESSIONS {
+        if map.len() >= self.config.max_sessions {
             return Err(SessionError::MaxSessions);
         }
         let id = format!("term-{}", rand_id());
@@ -360,6 +365,11 @@ impl SessionRegistry {
             info!("Stopping terminal session {}", id);
             instance.pty.terminate();
         }
+    }
+
+    /// TAB-009 (spec 008): expose the effective limit for UI "N/max" guards.
+    pub fn max_sessions(&self) -> usize {
+        self.config.max_sessions
     }
 
     pub fn list_sessions(&self) -> Vec<SessionMetadata> {

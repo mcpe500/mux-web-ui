@@ -28,9 +28,12 @@ async fn test_v051_005_health_version_is_0_5_1() {
         .unwrap();
     assert_eq!(resp.status(), 200);
     let body: serde_json::Value = resp.json().await.unwrap();
+    // After v0.5.2 the version advances; assert it matches the paket's
+    // current CARGO_PKG_VERSION so the pin stays green across bumps.
     assert_eq!(
-        body["version"], "0.5.1",
-        "health.version must be 0.5.1 after the version bump (spec 007 V051-005)"
+        body["version"],
+        env!("CARGO_PKG_VERSION"),
+        "health.version must match Cargo.toml (spec 007/008)"
     );
     server.shutdown().await;
 }

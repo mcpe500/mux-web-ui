@@ -8,11 +8,20 @@ import {
   displayWorkDir,
   gateState,
   loadPersistedWorkspace,
-  nextTerminalAction,
   parseGitBranch,
   persistWorkspace,
   spawnErrorMessage,
 } from './editorLogic';
+import {
+  type TermGroup,
+  adjustGroupFlex,
+  closeTab as closeTermTab,
+  createTab,
+  maxReached,
+  moveTab,
+  openInNewGroup,
+  setActive,
+} from './terminalTabsLogic';
 
 interface TextEditorViewProps {
   rootId?: string;
@@ -64,7 +73,6 @@ export function TextEditorView({ rootId: propRootId, filePath: propFilePath, ini
   const [showFind, setShowFind] = useState(false);
   const [findQuery, setFindQuery] = useState('');
   const [replaceQuery, setReplaceQuery] = useState('');
-  const [showTerminal, setShowTerminal] = useState(false);
   const [highlight, setHighlight] = useState(false);
   const [menuOpen, setMenuOpen] = useState<string|null>(null);
 
@@ -74,17 +82,21 @@ export function TextEditorView({ rootId: propRootId, filePath: propFilePath, ini
   const wsRef = useRef(ws);
   wsRef.current = ws;
 
-  // EDT-001..005: integrated terminal session state
-  const [termId, setTermId] = useState<string | null>(null);
-  const [splitRatio, setSplitRatio] = useState(0.6);
+  // TAB-001..008 (spec 008): multi-terminal state — VS Code-style groups
+  const [groups, setGroups] = useState<TermGroup[]>([]);
+  const [panelOpen, setPanelOpen] = useState(false);
+  const [spawning, setSpawning] = useState(false);
   const [spawnErr, setSpawnErr] = useState<string | null>(null);
-  // V051-002: cwd confirmed by the server in the create response (null = legacy)
-  const [terminalWorkDir, setTerminalWorkDir] = useState<string | null>(null);
+  // EDT-003: vertical editor↔terminal ratio (kept from v0.6)
+  const [splitRatio, setSplitRatio] = useState(0.6);
+  // Effective backend limit from /api/v1/metrics (TAB-009); null = unknown
+  const [metricsMax, setMetricsMax] = useState<number | null>(null);
   // V051-003: boot-time health gate (undefined = pending, null = no version field)
   const [serverVersion, setServerVersion] = useState<string | null | undefined>(undefined);
   const [healthFailed, setHealthFailed] = useState(false);
   const [gateDismissed, setGateDismissed] = useState(false);
   const splitRef = useRef<HTMLDivElement>(null);
+  const groupsRowRef = useRef<HTMLDivElement>(null);
   const dragRaf = useRef<number | null>(null);
 
   // EDT-008: Open File / Open Folder picker + Ctrl+K chord buffer
@@ -126,6 +138,16 @@ export function TextEditorView({ rootId: propRootId, filePath: propFilePath, ini
     return () => {
       cancelled = true;
     };
+  }, []);
+
+  // TAB-009: expose the effective limit for the "+"/split guard tooltip "N/max"
+  useEffect(() => {
+    fetch('/api/v1/metrics')
+      .then(res => (res.ok ? res.json() : Promise.reject()))
+      .then((body: { max_sessions?: unknown }) => {
+        if (typeof body.max_sessions === 'number') setMetricsMax(body.max_sessions);
+      })
+      .catch(() => {});
   }, []);
 
   // Load initial file if provided
@@ -181,31 +203,131 @@ export function TextEditorView({ rootId: propRootId, filePath: propFilePath, ini
     };
   }, [ws]);
 
+  // TAB helpers -----------------------------------------------------------
+  const totalTabs = groups.reduce((a, g) => a + g.tabs.length, 0);
+  const activePair = (() => {
+    for (let i = groups.length - 1; i >= 0; i--) {
+      const g = groups[i];
+      const t = g.tabs.find(x => x.key === g.activeKey);
+      if (t) return { group: g, tab: t };
+    }
+    return null;
+  })();
+  const termVisible = panelOpen && groups.length > 0;
+
   const applyFolder = useCallback((sel: EditorWS) => {
-    // EDT-009: when a live terminal exists, ask Replace / Keep first.
-    if (termId && (sel.rootId !== wsRef.current.rootId || sel.basePath !== wsRef.current.basePath)) {
+    // EDT-009/TAB-008: when live editor terminals exist, ask Replace / Keep first.
+    const count = groups.reduce((a, g) => a + g.tabs.length, 0);
+    if (count > 0 && (sel.rootId !== wsRef.current.rootId || sel.basePath !== wsRef.current.basePath)) {
       setPendingWs(sel);
     } else {
       setWs(sel);
     }
-  }, [termId]);
+  }, [groups]);
 
-  const killTerminal = useCallback(() => {
-    const id = termId;
-    setTermId(null);
-    setTerminalWorkDir(null);
-    setShowTerminal(false);
-    if (id) {
+  /** TAB-008 Replace: tear down every editor PTY, reset the layout. */
+  const killAllEditorSessions = useCallback(() => {
+    const ids = groups.flatMap(g => g.tabs.map(t => t.sessionId));
+    ids.forEach(id => {
       fetch(`/api/v1/terminals/${id}`, { method: 'DELETE' }).catch(() => {});
-    }
-  }, [termId]);
+    });
+    setGroups([]);
+    return ids.length;
+  }, [groups]);
 
-  const spawnTerminal = useCallback(() => {
-    const payload = cwdPayload(wsRef.current);
+  /**
+   * TAB-001/005: create a PTY and place it either in the focused group
+   * (`active`) or in a brand-new group right of `anchorGroupKey` (split).
+   */
+  const spawnInto = useCallback(
+    (
+      mode: 'active' | 'new-group',
+      opts?: { anchorGroupKey?: string | null; wsOverride?: EditorWS },
+    ) => {
+      if (spawning) return;
+      setSpawning(true);
+      const payload = cwdPayload(opts?.wsOverride ?? wsRef.current);
+      fetch('/api/v1/terminals', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload),
+      })
+        .then(res => {
+          const errMsg = spawnErrorMessage(res.status);
+          if (errMsg) {
+            setSpawnErr(errMsg);
+            return null;
+          }
+          return res.json();
+        })
+        .then(meta => {
+          setSpawning(false);
+          if (!meta) return;
+          setSpawnErr(null);
+          const workDir =
+            typeof meta.work_dir === 'string' && meta.work_dir ? meta.work_dir : null;
+          setGroups(prev =>
+            mode === 'active'
+              ? createTab(prev, { sessionId: meta.id, workDir }, metricsMax ?? undefined)
+              : openInNewGroup(prev, opts?.anchorGroupKey ?? null, {
+                  sessionId: meta.id,
+                  workDir,
+                }),
+          );
+          setPanelOpen(true);
+        })
+        .catch(() => {
+          setSpawning(false);
+          setSpawnErr('Spawn failed');
+        });
+    },
+    [spawning, metricsMax],
+  );
+
+  /** EDT-001 adapted: first open spawns; afterwards pure visibility toggle. */
+  const toggleTerminal = useCallback(() => {
+    if (!panelOpen && groups.length === 0) {
+      spawnInto('active');
+    } else {
+      setPanelOpen(!panelOpen);
+    }
+  }, [panelOpen, groups.length, spawnInto]);
+
+  /** TAB-001/007: Ctrl+Shift+` / ＋ button — another terminal in the focus group. */
+  const newTerminalInFocus = useCallback(() => {
+    spawnInto('active');
+  }, [spawnInto]);
+
+  /** TAB-005: split — brand-new terminal in its own right-side group. */
+  const splitFocused = useCallback(() => {
+    const anchor = activePair?.group.key ?? null;
+    spawnInto('new-group', { anchorGroupKey: anchor });
+  }, [activePair, spawnInto]);
+
+  /** TAB-002: ✕ on a tab kills that PTY and removes it from the layout. */
+  const closeOne = useCallback((tabKey: string) => {
+    setGroups(prev => {
+      const res = closeTermTab(prev, tabKey);
+      if (res.closedSessionId) {
+        fetch(`/api/v1/terminals/${res.closedSessionId}`, { method: 'DELETE' }).catch(() => {});
+      }
+      if (res.groups.length === 0) setPanelOpen(false);
+      return res.groups;
+    });
+  }, []);
+
+  /** TAB-004: restart the focused terminal in place, keeping its cwd. */
+  const restartActiveTab = useCallback(() => {
+    const pair = activePair;
+    if (!pair || spawning) return;
+    const { tab, group } = pair;
+    const cwd: EditorWS = { rootId: wsRef.current.rootId, basePath: wsRef.current.basePath };
+    fetch(`/api/v1/terminals/${tab.sessionId}`, { method: 'DELETE' }).catch(() => {});
+    setSpawning(true);
     fetch('/api/v1/terminals', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(payload),
+      body: JSON.stringify(cwdPayload(cwd)),
     })
       .then(res => {
         const errMsg = spawnErrorMessage(res.status);
@@ -216,30 +338,77 @@ export function TextEditorView({ rootId: propRootId, filePath: propFilePath, ini
         return res.json();
       })
       .then(meta => {
+        setSpawning(false);
         if (!meta) return;
         setSpawnErr(null);
-        setTermId(meta.id as string);
-        // V051-002: remember the server-confirmed cwd (null on legacy backend)
-        setTerminalWorkDir(typeof meta.work_dir === 'string' && meta.work_dir ? meta.work_dir : null);
-        setShowTerminal(true);
+        const workDir =
+          typeof meta.work_dir === 'string' && meta.work_dir ? meta.work_dir : null;
+        setGroups(prev =>
+          prev.map(g =>
+            g.key !== group.key
+              ? g
+              : {
+                  ...g,
+                  tabs: g.tabs.map(t =>
+                    t.key === tab.key
+                      ? { ...t, sessionId: meta.id, workDir }
+                      : t,
+                  ),
+                },
+          ),
+        );
       })
-      .catch(() => setSpawnErr('Spawn failed'));
-  }, []);
+      .catch(() => {
+        setSpawning(false);
+        setSpawnErr('Restart failed');
+      });
+  }, [activePair, spawning]);
 
-  // EDT-001: spawn-on-demand; afterwards toggle only (never duplicate a PTY).
-  const toggleTerminal = useCallback(() => {
-    const action = nextTerminalAction(showTerminal, termId);
-    if (action === 'spawn') spawnTerminal();
-    else if (action === 'show') setShowTerminal(true);
-    else setShowTerminal(false);
-  }, [showTerminal, termId, spawnTerminal]);
+  /** TAB-006 DnD: drop handler shared by tab pills and group bodies. */
+  const handleDropOnGroup = useCallback(
+    (e: DragEvent, toGroupKey: string, index?: number) => {
+      e.preventDefault();
+      e.stopPropagation();
+      try {
+        const raw = e.dataTransfer?.getData('text/plain');
+        if (!raw) return;
+        const { tabKey } = JSON.parse(raw) as { tabKey: string };
+        if (!groups.some(g => g.tabs.some(t => t.key === tabKey))) return;
+        setGroups(prev => moveTab(prev, tabKey, toGroupKey, index));
+      } catch {
+        /* malformed payload — ignore */
+      }
+    },
+    [groups],
+  );
 
-  const restartTerminal = useCallback(() => {
-    killTerminal();
-    spawnTerminal();
-  }, [killTerminal, spawnTerminal]);
+  /** TAB-005: divider drag between sibling groups — RAF-throttled flex adjust. */
+  const startGroupDrag = (leftGroupKey: string, clientX: number) => {
+    const el = groupsRowRef.current;
+    if (!el) return;
+    const width = el.getBoundingClientRect().width || 1;
+    let lastLeft = groups.find(g => g.key === leftGroupKey)?.flex ?? 0.5;
+    const move = (ev: PointerEvent) => {
+      if (dragRaf.current !== null) return;
+      dragRaf.current = requestAnimationFrame(() => {
+        dragRaf.current = null;
+        const deltaFrac = (ev.clientX - clientX) / width;
+        setGroups(prev => {
+          const cur = prev.find(g => g.key === leftGroupKey)?.flex ?? lastLeft;
+          lastLeft = cur;
+          return adjustGroupFlex(prev, leftGroupKey, deltaFrac);
+        });
+      });
+    };
+    const up = () => {
+      window.removeEventListener('pointermove', move);
+      window.removeEventListener('pointerup', up);
+    };
+    window.addEventListener('pointermove', move);
+    window.addEventListener('pointerup', up);
+  };
 
-  // EDT-003: split divider drag — RAF-throttled, clamped 0.25..0.75.
+  // EDT-003: vertical editor↔terminal divider drag — RAF-throttled, clamped 0.25..0.75.
   const startSplitDrag = () => {
     const el = splitRef.current;
     if (!el) return;
@@ -259,13 +428,14 @@ export function TextEditorView({ rootId: propRootId, filePath: propFilePath, ini
     window.addEventListener('pointerup', up);
   };
 
-  // EDT-008: global shortcuts — Ctrl+` / Ctrl+O / Ctrl+K O chord / Escape
+  // EDT-008/TAB-007: global shortcuts — Ctrl+` toggle, Ctrl+Shift+` new, Ctrl+O, Ctrl+K O chord, Escape
   useEffect(() => {
     const h = (e: KeyboardEvent) => {
       const ctrl = e.ctrlKey || e.metaKey;
       if (ctrl && e.key === '`') {
         e.preventDefault();
-        toggleTerminal();
+        if (e.shiftKey) newTerminalInFocus();
+        else toggleTerminal();
       } else if (ctrl && !e.shiftKey && e.key.toLowerCase() === 'o') {
         e.preventDefault();
         setMenuOpen(null);
@@ -286,7 +456,7 @@ export function TextEditorView({ rootId: propRootId, filePath: propFilePath, ini
     };
     window.addEventListener('keydown', h);
     return () => window.removeEventListener('keydown', h);
-  }, [toggleTerminal]);
+  }, [toggleTerminal, newTerminalInFocus]);
 
   const toggleDir = (dirPath: string) => {
     setExpandedDirs(prev => {
@@ -447,9 +617,11 @@ export function TextEditorView({ rootId: propRootId, filePath: propFilePath, ini
   const selectedRootObj = roots.find(r => r.id === ws.rootId);
   const treeBase = ws.basePath || '/';
 
-  // V051-002/003: server-confirmed cwd label + boot version gate
-  const wdLabel = displayWorkDir(terminalWorkDir, ws);
+  // V051-002/003 + TAB-001..008: active terminal of the focused group + version gate
+  const wdLabel = displayWorkDir(activePair?.tab.workDir ?? null, ws);
   const gate = gateState(serverVersion, healthFailed, gateDismissed);
+  const limitForGuard = metricsMax ?? 4;
+  const guardReached = maxReached(groups, limitForGuard);
 
   // Render tree recursively
   const renderTree = (dirPath: string, depth: number) => {
@@ -659,7 +831,29 @@ export function TextEditorView({ rootId: propRootId, filePath: propFilePath, ini
         {/* Editor Toolbar - VS Code */}
         <div style={{ display: 'flex', gap: '6px', padding: '4px 8px', background: '#1e293b', borderBottom: '1px solid rgba(255,255,255,0.06)', alignItems: 'center', fontSize: '11px' }}>
           <button onClick={()=> setShowFind(!showFind)} style={{ padding: '4px 8px', background: showFind?'#3b82f6':'#334155', color: 'white', borderRadius: '3px' }}>🔍 Find (Ctrl+F)</button>
-          <button onClick={toggleTerminal} style={{ padding: '4px 8px', background: showTerminal?'#10b981':'#334155', color: 'white', borderRadius: '3px' }}>💻 Terminal (Ctrl+`)</button>
+          <button
+            onClick={toggleTerminal}
+            title={guardReached ? `${totalTabs}/${limitForGuard} — max sessions reached` : `Terminal (Ctrl+\`) — ${totalTabs}/${limitForGuard}`}
+            style={{ padding: '4px 8px', background: termVisible ? '#10b981' : '#334155', color: 'white', borderRadius: '3px' }}
+          >
+            💻 Terminal ({totalTabs}/{limitForGuard}) {guardReached ? '⚠️' : ''}
+          </button>
+          <button
+            onClick={newTerminalInFocus}
+            disabled={spawning || guardReached}
+            title={guardReached ? `MAX_SESSIONS (${limitForGuard}) reached` : 'New Terminal Ctrl+Shift+`'}
+            style={{ padding: '4px 8px', background: guardReached ? '#475569' : '#6366f1', color: 'white', borderRadius: '3px', opacity: spawning || guardReached ? 0.55 : 1 }}
+          >
+            ＋
+          </button>
+          <button
+            onClick={splitFocused}
+            disabled={spawning || guardReached || totalTabs === 0}
+            title={guardReached ? 'MAX_SESSIONS — free one first' : 'Split Terminal ⫿ (side-by-side) — new terminal in new group'}
+            style={{ padding: '4px 8px', background: guardReached ? '#475569' : '#334155', color: 'white', borderRadius: '3px', opacity: (spawning || guardReached || totalTabs === 0) ? 0.55 : 1 }}
+          >
+            ⫿
+          </button>
           <button onClick={()=> setHighlight(!highlight)} style={{ padding: '4px 8px', background: highlight?'#f59e0b':'#334155', color: 'white', borderRadius: '3px' }}>{highlight?'✨ Highlight ON':'✨ Highlight OFF'}</button>
           <span style={{ marginLeft: 'auto', color: '#64748b' }}>{activeTab ? `${activeTab.content.split('\n').length} lines` : ''}</span>
         </div>
@@ -700,7 +894,7 @@ export function TextEditorView({ rootId: propRootId, filePath: propFilePath, ini
             </div>
           )}
           {/* Editor / empty state */}
-          <div style={{ height: showTerminal ? `${splitRatio * 100}%` : '100%', display: 'flex', flexDirection: 'column', overflow: 'hidden' }}>
+          <div style={{ height: termVisible ? `${splitRatio * 100}%` : '100%', display: 'flex', flexDirection: 'column', overflow: 'hidden' }}>
             {activeTab ? (
               <>
             {/* Save Error / Loading banner */}
@@ -757,8 +951,8 @@ export function TextEditorView({ rootId: propRootId, filePath: propFilePath, ini
             )}
           </div>
 
-          {/* EDT-001..005: real integrated terminal — spawn-on-demand PTY */}
-          {showTerminal && (
+          {/* TAB-001..008: VS Code-like panel — tabs, groups side-by-side, DnD, dividers */}
+          {termVisible && (
             <>
               <div
                 data-testid="split-divider"
@@ -767,11 +961,11 @@ export function TextEditorView({ rootId: propRootId, filePath: propFilePath, ini
                   startSplitDrag();
                 }}
                 style={{ height: '6px', flexShrink: 0, background: '#334155', cursor: 'row-resize' }}
-                title="Drag to resize"
+                title="Drag to resize panel height"
               />
-              <div style={{ flex: 1, minHeight: '60px', display: 'flex', flexDirection: 'column', background: '#0f172a' }}>
-                {/* V051-002: legacy backend did not confirm a cwd — never fake it */}
-                {termId && wdLabel.legacy && (
+              <div style={{ flex: 1, minHeight: '60px', display: 'flex', flexDirection: 'column', background: '#0f172a', overflow: 'hidden' }}>
+                {/* V051-002: legacy backend did not confirm cwd for the active tab — never fake it */}
+                {activePair && wdLabel.legacy && (
                   <div
                     data-testid="cwd-legacy-banner"
                     role="alert"
@@ -780,14 +974,133 @@ export function TextEditorView({ rootId: propRootId, filePath: propFilePath, ini
                     ⚠️ Server lama tidak mengonfirmasi cwd — label di bawah tebakan klien. Jalankan update.sh ke ≥0.5.1.
                   </div>
                 )}
-                <div style={{ display: 'flex', alignItems: 'center', gap: '8px', padding: '3px 8px', background: '#1e293b', borderBottom: '1px solid rgba(255,255,255,0.06)', fontSize: '11px', color: '#94a3b8', flexShrink: 0 }}>
-                  <span title={wdLabel.title}>💻 bash — {wdLabel.label}</span>
-                  {spawnErr && <span style={{ color: '#fca5a5' }}>⚠️ {spawnErr}</span>}
-                  <button onClick={restartTerminal} title="Restart in the opened folder" style={{ marginLeft: 'auto', padding: '2px 8px', background: '#334155', color: 'white', border: 'none', borderRadius: '3px', cursor: 'pointer' }}>↻ Restart</button>
-                  <button onClick={() => setShowTerminal(false)} title="Hide (Ctrl+`)" style={{ padding: '2px 8px', background: '#334155', color: 'white', border: 'none', borderRadius: '3px', cursor: 'pointer' }}>✕ Hide</button>
+                {/* TAB header row: tab strip per group + actions */}
+                <div
+                  data-testid="terminal-tabs-strip"
+                  style={{ display: 'flex', alignItems: 'center', gap: '4px', padding: '3px 6px', background: '#1e293b', borderBottom: '1px solid rgba(255,255,255,0.06)', fontSize: '11px', color: '#94a3b8', flexShrink: 0, overflowX: 'auto', scrollbarWidth: 'thin' }}
+                  onDragOver={e => e.preventDefault()}
+                  onDrop={e => {
+                    // Drop on the strip background → new group (VS Code "drop into empty")
+                    try {
+                      const raw = e.dataTransfer?.getData('text/plain');
+                      if (!raw) return;
+                      const { tabKey } = JSON.parse(raw);
+                      const owns = groups.some(g => g.tabs.some(t => t.key === tabKey));
+                      if (!owns) return;
+                      e.preventDefault();
+                      setGroups(prev => moveTab(prev, tabKey, null));
+                    } catch {}
+                  }}
+                >
+                  {groups.map((g, gi) => (
+                    <span key={g.key} style={{ display: 'flex', alignItems: 'center', gap: '3px', flexShrink: 0 }}>
+                      {gi > 0 && <span style={{ width: '1px', height: '14px', background: 'rgba(255,255,255,0.14)', margin: '0 3px' }} />}
+                      {g.tabs.map((t, ti) => (
+                        <span
+                          key={t.key}
+                          draggable
+                          data-testid={`term-tab-${t.key}`}
+                          onDragStart={e => {
+                            e.dataTransfer?.setData('text/plain', JSON.stringify({ tabKey: t.key }));
+                            if (e.dataTransfer) e.dataTransfer.effectAllowed = 'move';
+                          }}
+                          onDragOver={e => e.preventDefault()}
+                          onDrop={e => handleDropOnGroup(e, g.key, ti)}
+                          onClick={() => setGroups(prev => setActive(prev, t.key))}
+                          title={t.workDir ? `PTY ${t.sessionId} — ${t.workDir}` : `PTY ${t.sessionId}`}
+                          style={{
+                            display: 'inline-flex',
+                            alignItems: 'center',
+                            gap: '4px',
+                            padding: '2px 7px',
+                            borderRadius: '4px',
+                            background: t.key === g.activeKey ? '#334155' : 'transparent',
+                            color: t.key === g.activeKey ? '#f8fafc' : '#94a3b8',
+                            cursor: 'pointer',
+                            border: t.key === g.activeKey ? '1px solid rgba(255,255,255,0.12)' : '1px solid transparent',
+                            flexShrink: 0,
+                          }}
+                        >
+                          <span style={{ minWidth: '28px' }}>{t.label}</span>
+                          <button
+                            onClick={e => { e.stopPropagation(); closeOne(t.key); }}
+                            title="Close"
+                            style={{ background: 'transparent', border: 'none', color: 'inherit', cursor: 'pointer', padding: '0 2px', fontSize: '11px' }}
+                          >
+                            ✕
+                          </button>
+                        </span>
+                      ))}
+                    </span>
+                  ))}
+                  <span style={{ display: 'flex', gap: '4px', marginLeft: '6px', flexShrink: 0, alignItems: 'center' }}>
+                    <button
+                      onClick={newTerminalInFocus}
+                      disabled={spawning || guardReached}
+                      title={guardReached ? `MAX_SESSIONS (${limitForGuard})` : 'New Terminal ＋'}
+                      style={{ padding: '2px 7px', background: guardReached ? '#475569' : '#334155', color: 'white', border: 'none', borderRadius: '3px', cursor: guardReached ? 'not-allowed' : 'pointer', opacity: spawning || guardReached ? 0.6 : 1 }}
+                    >
+                      ＋
+                    </button>
+                    <button
+                      onClick={splitFocused}
+                      disabled={spawning || guardReached || totalTabs === 0}
+                      title={guardReached ? 'MAX_SESSIONS — free one' : 'Split ⫿ (side-by-side) — new terminal in new group'}
+                      style={{ padding: '2px 7px', background: '#334155', color: 'white', border: 'none', borderRadius: '3px', cursor: 'pointer', opacity: (spawning || guardReached || totalTabs === 0) ? 0.55 : 1 }}
+                    >
+                      ⫿
+                    </button>
+                  </span>
+                  <span
+                    title={wdLabel.title}
+                    style={{ marginLeft: '8px', minWidth: 0, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', color: '#64748b' }}
+                  >
+                    — {wdLabel.label}
+                  </span>
+                  {spawnErr && <span style={{ color: '#fca5a5', marginLeft: '8px' }}>⚠️ {spawnErr}</span>}
+                  <span style={{ marginLeft: 'auto', display: 'flex', gap: '4px', flexShrink: 0 }}>
+                    <button onClick={restartActiveTab} title="Restart active terminal" disabled={!activePair || spawning} style={{ padding: '2px 8px', background: '#334155', color: 'white', border: 'none', borderRadius: '3px', cursor: 'pointer', opacity: (!activePair || spawning) ? 0.5 : 1 }}>↻</button>
+                    <button onClick={() => setPanelOpen(false)} title="Hide Ctrl+`" style={{ padding: '2px 8px', background: '#334155', color: 'white', border: 'none', borderRadius: '3px', cursor: 'pointer' }}>✕ Hide</button>
+                  </span>
                 </div>
-                <div data-testid="terminal-host" style={{ flex: 1, minHeight: 0 }}>
-                  {termId && <TerminalView terminalId={termId} />}
+                {/* TAB-005/006: groups flex-row with draggable vertical dividers; every tab's TerminalView stays mounted (TAB-003) */}
+                <div
+                  ref={groupsRowRef}
+                  data-testid="terminal-groups-row"
+                  style={{ flex: 1, display: 'flex', flexDirection: 'row', overflow: 'hidden', minHeight: 0 }}
+                  onDragOver={e => e.preventDefault()}
+                >
+                  {groups.map((g, gi) => (
+                    <>
+                      <div
+                        key={g.key}
+                        data-testid={`term-group-${g.key}`}
+                        style={{ flex: g.flex, minWidth: 120, display: 'flex', flexDirection: 'column', overflow: 'hidden', borderRight: gi < groups.length - 1 ? '1px solid rgba(255,255,255,0.08)' : 'none' }}
+                        onDragOver={e => e.preventDefault()}
+                        onDrop={e => handleDropOnGroup(e, g.key)}
+                      >
+                        {g.tabs.map(t => (
+                          <div
+                            key={t.key}
+                            data-testid={`terminal-host-${t.key}`}
+                            style={{ flex: 1, display: t.key === g.activeKey ? 'flex' : 'none', flexDirection: 'column', minHeight: 0 }}
+                          >
+                            <TerminalView terminalId={t.sessionId} />
+                          </div>
+                        ))}
+                      </div>
+                      {gi < groups.length - 1 && (
+                        <div
+                          data-testid="group-divider"
+                          onPointerDown={e => {
+                            e.preventDefault();
+                            startGroupDrag(g.key, e.clientX);
+                          }}
+                          style={{ width: '5px', flexShrink: 0, background: '#334155', cursor: 'col-resize' }}
+                        />
+                      )}
+                    </>
+                  ))}
                 </div>
               </div>
             </>
@@ -873,11 +1186,23 @@ export function TextEditorView({ rootId: propRootId, filePath: propFilePath, ini
             >
               <div style={{ fontWeight: 600, marginBottom: '8px' }}>💻 Terminal cwd</div>
               <div style={{ fontSize: '12px', color: '#94a3b8', marginBottom: '14px' }}>
-                Folder changed to <b>{pendingWs.rootId}:{pendingWs.basePath || '/'}</b>. Restart the terminal in this folder?
+                Folder changed to <b>{pendingWs.rootId}:{pendingWs.basePath || '/'}</b>. Restart {totalTabs} terminal(s) in this folder?
               </div>
               <div style={{ display: 'flex', gap: '8px', justifyContent: 'flex-end' }}>
-                <button onClick={() => { setPendingWs(null); setWs(pendingWs); }} style={{ padding: '6px 10px', background: '#334155', border: 'none', borderRadius: '6px', color: '#f8fafc', cursor: 'pointer', fontSize: '12px' }}>Keep</button>
-                <button onClick={() => { const target = pendingWs; setPendingWs(null); killTerminal(); setWs(target); spawnTerminal(); }} style={{ padding: '6px 10px', background: '#6366f1', border: 'none', borderRadius: '6px', color: '#fff', fontWeight: 600, cursor: 'pointer', fontSize: '12px' }}>Replace</button>
+                <button onClick={() => { setPendingWs(null); setWs(pendingWs); }} style={{ padding: '6px 10px', background: '#334155', border: 'none', borderRadius: '6px', color: '#f8fafc', cursor: 'pointer', fontSize: '12px' }}>Keep ({totalTabs})</button>
+                <button
+                  onClick={() => {
+                    const target = pendingWs;
+                    setPendingWs(null);
+                    killAllEditorSessions();
+                    setWs(target);
+                    // wsRef flushes next tick; pass the target explicitly
+                    spawnInto('active', { wsOverride: target });
+                  }}
+                  style={{ padding: '6px 10px', background: '#6366f1', border: 'none', borderRadius: '6px', color: '#fff', fontWeight: 600, cursor: 'pointer', fontSize: '12px' }}
+                >
+                  Replace ({totalTabs} ↻)
+                </button>
               </div>
             </div>
           </div>
