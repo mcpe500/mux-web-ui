@@ -15,8 +15,8 @@
     "semantic_hash": "d3bd23ff3bc95807caa5fccd340468e8"
   },
   "src/config.rs": {
-    "mtime": 1787251758.471311,
-    "ast_hash": "09fb2c2c8375080429e6bd298d465eb0",
+    "mtime": 1787414486.5225558,
+    "ast_hash": "e213317f7c5844ee4922f88ad88c261f",
     "semantic_hash": ""
   },
   "src/files.rs": {
@@ -25,8 +25,8 @@
     "semantic_hash": "96a162b5abf6f90bfe36d36c7e8ab226"
   },
   "src/http.rs": {
-    "mtime": 1787325641.6215842,
-    "ast_hash": "0d5ede61442bc71f20492fd682f9fb60",
+    "mtime": 1787414515.5281444,
+    "ast_hash": "666cd8ddc0c64d9ca42bac714dfdeea1",
     "semantic_hash": ""
   },
   "src/lib.rs": {
@@ -35,8 +35,8 @@
     "semantic_hash": ""
   },
   "src/main.rs": {
-    "mtime": 1787252648.3552623,
-    "ast_hash": "4e2fd1d134c9636cebfd90747ca97e38",
+    "mtime": 1787414515.5292456,
+    "ast_hash": "16415856ae99330b3a54a6cf813dc8a2",
     "semantic_hash": ""
   },
   "src/paths.rs": {
@@ -55,13 +55,13 @@
     "semantic_hash": ""
   },
   "src/session.rs": {
-    "mtime": 1787386730.641913,
-    "ast_hash": "1ea120c78f8e771be378841a56d0a855",
+    "mtime": 1787414426.4160674,
+    "ast_hash": "4f4ad1104cbc9bc4503f47737617d906",
     "semantic_hash": ""
   },
   "tests/boot_tests.rs": {
-    "mtime": 1787386603.3043048,
-    "ast_hash": "5714eddb67c603d4e40d308d073415ec",
+    "mtime": 1787491227.3586173,
+    "ast_hash": "814940d8cc6f1d4b6832a569ba614001",
     "semantic_hash": ""
   },
   "tests/editor_tests.rs": {
@@ -85,8 +85,8 @@
     "semantic_hash": ""
   },
   "web/package.json": {
-    "mtime": 1787387685.4192016,
-    "ast_hash": "eeb7ea6b7bb054a7e61bb1be77bb0ca9",
+    "mtime": 1787491152.6497855,
+    "ast_hash": "0f8b860cd721eb3ea8e5a24accc74797",
     "semantic_hash": ""
   },
   "web/src/app.tsx": {
@@ -95,8 +95,8 @@
     "semantic_hash": "b200590443cb590d2d4911b46bba4b1d"
   },
   "web/src/apps/editor/TextEditorView.tsx": {
-    "mtime": 1787387461.9950154,
-    "ast_hash": "584b41e7d9450e8d47a472fc9d38cfea",
+    "mtime": 1787491032.068993,
+    "ast_hash": "74cff3785346ffd37303b2eb96bdb02b",
     "semantic_hash": ""
   },
   "web/src/apps/files/FileExplorerView.tsx": {
@@ -110,8 +110,8 @@
     "semantic_hash": "a76a3bd0b96f6b399ee62dfafe845f73"
   },
   "web/src/apps/terminal/TerminalView.tsx": {
-    "mtime": 1787388048.9571912,
-    "ast_hash": "19036b15294231eec4b01777b842efb3",
+    "mtime": 1787406407.6415117,
+    "ast_hash": "7f3cb119dfaac83864ad086d4516abf5",
     "semantic_hash": ""
   },
   "web/src/desktop/DesktopCanvas.tsx": {
@@ -165,8 +165,8 @@
     "semantic_hash": "f8be80d7c0632a6c791e45f83c0a7c53"
   },
   "tests/traceability.md": {
-    "mtime": 1787388354.5663562,
-    "ast_hash": "ccc4853de9d0c266841d1edd61b4b148",
+    "mtime": 1787491339.4240856,
+    "ast_hash": "c7b9d55c7a0beb78171c166adb97431d",
     "semantic_hash": ""
   },
   "web/index.html": {
@@ -200,8 +200,8 @@
     "semantic_hash": ""
   },
   "tests/session_tests.rs": {
-    "mtime": 1787386855.6260464,
-    "ast_hash": "022992cbfc8a04a7473df30f4371de75",
+    "mtime": 1787414739.463812,
+    "ast_hash": "b8c88b1591e64a4991402edbc855adbc",
     "semantic_hash": ""
   },
   "spec/specs/001b.plan-checklist.md": {
@@ -215,8 +215,8 @@
     "semantic_hash": "3bd7278b4a607c75aae38fb500d5d2ee"
   },
   ".github/workflows/ci.yml": {
-    "mtime": 1787135426.3363128,
-    "ast_hash": "09763c9e9ba55901bd48bb657106d73a",
+    "mtime": 1787411819.1376202,
+    "ast_hash": "46e86bf1479554c7feecd1c4a7e0dc1f",
     "semantic_hash": ""
   },
   "spec/specs/002.plan-v0.2.1.md": {
@@ -415,13 +415,38 @@
     "semantic_hash": ""
   },
   "web/src/apps/terminal/terminalConfig.ts": {
-    "mtime": 1787387920.039406,
-    "ast_hash": "1a8681db717fd33e8d62ad8b05cdd1a7",
+    "mtime": 1787406463.0474157,
+    "ast_hash": "4d299a980879b106588385b9b7e3ad75",
     "semantic_hash": ""
   },
   "spec/handoff/004.v051-hotfix.md": {
-    "mtime": 1787388894.0817502,
-    "ast_hash": "19ff2038578974c787ddf32e27325f35",
+    "mtime": 1787411942.56259,
+    "ast_hash": "21e82e3ad2e9dccf332352c45687b90d",
+    "semantic_hash": ""
+  },
+  "web/src/apps/editor/terminalTabsLogic.test.ts": {
+    "mtime": 1787490969.0429866,
+    "ast_hash": "f26aa4e74716f2284931a668a34178f2",
+    "semantic_hash": ""
+  },
+  "web/src/apps/editor/terminalTabsLogic.ts": {
+    "mtime": 1787415825.0735047,
+    "ast_hash": "de15a5be0b73505292a5fb536dc39968",
+    "semantic_hash": ""
+  },
+  "spec/specs/008.plan-v0.5.2-editor-multi-terminal-tabs.md": {
+    "mtime": 1787491814.0268652,
+    "ast_hash": "4aa0dce9f25d4eabcbe453391b69172e",
+    "semantic_hash": ""
+  },
+  "spec/specs/008b.plan-checklist.md": {
+    "mtime": 1787492694.2240005,
+    "ast_hash": "8905e5e5e2f53907f9913f4628fc3007",
+    "semantic_hash": ""
+  },
+  "spec/handoff/005.v052-multi-terminal.md": {
+    "mtime": 1787493098.223516,
+    "ast_hash": "2c92faa87903d9c9e61509158b8c481b",
     "semantic_hash": ""
   }
 }
