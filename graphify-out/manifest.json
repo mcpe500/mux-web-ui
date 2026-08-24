@@ -15,8 +15,8 @@
     "semantic_hash": "d3bd23ff3bc95807caa5fccd340468e8"
   },
   "src/config.rs": {
-    "mtime": 1787414486.5225558,
-    "ast_hash": "e213317f7c5844ee4922f88ad88c261f",
+    "mtime": 1787578710.183419,
+    "ast_hash": "7e53b59c0eff9edc4c36b00b417bed47",
     "semantic_hash": ""
   },
   "src/files.rs": {
@@ -25,8 +25,8 @@
     "semantic_hash": "96a162b5abf6f90bfe36d36c7e8ab226"
   },
   "src/http.rs": {
-    "mtime": 1787414515.5281444,
-    "ast_hash": "666cd8ddc0c64d9ca42bac714dfdeea1",
+    "mtime": 1787578690.8706267,
+    "ast_hash": "45feb4ff44a3aec8f4313dc494b4fdfb",
     "semantic_hash": ""
   },
   "src/lib.rs": {
@@ -35,8 +35,8 @@
     "semantic_hash": ""
   },
   "src/main.rs": {
-    "mtime": 1787414515.5292456,
-    "ast_hash": "16415856ae99330b3a54a6cf813dc8a2",
+    "mtime": 1787565964.1086197,
+    "ast_hash": "c37b1533e96e957513c1ad08808aa1a3",
     "semantic_hash": ""
   },
   "src/paths.rs": {
@@ -85,8 +85,8 @@
     "semantic_hash": ""
   },
   "web/package.json": {
-    "mtime": 1787491152.6497855,
-    "ast_hash": "0f8b860cd721eb3ea8e5a24accc74797",
+    "mtime": 1787578734.9528406,
+    "ast_hash": "2389a81eb64075dca6b08282b72982cd",
     "semantic_hash": ""
   },
   "web/src/app.tsx": {
@@ -165,8 +165,8 @@
     "semantic_hash": "f8be80d7c0632a6c791e45f83c0a7c53"
   },
   "tests/traceability.md": {
-    "mtime": 1787491339.4240856,
-    "ast_hash": "c7b9d55c7a0beb78171c166adb97431d",
+    "mtime": 1787578734.9884975,
+    "ast_hash": "be9f620eada716407a95b3bc77733900",
     "semantic_hash": ""
   },
   "web/index.html": {
@@ -305,8 +305,8 @@
     "semantic_hash": ""
   },
   "tests/security_tests.rs": {
-    "mtime": 1787252627.9225438,
-    "ast_hash": "6326a7a8cc895df88b9ba749699b8666",
+    "mtime": 1787578393.9156902,
+    "ast_hash": "3f1f9635f609a9cf96fe5b9de9686717",
     "semantic_hash": ""
   },
   "tests/share_tests.rs": {
@@ -440,13 +440,43 @@
     "semantic_hash": ""
   },
   "spec/specs/008b.plan-checklist.md": {
-    "mtime": 1787492694.2240005,
-    "ast_hash": "8905e5e5e2f53907f9913f4628fc3007",
+    "mtime": 1787494919.7316484,
+    "ast_hash": "2cc17e0099baac8fe304c18c3c2aec2a",
     "semantic_hash": ""
   },
   "spec/handoff/005.v052-multi-terminal.md": {
-    "mtime": 1787493098.223516,
-    "ast_hash": "2c92faa87903d9c9e61509158b8c481b",
+    "mtime": 1787494919.738072,
+    "ast_hash": "84213bda6299b9c67b3bd804a723f3fa",
+    "semantic_hash": ""
+  },
+  "tests/config_tests.rs": {
+    "mtime": 1787578690.983621,
+    "ast_hash": "6ce47494bf858f94352fa2f50644f5d8",
+    "semantic_hash": ""
+  },
+  "spec/handoff/006.network-vpn-custom-domain-v0.5.3.md": {
+    "mtime": 1787584247.5067573,
+    "ast_hash": "755aca5ebb86ce8e2ad463cfb40618d8",
+    "semantic_hash": ""
+  },
+  "spec/specs/009.plan-v0.5.3-network-vpn-custom-domain.md": {
+    "mtime": 1787579193.8150277,
+    "ast_hash": "2a1725ce550dd60b90d4915d71d9cf0d",
+    "semantic_hash": ""
+  },
+  "spec/specs/009b.plan-checklist.md": {
+    "mtime": 1787584213.3051074,
+    "ast_hash": "94ad6a2e86735329838832cec194df01",
+    "semantic_hash": ""
+  },
+  "spec/specs/010.plan-v0.6.1-coding-agents-proot-performance-editor.md": {
+    "mtime": 1787565808.8713388,
+    "ast_hash": "689b94aa645ee8033680750f4b6f839e",
+    "semantic_hash": ""
+  },
+  "spec/specs/010b.plan-checklist.md": {
+    "mtime": 1787565860.5759528,
+    "ast_hash": "cd5595e40210ee4ab43b7cc6b2234a3a",
     "semantic_hash": ""
   }
 }
