@@ -206,3 +206,24 @@
 | NET-005 HOST_REJECTED message hints --allowed-hosts | NET-005 | UX | Portable | Passed |
 | NET-006 Allowlist parser strict: wildcard/scheme/path/space rejected | NET-006 | Security | Portable | Passed |
 | NET-007 No-flag behavior identical; evil.com/public IP still 403 | NET-007 | Security | Portable | Passed |
+| PROOT-001 Detect proot-distro + installed distros (fs, CLI fallback) | PROOT-001 | Unit | Portable | Passed |
+| PROOT-002 GET /api/v1/environments lists termux + distros | PROOT-002 | Integration | Portable | Passed |
+| PROOT-003 env_id wraps argv proot-distro login <d> -- <shell> | PROOT-003 | Unit / Integration | Portable | Passed |
+| PROOT-004 cwd translation: shared prefixes kept, else distro HOME | PROOT-004 | Unit | Portable | Passed |
+| PROOT-005 Environment picker chips on terminal spawn | PROOT-005 | Frontend | Portable | Passed |
+| PROOT-006 Unknown env_id → 400 ENV_UNKNOWN actionable | PROOT-006 | Integration | Portable | Passed |
+| AGT-001 Static registry: opencode/claude-code/codex/antigravity | AGT-001 | Unit | Portable | Passed |
+| AGT-002 GET /environments/:id/agents probe cached 30s | AGT-002 | Integration | Portable | Passed |
+| AGT-003 Quick-launch agent_id → sh -lc cd+exec in env | AGT-003 | Unit / Integration | Portable | Passed |
+| AGT-004 Agents menu UI with found/not-found disabled | AGT-004 | Frontend | Portable | Passed |
+| AGT-005 Tab label [agent@env] | AGT-005 | Frontend | Portable | Passed |
+| SESS-009 Busy-grace auto-extend: streaming detached survives | SESS-009 | Integration | Portable | Passed |
+| SESS-010 --session-idle-timeout 0 disables idle reap | SESS-010 | Integration | Portable | Passed |
+| LIFE-010 WS heartbeat ping 20s + client pong | LIFE-010 | Integration | Portable | Passed |
+| PERF-006 Output coalescing 1 write per rAF | PERF-006 | Frontend Unit | Portable | Passed |
+| PERF-007 Budget PASS with lazy tokenizer chunk | PERF-007 | Release | Portable | Passed |
+| EDIT-009 mux-code table-driven tokenizer (7 langs + plain) | EDIT-009 | Frontend Unit | Portable | Passed |
+| EDIT-010 visibleRange viewport helper (overscan, clamp) | EDIT-010 | Frontend Unit | Portable | Passed |
+| EDIT-011 Overlay highlight layer behind transparent textarea | EDIT-011 | Frontend | Portable | Passed |
+| EDIT-012 Search/replace/goto-line helpers | EDIT-012 | Frontend Unit | Portable | Passed |
+| EDIT-016 Tokenizer lazy chunk (1.2 KiB gzip) separate from main | EDIT-016 | Release | Portable | Passed |

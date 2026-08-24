@@ -22,6 +22,7 @@ use futures_util::{SinkExt, StreamExt};
 use serde::{Deserialize, Serialize};
 use std::net::IpAddr;
 use std::sync::Arc;
+use std::time::Duration;
 use tracing::{debug, info};
 
 #[derive(Clone)]
@@ -44,6 +45,12 @@ pub struct CreateTerminalReq {
     pub cwd_root: Option<String>,
     #[serde(default)]
     pub cwd_path: Option<String>,
+    /// PROOT-003 (spec 010): optional environment id ("termux" or distro).
+    #[serde(default)]
+    pub env_id: Option<String>,
+    /// AGT-003 (spec 010): optional coding agent id for quick-launch.
+    #[serde(default)]
+    pub agent_id: Option<String>,
 }
 
 #[derive(Serialize)]
@@ -76,6 +83,11 @@ pub fn create_router(state: AppState) -> Router {
 
     Router::new()
         .route("/api/v1/health", get(health_handler))
+        .route("/api/v1/environments", get(list_environments_handler))
+        .route(
+            "/api/v1/environments/:id/agents",
+            get(list_env_agents_handler),
+        )
         .route(
             "/api/v1/terminals",
             get(list_terminals_handler).post(create_terminal_handler),
@@ -146,6 +158,36 @@ async fn health_handler() -> Json<HealthResp> {
         status: "ok",
         version: env!("CARGO_PKG_VERSION"),
     })
+}
+
+/// PROOT-002 (spec 010): list environments (Termux + installed proot distros).
+async fn list_environments_handler() -> Json<serde_json::Value> {
+    Json(serde_json::json!(crate::environments::list_environments()))
+}
+
+/// AGT-002 (spec 010): probe coding agents within an environment (cached 30s).
+async fn list_env_agents_handler(Path(id): Path<String>) -> Response {
+    if id != "termux"
+        && !crate::environments::list_environments()
+            .iter()
+            .any(|e| e.id == id)
+    {
+        let body = serde_json::json!({
+            "error": {"code": "ENV_UNKNOWN", "message": format!("unknown environment '{id}'")}
+        });
+        return (StatusCode::BAD_REQUEST, Json(body)).into_response();
+    }
+    let agents: Vec<serde_json::Value> = crate::agents::registry()
+        .into_iter()
+        .map(|a| {
+            let found = crate::agents::probe_agent(&id, &a.id);
+            serde_json::json!({
+                "id": a.id, "binary": a.binary, "label": a.label,
+                "color": a.color, "found": found,
+            })
+        })
+        .collect();
+    Json(serde_json::json!(agents)).into_response()
 }
 
 #[derive(Deserialize)]
@@ -588,10 +630,34 @@ async fn create_terminal_handler(
         _ => state.config.work_dir.clone(),
     };
 
-    match state
-        .sessions
-        .create_session(cols, rows, work_dir, state.config.shell.clone())
-    {
+    // PROOT-006 (spec 010): unknown env_id → 400 actionable
+    if let Some(env) = &req.env_id {
+        let known = crate::environments::list_environments();
+        if !known.iter().any(|e| &e.id == env) {
+            let body = serde_json::json!({
+                "error": {"code": "ENV_UNKNOWN", "message": format!("unknown environment '{env}' — see GET /api/v1/environments")}
+            });
+            return (StatusCode::BAD_REQUEST, Json(body)).into_response();
+        }
+    }
+    // AGT-003: agent must exist in registry
+    if let Some(agent) = &req.agent_id {
+        if !crate::agents::registry().iter().any(|a| &a.id == agent) {
+            let body = serde_json::json!({
+                "error": {"code": "AGENT_UNKNOWN", "message": format!("unknown agent '{agent}' — see GET /api/v1/environments/{env}/agents", env = req.env_id.as_deref().unwrap_or("termux"))}
+            });
+            return (StatusCode::BAD_REQUEST, Json(body)).into_response();
+        }
+    }
+
+    match state.sessions.create_session_with_env(
+        cols,
+        rows,
+        work_dir,
+        state.config.shell.clone(),
+        req.env_id,
+        req.agent_id,
+    ) {
         Ok(meta) => (StatusCode::CREATED, Json(meta)).into_response(),
         Err(session::SessionError::MaxSessions) => {
             let body = serde_json::json!({"error": {"code": "MAX_SESSIONS", "message": "session limit reached"}});
@@ -1311,6 +1377,7 @@ async fn handle_terminal_ws(
     }
 
     let mut out_task = tokio::spawn(async move {
+        let mut heartbeat = tokio::time::interval(Duration::from_secs(20));
         loop {
             tokio::select! {
                 biased;
@@ -1331,6 +1398,10 @@ async fn handle_terminal_ws(
                         let _ = ws_sender.send(Message::Binary(encode_frame(&frame))).await;
                         break;
                     }
+                }
+                _ = heartbeat.tick() => {
+                    // LIFE-010: keep NAT idle connections alive.
+                    let _ = ws_sender.send(Message::Binary(encode_frame(&Frame::Ping))).await;
                 }
                 result = live_rx.recv() => {
                     match result {
@@ -1374,8 +1445,8 @@ async fn handle_terminal_ws(
                             meta.rows = safe_rows;
                         }
                     }
-                    Frame::Ping => {
-                        // Pong handled by ws
+                    Frame::Ping | Frame::Pong => {
+                        // LIFE-010 heartbeat pong/keepalive — no action, just keep connection alive
                     }
                     _ => {}
                 }

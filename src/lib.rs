@@ -1,8 +1,10 @@
 #![allow(dead_code)]
+pub mod agents;
 pub mod archive;
 pub mod assets;
 pub mod auth;
 pub mod config;
+pub mod environments;
 pub mod files;
 pub mod git;
 pub mod http;

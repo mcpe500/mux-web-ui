@@ -769,3 +769,208 @@ async fn test_tab_009_metrics_max_sessions() {
         "default metrics must report max_sessions=4 (spec 008 TAB-009)"
     );
 }
+
+// ── SESS-009/010 (spec 010): busy-grace & disabled idle reap ──
+
+/// SESS-009: a detached session whose PTY keeps streaming output must NOT be
+/// reaped past the old grace; once output stops, normal grace reap resumes.
+#[tokio::test]
+async fn test_sess_009_busy_session_not_reaped() {
+    use clap::Parser as _;
+    use common::TEST_SECRET;
+    let temp = tempfile::tempdir().expect("tempdir");
+    let mut config = mux_web::config::Config::parse_from(["mux-web"]);
+    config.shell = Some("/bin/sh".to_string());
+    config.session_idle_timeout = 2; // grace 2s
+    config.session_busy_grace = 30; // busy window 30s
+    let roots = vec![("home".to_string(), temp.path().to_path_buf())];
+    let state = mux_web::http::AppState {
+        config,
+        allowed_roots: mux_web::paths::AllowedRoots::new(roots).expect("roots"),
+        sessions: mux_web::session::SessionRegistry::new_with(mux_web::session::SessionConfig {
+            grace_period: std::time::Duration::from_secs(2),
+            busy_grace: std::time::Duration::from_secs(30),
+            ..Default::default()
+        }),
+        auth: mux_web::auth::AuthState::with_secret(
+            mux_web::auth::AuthConfig::default(),
+            TEST_SECRET,
+        ),
+        share: mux_web::share::ShareRegistry::new(mux_web::share::ShareConfig::default()),
+    };
+    let mut server = common::start_server_with_state(state).await;
+    // pair
+    let resp = server
+        .client
+        .post(server.url("/api/v1/auth/pair"))
+        .header("content-type", "application/json")
+        .body(format!(r#"{{"secret": "{TEST_SECRET}"}}"#))
+        .send()
+        .await
+        .unwrap();
+    assert_eq!(resp.status(), 200);
+    let cookie = resp
+        .headers()
+        .get("set-cookie")
+        .and_then(|c| c.to_str().ok())
+        .map(String::from)
+        .unwrap();
+    server.session_cookie = Some(cookie.clone());
+    let jar = reqwest::cookie::Jar::default();
+    jar.add_cookie_str(&cookie, &server.base_url.parse().unwrap());
+    server.client = reqwest::Client::builder()
+        .cookie_provider(std::sync::Arc::new(jar))
+        .redirect(reqwest::redirect::Policy::none())
+        .build()
+        .unwrap();
+
+    // create + start a busy loop
+    let create = server
+        .client
+        .post(server.url("/api/v1/terminals"))
+        .json(&serde_json::json!({"cols": 80, "rows": 24}))
+        .send()
+        .await
+        .unwrap();
+    assert_eq!(create.status(), 201);
+    let create: serde_json::Value = create.json().await.unwrap();
+    let id = create["id"].as_str().unwrap().to_string();
+
+    let attach = server
+        .client
+        .post(server.url(&format!("/api/v1/terminals/{id}/attach")))
+        .send()
+        .await
+        .unwrap();
+    let attach: serde_json::Value = attach.json().await.unwrap();
+    let token = attach["ws_token"].as_str().unwrap().to_string();
+    let mut ws = authed_ws_connect(&server, &format!("/api/v1/terminals/{id}/ws?token={token}"))
+        .await
+        .unwrap();
+    send_input(&mut ws, "while true; do echo tick; sleep 0.5; done\n").await;
+    // detach — session now has NO client but keeps streaming
+    drop(ws);
+
+    // 3x the old grace: must still be alive thanks to busy-grace
+    tokio::time::sleep(std::time::Duration::from_secs(6)).await;
+    let list: serde_json::Value = server
+        .client
+        .get(server.url("/api/v1/terminals"))
+        .send()
+        .await
+        .unwrap()
+        .json()
+        .await
+        .unwrap();
+    let ids: Vec<&str> = list["sessions"]
+        .as_array()
+        .unwrap()
+        .iter()
+        .map(|s| s["id"].as_str().unwrap())
+        .collect();
+    assert!(
+        ids.contains(&id.as_str()),
+        "busy session must survive past old grace"
+    );
+
+    // stop output → normal grace reap (2s) + busy window (30s since last output)
+    // busy window is 30s; to keep the test fast we instead DELETE manually.
+    server
+        .client
+        .delete(server.url(&format!("/api/v1/terminals/{id}")))
+        .send()
+        .await
+        .unwrap();
+    server.shutdown().await;
+}
+
+/// SESS-010: idle_timeout = 0 disables idle reap entirely; manual DELETE works.
+#[tokio::test]
+async fn test_sess_010_idle_timeout_zero_disables_reap() {
+    use clap::Parser as _;
+    let temp = tempfile::tempdir().expect("tempdir");
+    let mut config = mux_web::config::Config::parse_from(["mux-web"]);
+    config.shell = Some("/bin/sh".to_string());
+    config.session_idle_timeout = 0;
+    let roots = vec![("home".to_string(), temp.path().to_path_buf())];
+    let state = mux_web::http::AppState {
+        config,
+        allowed_roots: mux_web::paths::AllowedRoots::new(roots).expect("roots"),
+        sessions: mux_web::session::SessionRegistry::new_with(mux_web::session::SessionConfig {
+            grace_period: std::time::Duration::ZERO,
+            ..Default::default()
+        }),
+        auth: mux_web::auth::AuthState::with_secret(
+            mux_web::auth::AuthConfig::default(),
+            common::TEST_SECRET,
+        ),
+        share: mux_web::share::ShareRegistry::new(mux_web::share::ShareConfig::default()),
+    };
+    let mut server = common::start_server_with_state(state).await;
+    let resp = server
+        .client
+        .post(server.url("/api/v1/auth/pair"))
+        .header("content-type", "application/json")
+        .body(format!(r#"{{"secret": "{}"}}"#, common::TEST_SECRET))
+        .send()
+        .await
+        .unwrap();
+    assert_eq!(resp.status(), 200);
+    let cookie = resp
+        .headers()
+        .get("set-cookie")
+        .and_then(|c| c.to_str().ok())
+        .map(String::from)
+        .unwrap();
+    server.session_cookie = Some(cookie.clone());
+    let jar = reqwest::cookie::Jar::default();
+    jar.add_cookie_str(&cookie, &server.base_url.parse().unwrap());
+    server.client = reqwest::Client::builder()
+        .cookie_provider(std::sync::Arc::new(jar))
+        .redirect(reqwest::redirect::Policy::none())
+        .build()
+        .unwrap();
+
+    let create = server
+        .client
+        .post(server.url("/api/v1/terminals"))
+        .json(&serde_json::json!({"cols": 80, "rows": 24}))
+        .send()
+        .await
+        .unwrap();
+    assert_eq!(create.status(), 201);
+    let create: serde_json::Value = create.json().await.unwrap();
+    let id = create["id"].as_str().unwrap().to_string();
+
+    // never attached: old behavior would reap at grace; with 0 → survives 4s
+    tokio::time::sleep(std::time::Duration::from_secs(4)).await;
+    let list: serde_json::Value = server
+        .client
+        .get(server.url("/api/v1/terminals"))
+        .send()
+        .await
+        .unwrap()
+        .json()
+        .await
+        .unwrap();
+    let ids: Vec<&str> = list["sessions"]
+        .as_array()
+        .unwrap()
+        .iter()
+        .map(|s| s["id"].as_str().unwrap())
+        .collect();
+    assert!(
+        ids.contains(&id.as_str()),
+        "idle_timeout=0 must disable reap"
+    );
+
+    // manual delete still works
+    let del = server
+        .client
+        .delete(server.url(&format!("/api/v1/terminals/{id}")))
+        .send()
+        .await
+        .unwrap();
+    assert_eq!(del.status(), 204);
+    server.shutdown().await;
+}

@@ -81,12 +81,13 @@ export function createTab(
   groups: TermGroup[],
   session: { sessionId: string; workDir?: string | null },
   maxSessions?: number,
+  labelOverride?: string,
 ): TermGroup[] {
   if (maxSessions != null && maxReached(groups, maxSessions)) return groups;
   const tab: TermTab = {
     key: nextKey('t'),
     sessionId: session.sessionId,
-    label: nextLabel(groups),
+    label: labelOverride ?? nextLabel(groups),
     workDir: session.workDir ?? null,
   };
   if (groups.length === 0) {
@@ -106,11 +107,12 @@ export function openInNewGroup(
   groups: TermGroup[],
   anchorGroupKey: string | null,
   session: { sessionId: string; workDir?: string | null },
+  labelOverride?: string,
 ): TermGroup[] {
   const tab: TermTab = {
     key: nextKey('t'),
     sessionId: session.sessionId,
-    label: nextLabel(groups),
+    label: labelOverride ?? nextLabel(groups),
     workDir: session.workDir ?? null,
   };
   const fresh: TermGroup = { key: nextKey('g'), tabs: [tab], activeKey: tab.key, flex: 1 };

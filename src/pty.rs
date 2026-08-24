@@ -23,6 +23,29 @@ impl PtySession {
         output_tx: mpsc::Sender<Vec<u8>>,
         exit_tx: mpsc::Sender<i32>,
     ) -> Result<Self, String> {
+        Self::new_with_env(
+            cols,
+            rows,
+            work_dir,
+            custom_shell,
+            None,
+            None,
+            output_tx,
+            exit_tx,
+        )
+    }
+
+    #[allow(clippy::too_many_arguments)]
+    pub fn new_with_env(
+        cols: u16,
+        rows: u16,
+        work_dir: Option<PathBuf>,
+        custom_shell: Option<String>,
+        env_id: Option<String>,
+        agent_id: Option<String>,
+        output_tx: mpsc::Sender<Vec<u8>>,
+        exit_tx: mpsc::Sender<i32>,
+    ) -> Result<Self, String> {
         // ===== RESOLVE EVERYTHING BEFORE FORK (fork-safe) =====
 
         // Resolve shell path
@@ -44,11 +67,23 @@ impl PtySession {
             });
 
         // Pre-allocate CStrings before fork (heap allocation is unsafe after fork)
-        let shell_cstr =
-            CString::new(shell.as_str()).map_err(|e| format!("Invalid shell path: {}", e))?;
-
-        let arg0_cstr =
-            CString::new(shell.as_str()).map_err(|e| format!("Invalid shell arg0: {}", e))?;
+        // PROOT-003/AGT-003 (spec 010): wrapper argv if env_id/agent_id present
+        let argv_strings: Vec<String> = if let Some(ref aid) = agent_id {
+            crate::agents::build_agent_argv(
+                &shell,
+                env_id.as_deref(),
+                aid.as_str(),
+                work_dir.as_deref(),
+            )?
+        } else if let Some(ref eid) = env_id {
+            crate::environments::build_argv(&shell, Some(eid.as_str()))?
+        } else {
+            vec![shell.clone()]
+        };
+        let argv_cstrs: Vec<CString> = argv_strings
+            .iter()
+            .map(|s| CString::new(s.as_str()).map_err(|e| format!("Invalid argv: {}", e)))
+            .collect::<Result<Vec<_>, _>>()?;
 
         // Resolve work directory to a CString before fork
         let work_dir_cstr = if let Some(ref dir) = work_dir {
@@ -195,11 +230,12 @@ impl PtySession {
                 // Set TERM environment variable
                 libc::setenv(term_key.as_ptr(), term_val.as_ptr(), 1);
 
-                // Build argv: [shell, NULL] — interactive login shell
-                let argv: [*const libc::c_char; 2] = [arg0_cstr.as_ptr(), std::ptr::null()];
-
-                // exec the shell
-                libc::execvp(shell_cstr.as_ptr(), argv.as_ptr());
+                // Build argv for execvp (first element is executable)
+                let mut argv_ptrs: Vec<*const libc::c_char> =
+                    argv_cstrs.iter().map(|c| c.as_ptr()).collect();
+                argv_ptrs.push(std::ptr::null());
+                // exec the (possibly wrapped) command
+                libc::execvp(argv_cstrs[0].as_ptr(), argv_ptrs.as_ptr());
 
                 // If execvp returns, it failed — write error to stderr and exit
                 let err_msg = b"mux-web: execvp failed\n";

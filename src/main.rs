@@ -1,8 +1,10 @@
 #![allow(dead_code)]
+mod agents;
 mod archive;
 mod assets;
 mod auth;
 mod config;
+mod environments;
 mod files;
 mod git;
 mod http;
@@ -139,6 +141,7 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
         output_buffer: config.session_output_buffer,
         ws_token_ttl: std::time::Duration::from_secs(config.ws_token_ttl),
         max_sessions: config.effective_max_sessions(),
+        busy_grace: std::time::Duration::from_secs(config.session_busy_grace),
     });
     let auth = auth::AuthState::new(auth::AuthConfig::from_parts(
         config.pairing_rate_window,

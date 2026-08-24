@@ -91,6 +91,11 @@ export function TextEditorView({ rootId: propRootId, filePath: propFilePath, ini
   const [splitRatio, setSplitRatio] = useState(0.6);
   // Effective backend limit from /api/v1/metrics (TAB-009); null = unknown
   const [metricsMax, setMetricsMax] = useState<number | null>(null);
+  // PROOT-005/AGT-004 (spec 010): environment picker + agents menu
+  const [spawnEnv, setSpawnEnv] = useState('termux');
+  const [envs, setEnvs] = useState<{ id: string; name: string }[]>([{ id: 'termux', name: 'Termux' }]);
+  const [agentsOpen, setAgentsOpen] = useState(false);
+  const [agents, setAgents] = useState<{ id: string; binary: string; label: string; color: string; found: boolean }[]>([]);
   // V051-003: boot-time health gate (undefined = pending, null = no version field)
   const [serverVersion, setServerVersion] = useState<string | null | undefined>(undefined);
   const [healthFailed, setHealthFailed] = useState(false);
@@ -108,6 +113,9 @@ export function TextEditorView({ rootId: propRootId, filePath: propFilePath, ini
 
   // EDT-010: git branch badge
   const [gitBranch, setGitBranch] = useState<string | null>(null);
+  // EDIT-009/016 (spec 010): lazy mux-code highlight layer
+  const [hlLines, setHlLines] = useState<string[] | null>(null);
+  const hlPreRef = useRef<HTMLPreElement>(null);
 
   // Load roots — validate persisted workspace against real roots (tamper-safe)
   useEffect(() => {
@@ -138,6 +146,16 @@ export function TextEditorView({ rootId: propRootId, filePath: propFilePath, ini
     return () => {
       cancelled = true;
     };
+  }, []);
+
+  // PROOT-002: environments for the picker chips
+  useEffect(() => {
+    fetch('/api/v1/environments')
+      .then(r => (r.ok ? r.json() : Promise.reject()))
+      .then((list: { id: string; name: string }[]) => {
+        if (Array.isArray(list) && list.length > 0) setEnvs(list);
+      })
+      .catch(() => {});
   }, []);
 
   // TAB-009: expose the effective limit for the "+"/split guard tooltip "N/max"
@@ -242,11 +260,16 @@ export function TextEditorView({ rootId: propRootId, filePath: propFilePath, ini
   const spawnInto = useCallback(
     (
       mode: 'active' | 'new-group',
-      opts?: { anchorGroupKey?: string | null; wsOverride?: EditorWS },
+      opts?: { anchorGroupKey?: string | null; wsOverride?: EditorWS; envId?: string; agentId?: string },
     ) => {
       if (spawning) return;
       setSpawning(true);
-      const payload = cwdPayload(opts?.wsOverride ?? wsRef.current);
+      const envId = opts?.envId ?? (agentsOpen ? spawnEnv : spawnEnv);
+      const payload = {
+        ...cwdPayload(opts?.wsOverride ?? wsRef.current),
+        ...(envId && envId !== 'termux' ? { env_id: envId } : {}),
+        ...(opts?.agentId ? { agent_id: opts.agentId } : {}),
+      };
       fetch('/api/v1/terminals', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -266,13 +289,17 @@ export function TextEditorView({ rootId: propRootId, filePath: propFilePath, ini
           setSpawnErr(null);
           const workDir =
             typeof meta.work_dir === 'string' && meta.work_dir ? meta.work_dir : null;
+          const labelOverride =
+            opts?.agentId
+              ? `[${opts.agentId}@${envId ?? 'termux'}]`
+              : undefined;
           setGroups(prev =>
             mode === 'active'
-              ? createTab(prev, { sessionId: meta.id, workDir }, metricsMax ?? undefined)
+              ? createTab(prev, { sessionId: meta.id, workDir }, metricsMax ?? undefined, labelOverride)
               : openInNewGroup(prev, opts?.anchorGroupKey ?? null, {
                   sessionId: meta.id,
                   workDir,
-                }),
+                }, labelOverride),
           );
           setPanelOpen(true);
         })
@@ -532,6 +559,42 @@ export function TextEditorView({ rootId: propRootId, filePath: propFilePath, ini
   };
 
   const activeTab = useMemo(() => tabs.find(t => t.id === activeTabId), [tabs, activeTabId]);
+  // EDIT-009/016: lazy tokenizer highlight (mux-code) — only when enabled
+  useEffect(() => {
+    const tab = activeTab;
+    if (!highlight || !tab || tab.content.length > 200_000) {
+      setHlLines(null);
+      return;
+    }
+    let cancelled = false;
+    import('./mux-code/tokenizer').then(({ detectLang, tokenizeLine }) => {
+      if (cancelled) return;
+      const lang = detectLang(tab.fileName);
+      const esc = (t: string) =>
+        t.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+      const colors: Record<string, string> = {
+        kw: '#c792ea', str: '#c3e88d', com: '#5c6a7a',
+        num: '#f78c6c', fn: '#82aaff', txt: '#f8fafc',
+      };
+      const lines = tab.content.split('\n').map((line) => {
+        const toks: { t: string; s: number; e: number }[] = tokenizeLine(line, lang);
+        if (toks.length === 0) return esc(line) || '&nbsp;';
+        let out = '';
+        let pos = 0;
+        for (const t of toks) {
+          if (t.s > pos) out += esc(line.slice(pos, t.s));
+          out += `<span style="color:${colors[t.t] ?? colors.txt}">${esc(line.slice(t.s, t.e))}</span>`;
+          pos = t.e;
+        }
+        out += esc(line.slice(pos));
+        return out || '&nbsp;';
+      });
+      setHlLines(lines);
+    }).catch(() => setHlLines(null));
+    return () => { cancelled = true; };
+  }, [highlight, activeTab?.fileName, activeTab?.content]);
+
+
 
   const updateActiveTab = (updates: Partial<TabData>) => {
     if (!activeTabId) return;
@@ -908,6 +971,21 @@ export function TextEditorView({ rootId: propRootId, filePath: propFilePath, ini
             ) : (
               <div style={{ flex: 1, display: 'flex', overflow: 'hidden' }}>
                 {renderLineNumbers()}
+                <div style={{ flex: 1, position: 'relative', display: 'flex', overflow: 'hidden' }}>
+                  {/* EDIT-011: highlight layer behind transparent textarea */}
+                  {hlLines && (
+                    <pre
+                      ref={hlPreRef}
+                      aria-hidden
+                      style={{
+                        position: 'absolute', inset: 0, margin: 0, padding: '16px',
+                        fontFamily: "'JetBrains Mono', monospace", fontSize: '14px',
+                        lineHeight: '1.5', whiteSpace: 'pre', overflow: 'hidden',
+                        pointerEvents: 'none', color: '#f8fafc',
+                      }}
+                      dangerouslySetInnerHTML={{ __html: hlLines.join('\n') }}
+                    />
+                  )}
                 <textarea
                   value={activeTab.content}
                   onInput={e => updateActiveTab({ content: (e.target as HTMLTextAreaElement).value })}
@@ -915,13 +993,21 @@ export function TextEditorView({ rootId: propRootId, filePath: propFilePath, ini
                   onSelect={handleEditorSelect}
                   onMouseUp={handleEditorSelect}
                   onKeyUp={handleEditorSelect}
+                  onScroll={e => {
+                    if (hlPreRef.current) {
+                      const t = e.target as HTMLTextAreaElement;
+                      hlPreRef.current.scrollTop = t.scrollTop;
+                      hlPreRef.current.scrollLeft = t.scrollLeft;
+                    }
+                  }}
                   spellcheck={false}
                   style={{
                     flex: 1,
                     width: '100%',
                     height: '100%',
                     backgroundColor: 'transparent',
-                    color: '#f8fafc',
+                    color: highlight && hlLines ? 'transparent' : '#f8fafc',
+                    caretColor: '#f8fafc',
                     fontFamily: "'JetBrains Mono', monospace",
                     fontSize: '14px',
                     lineHeight: '1.5',
@@ -931,9 +1017,12 @@ export function TextEditorView({ rootId: propRootId, filePath: propFilePath, ini
                     resize: 'none',
                     whiteSpace: 'pre',
                     overflow: 'auto',
-                    boxSizing: 'border-box'
+                    boxSizing: 'border-box',
+                    position: 'relative',
+                    zIndex: 1
                   }}
                 />
+                </div>
                 {/* Minimap - VS Code */}
                 <div style={{ width: '64px', background: '#0f172a', borderLeft: '1px solid rgba(255,255,255,0.06)', overflow: 'hidden', padding: '4px 2px', fontSize: '2px', lineHeight: '3px', color: '#475569', fontFamily: 'monospace', opacity: 0.6 }}>
                   {activeTab.content.slice(0, 3000).split('\n').slice(0, 100).map((line, i)=> (
@@ -1050,6 +1139,46 @@ export function TextEditorView({ rootId: propRootId, filePath: propFilePath, ini
                     >
                       ⫿
                     </button>
+                    <button
+                      onClick={() => {
+                        if (agentsOpen) { setAgentsOpen(false); return; }
+                        fetch(`/api/v1/environments/${spawnEnv}/agents`)
+                          .then(r => (r.ok ? r.json() : Promise.reject()))
+                          .then(list => { setAgents(list); setAgentsOpen(true); })
+                          .catch(() => setAgentsOpen(true));
+                      }}
+                      title="Coding Agents"
+                      style={{ padding: '2px 7px', background: agentsOpen ? '#6366f1' : '#334155', color: 'white', border: 'none', borderRadius: '3px', cursor: 'pointer' }}
+                    >
+                      🤖
+                    </button>
+                  </span>
+                  {agentsOpen && (
+                    <span style={{ display: 'inline-flex', gap: '4px', alignItems: 'center', flexShrink: 0 }}>
+                      {agents.map(a => (
+                        <button
+                          key={a.id}
+                          disabled={!a.found || spawning || guardReached}
+                          onClick={() => { setAgentsOpen(false); spawnInto('active', { envId: spawnEnv, agentId: a.id }); }}
+                          title={a.found ? `Launch ${a.label} (${a.binary})` : `${a.binary} not found in ${spawnEnv}`}
+                          style={{ padding: '2px 7px', background: a.found ? a.color : '#475569', color: 'white', border: 'none', borderRadius: '3px', cursor: a.found ? 'pointer' : 'not-allowed', opacity: a.found ? 1 : 0.5, fontSize: '10px' }}
+                        >
+                          {a.label}
+                        </button>
+                      ))}
+                    </span>
+                  )}
+                  <span style={{ display: 'inline-flex', gap: '3px', marginLeft: '4px', flexShrink: 0, alignItems: 'center' }}>
+                    {envs.map(e => (
+                      <button
+                        key={e.id}
+                        onClick={() => setSpawnEnv(e.id)}
+                        title={`Spawn environment: ${e.name}`}
+                        style={{ padding: '2px 6px', background: spawnEnv === e.id ? '#10b981' : '#334155', color: 'white', border: 'none', borderRadius: '3px', cursor: 'pointer', fontSize: '10px' }}
+                      >
+                        {e.name}
+                      </button>
+                    ))}
                   </span>
                   <span
                     title={wdLabel.title}

@@ -31,6 +31,9 @@ pub struct SessionMetadata {
     /// Absent when no explicit cwd applies (legacy wire format preserved).
     #[serde(skip_serializing_if = "Option::is_none")]
     pub work_dir: Option<PathBuf>,
+    /// PROOT-003 (spec 010): environment id for proot-distro label.
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub env: Option<String>,
 }
 
 #[derive(Debug, Clone)]
@@ -42,6 +45,8 @@ pub struct SessionConfig {
     /// historic MAX_SESSIONS=4 behavior; operators may raise it via
     /// `--max-sessions` (clamped 1..=16) on capable devices.
     pub max_sessions: usize,
+    /// SESS-009 (spec 010): busy-grace window; 0 = off
+    pub busy_grace: Duration,
 }
 
 impl Default for SessionConfig {
@@ -51,6 +56,7 @@ impl Default for SessionConfig {
             output_buffer: 256 * 1024,
             ws_token_ttl: Duration::from_secs(10),
             max_sessions: MAX_SESSIONS,
+            busy_grace: Duration::from_secs(30),
         }
     }
 }
@@ -128,6 +134,8 @@ pub struct TerminalSessionInstance {
     pub attach_count: AtomicU64,
     /// Grace deadline: cleanup time when no client is attached.
     pub idle_deadline: Mutex<Option<Instant>>,
+    /// SESS-009: last time output was observed; used for busy-grace extension.
+    pub last_output: Mutex<Instant>,
 }
 
 struct PendingAttach {
@@ -168,6 +176,18 @@ impl SessionRegistry {
         work_dir: Option<PathBuf>,
         shell: Option<String>,
     ) -> Result<SessionMetadata, SessionError> {
+        self.create_session_with_env(cols, rows, work_dir, shell, None, None)
+    }
+
+    pub fn create_session_with_env(
+        &self,
+        cols: u16,
+        rows: u16,
+        work_dir: Option<PathBuf>,
+        shell: Option<String>,
+        env: Option<String>,
+        agent: Option<String>,
+    ) -> Result<SessionMetadata, SessionError> {
         let mut map = self.sessions.lock().unwrap();
         if map.len() >= self.config.max_sessions {
             return Err(SessionError::MaxSessions);
@@ -179,8 +199,17 @@ impl SessionRegistry {
         let (exit_tx, mut exit_rx) = mpsc::channel::<i32>(4);
 
         let (cols, rows) = crate::pty::clamp_dimensions(cols, rows);
-        let pty = PtySession::new(cols, rows, work_dir.clone(), shell, output_tx, exit_tx)
-            .map_err(SessionError::SpawnFailed)?;
+        let pty = PtySession::new_with_env(
+            cols,
+            rows,
+            work_dir.clone(),
+            shell,
+            env.clone(),
+            agent,
+            output_tx,
+            exit_tx,
+        )
+        .map_err(SessionError::SpawnFailed)?;
 
         let metadata = SessionMetadata {
             id: id.clone(),
@@ -190,6 +219,7 @@ impl SessionRegistry {
             state: SessionState::Running,
             pid: pty.pid(),
             work_dir,
+            env,
         };
 
         let (live_tx, _) = broadcast::channel::<Vec<u8>>(128);
@@ -207,21 +237,29 @@ impl SessionRegistry {
             _gen_rx: gen_rx_w,
             has_client: AtomicBool::new(false),
             attach_count: AtomicU64::new(0),
-            idle_deadline: Mutex::new(Some(Instant::now() + self.config.grace_period)),
+            idle_deadline: Mutex::new(if self.config.grace_period.is_zero() {
+                None
+            } else {
+                Some(Instant::now() + self.config.grace_period)
+            }),
+            last_output: Mutex::new(Instant::now()),
         });
 
         map.insert(id.clone(), instance.clone());
         drop(map);
 
         // Writer task: PTY output -> ring buffer + live broadcast (SESS-007).
+        // SESS-009: update last_output for busy-grace.
         let ring = instance.output.clone();
         let live = instance.live.clone();
+        let inst_writer = instance.clone();
         tokio::spawn(async move {
             while let Some(bytes) = output_rx.recv().await {
                 let _ = std::panic::catch_unwind(std::panic::AssertUnwindSafe(|| {
                     let mut g = ring.lock().unwrap();
                     g.push(&bytes);
                 }));
+                *inst_writer.last_output.lock().unwrap() = Instant::now();
                 let _ = live.send(bytes);
             }
         });
@@ -243,13 +281,19 @@ impl SessionRegistry {
                 }
                 let _ = instance.exit_notify.send(Some(code));
                 if !instance.has_client.load(Ordering::Relaxed) {
-                    *instance.idle_deadline.lock().unwrap() = Some(Instant::now() + grace);
+                    if grace.is_zero() {
+                        *instance.idle_deadline.lock().unwrap() = None;
+                    } else {
+                        *instance.idle_deadline.lock().unwrap() = Some(Instant::now() + grace);
+                    }
                 }
             }
         });
 
         // Janitor: reap detached sessions after the grace period (LIFE-005,
         // SESS-004) and closed sessions after the same deadline.
+        // SESS-009: busy-grace auto-extends deadline while output flows.
+        // SESS-010: grace_period == 0 disables idle reap entirely.
         let registry = self.clone();
         tokio::spawn(async move {
             let mut tick = tokio::time::interval(Duration::from_secs(1));
@@ -261,6 +305,19 @@ impl SessionRegistry {
                 let has_client = instance.has_client.load(Ordering::Relaxed);
                 if has_client {
                     continue;
+                }
+                if registry.config.grace_period.is_zero() {
+                    continue;
+                }
+                // SESS-009: if output is still flowing, push deadline forward.
+                let busy = registry.config.busy_grace;
+                if !busy.is_zero() {
+                    let last = *instance.last_output.lock().unwrap();
+                    if Instant::now().duration_since(last) < busy {
+                        *instance.idle_deadline.lock().unwrap() =
+                            Some(Instant::now() + registry.config.grace_period);
+                        continue;
+                    }
                 }
                 let deadline = *instance.idle_deadline.lock().unwrap();
                 if let Some(d) = deadline {
@@ -332,6 +389,7 @@ impl SessionRegistry {
     }
 
     /// Called when a client detaches: restart the grace deadline.
+    /// SESS-010: grace == 0 => no deadline (never reap idle).
     pub fn detach_session(&self, id: &str) {
         let Some(instance) = self.get_session(id) else {
             return;
@@ -339,8 +397,12 @@ impl SessionRegistry {
         instance.has_client.store(false, Ordering::Relaxed);
         let state = instance.metadata.lock().unwrap().state;
         if state != SessionState::Closed {
-            *instance.idle_deadline.lock().unwrap() =
-                Some(Instant::now() + self.config.grace_period);
+            if self.config.grace_period.is_zero() {
+                *instance.idle_deadline.lock().unwrap() = None;
+            } else {
+                *instance.idle_deadline.lock().unwrap() =
+                    Some(Instant::now() + self.config.grace_period);
+            }
         }
     }
 

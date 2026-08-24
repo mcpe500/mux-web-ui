@@ -59,8 +59,13 @@ pub struct Config {
     pub max_sessions: usize,
 
     /// Grace period (seconds) before an unattached session is terminated
+    /// 0 = idle reap disabled (SESS-010)
     #[arg(long, default_value_t = 60)]
     pub session_idle_timeout: u64,
+
+    /// Busy-grace window (seconds) that auto-extends detached deadline while output flows (SESS-009)
+    #[arg(long, env = "MUX_WEB_SESSION_BUSY_GRACE", default_value_t = 30)]
+    pub session_busy_grace: u64,
 
     /// Ring buffer size (bytes) replayed on reattach
     #[arg(long, default_value_t = 256 * 1024)]

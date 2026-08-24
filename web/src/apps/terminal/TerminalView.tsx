@@ -49,6 +49,7 @@ export function TerminalView({ terminalId }: TerminalViewProps) {
     termRef.current = term;
 
     let ws: WebSocket | null = null;
+    let raf: number | null = null;
     let dataDisposable: { dispose: () => void } | null = null;
     let resizeObserver: ResizeObserver | null = null;
     let resizeTimer: number | null = null;
@@ -78,6 +79,28 @@ export function TerminalView({ terminalId }: TerminalViewProps) {
           }
         };
 
+        // PERF-006: coalesce OUTPUT frames to 1 term.write per animation frame
+        let pending: Uint8Array[] = [];
+        const flush = () => {
+          raf = null;
+          if (pending.length === 0) return;
+          let total = 0;
+          for (const c of pending) total += c.length;
+          const merged = new Uint8Array(total);
+          let off = 0;
+          for (const c of pending) {
+            merged.set(c, off);
+            off += c.length;
+          }
+          pending = [];
+          term.write(merged);
+        };
+        const schedule = (chunk: Uint8Array) => {
+          pending.push(chunk);
+          if (raf !== null) return;
+          raf = requestAnimationFrame(flush);
+        };
+
         ws.onmessage = (event) => {
           if (event.data instanceof ArrayBuffer) {
             const data = new Uint8Array(event.data);
@@ -86,8 +109,13 @@ export function TerminalView({ terminalId }: TerminalViewProps) {
             const payload = data.subarray(1);
 
             if (opcode === 0x00) {
-              // OUTPUT
-              term.write(payload);
+              // OUTPUT - coalesced (PERF-006)
+              schedule(new Uint8Array(payload));
+            } else if (opcode === 0x05) {
+              // PING from server (LIFE-010) -> pong
+              if (ws && ws.readyState === WebSocket.OPEN) {
+                ws.send(new Uint8Array([0x06])); // PONG
+              }
             } else if (opcode === 0x03) {
               // EXIT
               setDisconnectReason('Terminal Session Exited');
@@ -174,6 +202,7 @@ export function TerminalView({ terminalId }: TerminalViewProps) {
 
     return () => {
       isSubscribed = false;
+      if (raf !== null) cancelAnimationFrame(raf);
       if (resizeTimer) window.clearTimeout(resizeTimer);
       if (dataDisposable) dataDisposable.dispose();
       if (resizeObserver) resizeObserver.disconnect();
