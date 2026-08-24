@@ -33,7 +33,9 @@ fn private_ips() -> Vec<IpAddr> {
                 if let Some(ip) = ip {
                     let private = match ip {
                         IpAddr::V4(v4) => {
-                            v4.is_private() && !v4.is_loopback() && !v4.is_link_local()
+                            (v4.is_private() || config::is_cgnat_v4(v4))
+                                && !v4.is_loopback()
+                                && !v4.is_link_local()
                         }
                         IpAddr::V6(v6) => v6.is_unique_local() && !v6.is_loopback(),
                     };
@@ -89,6 +91,17 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
         .init();
 
     let mut config = Config::parse();
+
+    // NET-006 (spec 009): fail fast on invalid allowlist/advertise input so a
+    // typo can never silently widen (or break) the Host gate.
+    if let Err(e) = config.effective_allowed_hosts() {
+        eprintln!("Error: {e}");
+        std::process::exit(1);
+    }
+    if let Err(e) = config.effective_advertise_addrs() {
+        eprintln!("Error: {e}");
+        std::process::exit(1);
+    }
 
     // rustls needs an explicit default CryptoProvider (axum-server ships
     // rustls without a provider feature).
@@ -176,11 +189,11 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
 
     if config.lan {
         let ips = private_ips();
-        for ip in &ips {
-            println!(
-                "  LAN access: {}://{}:{}/{}",
-                scheme, ip, config.port, bootstrap
-            );
+        // NET-004 (spec 009): one ordered, deduped list — loopback, advertised
+        // (VPN/custom domain), then every private/CGNAT interface IP.
+        let advertise = config.effective_advertise_addrs().unwrap_or_default();
+        for url in config::collect_access_urls(scheme, config.port, &advertise, &ips) {
+            println!("  Access: {url}/{}", bootstrap);
         }
         if ips.is_empty() {
             println!("  LAN mode: no private interface addresses detected");
@@ -190,6 +203,14 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
             println!("WARNING: LAN mode WITHOUT TLS. Anyone on the network can read");
             println!("your terminal output and steal the session cookie. Strongly");
             println!("recommended: --generate-cert (then accept the browser warning).");
+        }
+    } else {
+        // Non-LAN: still surface advertised VPN/custom URLs if the user set them.
+        let advertise = config.effective_advertise_addrs().unwrap_or_default();
+        if !advertise.is_empty() {
+            for a in &advertise {
+                println!("  VPN/Custom: {scheme}://{a}/{}", bootstrap);
+            }
         }
     }
 

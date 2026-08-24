@@ -199,3 +199,10 @@
 | TAB-007 Panel toggle/hide, last-tab closes panel, Ctrl+` and Ctrl+Shift+` | TAB-007 | Frontend Unit | Portable | Passed |
 | TAB-008 Folder change with many terminals: Replace closes all then spawns one | TAB-008 | Integration | Portable | Passed |
 | TAB-009 Metrics exposes max_sessions for guard "N/max" | TAB-009 | Integration | Portable | Passed |
+| NET-001 Host allowlist --allowed-hosts exact case-insensitive | NET-001 | Integration / Security | Portable | Passed |
+| NET-002 CGNAT 100.64/10 accepted at gate and banner | NET-002 | Security / UX | Portable | Passed |
+| NET-003 --advertise-addr prints URLs and implies allowlist | NET-003 | UX / Config | Portable | Passed |
+| NET-004 Startup banner lists loopback/advertise/private+CGNAT deduped | NET-004 | UX | Portable | Passed |
+| NET-005 HOST_REJECTED message hints --allowed-hosts | NET-005 | UX | Portable | Passed |
+| NET-006 Allowlist parser strict: wildcard/scheme/path/space rejected | NET-006 | Security | Portable | Passed |
+| NET-007 No-flag behavior identical; evil.com/public IP still 403 | NET-007 | Security | Portable | Passed |

@@ -277,18 +277,10 @@ async fn auth_middleware(
     next.run(request).await
 }
 
-fn is_private(ip: IpAddr) -> bool {
-    use std::net::Ipv4Addr;
-    match ip {
-        IpAddr::V4(v4) => {
-            v4.is_loopback() || v4.is_private() || v4.is_link_local() || v4 == Ipv4Addr::UNSPECIFIED
-        }
-        IpAddr::V6(v6) => v6.is_loopback() || v6.is_unique_local(),
-    }
-}
-
-/// SEC-003 / AUTH-006: pin the Host header to the bind address/port and reject
-/// mismatched Origins. Blocks dns-rebinding and host-spoofing.
+/// SEC-003 / AUTH-006 / NET-001/002 (spec 009): pin the Host header to the
+/// bind address/port, private/CGNAT IPs, literal localhost, or the operator's
+/// explicit allowlist — reject everything else. Blocks dns-rebinding and
+/// host-spoofing while enabling VPN meshes and custom domains.
 async fn host_origin_middleware(
     State(state): State<AppState>,
     request: Request<axum::body::Body>,
@@ -296,6 +288,8 @@ async fn host_origin_middleware(
 ) -> Response {
     let tls = state.config.tls_enabled();
     let expected_port = state.config.port.to_string();
+    // Validated (and lowercased) at startup; empty here means no extra hosts.
+    let allowed_hosts = state.config.effective_allowed_hosts().unwrap_or_default();
 
     let host_header = request
         .headers()
@@ -314,17 +308,21 @@ async fn host_origin_middleware(
             };
             let host_part = host_part.trim_matches(['[', ']']);
             let port_ok = port.is_empty() || port == expected_port;
-            let host_ok = match host_part.parse::<IpAddr>() {
-                Ok(ip) => is_private(ip) || ip == state.config.effective_bind(),
-                Err(_) => host_part.eq_ignore_ascii_case("localhost"),
-            };
-            port_ok && host_ok
+            let ip_ok = host_part
+                .parse::<IpAddr>()
+                .map(|ip| crate::config::is_gate_ok_ip(ip, state.config.effective_bind()))
+                .unwrap_or(false);
+            let name_ok = host_part.eq_ignore_ascii_case("localhost")
+                || allowed_hosts
+                    .iter()
+                    .any(|h| h == &host_part.to_ascii_lowercase());
+            port_ok && (ip_ok || name_ok)
         }
         None => false,
     };
 
     if !host_ok {
-        let body = serde_json::json!({"error": {"code": "HOST_REJECTED", "message": "invalid Host header"}});
+        let body = serde_json::json!({"error": {"code": "HOST_REJECTED", "message": "invalid Host header — add it via --allowed-hosts"}});
         return (StatusCode::FORBIDDEN, Json(body)).into_response();
     }
 

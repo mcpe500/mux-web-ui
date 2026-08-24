@@ -251,3 +251,145 @@ async fn test_sec_006_constant_time_compare_subtle() {
         Err(mux_web::auth::AuthError::InvalidSecret)
     );
 }
+
+// ── NET-001/002/005/007 (spec 009): Host allowlist & CGNAT gate ──
+
+use std::path::PathBuf;
+
+/// Server with custom allowed_hosts/advertise_addrs (auto-paired client).
+async fn start_server_with_hosts(allowed: &str, advertise: &str) -> common::TestServer {
+    use clap::Parser as _;
+    use mux_web::http::AppState;
+    let temp = tempfile::tempdir().expect("tempdir");
+    let mut config = mux_web::config::Config::parse_from(["mux-web"]);
+    config.shell = Some("/bin/sh".to_string());
+    if !allowed.is_empty() {
+        config.allowed_hosts = Some(allowed.to_string());
+    }
+    if !advertise.is_empty() {
+        config.advertise_addrs = Some(advertise.to_string());
+    }
+    let roots = vec![("home".to_string(), temp.path().to_path_buf())];
+    let state = AppState {
+        config,
+        allowed_roots: mux_web::paths::AllowedRoots::new(roots).expect("roots"),
+        sessions: SessionRegistry::new_with(SessionConfig::default()),
+        auth: AuthState::with_secret(AuthConfig::default(), common::TEST_SECRET),
+        share: mux_web::share::ShareRegistry::new(mux_web::share::ShareConfig::default()),
+    };
+    let mut server = common::start_server_with_state(state).await;
+    let resp = server
+        .client
+        .post(server.url("/api/v1/auth/pair"))
+        .header("content-type", "application/json")
+        .body(format!(r#"{{"secret": "{}"}}"#, common::TEST_SECRET))
+        .send()
+        .await
+        .expect("pair");
+    assert_eq!(resp.status(), 200);
+    let cookie = resp
+        .headers()
+        .get("set-cookie")
+        .and_then(|c| c.to_str().ok())
+        .map(String::from)
+        .expect("cookie");
+    let jar = reqwest::cookie::Jar::default();
+    jar.add_cookie_str(&cookie, &server.base_url.parse().unwrap());
+    server.client = reqwest::Client::builder()
+        .cookie_provider(std::sync::Arc::new(jar))
+        .redirect(reqwest::redirect::Policy::none())
+        .build()
+        .unwrap();
+    server
+}
+
+async fn status_with_host(server: &common::TestServer, host: &str) -> u16 {
+    server
+        .client
+        .get(server.url("/api/v1/health"))
+        .header("Host", host)
+        .send()
+        .await
+        .unwrap()
+        .status()
+        .as_u16()
+}
+
+fn server_port(server: &common::TestServer) -> String {
+    server
+        .base_url
+        .rsplit_once(':')
+        .map(|(_, p)| p.to_string())
+        .expect("port in base_url")
+}
+
+/// NET-001: allowlisted domain (with and without port) is accepted.
+#[tokio::test]
+async fn test_net_001_allowed_host_accepted() {
+    let server = start_server_with_hosts("allowed.test", "").await;
+    assert_ne!(status_with_host(&server, "allowed.test").await, 403);
+    let with_port = format!("allowed.test:{}", server_port(&server));
+    assert_ne!(status_with_host(&server, &with_port).await, 403);
+    server.shutdown().await;
+}
+
+/// NET-001: matching is case-insensitive.
+#[tokio::test]
+async fn test_net_001_case_insensitive() {
+    let server = start_server_with_hosts("allowed.test", "").await;
+    assert_ne!(status_with_host(&server, "ALLOWED.TEST").await, 403);
+    server.shutdown().await;
+}
+
+/// NET-002: CGNAT (Tailscale-style) IP in Host is accepted without any flag.
+#[tokio::test]
+async fn test_net_002_cgnat_ip_accepted() {
+    let server = start_health_server().await;
+    let host = format!("100.64.1.2:{}", server_port(&server));
+    assert_eq!(status_with_host(&server, &host).await, 200);
+    server.shutdown().await;
+}
+
+/// NET-007: public IPs and unknown domains stay rejected (rebinding guard).
+#[tokio::test]
+async fn test_net_007_evil_host_still_rejected() {
+    let server = start_server_with_hosts("allowed.test", "").await;
+    for host in ["evil.com", "93.184.216.34"] {
+        let status = status_with_host(&server, host).await;
+        assert_eq!(status, 403, "host {host} must stay rejected");
+    }
+    // default server (no flags) rejects public domain too
+    let plain = start_health_server().await;
+    assert_eq!(status_with_host(&plain, "evil.com").await, 403);
+    plain.shutdown().await;
+    server.shutdown().await;
+}
+
+/// NET-005: rejection body hints at --allowed-hosts.
+#[tokio::test]
+async fn test_net_005_host_rejected_message_hints_flag() {
+    let server = start_health_server().await;
+    let resp = server
+        .client
+        .get(server.url("/api/v1/health"))
+        .header("Host", "evil.com")
+        .send()
+        .await
+        .unwrap();
+    let body: serde_json::Value = resp.json().await.unwrap();
+    let msg = body["error"]["message"].as_str().unwrap_or("");
+    assert!(msg.contains("--allowed-hosts"), "msg: {msg}");
+    server.shutdown().await;
+}
+
+/// NET-003: advertise_addrs implies allowlist for its host-part.
+#[tokio::test]
+async fn test_net_003_advertise_implies_allowlist() {
+    let server = start_server_with_hosts("", "a.test").await;
+    assert_ne!(status_with_host(&server, "a.test").await, 403);
+    server.shutdown().await;
+}
+
+// silence unused import when helpers evolve
+#[allow(unused)]
+fn _unused(p: PathBuf) {}
