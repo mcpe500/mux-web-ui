@@ -276,6 +276,9 @@ async fn start_server_with_hosts(allowed: &str, advertise: &str) -> common::Test
         sessions: SessionRegistry::new_with(SessionConfig::default()),
         auth: AuthState::with_secret(AuthConfig::default(), common::TEST_SECRET),
         share: mux_web::share::ShareRegistry::new(mux_web::share::ShareConfig::default()),
+        distro_tasks: std::sync::Arc::new(tokio::sync::Mutex::new(
+            mux_web::distro_mgmt::DistroTaskRegistry::default(),
+        )),
     };
     let mut server = common::start_server_with_state(state).await;
     let resp = server
@@ -388,6 +391,110 @@ async fn test_net_003_advertise_implies_allowlist() {
     let server = start_server_with_hosts("", "a.test").await;
     assert_ne!(status_with_host(&server, "a.test").await, 403);
     server.shutdown().await;
+}
+
+// ── NET-007 (spec 011): trusted-proxy client-IP resolution ──
+
+#[test]
+fn test_net_007_resolve_client_ip_matrix() {
+    use mux_web::config::TrustedProxy;
+    use mux_web::http::resolve_client_ip;
+    use std::net::{IpAddr, Ipv4Addr};
+
+    let peer = IpAddr::V4(Ipv4Addr::new(10, 0, 0, 9));
+    let client: IpAddr = "203.0.113.7".parse().unwrap();
+    let other: IpAddr = Ipv4Addr::new(10, 9, 9, 9).into();
+    let tp_peer = TrustedProxy::Single(peer);
+    let cidr8 = TrustedProxy::V4Cidr(Ipv4Addr::new(10, 0, 0, 0), 8);
+
+    // empty trust list → legacy behavior byte-for-byte (header ignored)
+    assert_eq!(resolve_client_ip(peer, Some("203.0.113.7"), &[]), peer);
+    // untrusted peer carrying XFF → header ignored entirely
+    assert_eq!(
+        resolve_client_ip(other, Some("203.0.113.7"), std::slice::from_ref(&tp_peer)),
+        other
+    );
+    // trusted single proxy → client is the rightmost untrusted hop
+    assert_eq!(
+        resolve_client_ip(peer, Some("203.0.113.7"), &[tp_peer]),
+        client
+    );
+    // chain client → inner-proxy(10.1.2.3) → edge(peer): /8 trusts the middle hop
+    assert_eq!(
+        resolve_client_ip(peer, Some("198.51.100.5, 10.1.2.3"), &[cidr8]),
+        "198.51.100.5".parse::<IpAddr>().unwrap()
+    );
+    // garbage entries skipped, valid ones still resolved
+    assert_eq!(
+        resolve_client_ip(
+            peer,
+            Some("not-an-ip, 203.0.113.7"),
+            &[TrustedProxy::Single(peer)]
+        ),
+        client
+    );
+    // all hops trusted → collapse to leftmost entry
+    let self_ref = resolve_client_ip(
+        peer,
+        Some("10.0.0.9"),
+        &[TrustedProxy::V4Cidr(Ipv4Addr::new(10, 0, 0, 0), 8)],
+    );
+    assert_eq!(self_ref, IpAddr::V4(Ipv4Addr::new(10, 0, 0, 9)));
+    // missing header with trusted peer → fall back to peer
+    assert_eq!(
+        resolve_client_ip(peer, None, &[TrustedProxy::Single(peer)]),
+        peer
+    );
+}
+
+#[test]
+fn test_net_007_config_parse_fail_fast() {
+    use clap::Parser as _;
+    use mux_web::config::Config;
+    let ok = Config::try_parse_from(["mux-web", "--trusted-proxies", "100.64.0.0/10"]);
+    assert!(ok.is_ok());
+    assert_eq!(ok.unwrap().effective_trusted_proxies().unwrap().len(), 1);
+    for bad in ["abc", "1.2.3.4/33", "::1/129"] {
+        let cfg = Config::try_parse_from(["mux-web", "--trusted-proxies", bad]).unwrap();
+        assert!(
+            cfg.effective_trusted_proxies().is_err(),
+            "'{bad}' must fail fast"
+        );
+    }
+}
+
+// ── NET-008 (spec 011): wildcard allowlist entries ──
+
+#[test]
+fn test_net_008_wildcard_token_validation() {
+    use clap::Parser as _;
+    use mux_web::config::{valid_allowed_host_token, Config};
+    assert!(valid_allowed_host_token("*.ts.net"));
+    assert!(valid_allowed_host_token("mux.example.com"));
+    assert!(!valid_allowed_host_token("*"));
+    assert!(!valid_allowed_host_token("*."));
+    assert!(!valid_allowed_host_token("*evil.com"));
+    assert!(!valid_allowed_host_token(".."));
+    let cfg = Config::try_parse_from(["mux-web", "--allowed-hosts", "*.ts.net"]).unwrap();
+    let hosts = cfg.effective_allowed_hosts().unwrap();
+    assert_eq!(hosts, vec!["*.ts.net".to_string()]);
+    assert!(Config::try_parse_from(["mux-web", "--allowed-hosts", "*"])
+        .unwrap()
+        .effective_allowed_hosts()
+        .is_err());
+}
+
+#[test]
+fn test_net_008_host_matches_dot_boundary() {
+    use mux_web::config::host_matches;
+    assert!(host_matches("*.ts.net", "ts.net"));
+    assert!(host_matches("*.ts.net", "myhost.ts.net"));
+    assert!(host_matches("*.ts.net", "deep.a.b.ts.net"));
+    assert!(!host_matches("*.ts.net", "ats.net")); // no dot-boundary
+    assert!(!host_matches("*.ts.net", "TS.NET.evil.io"));
+    assert!(host_matches("MUX.Example.COM", "mux.example.com"));
+    assert!(host_matches("exact.host", "exact.host"));
+    assert!(!host_matches("exact.host", "other.host"));
 }
 
 // silence unused import when helpers evolve

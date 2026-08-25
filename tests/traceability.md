@@ -227,3 +227,40 @@
 | EDIT-011 Overlay highlight layer behind transparent textarea | EDIT-011 | Frontend | Portable | Passed |
 | EDIT-012 Search/replace/goto-line helpers | EDIT-012 | Frontend Unit | Portable | Passed |
 | EDIT-016 Tokenizer lazy chunk (1.2 KiB gzip) separate from main | EDIT-016 | Release | Portable | Passed |
+| EDIT-017 Tokenizer stateful — blok komentar multi-line | tokenizer.test.ts | Frontend Unit | Portable | Passed |
+| EDIT-013 Bracket auto-close/skip-over/wrap-seleksi (murni) | brackets.test.ts | Frontend Unit | Portable | Passed |
+| EDIT-014 Word-wrap toggle + persist + sinkron layer | editorLogic.test.ts | Frontend Unit | Portable | Passed |
+| EDIT-018 lineStates cache inkremental + windowed gutter/highlight, cap 2 MB | lineStates.test.ts | Frontend Unit | Portable | Passed |
+| AGT-006 FolderPicker cwd override untuk quick-launch agent | editorLogic.test.ts (mergeAgentSpawnPayload) | Frontend Unit | Portable | Passed |
+| TAB-010 Persist layout tab/grup terminal per winId | terminalTabsLogic.test.ts | Frontend Unit | Portable | Passed |
+| TAB-011 Restore aman: sesi mati dibuang, JSON korup → kosong | terminalTabsLogic.test.ts | Frontend Unit | Portable | Passed |
+| NET-007 --trusted-proxies + resolusi client-IP XFF kanan→kiri | security_tests::test_net_007_* | Unit / Integration | Portable | Passed |
+| NET-008 Wildcard allowlist *.suffix dot-boundary + fail-fast parser | security_tests::test_net_008_*, config_tests | Unit | Portable | Passed |
+| SIGN-001 CI menandatangani checksums.txt (minisign, kondisional secret) | ci.yml release-summary | Release | CI | Passed* |
+| SIGN-002 install/update verifikasi minisign fail-closed + MUX_WEB_STRICT_VERIFY | install.sh/update.sh sig_gate | Integration (CI scenario) | Portable | Passed* |
+| SIGN-003 Scenario 5a valid/5b tamper abort/5c strict tanpa asset | ci.yml installer-test | Integration | CI | Passed* |
+| DISTRO-001 Katalog available vs installed proot-distro | distro_mgmt_tests | Unit | Portable | Passed |
+| DISTRO-002 POST install/remove argv-only + task stream WS + TASK_BUSY + cancel | distro_mgmt_tests | Unit / Integration | Portable | Passed |
+| DISTRO-003 Agent install_hint statis read-only (server tak pernah eksekusi instal) | src/agents.rs field + serialize | Unit | Portable | Passed |
+| DISTRO-004 UI modal manajemen environment + progress stream | TextEditorView.tsx | Frontend | Portable | Passed |
+| SEC-007 cargo audit job mingguan di CI (gagal pada vulnerability) | ci.yml audit job | Release | CI | Passed* |
+| SEC-008 Pemetaan kontrol→SOC 2 TSC + threat model per fitur baru | spec 011 §10, dokumen ini | Documentation | — | Passed |
+
+\* Passed* = diverifikasi lokal/CI-scenario; langkah signing produksi aktif setelah
+secret `MINISIGN_SIGNING_KEY` diset & key ceremony dilakukan (spec 011 §9).
+
+## Pemetaan Kontrol → SOC 2 Trust Services Criteria (SEC-008)
+
+| Kontrol | TSC | Bukti |
+|---|---|---|
+| Pairing single-use CSPRNG + cookie HttpOnly + constant-time compare | CC6.1 | AUTH tests |
+| CSRF double-submit + security headers/CSP | CC6.1/CC6.6 | SEC-004/005 |
+| Host gate exact/wildcard + trusted-proxy real-IP rate-limit | CC6.6/CC7.2 | NET-007/008 |
+| Janitor/busy-grace + budget gates | A1.1 | SESS/LIFE/PERF |
+| cargo audit mingguan | CC7.1 | SEC-007 |
+| Minisign + sha256 + installer scenarios | Supply chain | SIGN-001..003 |
+| Argv-only + registry statis (agents/distro) | CC6.8 | D5/PROOT/DISTRO |
+
+Catatan kejujuran: sertifikasi SOC 1/2/3 adalah audit organisasi (AICPA), bukan
+hasil rilis kode. Rilis ini menyediakan kontrol engineering selaras Trust
+Services Criteria + jejak bukti agar audit organisasi kelak punya evidensi.

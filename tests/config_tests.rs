@@ -34,13 +34,20 @@ fn net_006_parser_accepts_ip_literal() {
     assert_eq!(hosts, vec!["100.64.1.2", "mux.lab.internal"]);
 }
 
-// ── NET-006: allowlist parser — invalid cases fail fast ──
+// NET-008 (spec 011): wildcard `*.suffix` entries are now VALID in
+// --allowed-hosts (dot-boundary match). The v0.6.1 rejection test is updated:
+// wildcards stay rejected only in --advertise-addr (implicit allowlist).
+#[test]
+fn net_006_parser_accepts_wildcard_in_allowed_hosts() {
+    let c = cfg(&["--allowed-hosts", "*.ts.net"]);
+    let hosts = c.effective_allowed_hosts().expect("valid");
+    assert_eq!(hosts, vec!["*.ts.net"]);
+}
 
 #[test]
-fn net_006_parser_rejects_wildcard() {
-    let c = cfg(&["--allowed-hosts", "*.ts.net"]);
-    let err = c.effective_allowed_hosts().unwrap_err();
-    assert!(err.contains("entry #1"), "err: {err}");
+fn net_008_advertise_still_rejects_wildcard() {
+    let c = cfg(&["--advertise-addr", "*.ts.net:7681"]);
+    assert!(c.effective_advertise_addrs().is_err());
 }
 
 #[test]

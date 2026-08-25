@@ -22,6 +22,9 @@ async fn start_auth_server(global_limit: u32) -> TestServer {
         sessions: SessionRegistry::new(),
         auth: AuthState::with_secret(AuthConfig::from_parts(60, global_limit, 30, false), SECRET),
         share: ShareRegistry::new(ShareConfig::default()),
+        distro_tasks: std::sync::Arc::new(tokio::sync::Mutex::new(
+            mux_web::distro_mgmt::DistroTaskRegistry::default(),
+        )),
     };
     common::start_server_with_state(state).await
 }

@@ -6,6 +6,9 @@ on:
     tags: [ 'v*' ]
   pull_request:
     branches: [ main ]
+  schedule:
+    # SEC-007 (spec 011): weekly dependency vulnerability audit (Mondays 03:17 UTC)
+    - cron: '17 3 * * 1'
 
 env:
   CARGO_TERM_COLOR: always
@@ -79,6 +82,22 @@ jobs:
 
       - name: Verify Budget & Metrics
         run: bash ./scripts/check_budget.sh
+
+  # SEC-007 (spec 011): dependency vulnerability audit — fails the workflow on
+  # known CVEs in Cargo.lock (CC7.1 evidence for SOC 2 TSC mapping).
+  audit:
+    name: Security Audit (SEC-007)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install cargo-audit
+        uses: taiki-e/install-action@v2
+        with:
+          tool: cargo-audit
+
+      - name: Run cargo audit
+        run: cargo audit
 
   # Milestone A — multi-target release pipeline (DIST-001..006)
   release:
@@ -195,12 +214,35 @@ jobs:
           cat dist/checksums.txt
           ls -lh dist/
 
+      # SIGN-001 (spec 011): sign checksums.txt with minisign. The secret must
+      # contain the UNENCRYPTED private key file content (key ceremony:
+      # `minisign -G -p share/minisign.pub -s minisign.key`, keep key offline).
+      # Without the secret the release proceeds unsigned (warning) so the
+      # pipeline is usable before the one-time key setup.
+      - name: Install minisign
+        run: sudo apt-get update -qq && sudo apt-get install -y -qq minisign
+
+      - name: Sign checksums.txt (SIGN-001)
+        env:
+          MINISIGN_SIGNING_KEY: ${{ secrets.MINISIGN_SIGNING_KEY }}
+        run: |
+          if [ -z "$MINISIGN_SIGNING_KEY" ]; then
+            echo "::warning::MINISIGN_SIGNING_KEY secret not set — publishing UNSIGNED checksums.txt"
+            exit 0
+          fi
+          printf '%s\n' "$MINISIGN_SIGNING_KEY" > /tmp/mux-release.key
+          chmod 600 /tmp/mux-release.key
+          minisign -S -q -s /tmp/mux-release.key -m dist/checksums.txt
+          rm -f /tmp/mux-release.key
+          ls -lh dist/
+
       - name: Upload Release Artifacts (DIST-006)
         uses: softprops/action-gh-release@v2
         with:
           files: |
             dist/mux-web-*
-            dist/checksums.txt
+            dist/checksums*
+            dist/*.minisig
 
   # Milestone B — installer/updater testability (DIST-013)
   installer-test:
@@ -301,3 +343,53 @@ jobs:
           bash update.sh --rollback >/dev/null
           ./scen4c/mux-web --version | grep -q "0.2.0"
           bash update.sh --rollback >/dev/null
+
+      # ── SIGN-003 (spec 011): signature verification scenarios ──
+      - name: Install minisign (SIGN-003)
+        run: sudo apt-get update -qq && sudo apt-get install -y -qq minisign
+
+      - name: Scenario 5a/5b/5c — signature verify, tamper abort, strict mode (SIGN-003)
+        run: |
+          set -e
+          TARGET="x86_64-unknown-linux-gnu"
+          export MUX_WEB_NO_FALLBACK=1
+          export MUX_WEB_BASE_URL="file://$PWD/dist"
+          export MUX_WEB_API_URL="file://$PWD/dist/latest.json"
+
+          # Ephemeral CI keypair (unencrypted secret key for non-interactive sign)
+          printf '\n' | minisign -G -p /tmp/kp.pub -s /tmp/kp.sec >/dev/null 2>&1 \
+            || minisign -G -W -p /tmp/kp.pub -s /tmp/kp.sec >/dev/null 2>&1
+          test -s /tmp/kp.sec || { echo "keygen failed"; exit 1; }
+          minisign -S -q -s /tmp/kp.sec -m dist/v0.2.0/checksums.txt
+          test -f dist/v0.2.0/checksums.txt.minisig
+
+          export MUX_WEB_MINISIGN_PUB=/tmp/kp.pub
+
+          # 5a — valid signature installs cleanly
+          export MUX_WEB_INSTALL_DIR="$PWD/scen5a"
+          bash install.sh --version 0.2.0 >/dev/null
+          ./scen5a/mux-web --version | grep -q "0.2.0"
+
+          # 5b — tampered checksums + stale signature must abort hard;
+          # previously installed binary stays intact.
+          cp dist/v0.2.0/checksums.txt "$RUNNER_TEMP/ct.bak"
+          cp dist/v0.2.0/checksums.txt.minisig "$RUNNER_TEMP/ct.minisig.bak"
+          printf 'deadbeef  mux-web-0.2.0-%s\n' "$TARGET" > dist/v0.2.0/checksums.txt
+          export MUX_WEB_INSTALL_DIR="$PWD/scen5b"
+          mkdir -p scen5b
+          cp scen5a/mux-web scen5b/mux-web   # simulate a previous good install
+          if bash install.sh --version 0.2.0 >/dev/null 2>&1; then
+            echo "FAIL: tampered checksums accepted"; exit 1
+          fi
+          ./scen5b/mux-web --version | grep -q "0.2.0"
+          cp "$RUNNER_TEMP/ct.bak" dist/v0.2.0/checksums.txt
+          cp "$RUNNER_TEMP/ct.minisig.bak" dist/v0.2.0/checksums.txt.minisig
+
+          # 5c — strict mode without the signature asset fails closed
+          rm -f dist/v0.2.0/checksums.txt.minisig
+          export MUX_WEB_INSTALL_DIR="$PWD/scen5c"
+          export MUX_WEB_STRICT_VERIFY=1
+          if bash install.sh --version 0.2.0 >/dev/null 2>&1; then
+            echo "FAIL: strict mode accepted missing signature"; exit 1
+          fi
+          unset MUX_WEB_STRICT_VERIFY

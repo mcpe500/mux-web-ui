@@ -10,6 +10,11 @@ import {
   isVersionAtLeast,
   gateState,
   MIN_SERVER_VERSION,
+  wrapStorageKey,
+  wrapStyles,
+  loadWrapPref,
+  persistWrapPref,
+  mergeAgentSpawnPayload,
 } from './editorLogic';
 
 // EDT-001: toggle never duplicates the PTY session — 'spawn' is only ever
@@ -179,6 +184,42 @@ describe('V051-003 isVersionAtLeast', () => {
   });
 });
 
+// ── AGT-006 (spec 011): agent launch cwd override merge ──
+
+describe('AGT-006 mergeAgentSpawnPayload', () => {
+  const baseWs = { rootId: 'home', basePath: '/work' };
+
+  it('null picker keeps the active workspace (legacy behavior locked)', () => {
+    expect(mergeAgentSpawnPayload(baseWs, null, 'ubuntu', 'opencode')).toEqual({
+      cols: 80,
+      rows: 24,
+      cwd_root: 'home',
+      cwd_path: '/work',
+      env_id: 'ubuntu',
+      agent_id: 'opencode',
+    });
+  });
+
+  it('picker selection overrides cwd only', () => {
+    const p = mergeAgentSpawnPayload(
+      baseWs,
+      { rootId: 'sdcard', path: '/projects/app' },
+      undefined,
+      'claude-code',
+    );
+    expect(p.cwd_root).toBe('sdcard');
+    expect(p.cwd_path).toBe('/projects/app');
+    expect(p.env_id).toBeUndefined();
+    expect(p.agent_id).toBe('claude-code');
+  });
+
+  it('termux env never sends env_id', () => {
+    const p = mergeAgentSpawnPayload(baseWs, null, 'termux', 'codex');
+    expect(p.env_id).toBeUndefined();
+    expect(p.agent_id).toBe('codex');
+  });
+});
+
 describe('V051-003 gateState', () => {
   it('ok when server version meets the minimum', () => {
     expect(gateState('0.5.1', false, false)).toEqual({
@@ -207,5 +248,46 @@ describe('V051-003 gateState', () => {
     expect(g.level).toBe('unreachable');
     expect(g.banner).toBeNull();
     expect(g.chip).toBe('warn');
+  });
+});
+
+// ── EDIT-014 (spec 011): word-wrap toggle ──
+
+describe('EDIT-014 wrapStorageKey', () => {
+  it('is per-window', () => {
+    expect(wrapStorageKey(undefined)).toBe('mux_editor_wrap_default');
+    expect(wrapStorageKey('w1')).toBe('mux_editor_wrap_w1');
+  });
+});
+
+describe('EDIT-014 wrapStyles', () => {
+  it('off = legacy pre exactly (regression lock)', () => {
+    expect(wrapStyles(false)).toEqual({ whiteSpace: 'pre' });
+  });
+  it('on = pre-wrap with break-word for long tokens', () => {
+    expect(wrapStyles(true)).toEqual({ whiteSpace: 'pre-wrap', overflowWrap: 'break-word' });
+  });
+});
+
+describe('EDIT-014 wrap pref persistence', () => {
+  it('round-trips through localStorage and survives corruption', () => {
+    const store = new Map<string, string>();
+    const win = { localStorage: {
+      getItem: (k: string) => store.get(k) ?? null,
+      setItem: (k: string, v: string) => void store.set(k, v),
+    } } as unknown as Window;
+    const old = globalThis.window;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    (globalThis as any).window = win;
+    try {
+      persistWrapPref('w9', true);
+      expect(loadWrapPref('w9')).toBe(true);
+      store.set(wrapStorageKey('w9'), 'garbage');
+      expect(loadWrapPref('w9')).toBe(false);
+      expect(loadWrapPref('missing')).toBe(false);
+    } finally {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      (globalThis as any).window = old;
+    }
   });
 });

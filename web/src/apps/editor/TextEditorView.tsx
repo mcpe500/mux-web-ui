@@ -8,18 +8,31 @@ import {
   displayWorkDir,
   gateState,
   loadPersistedWorkspace,
+  loadWrapPref,
   parseGitBranch,
   persistWorkspace,
+  persistWrapPref,
   spawnErrorMessage,
+  wrapStyles,
 } from './editorLogic';
+import { onSelfInsert, wrapSelection } from './mux-code/brackets';
+import { visibleRange } from './mux-code/engine';
+import { LINE_H } from './mux-code/lineStates';
+
+/** EDIT-018 (spec 011): highlight hard-guard raised from 200 KB to 2 MB. */
+const HIGHLIGHT_MAX = 2_000_000;
 import {
   type TermGroup,
   adjustGroupFlex,
   closeTab as closeTermTab,
   createTab,
+  loadTermLayout,
   maxReached,
   moveTab,
   openInNewGroup,
+  restoreLayout,
+  saveTermLayout,
+  serializeLayout,
   setActive,
 } from './terminalTabsLogic';
 
@@ -74,7 +87,17 @@ export function TextEditorView({ rootId: propRootId, filePath: propFilePath, ini
   const [findQuery, setFindQuery] = useState('');
   const [replaceQuery, setReplaceQuery] = useState('');
   const [highlight, setHighlight] = useState(false);
+  // EDIT-014 (spec 011): word-wrap toggle, persisted per window
+  const [wrapOn, setWrapOn] = useState<boolean>(() => loadWrapPref(winId));
   const [menuOpen, setMenuOpen] = useState<string|null>(null);
+  // AGT-006 (spec 011): cwd override for agent quick-launch + its picker
+  const [agentCwd, setAgentCwd] = useState<{ rootId: string; path: string } | null>(null);
+  const [agentPickerOpen, setAgentPickerOpen] = useState(false);
+  // DISTRO-004 (spec 011): environment management modal + live task stream
+  const [envMgmtOpen, setEnvMgmtOpen] = useState(false);
+  const [envCatalog, setEnvCatalog] = useState<{ installed: string[]; available: string[] } | null>(null);
+  const [mgmtTask, setMgmtTask] = useState<{ id: string; lines: string[]; running: boolean; exit?: number | null } | null>(null);
+  const [removeConfirmId, setRemoveConfirmId] = useState('');
 
   // EDT-007: workspace (opened folder) — persisted per window id
   const defaultRoot = initialRoot || propRootId || 'home';
@@ -85,6 +108,9 @@ export function TextEditorView({ rootId: propRootId, filePath: propFilePath, ini
   // TAB-001..008 (spec 008): multi-terminal state — VS Code-style groups
   const [groups, setGroups] = useState<TermGroup[]>([]);
   const [panelOpen, setPanelOpen] = useState(false);
+  // TAB-010/011 (spec 011): restore-after-reload guard (don't clobber the
+  // saved layout with the empty initial state before validation completes)
+  const layoutHydratedRef = useRef(false);
   const [spawning, setSpawning] = useState(false);
   const [spawnErr, setSpawnErr] = useState<string | null>(null);
   // EDT-003: vertical editor↔terminal ratio (kept from v0.6)
@@ -95,7 +121,7 @@ export function TextEditorView({ rootId: propRootId, filePath: propFilePath, ini
   const [spawnEnv, setSpawnEnv] = useState('termux');
   const [envs, setEnvs] = useState<{ id: string; name: string }[]>([{ id: 'termux', name: 'Termux' }]);
   const [agentsOpen, setAgentsOpen] = useState(false);
-  const [agents, setAgents] = useState<{ id: string; binary: string; label: string; color: string; found: boolean }[]>([]);
+  const [agents, setAgents] = useState<{ id: string; binary: string; label: string; color: string; found: boolean; install_hint?: string }[]>([]);
   // V051-003: boot-time health gate (undefined = pending, null = no version field)
   const [serverVersion, setServerVersion] = useState<string | null | undefined>(undefined);
   const [healthFailed, setHealthFailed] = useState(false);
@@ -113,9 +139,60 @@ export function TextEditorView({ rootId: propRootId, filePath: propFilePath, ini
 
   // EDT-010: git branch badge
   const [gitBranch, setGitBranch] = useState<string | null>(null);
-  // EDIT-009/016 (spec 010): lazy mux-code highlight layer
-  const [hlLines, setHlLines] = useState<string[] | null>(null);
-  const hlPreRef = useRef<HTMLPreElement>(null);
+  // EDIT-009/016 (spec 010) + EDIT-018 (spec 011): lazy mux-code modules,
+  // incremental line-state cache, windowed highlight/gutter rendering.
+  const [mods, setMods] = useState<{
+    tk: typeof import('./mux-code/tokenizer');
+    ls: typeof import('./mux-code/lineStates');
+  } | null>(null);
+  const cacheRef = useRef<import('./mux-code/lineStates').LineStateCache | null>(null);
+  const [hlV, setHlV] = useState(0);
+  const [scrollPos, setScrollPos] = useState({ top: 0, left: 0 });
+  const [viewportH, setViewportH] = useState(360);
+  const taRef = useRef<HTMLTextAreaElement>(null);
+  const hlRafRef = useRef<number | null>(null);
+
+  /** EDIT-014 (spec 011): wrap toggle persists per window id (best-effort). */
+  const toggleWrap = useCallback(() => {
+    setWrapOn(prev => {
+      persistWrapPref(winId, !prev);
+      return !prev;
+    });
+  }, [winId]);
+
+  /** DISTRO-004 (spec 011): start install/remove and stream progress. */
+  const startMgmt = useCallback((kind: 'install' | 'remove', distroId: string) => {
+    if (mgmtTask?.running) return;
+    fetch(`/api/v1/environments/${encodeURIComponent(distroId)}/${kind}`, { method: 'POST' })
+      .then(async r => {
+        if (!r.ok) throw new Error(`HTTP ${r.status}`);
+        return r.json() as Promise<{ task_id: string }>;
+      })
+      .then(({ task_id }) => {
+        setMgmtTask({ id: task_id, lines: [], running: true, exit: null });
+        const wsProto = location.protocol === 'https:' ? 'wss://' : 'ws://';
+        const ws = new WebSocket(`${wsProto}${location.host}/api/v1/environments/tasks/${task_id}/stream`);
+        ws.onmessage = ev => {
+          try {
+            const f = JSON.parse(ev.data) as { type: string; data?: string; code?: number };
+            if (f.type === 'line') {
+              setMgmtTask(t => (t && t.id === task_id
+                ? { ...t, lines: [...t.lines.slice(-199), String(f.data)] }
+                : t));
+            } else if (f.type === 'exit') {
+              setMgmtTask(t => (t && t.id === task_id ? { ...t, running: false, exit: f.code ?? null } : t));
+              ws.close();
+              fetch('/api/v1/environments/catalog')
+                .then(r => (r.ok ? r.json() : Promise.reject()))
+                .then(setEnvCatalog)
+                .catch(() => {});
+            }
+          } catch { /* ignore malformed frames */ }
+        };
+        ws.onerror = () => setMgmtTask(t => (t && t.id === task_id ? { ...t, running: false } : t));
+      })
+      .catch(err => setMgmtTask({ id: '-', lines: [String(err)], running: false, exit: null }));
+  }, [mgmtTask?.running]);
 
   // Load roots — validate persisted workspace against real roots (tamper-safe)
   useEffect(() => {
@@ -559,40 +636,82 @@ export function TextEditorView({ rootId: propRootId, filePath: propFilePath, ini
   };
 
   const activeTab = useMemo(() => tabs.find(t => t.id === activeTabId), [tabs, activeTabId]);
-  // EDIT-009/016: lazy tokenizer highlight (mux-code) — only when enabled
+  // EDIT-018 (spec 011): lazy-load mux-code modules once (single chunk)
   useEffect(() => {
-    const tab = activeTab;
-    if (!highlight || !tab || tab.content.length > 200_000) {
-      setHlLines(null);
-      return;
+    let alive = true;
+    Promise.all([import('./mux-code/tokenizer'), import('./mux-code/lineStates')])
+      .then(([tk, ls]) => { if (alive) setMods({ tk, ls }); })
+      .catch(() => {});
+    return () => { alive = false; };
+  }, []);
+
+  // EDIT-018: keep the incremental cache in sync with the active tab content
+  const lastTabIdRef = useRef<string | null>(null);
+  useEffect(() => {
+    if (!mods || !activeTab) return;
+    const { tk, ls } = mods;
+    // switching tabs = different document → full rebuild, never a cross-file diff
+    if (!cacheRef.current || lastTabIdRef.current !== activeTab.id) {
+      cacheRef.current = ls.createCache();
     }
-    let cancelled = false;
-    import('./mux-code/tokenizer').then(({ detectLang, tokenizeLine }) => {
-      if (cancelled) return;
-      const lang = detectLang(tab.fileName);
-      const esc = (t: string) =>
-        t.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
-      const colors: Record<string, string> = {
-        kw: '#c792ea', str: '#c3e88d', com: '#5c6a7a',
-        num: '#f78c6c', fn: '#82aaff', txt: '#f8fafc',
-      };
-      const lines = tab.content.split('\n').map((line) => {
-        const toks: { t: string; s: number; e: number }[] = tokenizeLine(line, lang);
-        if (toks.length === 0) return esc(line) || '&nbsp;';
-        let out = '';
-        let pos = 0;
-        for (const t of toks) {
-          if (t.s > pos) out += esc(line.slice(pos, t.s));
-          out += `<span style="color:${colors[t.t] ?? colors.txt}">${esc(line.slice(t.s, t.e))}</span>`;
-          pos = t.e;
+    lastTabIdRef.current = activeTab.id;
+    const lang = tk.detectLang(activeTab.fileName);
+    const fold = (line: string, inBlock: boolean) =>
+      tk.tokenizeLineStateful(line, lang, inBlock);
+    ls.syncLines(cacheRef.current, activeTab.content, fold);
+    setHlV(v => v + 1);
+  }, [mods, activeTab, activeTab?.id, activeTab?.content, activeTab?.fileName]);
+
+  // TAB-011 (spec 011): restore layout after reload — attach only to PTY
+  // sessions that are STILL alive; PTYs are never resurrected.
+  useEffect(() => {
+    let alive = true;
+    const raw = loadTermLayout(winId);
+    fetch('/api/v1/terminals')
+      .then(r => (r.ok ? r.json() : Promise.reject(new Error('http ' + r.status))))
+      .then((data: { sessions?: Array<{ id?: string }> }) => {
+        if (!alive) return;
+        const live = new Set<string>(
+          (data.sessions ?? []).map(s => String(s.id ?? '')),
+        );
+        const restored = restoreLayout(raw, live, metricsMax ?? undefined);
+        if (restored.groups.length > 0) {
+          setGroups(restored.groups);
+          setPanelOpen(restored.panelOpen);
+          setSplitRatio(restored.splitRatio);
         }
-        out += esc(line.slice(pos));
-        return out || '&nbsp;';
+      })
+      .catch(() => {})
+      .finally(() => {
+        if (alive) layoutHydratedRef.current = true;
       });
-      setHlLines(lines);
-    }).catch(() => setHlLines(null));
-    return () => { cancelled = true; };
-  }, [highlight, activeTab?.fileName, activeTab?.content]);
+    return () => {
+      alive = false;
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [winId]);
+
+  // TAB-010 (spec 011): persist layout (debounced) after hydration
+  useEffect(() => {
+    if (!layoutHydratedRef.current) return;
+    const id = window.setTimeout(() => {
+      saveTermLayout(winId, serializeLayout(groups, panelOpen, splitRatio));
+    }, 250);
+    return () => window.clearTimeout(id);
+  }, [groups, panelOpen, splitRatio, winId]);
+
+  // EDIT-018: track viewport height for window math
+  useEffect(() => {
+    const measure = () => {
+      if (taRef.current) setViewportH(taRef.current.clientHeight || 360);
+    };
+    measure();
+    window.addEventListener('resize', measure);
+    return () => {
+      window.removeEventListener('resize', measure);
+      if (hlRafRef.current !== null) cancelAnimationFrame(hlRafRef.current);
+    };
+  }, [activeTabId]);
 
 
 
@@ -632,6 +751,23 @@ export function TextEditorView({ rootId: propRootId, filePath: propFilePath, ini
       setShowFind(true);
     } else if (e.key === 'Escape' && showFind) {
       setShowFind(false);
+    } else if (e.key.length === 1 && !e.ctrlKey && !e.metaKey && !e.altKey) {
+      // EDIT-013 (spec 011): bracket auto-close / skip-over / selection wrap
+      const target = e.target as HTMLTextAreaElement;
+      const start = target.selectionStart;
+      const end = target.selectionEnd;
+      const value = target.value;
+      const r =
+        start !== end
+          ? wrapSelection(value.slice(0, start), value.slice(start, end), value.slice(end), e.key)
+          : onSelfInsert(value.slice(0, start), value.slice(end), e.key);
+      if (r) {
+        e.preventDefault();
+        updateActiveTab({ content: r.text });
+        setTimeout(() => {
+          target.selectionStart = target.selectionEnd = r.caret;
+        }, 0);
+      }
     } else if (e.key === 'Tab') {
       e.preventDefault();
       const target = e.target as HTMLTextAreaElement;
@@ -736,14 +872,60 @@ export function TextEditorView({ rootId: propRootId, filePath: propFilePath, ini
     });
   };
 
+  // EDIT-018: visible window + windowed highlight HTML (O(viewport) per frame)
+  const totalLines = activeTab ? activeTab.content.split('\n').length : 0;
+  const win = useMemo(
+    () => visibleRange(totalLines, scrollPos.top, viewportH, LINE_H),
+    [totalLines, scrollPos.top, viewportH],
+  );
+  const hlEnabled =
+    !!mods && !!activeTab && highlight && !wrapOn &&
+    activeTab.content.length <= HIGHLIGHT_MAX && totalLines > 0;
+  const hlHtml = useMemo(() => {
+    if (!hlEnabled || !mods || !cacheRef.current || !activeTab) return null;
+    const { tk, ls } = mods;
+    const lang = tk.detectLang(activeTab.fileName);
+    const fold = (line: string, inBlock: boolean) =>
+      tk.tokenizeLineStateful(line, lang, inBlock);
+    const toks2d = ls.tokensFor(cacheRef.current, win.start, win.end, fold);
+    const esc = (t: string) =>
+      t.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+    const colors: Record<string, string> = {
+      kw: '#c792ea', str: '#c3e88d', com: '#5c6a7a',
+      num: '#f78c6c', fn: '#82aaff', txt: '#f8fafc',
+    };
+    return toks2d
+      .map((toks, idx) => {
+        const line = cacheRef.current!.lines[win.start + idx] ?? '';
+        if (toks.length === 0) return esc(line) || '&nbsp;';
+        let out = '';
+        let pos = 0;
+        for (const t of toks) {
+          if (t.s > pos) out += esc(line.slice(pos, t.s));
+          out += `<span style="color:${colors[t.t] ?? colors.txt}">${esc(line.slice(t.s, t.e))}</span>`;
+          pos = t.e;
+        }
+        out += esc(line.slice(pos));
+        return out || '&nbsp;';
+      })
+      .join('\n');
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [hlEnabled, hlV, win.start, win.end, mods, activeTab?.fileName]);
+
   const renderLineNumbers = () => {
     if (!activeTab) return null;
-    const linesCount = activeTab.content.split('\n').length;
-    const lines = Array.from({ length: Math.max(1, linesCount) }, (_, i) => i + 1);
-    
+    // EDIT-014: wrapped lines break logical-number alignment — hide gutter
+    if (wrapOn) return null;
+    // EDIT-018: windowed gutter — only the visible slice is in the DOM,
+    // positioned at 16px(padding) + i*LINE_H - scrollTop like the text rows.
+    const start = Math.max(0, win.start);
+    const end = Math.min(totalLines, Math.max(win.end, 1));
+    const nums: number[] = [];
+    for (let i = start; i < end; i++) nums.push(i + 1);
+
     return (
       <div style={{
-        padding: '16px 8px',
+        overflow: 'hidden',
         textAlign: 'right',
         color: '#64748b',
         fontFamily: "'JetBrains Mono', monospace",
@@ -753,8 +935,11 @@ export function TextEditorView({ rootId: propRootId, filePath: propFilePath, ini
         backgroundColor: '#0f172a',
         borderRight: '1px solid rgba(255,255,255,0.08)',
         minWidth: '40px',
+        position: 'relative',
       }}>
-        {lines.map(l => <div key={l}>{l}</div>)}
+        <div style={{ transform: `translateY(${16 + start * LINE_H - scrollPos.top}px)` }}>
+          {nums.map(l => <div key={l}>{l}</div>)}
+        </div>
       </div>
     );
   };
@@ -847,6 +1032,7 @@ export function TextEditorView({ rootId: propRootId, filePath: propFilePath, ini
             </>)}
             {menuOpen==='View' && (<>
               <div style={{ padding: '6px 12px', cursor: 'pointer' }} onClick={()=> setHighlight(!highlight)}>✨ Syntax Highlight {highlight?'ON':'OFF'}</div>
+              <div style={{ padding: '6px 12px', cursor: 'pointer' }} onClick={toggleWrap}>⮐ Word Wrap {wrapOn?'ON':'OFF'}</div>
               <div style={{ padding: '6px 12px', cursor: 'pointer' }} onClick={toggleTerminal}>💻 Terminal Ctrl+`</div>
               <div style={{ padding: '6px 12px', cursor: 'pointer' }}>🔍 Zoom In Ctrl++</div>
             </>)}
@@ -918,6 +1104,7 @@ export function TextEditorView({ rootId: propRootId, filePath: propFilePath, ini
             ⫿
           </button>
           <button onClick={()=> setHighlight(!highlight)} style={{ padding: '4px 8px', background: highlight?'#f59e0b':'#334155', color: 'white', borderRadius: '3px' }}>{highlight?'✨ Highlight ON':'✨ Highlight OFF'}</button>
+          <button data-testid="wrap-toggle" onClick={toggleWrap} title="Word wrap" style={{ padding: '4px 8px', background: wrapOn?'#f59e0b':'#334155', color: 'white', borderRadius: '3px' }}>⮐ Wrap {wrapOn?'ON':'OFF'}</button>
           <span style={{ marginLeft: 'auto', color: '#64748b' }}>{activeTab ? `${activeTab.content.split('\n').length} lines` : ''}</span>
         </div>
 
@@ -969,24 +1156,28 @@ export function TextEditorView({ rootId: propRootId, filePath: propFilePath, ini
             {activeTab.isLoading ? (
               <div style={{ padding: '20px', color: '#94a3b8' }}>Loading file content...</div>
             ) : (
-              <div style={{ flex: 1, display: 'flex', overflow: 'hidden' }}>
-                {renderLineNumbers()}
-                <div style={{ flex: 1, position: 'relative', display: 'flex', overflow: 'hidden' }}>
-                  {/* EDIT-011: highlight layer behind transparent textarea */}
-                  {hlLines && (
-                    <pre
-                      ref={hlPreRef}
-                      aria-hidden
-                      style={{
-                        position: 'absolute', inset: 0, margin: 0, padding: '16px',
-                        fontFamily: "'JetBrains Mono', monospace", fontSize: '14px',
-                        lineHeight: '1.5', whiteSpace: 'pre', overflow: 'hidden',
-                        pointerEvents: 'none', color: '#f8fafc',
-                      }}
-                      dangerouslySetInnerHTML={{ __html: hlLines.join('\n') }}
-                    />
-                  )}
+                <div style={{ flex: 1, display: 'flex', overflow: 'hidden' }}>
+                  {renderLineNumbers()}
+                  <div style={{ flex: 1, position: 'relative', display: 'flex', overflow: 'hidden' }}>
+                    {/* EDIT-018: windowed highlight layer behind transparent textarea */}
+                    {hlHtml !== null && (
+                      <pre
+                        aria-hidden
+                        data-testid="hl-layer"
+                        style={{
+                          position: 'absolute', inset: 0, margin: 0, padding: 0,
+                          fontFamily: "'JetBrains Mono', monospace", fontSize: '14px',
+                          lineHeight: '1.5', overflow: 'hidden', whiteSpace: 'pre',
+                          pointerEvents: 'none', color: '#f8fafc',
+                        }}
+                      >
+                        <div style={{
+                          transform: `translate(${16 - scrollPos.left}px, ${16 + win.start * LINE_H - scrollPos.top}px)`,
+                        }} dangerouslySetInnerHTML={{ __html: hlHtml }} />
+                      </pre>
+                    )}
                 <textarea
+                  ref={taRef}
                   value={activeTab.content}
                   onInput={e => updateActiveTab({ content: (e.target as HTMLTextAreaElement).value })}
                   onKeyDown={handleKeyDown}
@@ -994,11 +1185,14 @@ export function TextEditorView({ rootId: propRootId, filePath: propFilePath, ini
                   onMouseUp={handleEditorSelect}
                   onKeyUp={handleEditorSelect}
                   onScroll={e => {
-                    if (hlPreRef.current) {
-                      const t = e.target as HTMLTextAreaElement;
-                      hlPreRef.current.scrollTop = t.scrollTop;
-                      hlPreRef.current.scrollLeft = t.scrollLeft;
-                    }
+                    // EDIT-018: rAF-throttled scroll state drives the window
+                    const t = e.target as HTMLTextAreaElement;
+                    if (t.clientHeight && t.clientHeight !== viewportH) setViewportH(t.clientHeight);
+                    if (hlRafRef.current !== null) return;
+                    hlRafRef.current = requestAnimationFrame(() => {
+                      hlRafRef.current = null;
+                      setScrollPos({ top: t.scrollTop, left: t.scrollLeft });
+                    });
                   }}
                   spellcheck={false}
                   style={{
@@ -1006,7 +1200,7 @@ export function TextEditorView({ rootId: propRootId, filePath: propFilePath, ini
                     width: '100%',
                     height: '100%',
                     backgroundColor: 'transparent',
-                    color: highlight && hlLines ? 'transparent' : '#f8fafc',
+                    color: hlEnabled ? 'transparent' : '#f8fafc',
                     caretColor: '#f8fafc',
                     fontFamily: "'JetBrains Mono', monospace",
                     fontSize: '14px',
@@ -1015,7 +1209,7 @@ export function TextEditorView({ rootId: propRootId, filePath: propFilePath, ini
                     border: 'none',
                     outline: 'none',
                     resize: 'none',
-                    whiteSpace: 'pre',
+                    ...wrapStyles(wrapOn),
                     overflow: 'auto',
                     boxSizing: 'border-box',
                     position: 'relative',
@@ -1152,15 +1346,50 @@ export function TextEditorView({ rootId: propRootId, filePath: propFilePath, ini
                     >
                       🤖
                     </button>
+                    {/* AGT-006 (spec 011): optional cwd override for agent quick-launch */}
+                    <button
+                      onClick={() => setAgentPickerOpen(true)}
+                      title="Pick cwd folder for the next agent launch"
+                      style={{ padding: '2px 7px', background: agentCwd ? '#0ea5e9' : '#334155', color: 'white', border: 'none', borderRadius: '3px', cursor: 'pointer' }}
+                    >
+                      📁
+                    </button>
                   </span>
+                  {agentCwd && (
+                    <span
+                      data-testid="agent-cwd-chip"
+                      title={`Agents will launch in ${agentCwd.rootId}:${agentCwd.path}`}
+                      style={{ display: 'inline-flex', gap: '4px', alignItems: 'center', marginLeft: '4px', padding: '1px 6px', background: 'rgba(14,165,233,0.2)', borderRadius: '3px', fontSize: '10px', color: '#7dd3fc', flexShrink: 0 }}
+                    >
+                      [cwd: {agentCwd.rootId}:{agentCwd.path || '/'}]
+                      <button
+                        onClick={() => setAgentCwd(null)}
+                        title="Clear cwd override"
+                        style={{ background: 'transparent', border: 'none', color: '#7dd3fc', cursor: 'pointer', fontSize: '10px', padding: 0 }}
+                      >
+                        ✕
+                      </button>
+                    </span>
+                  )}
                   {agentsOpen && (
                     <span style={{ display: 'inline-flex', gap: '4px', alignItems: 'center', flexShrink: 0 }}>
                       {agents.map(a => (
                         <button
                           key={a.id}
                           disabled={!a.found || spawning || guardReached}
-                          onClick={() => { setAgentsOpen(false); spawnInto('active', { envId: spawnEnv, agentId: a.id }); }}
-                          title={a.found ? `Launch ${a.label} (${a.binary})` : `${a.binary} not found in ${spawnEnv}`}
+                          onClick={() => {
+                            setAgentsOpen(false);
+                            spawnInto('active', {
+                              envId: spawnEnv,
+                              agentId: a.id,
+                              wsOverride: agentCwd
+                                ? { rootId: agentCwd.rootId, basePath: agentCwd.path }
+                                : undefined,
+                            });
+                          }}
+                          title={a.found
+                            ? `Launch ${a.label} (${a.binary})${a.install_hint ? ` · hint: ${a.install_hint}` : ''}`
+                            : `${a.binary} not found in ${spawnEnv}${a.install_hint ? ` — install: ${a.install_hint}` : ''}`}
                           style={{ padding: '2px 7px', background: a.found ? a.color : '#475569', color: 'white', border: 'none', borderRadius: '3px', cursor: a.found ? 'pointer' : 'not-allowed', opacity: a.found ? 1 : 0.5, fontSize: '10px' }}
                         >
                           {a.label}
@@ -1179,6 +1408,20 @@ export function TextEditorView({ rootId: propRootId, filePath: propFilePath, ini
                         {e.name}
                       </button>
                     ))}
+                    {/* DISTRO-004 (spec 011): manage proot distros */}
+                    <button
+                      onClick={() => {
+                        setEnvMgmtOpen(true);
+                        fetch('/api/v1/environments/catalog')
+                          .then(r => (r.ok ? r.json() : Promise.reject()))
+                          .then(setEnvCatalog)
+                          .catch(() => setEnvCatalog({ installed: [], available: [] }));
+                      }}
+                      title="Manage proot-distro environments"
+                      style={{ padding: '2px 6px', background: '#334155', color: 'white', border: 'none', borderRadius: '3px', cursor: 'pointer', fontSize: '10px' }}
+                    >
+                      ⚙
+                    </button>
                   </span>
                   <span
                     title={wdLabel.title}
@@ -1263,6 +1506,9 @@ export function TextEditorView({ rootId: propRootId, filePath: propFilePath, ini
                 {activeTab.content !== activeTab.initialContent ? '● Unsaved' : 'Saved'}
               </span>
             )}
+            <span data-testid="wrap-chip" title="Word wrap">
+              Wrap: {wrapOn ? 'ON' : 'OFF'}
+            </span>
             {gitBranch && (
               <span data-testid="git-branch" title="Git branch" style={{ color: '#818cf8' }}>
                 ⎇ {gitBranch}
@@ -1300,6 +1546,126 @@ export function TextEditorView({ rootId: propRootId, filePath: propFilePath, ini
             }}
             onClose={() => setPickerMode(null)}
           />
+        )}
+
+        {/* AGT-006 (spec 011): cwd picker for agent quick-launch */}
+        {agentPickerOpen && (
+          <FolderPicker
+            mode="folder"
+            initial={{ rootId: ws.rootId, path: ws.basePath || '/' }}
+            onSelect={(sel) => {
+              setAgentPickerOpen(false);
+              setAgentCwd(sel);
+            }}
+            onClose={() => setAgentPickerOpen(false)}
+          />
+        )}
+
+        {/* DISTRO-004 (spec 011): environment management modal */}
+        {envMgmtOpen && (
+          <div
+            data-testid="env-mgmt-overlay"
+            onClick={() => setEnvMgmtOpen(false)}
+            style={{ position: 'fixed', inset: 0, background: 'rgba(2,6,23,0.55)', backdropFilter: 'blur(4px)', zIndex: 1002, display: 'flex', alignItems: 'center', justifyContent: 'center', fontFamily: 'sans-serif' }}
+          >
+            <div
+              onClick={e => e.stopPropagation()}
+              style={{ width: '420px', maxWidth: '92vw', maxHeight: '80vh', overflowY: 'auto' as const, background: '#0c1222', border: '1px solid rgba(255,255,255,0.12)', borderRadius: '12px', padding: '16px', color: '#f8fafc' }}
+            >
+              <div style={{ fontWeight: 600, marginBottom: '4px' }}>⚙️ Manage proot distros</div>
+              <div style={{ fontSize: '11px', color: '#94a3b8', marginBottom: '12px' }}>
+                Install/remove runs <code>proot-distro install|remove</code> as your user — argv-only, one task at a time.
+              </div>
+
+              {(['installed', 'available'] as const).map(bucket => (
+                <div key={bucket} style={{ marginBottom: '10px' }}>
+                  <div style={{ fontSize: '11px', textTransform: 'uppercase', color: '#64748b', marginBottom: '4px' }}>{bucket}</div>
+                  {(envCatalog?.[bucket] ?? []).length === 0 && (
+                    <div style={{ fontSize: '12px', color: '#475569' }}>(none)</div>
+                  )}
+                  {(envCatalog?.[bucket] ?? []).map(d => (
+                    <div key={d} style={{ display: 'flex', alignItems: 'center', gap: '6px', padding: '4px 0' }}>
+                      <span style={{ flex: 1, fontSize: '13px' }}>{d}</span>
+                      {bucket === 'installed' ? (
+                        <>
+                          <button
+                            onClick={() => { setEnvMgmtOpen(false); spawnInto('active', { envId: d }); }}
+                            disabled={mgmtTask?.running}
+                            title={`Open terminal in ${d}`}
+                            style={{ padding: '2px 8px', background: '#334155', border: 'none', borderRadius: '3px', color: 'white', cursor: 'pointer', fontSize: '11px', opacity: mgmtTask?.running ? 0.5 : 1 }}
+                          >
+                            Terminal
+                          </button>
+                          {removeConfirmId === d ? (
+                            <>
+                              <input
+                                value=""
+                                placeholder={`type "${d}"`}
+                                data-testid={`remove-confirm-${d}`}
+                                onInput={(e) => {
+                                  if ((e.target as HTMLInputElement).value === d) {
+                                    startMgmt('remove', d);
+                                    setRemoveConfirmId('');
+                                  }
+                                }}
+                                autoFocus
+                                style={{ width: '90px', padding: '2px 6px', background: '#1e293b', border: '1px solid rgba(239,68,68,0.5)', borderRadius: '3px', color: '#fca5a5', fontSize: '11px' }}
+                              />
+                              <button onClick={() => setRemoveConfirmId('')} style={{ background: 'transparent', border: 'none', color: '#94a3b8', cursor: 'pointer', fontSize: '11px' }}>✕</button>
+                            </>
+                          ) : (
+                            <button
+                              onClick={() => setRemoveConfirmId(d)}
+                              disabled={mgmtTask?.running}
+                              title="Remove distro (destructive)"
+                              style={{ padding: '2px 8px', background: '#7f1d1d', border: 'none', borderRadius: '3px', color: 'white', cursor: mgmtTask?.running ? 'not-allowed' : 'pointer', fontSize: '11px', opacity: mgmtTask?.running ? 0.5 : 1 }}
+                            >
+                              Remove
+                            </button>
+                          )}
+                        </>
+                      ) : (
+                        <button
+                          onClick={() => startMgmt('install', d)}
+                          disabled={mgmtTask?.running}
+                          title={`Install ${d}`}
+                          style={{ padding: '2px 8px', background: '#065f46', border: 'none', borderRadius: '3px', color: 'white', cursor: mgmtTask?.running ? 'not-allowed' : 'pointer', fontSize: '11px', opacity: mgmtTask?.running ? 0.5 : 1 }}
+                        >
+                          Install
+                        </button>
+                      )}
+                    </div>
+                  ))}
+                </div>
+              ))}
+
+              {mgmtTask && (
+                <div style={{ marginTop: '8px', borderTop: '1px solid rgba(255,255,255,0.08)', paddingTop: '8px' }}>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '4px' }}>
+                    <span style={{ fontSize: '11px', color: mgmtTask.running ? '#fbbf24' : mgmtTask.exit === 0 ? '#6ee7b7' : '#fca5a5' }}>
+                      task {mgmtTask.id}{mgmtTask.running ? ' — running…' : ` — exit ${mgmtTask.exit ?? '?'}`}
+                    </span>
+                    {mgmtTask.running && (
+                      <button
+                        onClick={() => fetch(`/api/v1/environments/tasks/${mgmtTask.id}`, { method: 'DELETE' }).catch(() => {})}
+                        style={{ marginLeft: 'auto', padding: '1px 8px', background: '#7f1d1d', border: 'none', borderRadius: '3px', color: 'white', cursor: 'pointer', fontSize: '11px' }}
+                      >
+                        Cancel
+                      </button>
+                    )}
+                  </div>
+                  <pre
+                    data-testid="mgmt-log"
+                    style={{ margin: 0, maxHeight: '120px', overflowY: 'auto', fontSize: '11px', lineHeight: 1.4, color: '#cbd5e1', whiteSpace: 'pre-wrap' }}
+                  >{mgmtTask.lines.join('\n') || '(no output yet)'}</pre>
+                </div>
+              )}
+
+              <div style={{ marginTop: '12px', textAlign: 'right' }}>
+                <button onClick={() => setEnvMgmtOpen(false)} style={{ padding: '5px 10px', background: '#334155', border: 'none', borderRadius: '5px', color: 'white', cursor: 'pointer', fontSize: '12px' }}>Close</button>
+              </div>
+            </div>
+          </div>
         )}
 
         {/* EDT-009: Replace or Keep the live terminal when folder changes */}

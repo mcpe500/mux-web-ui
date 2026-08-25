@@ -24,6 +24,57 @@ DEFAULT_BASE_URL="https://github.com/mcpe500/mux-web-ui/releases/download"
 GITHUB_API="https://api.github.com/repos/mcpe500/mux-web-ui/releases/latest"
 API_URL="${MUX_WEB_API_URL:-$GITHUB_API}"
 
+# ── SIGN-002 (spec 011): release signing pubkey (minisign) ──────────────────
+# Replace BOTH lines below (and share/minisign.pub) during the offline key
+# ceremony:  minisign -G -p share/minisign.pub -s minisign.key
+# Keep the UNTRUSTED-PLACEHOLDER marker until a real key exists — scripts
+# treat a placeholder pubkey exactly like "verification unavailable".
+SIG_PUBKEY='untrusted comment: mux-web release signing key (UNTRUSTED-PLACEHOLDER)
+RWS-placeholder-not-a-real-key-replace-me'
+
+# Verify checksums.txt signature. Returns:
+#   0 = verified · 1 = TAMPERED (fatal) · 2 = cannot verify (warn/strict path)
+sig_verify_dir() {
+    local d="$1"
+    command -v minisign >/dev/null 2>&1 || return 2
+    [ -f "$d/checksums.txt.minisig" ] || return 2
+    local pub="${MUX_WEB_MINISIGN_PUB:-}"
+    local pubtmp=""
+    if [ -z "$pub" ] || [ ! -f "$pub" ]; then
+        pubtmp=$(mktemp)
+        printf '%s\n' "$SIG_PUBKEY" > "$pubtmp"
+        pub="$pubtmp"
+    fi
+    if grep -q "UNTRUSTED-PLACEHOLDER" "$pub" 2>/dev/null; then
+        [ -n "$pubtmp" ] && rm -f "$pubtmp"
+        return 2
+    fi
+    local ok=0
+    minisign -V -q -p "$pub" -m "$d/checksums.txt" -x "$d/checksums.txt.minisig" >/dev/null 2>&1 || ok=1
+    [ -n "$pubtmp" ] && rm -f "$pubtmp"
+    if [ $ok -eq 0 ]; then
+        echo -e "${GREEN}✅ Release signature verified (minisign).${RESET}"
+        return 0
+    fi
+    return 1
+}
+
+sig_gate() {
+    local rc=0
+    sig_verify_dir "$1" || rc=$?
+    case $rc in
+        0) return 0 ;;
+        1) die "RELEASE SIGNATURE VERIFICATION FAILED — possible tampering. Aborting." ;;
+        *)
+            if [ "${MUX_WEB_STRICT_VERIFY:-0}" = "1" ]; then
+                die "MUX_WEB_STRICT_VERIFY=1 but the signature could not be verified (minisign / checksums.txt.minisig / trusted pubkey missing)."
+            fi
+            echo -e "${YELLOW}⚠️  Signature NOT verified — falling back to SHA-256-only integrity.${RESET}"
+            echo -e "${YELLOW}   Install 'minisign' (Termux: pkg install minisign) for full supply-chain checks.${RESET}"
+            ;;
+    esac
+}
+
 usage() {
     cat <<EOF
 Mux Web UI Installer (binary-first)
@@ -127,6 +178,18 @@ install_from_release() {
     if ! curl -fsSL -o "$tmp/mux-web-$VERSION-$TARGET.sha256" "$sha_url" 2>/dev/null; then
         echo -e "${YELLOW}Checksum not available at $sha_url${RESET}"
         return 1
+    fi
+
+    # SIGN-002 (spec 011): verify the aggregate checksum signature BEFORE
+    # trusting any per-file SHA-256 sums (supply-chain gate, fail-closed).
+    if curl -fsSL -o "$tmp/checksums.txt" "$BASE_URL/v$VERSION/checksums.txt" 2>/dev/null \
+        && curl -fsSL -o "$tmp/checksums.txt.minisig" "$BASE_URL/v$VERSION/checksums.txt.minisig" 2>/dev/null; then
+        sig_gate "$tmp"
+    else
+        if [ "${MUX_WEB_STRICT_VERIFY:-0}" = "1" ]; then
+            die "MUX_WEB_STRICT_VERIFY=1 but checksums.txt(.minisig) unavailable at $BASE_URL/v$VERSION"
+        fi
+        echo -e "${YELLOW}⚠️  checksums.txt(.minisig) unavailable — SHA-256-only mode.${RESET}"
     fi
 
     echo -e "${BLUE}Verifying SHA-256 checksum...${RESET}"

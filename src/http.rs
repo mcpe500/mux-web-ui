@@ -32,6 +32,8 @@ pub struct AppState {
     pub sessions: SessionRegistry,
     pub auth: AuthState,
     pub share: ShareRegistry,
+    /// DISTRO-002 (spec 011): process-wide install/remove task slot.
+    pub distro_tasks: Arc<tokio::sync::Mutex<crate::distro_mgmt::DistroTaskRegistry>>,
 }
 
 #[derive(Deserialize)]
@@ -84,6 +86,20 @@ pub fn create_router(state: AppState) -> Router {
     Router::new()
         .route("/api/v1/health", get(health_handler))
         .route("/api/v1/environments", get(list_environments_handler))
+        .route("/api/v1/environments/catalog", get(env_catalog_handler))
+        .route(
+            "/api/v1/environments/:id/install",
+            post(env_install_handler),
+        )
+        .route("/api/v1/environments/:id/remove", post(env_remove_handler))
+        .route(
+            "/api/v1/environments/tasks/:id/stream",
+            get(env_task_stream_handler),
+        )
+        .route(
+            "/api/v1/environments/tasks/:id",
+            delete(env_task_cancel_handler),
+        )
         .route(
             "/api/v1/environments/:id/agents",
             get(list_env_agents_handler),
@@ -184,10 +200,139 @@ async fn list_env_agents_handler(Path(id): Path<String>) -> Response {
             serde_json::json!({
                 "id": a.id, "binary": a.binary, "label": a.label,
                 "color": a.color, "found": found,
+                "install_hint": a.install_hint,
             })
         })
         .collect();
     Json(serde_json::json!(agents)).into_response()
+}
+
+// ── DISTRO-001..004 (spec 011): proot-distro management ─────────────────────
+
+/// DISTRO-001: installed vs installable catalog.
+async fn env_catalog_handler() -> Response {
+    let cat = crate::distro_mgmt::catalog(None);
+    let body = serde_json::json!({
+        "installed": cat.installed,
+        "available": cat.available,
+    });
+    Json(body).into_response()
+}
+
+/// DISTRO-002: start `proot-distro install <id>` (argv-only, single slot).
+async fn env_install_handler(State(state): State<AppState>, Path(id): Path<String>) -> Response {
+    env_mgmt_start(state, "install", &id).await
+}
+
+/// DISTRO-002: start `proot-distro remove <id>` (destructive — UI gates it).
+async fn env_remove_handler(State(state): State<AppState>, Path(id): Path<String>) -> Response {
+    env_mgmt_start(state, "remove", &id).await
+}
+
+async fn env_mgmt_start(state: AppState, kind: &str, id: &str) -> Response {
+    let mut reg = state.distro_tasks.lock().await;
+    let cat = reg.catalog();
+    let mut allowed = cat.available.clone();
+    allowed.extend(cat.installed.clone());
+    match reg.spawn(kind, id, &allowed).await {
+        Ok(task_id) => {
+            info!(task = %task_id, kind, distro = %id, "distro mgmt task started");
+            Json(serde_json::json!({ "task_id": task_id })).into_response()
+        }
+        Err(e) => {
+            let (code, status): (&str, StatusCode) = match e.as_str() {
+                "TASK_BUSY" => ("TASK_BUSY", StatusCode::CONFLICT),
+                "UNKNOWN_DISTRO" | "INVALID_ID" => ("DISTRO_UNKNOWN", StatusCode::BAD_REQUEST),
+                _ => ("TASK_SPAWN_FAILED", StatusCode::INTERNAL_SERVER_ERROR),
+            };
+            let body = serde_json::json!({
+                "error": {"code": code, "message": format!("{kind} {id}: {e}")}
+            });
+            (status, Json(body)).into_response()
+        }
+    }
+}
+
+/// DISTRO-002: WS stream of task stdout/stderr + final exit frame.
+async fn env_task_stream_handler(
+    State(state): State<AppState>,
+    Path(task_id): Path<String>,
+    ws: WebSocketUpgrade,
+) -> Response {
+    ws.on_upgrade(move |socket| async move {
+        env_task_stream_socket(socket, state, task_id).await;
+    })
+}
+
+async fn env_task_stream_socket(mut socket: WebSocket, state: AppState, task_id: String) {
+    // snapshot status + subscribe before reaping can park the handle
+    let (rx, running) = {
+        let reg = state.distro_tasks.lock().await;
+        let rx = reg.subscribe(&task_id);
+        (rx, reg.status(&task_id).map(|s| s.running).unwrap_or(false))
+    };
+    let Some(mut rx) = rx else {
+        let _ = socket
+            .send(Message::Text(
+                serde_json::json!({"type":"error","message":"unknown task"}).to_string(),
+            ))
+            .await;
+        return;
+    };
+    loop {
+        tokio::select! {
+            line = rx.recv() => {
+                match line {
+                    Ok(l) => {
+                        if socket.send(Message::Text(serde_json::json!({"type":"line","data":l}).to_string())).await.is_err() {
+                            return;
+                        }
+                    }
+                    Err(tokio::sync::broadcast::error::RecvError::Lagged(_)) => continue,
+                    Err(_) => break,
+                }
+            }
+            _ = tokio::time::sleep(Duration::from_millis(150)) => {
+                // poll completion + reap
+                let mut reg = state.distro_tasks.lock().await;
+                if let Some((tid, st)) = reg.reap_if_done().await {
+                    if tid == task_id {
+                        let _ = socket.send(Message::Text(
+                            serde_json::json!({"type":"exit","code":st.exit_code}).to_string(),
+                        )).await;
+                        return;
+                    }
+                }
+                if !running {
+                    if let Some(st) = reg.status(&task_id) {
+                        if !st.running {
+                            let _ = socket.send(Message::Text(
+                                serde_json::json!({"type":"exit","code":st.exit_code}).to_string(),
+                            )).await;
+                            return;
+                        }
+                    }
+                }
+                drop(reg);
+            }
+        }
+    }
+}
+
+/// DISTRO-002: cancel the running management task.
+async fn env_task_cancel_handler(
+    State(state): State<AppState>,
+    Path(id): Path<String>,
+) -> Response {
+    let mut reg = state.distro_tasks.lock().await;
+    if reg.cancel(&id).await {
+        StatusCode::NO_CONTENT.into_response()
+    } else {
+        let body = serde_json::json!({
+            "error": {"code": "TASK_NOT_RUNNING", "message": format!("no running task '{id}'")}
+        });
+        (StatusCode::NOT_FOUND, Json(body)).into_response()
+    }
 }
 
 #[derive(Deserialize)]
@@ -228,14 +373,59 @@ fn set_session_cookie(headers: &mut HeaderMap, tls: bool, session_id: &str) {
     );
 }
 
+/// NET-007 (spec 011): resolve the real client IP from X-Forwarded-For when
+/// (and only when) the immediate peer is a trusted proxy. The chain is walked
+/// right-to-left, skipping trusted hops; the first untrusted address wins
+/// (all-trusted chains collapse to the leftmost entry). With an empty trusted
+/// list the forwarded header is ignored entirely — legacy behavior.
+pub fn resolve_client_ip(
+    peer: IpAddr,
+    xff: Option<&str>,
+    trusted: &[crate::config::TrustedProxy],
+) -> IpAddr {
+    if trusted.is_empty() {
+        return peer;
+    }
+    if !trusted.iter().any(|tp| tp.matches(&peer)) {
+        // peer itself is not a trusted proxy → header is untrustworthy
+        return peer;
+    }
+    let Some(xff) = xff else {
+        return peer;
+    };
+    let mut chain: Vec<IpAddr> = xff
+        .split(',')
+        .filter_map(|h| h.trim().parse::<IpAddr>().ok())
+        .collect();
+    if chain.is_empty() {
+        return peer;
+    }
+    chain.push(peer);
+    // walk from the rightmost hop; first untrusted wins, all-trusted → leftmost
+    let mut idx = chain.len() - 1;
+    while idx > 0 && trusted.iter().any(|tp| tp.matches(&chain[idx])) {
+        idx -= 1;
+    }
+    chain[idx]
+}
+
 async fn pair_handler(
     State(state): State<AppState>,
     connect_info: Option<ConnectInfo<std::net::SocketAddr>>,
+    headers: HeaderMap,
     Json(req): Json<PairReq>,
 ) -> Response {
-    let ip = connect_info
-        .map(|ci| ci.0.ip().to_string())
-        .unwrap_or_else(|| "127.0.0.1".to_string());
+    // NET-007 (spec 011): rate-limit keying uses the REAL client IP when the
+    // immediate peer is a trusted proxy carrying X-Forwarded-For; otherwise
+    // (default config) forwarded headers are ignored and the peer IP is used
+    // exactly as before.
+    let trusted = state.config.effective_trusted_proxies().unwrap_or_default();
+    let peer_ip = connect_info.map(|ci| ci.0.ip());
+    let xff = headers.get("x-forwarded-for").and_then(|v| v.to_str().ok());
+    let ip = match peer_ip {
+        Some(peer) => resolve_client_ip(peer, xff, &trusted).to_string(),
+        None => "127.0.0.1".to_string(),
+    };
     let secure = state.auth.config.secure_cookie;
     match state.auth.pair(&req.secret, &ip) {
         Ok(session_id) => {
@@ -357,7 +547,8 @@ async fn host_origin_middleware(
             let name_ok = host_part.eq_ignore_ascii_case("localhost")
                 || allowed_hosts
                     .iter()
-                    .any(|h| h == &host_part.to_ascii_lowercase());
+                    // NET-008 (spec 011): exact or dot-boundary wildcard match
+                    .any(|h| crate::config::host_matches(h, &host_part.to_ascii_lowercase()));
             port_ok && (ip_ok || name_ok)
         }
         None => false,

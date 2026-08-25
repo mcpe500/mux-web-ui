@@ -261,3 +261,121 @@ export function adjustGroupFlex(
   );
   return normalize(patched);
 }
+
+// ── TAB-010/011 (spec 011): layout persistence — serialize/restore safely ──
+
+export interface SerializedTab {
+  sessionId: string;
+  label: string;
+  workDir: string | null;
+}
+
+export interface SerializedGroup {
+  tabs: SerializedTab[];
+  flex: number;
+}
+
+export interface SerializedLayout {
+  v: 1;
+  panelOpen: boolean;
+  splitRatio: number;
+  groups: SerializedGroup[];
+}
+
+const clampSplit = (r: number): number =>
+  Number.isFinite(r) ? Math.min(0.75, Math.max(0.25, r)) : 0.6;
+
+export function serializeLayout(
+  groups: TermGroup[],
+  panelOpen: boolean,
+  splitRatio: number,
+): SerializedLayout {
+  return {
+    v: 1,
+    panelOpen,
+    splitRatio: clampSplit(splitRatio),
+    groups: groups.map(g => ({
+      flex: g.flex,
+      tabs: g.tabs.map(t => ({
+        sessionId: t.sessionId,
+        label: t.label,
+        workDir: t.workDir,
+      })),
+    })),
+  };
+}
+
+/**
+ * TAB-011: restore only tabs whose PTY session is still alive; dead sessions
+ * are dropped, empty groups collapse, keys are regenerated fresh, dangling
+ * active pointers heal to the last tab, flex renormalizes, and any corrupt /
+ * wrong-shape payload yields the clean empty layout.
+ */
+export function restoreLayout(
+  raw: unknown,
+  liveSessionIds: Set<string>,
+  maxSessions?: number,
+): { groups: TermGroup[]; panelOpen: boolean; splitRatio: number } {
+  const empty = { groups: [] as TermGroup[], panelOpen: false, splitRatio: 0.6 };
+  let data: unknown = raw;
+  if (typeof raw === 'string') {
+    try {
+      data = JSON.parse(raw);
+    } catch {
+      return empty;
+    }
+  }
+  if (!data || typeof data !== 'object' || (data as { v?: unknown }).v !== 1) return empty;
+  const d = data as { panelOpen?: unknown; splitRatio?: unknown; groups?: unknown };
+  let budget = maxSessions ?? Number.POSITIVE_INFINITY;
+  const outGroups: TermGroup[] = [];
+  for (const g of Array.isArray(d.groups) ? d.groups : []) {
+    if (!g || typeof g !== 'object' || !Array.isArray((g as SerializedGroup).tabs)) continue;
+    const grp = g as SerializedGroup;
+    const tabs: TermTab[] = [];
+    for (const t of grp.tabs) {
+      if (budget <= 0) break;
+      if (!t || typeof t.sessionId !== 'string' || !liveSessionIds.has(t.sessionId)) continue;
+      tabs.push({
+        key: nextKey('t'),
+        sessionId: t.sessionId,
+        label: typeof t.label === 'string' ? t.label : 'bash',
+        workDir: typeof t.workDir === 'string' ? t.workDir : null,
+      });
+      budget -= 1;
+    }
+    if (tabs.length === 0) continue;
+    const flex =
+      typeof grp.flex === 'number' && Number.isFinite(grp.flex) && grp.flex > 0 ? grp.flex : 1;
+    outGroups.push({ key: nextKey('g'), tabs, activeKey: tabs[tabs.length - 1].key, flex });
+  }
+  const groups = normalize(outGroups);
+  return {
+    groups,
+    panelOpen: groups.length > 0 ? d.panelOpen === true : false,
+    splitRatio: typeof d.splitRatio === 'number' ? clampSplit(d.splitRatio) : 0.6,
+  };
+}
+
+export function termLayoutStorageKey(winId?: string): string {
+  return `mux_editor_term_layout_${winId || 'default'}`;
+}
+
+/** Raw persisted layout (string) or null — tamper-safe, never throws. */
+export function loadTermLayout(winId?: string): string | null {
+  if (typeof window === 'undefined' || !window.localStorage) return null;
+  try {
+    return window.localStorage.getItem(termLayoutStorageKey(winId));
+  } catch {
+    return null;
+  }
+}
+
+export function saveTermLayout(winId: string | undefined, layout: SerializedLayout): void {
+  if (typeof window === 'undefined' || !window.localStorage) return;
+  try {
+    window.localStorage.setItem(termLayoutStorageKey(winId), JSON.stringify(layout));
+  } catch {
+    // quota / privacy mode — persistence is best-effort
+  }
+}

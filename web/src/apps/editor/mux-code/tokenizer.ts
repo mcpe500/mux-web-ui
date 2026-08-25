@@ -78,7 +78,20 @@ const RULES: Record<Exclude<Lang, 'plain'>, LangRules> = {
 
 /** Tokenize one line. Stateless per line (block comments handled per line). */
 export function tokenizeLine(line: string, lang: Lang): Token[] {
-  if (lang === 'plain') return [];
+  return tokenizeLineStateful(line, lang, false).tokens;
+}
+
+/**
+ * EDIT-017 (spec 011): stateful pass — carries block-comment state across
+ * lines. `inBlock` = the previous line ended inside an open block comment.
+ * Wrapper `tokenizeLine` keeps the legacy stateless signature for compat.
+ */
+export function tokenizeLineStateful(
+  line: string,
+  lang: Lang,
+  inBlock: boolean,
+): { tokens: Token[]; inBlock: boolean } {
+  if (lang === 'plain') return { tokens: [], inBlock: false };
   const rules = RULES[lang];
   const tokens: Token[] = [];
   const push = (t: TokenType, s: number, e: number) => {
@@ -87,6 +100,18 @@ export function tokenizeLine(line: string, lang: Lang): Token[] {
 
   let i = 0;
   const n = line.length;
+
+  // Continuing a block comment opened on an earlier line.
+  if (inBlock && rules.blockComment) {
+    const end = line.indexOf(rules.blockComment[1]);
+    if (end === -1) {
+      push('com', 0, n);
+      return { tokens, inBlock: true };
+    }
+    push('com', 0, end + rules.blockComment[1].length);
+    i = end + rules.blockComment[1].length;
+  }
+
   while (i < n) {
     // whitespace
     if (line[i] === ' ' || line[i] === '\t') {
@@ -96,14 +121,14 @@ export function tokenizeLine(line: string, lang: Lang): Token[] {
     // line comment
     if (rules.lineComment && line.startsWith(rules.lineComment, i)) {
       push('com', i, n);
-      return tokens;
+      return { tokens, inBlock: false };
     }
     // block comment start → rest of line (per-line pass)
     if (rules.blockComment && line.startsWith(rules.blockComment[0], i)) {
       const end = line.indexOf(rules.blockComment[1], i + rules.blockComment[0].length);
       if (end === -1) {
         push('com', i, n);
-        return tokens;
+        return { tokens, inBlock: true };
       }
       push('com', i, end + rules.blockComment[1].length);
       i = end + rules.blockComment[1].length;
@@ -139,7 +164,10 @@ export function tokenizeLine(line: string, lang: Lang): Token[] {
     // word
     if (/[A-Za-z_$#]/.test(line[i])) {
       let j = i;
-      while (j < n && /[A-Za-z0-9_$]/.test(line[j])) j++;
+      // inner class MUST mirror the gate above incl. '#' — otherwise a word
+      // starting with '#' never advances i and loops forever (latent v0.6.1
+      // bug exposed by EDIT-017 tests)
+      while (j < n && /[A-Za-z0-9_$#]/.test(line[j])) j++;
       const word = line.slice(i, j);
       if (rules.keywords.has(word)) push('kw', i, j);
       else if (lang !== 'md' && line[j] === '(') push('fn', i, j);
@@ -151,10 +179,22 @@ export function tokenizeLine(line: string, lang: Lang): Token[] {
     // any other char
     i++;
   }
-  return tokens;
+  return { tokens, inBlock: false };
 }
 
-/** Tokenize full text into per-line token arrays. */
+/** Tokenize full text into per-line token arrays (stateless legacy API). */
 export function tokenize(text: string, lang: Lang): Token[][] {
   return text.split('\n').map((l) => tokenizeLine(l, lang));
+}
+
+/** EDIT-017: stateful fold over all lines — correct block comments across lines. */
+export function tokenizeTextStateful(text: string, lang: Lang): Token[][] {
+  const out: Token[][] = [];
+  let inBlock = false;
+  for (const line of text.split('\n')) {
+    const r = tokenizeLineStateful(line, lang, inBlock);
+    out.push(r.tokens);
+    inBlock = r.inBlock;
+  }
+  return out;
 }

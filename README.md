@@ -86,6 +86,10 @@ Every Mux Web UI session is authenticated by default:
 - **TLS Support**: Pass `--tls-cert <path>` and `--tls-key <path>` to enable HTTPS/WSS. Use `--generate-cert` to automatically create a self-signed TLS certificate in `~/.mux-web`.
 - **Loopback Default**: By default, `mux-web` binds strictly to `127.0.0.1`. Remote network access requires `--lan` or explicit `--bind <ip>`.
 - **DNS Rebinding Defense**: Requests with invalid `Origin` or spoofed `Host` headers are automatically rejected with `403 Forbidden`.
+- **Reverse-Proxy Awareness (v0.6.2)**: declare trusted proxy peers with `--trusted-proxies <ip/cidr,...>` so rate limiting keys on the real client IP from `X-Forwarded-For`; forwarded headers from untrusted peers are ignored. Wildcard Host entries (`--allowed-hosts '*.ts.net'`) are opt-in and print a trust-delegation warning at startup.
+- **Supply-Chain Verification (v0.6.2)**: releases ship `checksums.txt.minisig` (minisign). `install.sh` / `update.sh` verify the signature against the committed pubkey before trusting SHA-256 sums — tampering aborts hard. Set `MUX_WEB_STRICT_VERIFY=1` to refuse unsigned/verify-less installs (install `minisign`: Termux `pkg install minisign`).
+- **Dependency Audit (v0.6.2)**: CI runs `cargo audit` weekly and fails on known vulnerabilities.
+- **Compliance posture**: engineering controls are mapped to SOC 2 Trust Services Criteria (see `tests/traceability.md`). Note: SOC 1/2/3 are organizational audits — this project provides controls + evidence, not a certification.
 
 ---
 

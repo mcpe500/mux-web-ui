@@ -85,6 +85,67 @@ export function persistWorkspace(winId: string | undefined, ws: EditorWS): void 
   }
 }
 
+// ── EDIT-014 (spec 011): word-wrap toggle with persistence ──
+
+export const WRAP_KEY_PREFIX = 'mux_editor_wrap_';
+
+export function wrapStorageKey(winId: string | undefined): string {
+  return `${WRAP_KEY_PREFIX}${winId || 'default'}`;
+}
+
+export function loadWrapPref(winId: string | undefined): boolean {
+  if (typeof window === 'undefined' || !window.localStorage) return false;
+  try {
+    return window.localStorage.getItem(wrapStorageKey(winId)) === '1';
+  } catch {
+    return false;
+  }
+}
+
+export function persistWrapPref(winId: string | undefined, on: boolean): void {
+  if (typeof window === 'undefined' || !window.localStorage) return;
+  try {
+    window.localStorage.setItem(wrapStorageKey(winId), on ? '1' : '0');
+  } catch {
+    // quota / privacy mode — best-effort only
+  }
+}
+
+/** CSS for textarea AND the highlight layer must stay identical. */
+export function wrapStyles(on: boolean): { whiteSpace: 'pre' | 'pre-wrap'; overflowWrap?: 'break-word' } {
+  return on ? { whiteSpace: 'pre-wrap', overflowWrap: 'break-word' } : { whiteSpace: 'pre' };
+}
+
+// ── AGT-006 (spec 011): agent quick-launch cwd override merge ──
+
+export interface AgentCwdSel {
+  rootId: string;
+  path: string;
+}
+
+export function mergeAgentSpawnPayload(
+  baseWs: EditorWS,
+  pickerSel: AgentCwdSel | null,
+  envId?: string,
+  agentId?: string,
+): {
+  cols: number;
+  rows: number;
+  cwd_root: string;
+  cwd_path: string;
+  env_id?: string;
+  agent_id?: string;
+} {
+  const ws = pickerSel
+    ? { rootId: pickerSel.rootId, basePath: pickerSel.path }
+    : baseWs;
+  return {
+    ...cwdPayload(ws),
+    ...(envId && envId !== 'termux' ? { env_id: envId } : {}),
+    ...(agentId ? { agent_id: agentId } : {}),
+  };
+}
+
 // ── EDT-010: git branch badge from `git status --porcelain=v2 --branch` raw ──
 
 export function parseGitBranch(raw: string | null | undefined): string | null {

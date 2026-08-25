@@ -10,6 +10,8 @@ import {
   adjustGroupFlex,
   maxReached,
   openInNewGroup,
+  serializeLayout,
+  restoreLayout,
   type TermGroup,
 } from './terminalTabsLogic';
 
@@ -209,6 +211,66 @@ describe('TAB split & flex', () => {
       expect(fresh.activeKey).toBe(fresh.tabs[0].key);
       expect(sumFlex(gs)).toBeCloseTo(1);
     });
+  });
+});
+
+describe('TAB-010/011 (spec 011) layout persistence', () => {
+  function twoGroupsLive() {
+    let gs = createTab([], mkTab('s1'));
+    gs = createTab(gs, mkTab('s2'));
+    gs = splitToNewGroup(gs, gs[0].tabs[1].key);
+    return gs;
+  }
+
+  it('serialize → restore round-trips live tabs with fresh keys', () => {
+    const gs = twoGroupsLive();
+    const ser = serializeLayout(gs, true, 0.55);
+    expect(ser.v).toBe(1);
+    const res = restoreLayout(ser, new Set(['s1', 's2']), 4);
+    expect(res.panelOpen).toBe(true);
+    expect(res.splitRatio).toBeCloseTo(0.55);
+    expect(res.groups).toHaveLength(2);
+    expect(res.groups.flatMap(g => g.tabs.map(t => t.sessionId))).toEqual(['s1', 's2']);
+    // keys regenerated — no collision with old runtime keys
+    expect(res.groups[0].tabs[0].key).not.toBe(gs[0].tabs[0].key);
+    for (const g of res.groups) {
+      expect(g.activeKey).toBe(g.tabs[g.tabs.length - 1].key);
+    }
+    expect(sumFlex(res.groups)).toBeCloseTo(1);
+  });
+
+  it('drops dead sessions and collapses their groups; all-dead → panel closed', () => {
+    const gs = twoGroupsLive();
+    const ser = serializeLayout(gs, true, 0.5);
+    const partial = restoreLayout(ser, new Set(['s2']), 4);
+    expect(partial.groups).toHaveLength(1);
+    expect(partial.groups[0].tabs.map(t => t.sessionId)).toEqual(['s2']);
+    const none = restoreLayout(ser, new Set(), 4);
+    expect(none.groups).toHaveLength(0);
+    expect(none.panelOpen).toBe(false);
+  });
+
+  it('clamps to maxSessions (drop from the end)', () => {
+    let gs = createTab([], mkTab('a'));
+    gs = createTab(gs, mkTab('b'));
+    gs = createTab(gs, mkTab('c'));
+    gs = createTab(gs, mkTab('d'));
+    const res = restoreLayout(serializeLayout(gs, false, 0.6), new Set(['a','b','c','d']), 2);
+    expect(res.groups.flatMap(g => g.tabs.map(t => t.sessionId))).toEqual(['a', 'b']);
+  });
+
+  it('corrupt JSON / wrong shape / tampered types → clean empty layout', () => {
+    for (const bad of ['{nope', 'null', '{"v":2}', '{"v":1,"groups":"x"}', '42']) {
+      const res = restoreLayout(bad as unknown, new Set(['s1']), 4);
+      expect(res.groups).toHaveLength(0);
+      expect(res.panelOpen).toBe(false);
+      expect(res.splitRatio).toBe(0.6);
+    }
+  });
+
+  it('splitRatio clamps into the EDT-003 band on restore', () => {
+    const ser = { v: 1 as const, panelOpen: true, splitRatio: 99, groups: [] };
+    expect(restoreLayout(ser, new Set(), 4).splitRatio).toBe(0.75);
   });
 });
 

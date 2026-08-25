@@ -693,6 +693,9 @@ fn start_server_with_session_limit(
                 TEST_SECRET,
             ),
             share: mux_web::share::ShareRegistry::new(mux_web::share::ShareConfig::default()),
+            distro_tasks: std::sync::Arc::new(tokio::sync::Mutex::new(
+                mux_web::distro_mgmt::DistroTaskRegistry::default(),
+            )),
         };
         let mut server = common::start_server_with_state(state).await;
         // auto_pair equivalent (mirror common::start_server)
@@ -797,6 +800,9 @@ async fn test_sess_009_busy_session_not_reaped() {
             TEST_SECRET,
         ),
         share: mux_web::share::ShareRegistry::new(mux_web::share::ShareConfig::default()),
+        distro_tasks: std::sync::Arc::new(tokio::sync::Mutex::new(
+            mux_web::distro_mgmt::DistroTaskRegistry::default(),
+        )),
     };
     let mut server = common::start_server_with_state(state).await;
     // pair
@@ -905,6 +911,9 @@ async fn test_sess_010_idle_timeout_zero_disables_reap() {
             common::TEST_SECRET,
         ),
         share: mux_web::share::ShareRegistry::new(mux_web::share::ShareConfig::default()),
+        distro_tasks: std::sync::Arc::new(tokio::sync::Mutex::new(
+            mux_web::distro_mgmt::DistroTaskRegistry::default(),
+        )),
     };
     let mut server = common::start_server_with_state(state).await;
     let resp = server

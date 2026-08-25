@@ -20,6 +20,9 @@ async fn test_edit_001_file_read_and_atomic_write() {
         sessions: SessionRegistry::new(),
         auth: mux_web::auth::AuthState::new(mux_web::auth::AuthConfig::default()),
         share: ShareRegistry::new(ShareConfig::default()),
+        distro_tasks: std::sync::Arc::new(tokio::sync::Mutex::new(
+            mux_web::distro_mgmt::DistroTaskRegistry::default(),
+        )),
     };
 
     let _app = create_router(state.clone());

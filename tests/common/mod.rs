@@ -55,6 +55,9 @@ pub async fn start_server(roots: Vec<(String, PathBuf)>) -> TestServer {
         sessions: SessionRegistry::new(),
         auth: test_auth(),
         share,
+        distro_tasks: std::sync::Arc::new(tokio::sync::Mutex::new(
+            mux_web::distro_mgmt::DistroTaskRegistry::default(),
+        )),
     })
     .await;
     server.auto_pair().await;
@@ -101,7 +104,7 @@ pub async fn start_server_with_state(state: AppState) -> TestServer {
 
 impl TestServer {
     #[allow(dead_code)]
-    async fn auto_pair(&mut self) {
+    pub async fn auto_pair(&mut self) {
         let resp = self
             .client
             .post(self.url("/api/v1/auth/pair"))

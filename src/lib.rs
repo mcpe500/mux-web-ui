@@ -4,6 +4,7 @@ pub mod archive;
 pub mod assets;
 pub mod auth;
 pub mod config;
+pub mod distro_mgmt;
 pub mod environments;
 pub mod files;
 pub mod git;

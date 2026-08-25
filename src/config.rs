@@ -1,5 +1,5 @@
 use clap::Parser;
-use std::net::{IpAddr, Ipv4Addr};
+use std::net::{IpAddr, Ipv4Addr, Ipv6Addr};
 use std::path::PathBuf;
 
 #[derive(Parser, Debug, Clone)]
@@ -100,6 +100,59 @@ pub struct Config {
     /// `host[:port]`); each entry is implicitly allowlisted
     #[arg(long = "advertise-addr", env = "MUX_WEB_ADVERTISE_ADDRS")]
     pub advertise_addrs: Option<String>,
+
+    /// NET-007 (spec 011): trusted reverse-proxy peers (CSV of IP or CIDR).
+    /// Only requests FROM these peers may carry X-Forwarded-For; the client
+    /// IP resolved from it is used for rate limiting and logging. Empty =
+    /// legacy behavior (forwarded headers ignored entirely).
+    #[arg(long, env = "MUX_WEB_TRUSTED_PROXIES")]
+    pub trusted_proxies: Option<String>,
+}
+
+/// NET-007 (spec 011): one trusted-proxy entry — a bare IP or a CIDR range.
+#[derive(Debug, Clone, PartialEq, Eq)]
+pub enum TrustedProxy {
+    Single(IpAddr),
+    V4Cidr(Ipv4Addr, u8),
+    V6Cidr(Ipv6Addr, u8),
+}
+
+impl TrustedProxy {
+    pub fn matches(&self, ip: &IpAddr) -> bool {
+        match self {
+            TrustedProxy::Single(p) => p == ip,
+            TrustedProxy::V4Cidr(base, prefix) => match ip {
+                IpAddr::V4(v) => v4_in_cidr(v, base, *prefix),
+                _ => false,
+            },
+            TrustedProxy::V6Cidr(base, prefix) => match ip {
+                IpAddr::V6(v) => v6_in_cidr(v, base, *prefix),
+                _ => false,
+            },
+        }
+    }
+}
+
+fn v4_in_cidr(ip: &Ipv4Addr, base: &Ipv4Addr, prefix: u8) -> bool {
+    let o = u32::from(*ip);
+    let b = u32::from(*base);
+    let bits = if prefix == 0 {
+        0
+    } else {
+        32u32 - (prefix as u32).min(32)
+    };
+    (o >> bits) == (b >> bits)
+}
+
+fn v6_in_cidr(ip: &Ipv6Addr, base: &Ipv6Addr, prefix: u8) -> bool {
+    let o = u128::from(*ip);
+    let b = u128::from(*base);
+    let bits = if prefix == 0 {
+        0
+    } else {
+        128u128 - (prefix as u128).min(128)
+    };
+    (o >> bits) == (b >> bits)
 }
 
 /// NET-002 (spec 009): CGNAT range 100.64.0.0/10 — Tailscale/CGNAT VPN meshes.
@@ -134,6 +187,29 @@ fn valid_host_token(s: &str) -> bool {
         && !s.starts_with('.')
         && !s.ends_with('.')
         && !s.contains("..")
+}
+
+/// NET-008 (spec 011): allowlist entry — either a strict host token or a
+/// wildcard `*.suffix` (dot-boundary). Bare `*` and `*.` are rejected.
+pub fn valid_allowed_host_token(s: &str) -> bool {
+    if let Some(rest) = s.strip_prefix("*.") {
+        !rest.is_empty() && valid_host_token(rest)
+    } else {
+        valid_host_token(s)
+    }
+}
+
+/// NET-008 (spec 011): match a Host header value against one allowlist entry.
+/// Exact (case-insensitive) or dot-boundary wildcard: `*.ts.net` matches
+/// `ts.net` itself AND any-depth subdomains (`a.b.ts.net`).
+pub fn host_matches(entry: &str, host: &str) -> bool {
+    let e = entry.to_ascii_lowercase();
+    let h = host.to_ascii_lowercase();
+    if let Some(suffix) = e.strip_prefix("*.") {
+        h == suffix || h.ends_with(&format!(".{suffix}"))
+    } else {
+        e == h
+    }
 }
 
 /// NET-004 (spec 009): pure collector for the startup banner — loopback
@@ -176,7 +252,9 @@ impl Config {
         if let Some(raw) = &self.allowed_hosts {
             for (i, entry) in raw.split(',').enumerate() {
                 let e = entry.trim().to_ascii_lowercase();
-                if !valid_host_token(&e) {
+                // NET-008 (spec 011): wildcards allowed here, advertised
+                // implicit entries stay exact-match only.
+                if !valid_allowed_host_token(&e) {
                     return Err(format!("invalid --allowed-hosts entry #{}: '{e}'", i + 1));
                 }
                 if !out.contains(&e) {
@@ -222,6 +300,63 @@ impl Config {
                 );
                 if !out.contains(&item) {
                     out.push(item);
+                }
+            }
+        }
+        Ok(out)
+    }
+
+    /// NET-007 (spec 011): parse + validate trusted proxies (IP or CIDR).
+    /// Fails fast with an entry-numbered message.
+    pub fn effective_trusted_proxies(&self) -> Result<Vec<TrustedProxy>, String> {
+        let mut out: Vec<TrustedProxy> = Vec::new();
+        if let Some(raw) = &self.trusted_proxies {
+            for (i, entry) in raw.split(',').enumerate() {
+                let e = entry.trim();
+                if e.is_empty() {
+                    continue;
+                }
+                if let Some((base, prefix)) = e.split_once('/') {
+                    let ip: IpAddr = base.parse().map_err(|_| {
+                        format!("invalid --trusted-proxies entry #{}: '{e}' (bad IP)", i + 1)
+                    })?;
+                    let plen: u8 = prefix.parse().map_err(|_| {
+                        format!(
+                            "invalid --trusted-proxies entry #{}: '{e}' (bad prefix)",
+                            i + 1
+                        )
+                    })?;
+                    let tp = match ip {
+                        IpAddr::V4(v4) => {
+                            if plen > 32 {
+                                return Err(format!(
+                                    "invalid --trusted-proxies entry #{}: '{e}' (v4 prefix > 32)",
+                                    i + 1
+                                ));
+                            }
+                            TrustedProxy::V4Cidr(v4, plen)
+                        }
+                        IpAddr::V6(v6) => {
+                            if plen > 128 {
+                                return Err(format!(
+                                    "invalid --trusted-proxies entry #{}: '{e}' (v6 prefix > 128)",
+                                    i + 1
+                                ));
+                            }
+                            TrustedProxy::V6Cidr(v6, plen)
+                        }
+                    };
+                    if !out.contains(&tp) {
+                        out.push(tp);
+                    }
+                } else {
+                    let ip: IpAddr = e.parse().map_err(|_| {
+                        format!("invalid --trusted-proxies entry #{}: '{e}'", i + 1)
+                    })?;
+                    let tp = TrustedProxy::Single(ip);
+                    if !out.contains(&tp) {
+                        out.push(tp);
+                    }
                 }
             }
         }

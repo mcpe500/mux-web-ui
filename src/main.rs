@@ -4,6 +4,7 @@ mod archive;
 mod assets;
 mod auth;
 mod config;
+mod distro_mgmt;
 mod environments;
 mod files;
 mod git;
@@ -104,6 +105,27 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
         eprintln!("Error: {e}");
         std::process::exit(1);
     }
+    // NET-007/008 (spec 011): fail fast on bad trusted-proxies input; warn on
+    // wildcard allowlist entries (trust delegated to the suffix holder).
+    if let Err(e) = config.effective_trusted_proxies() {
+        eprintln!("Error: {e}");
+        std::process::exit(1);
+    }
+    if let Ok(hosts) = config.effective_allowed_hosts() {
+        let wildcards: Vec<&String> = hosts.iter().filter(|h| h.starts_with("*.")).collect();
+        if !wildcards.is_empty() {
+            println!("WARNING: wildcard --allowed-hosts entries delegate trust to the");
+            println!(
+                "suffix holder (DNS rebinding risk): {}",
+                wildcards
+                    .iter()
+                    .map(|s| s.as_str())
+                    .collect::<Vec<_>>()
+                    .join(", ")
+            );
+            println!("Only use wildcards for suffixes you control.");
+        }
+    }
 
     // rustls needs an explicit default CryptoProvider (axum-server ships
     // rustls without a provider feature).
@@ -161,6 +183,7 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
         sessions: sessions.clone(),
         auth: auth.clone(),
         share: share.clone(),
+        distro_tasks: crate::distro_mgmt::shared_registry(),
     };
 
     let app = create_router(state);

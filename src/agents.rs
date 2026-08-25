@@ -8,6 +8,9 @@ pub struct AgentDef {
     pub binary: String,
     pub label: String,
     pub color: String,
+    /// DISTRO-003 (spec 011): static install hint shown in the UI. The server
+    /// NEVER executes installs — this is documentation, not a command runner.
+    pub install_hint: String,
 }
 
 pub fn registry() -> Vec<AgentDef> {
@@ -17,24 +20,29 @@ pub fn registry() -> Vec<AgentDef> {
             binary: "opencode".to_string(),
             label: "OpenCode".to_string(),
             color: "#6366f1".to_string(),
+            install_hint: "npm i -g opencode-ai  (di dalam distro)".to_string(),
         },
         AgentDef {
             id: "claude-code".to_string(),
             binary: "claude".to_string(),
             label: "Claude Code".to_string(),
             color: "#f59e0b".to_string(),
+            install_hint: "npm i -g @anthropic-ai/claude-code  (di dalam distro)".to_string(),
         },
         AgentDef {
             id: "codex".to_string(),
             binary: "codex".to_string(),
             label: "Codex".to_string(),
             color: "#10b981".to_string(),
+            install_hint: "npm i -g @openai/codex  (di dalam distro)".to_string(),
         },
         AgentDef {
             id: "antigravity".to_string(),
             binary: "agy".to_string(),
             label: "Antigravity".to_string(),
             color: "#ec4899".to_string(),
+            install_hint: "unduh CLI Antigravity dari situs resmi lalu taruh 'agy' di PATH distro"
+                .to_string(),
         },
     ]
 }
