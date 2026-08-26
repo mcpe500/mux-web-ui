@@ -274,6 +274,8 @@ jobs:
           printf '#!/bin/sh\necho "mux-web 0.2.0"\n' > "dist/v0.2.0/mux-web-0.2.0-$TARGET"
           chmod +x "dist/v0.2.0/mux-web-0.2.0-$TARGET"
           (cd "dist/v0.2.0" && sha256sum "mux-web-0.2.0-$TARGET" > "mux-web-0.2.0-$TARGET.sha256")
+          # Aggregate checksums.txt — signed by SIGN-003 scenarios (5a/5b/5c).
+          (cd "dist/v0.2.0" && sha256sum "mux-web-0.2.0-$TARGET" > checksums.txt)
           printf '{"tag_name":"v%s"}' "$VERSION" > "dist/latest.json"
 
       - name: Scenario 1 — clean install, latest via staging (DIST-007)
