@@ -12,3 +12,11 @@ graphify-out/202*-*/
 
 # graphify rebuild lock (transient, never commit)
 graphify-out/.rebuild.lock
+
+# signing key material (SIGN-001..003): PRIVATE keys must NEVER be committed.
+# Only the PUBLIC key at share/minisign.pub belongs in git.
+minisign.key
+*.minisign.key
+share/minisign.key
+**/minisign.key
+checksums.txt.minisig
