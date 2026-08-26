@@ -30,20 +30,20 @@
     "semantic_hash": "96a162b5abf6f90bfe36d36c7e8ab226"
   },
   "src/http.rs": {
-    "mtime": 1787683280.884997,
-    "seen": 1787714737.1675925,
+    "mtime": 1787714920.1015077,
+    "seen": 1787721265.097327,
     "ast_hash": "d4e6c43432f25434bd855654fde64c36",
     "semantic_hash": "d4e6c43432f25434bd855654fde64c36"
   },
   "src/lib.rs": {
-    "mtime": 1787682637.775779,
-    "seen": 1787714737.1675937,
+    "mtime": 1787714920.1020167,
+    "seen": 1787721265.0973294,
     "ast_hash": "79b37ca67b43552ee369f7249395e0b0",
     "semantic_hash": "79b37ca67b43552ee369f7249395e0b0"
   },
   "src/main.rs": {
-    "mtime": 1787682706.6804066,
-    "seen": 1787714737.1675951,
+    "mtime": 1787714920.1025693,
+    "seen": 1787721265.097331,
     "ast_hash": "b71766679814a7ad7ce169a57bd48a60",
     "semantic_hash": "b71766679814a7ad7ce169a57bd48a60"
   },
@@ -102,8 +102,8 @@
     "semantic_hash": "31d257b277c4606d05789ffc1d2d0805"
   },
   "web/package.json": {
-    "mtime": 1787683104.7321527,
-    "seen": 1787714737.1682742,
+    "mtime": 1787714920.1184099,
+    "seen": 1787721265.0973687,
     "ast_hash": "e5e7bbf463546f744a570179521ef2c6",
     "semantic_hash": "e5e7bbf463546f744a570179521ef2c6"
   },
@@ -138,8 +138,8 @@
     "semantic_hash": "1fe3e428358981ac285feaf3c4e5eb85"
   },
   "web/src/desktop/DesktopCanvas.tsx": {
-    "mtime": 1787683094.2700539,
-    "seen": 1787714737.1691082,
+    "mtime": 1787714920.121386,
+    "seen": 1787721265.0974147,
     "ast_hash": "811e235b72860a4611fa29ab9eb3f0c6",
     "semantic_hash": "811e235b72860a4611fa29ab9eb3f0c6"
   },
@@ -150,8 +150,8 @@
     "semantic_hash": "9c042df70dc9524c66a979ca5356de84"
   },
   "web/src/desktop/windowStore.ts": {
-    "mtime": 1787683082.7507193,
-    "seen": 1787714737.1691172,
+    "mtime": 1787714920.1227484,
+    "seen": 1787721265.097429,
     "ast_hash": "0c77b0a881ff0ad23da2328c546874a2",
     "semantic_hash": "0c77b0a881ff0ad23da2328c546874a2"
   },
@@ -426,8 +426,8 @@
     "semantic_hash": "105b3ed891e147f91fc320db52c09b4b"
   },
   "web/src/desktop/StartMenu.tsx": {
-    "mtime": 1787683082.9527688,
-    "seen": 1787714737.1691113,
+    "mtime": 1787714920.1221337,
+    "seen": 1787721265.097417,
     "ast_hash": "3b7aca5790018ab4c893df22db9c7102",
     "semantic_hash": "3b7aca5790018ab4c893df22db9c7102"
   },
@@ -576,8 +576,8 @@
     "semantic_hash": ""
   },
   "src/agents.rs": {
-    "mtime": 1787682649.227186,
-    "seen": 1787714737.1671097,
+    "mtime": 1787714920.0993376,
+    "seen": 1787721265.097311,
     "ast_hash": "c054bdf721ef2280e6cec85bae33d692",
     "semantic_hash": "c054bdf721ef2280e6cec85bae33d692"
   },
@@ -672,8 +672,8 @@
     "semantic_hash": ""
   },
   "session-ses_fc80_AFK_DIEM.md": {
-    "mtime": 1787674988.3438356,
-    "seen": 1787683601.8626516,
+    "mtime": 1787714929.6849573,
+    "seen": 1787721265.097443,
     "ast_hash": "07cfe1a4a0f687dc251a991fffa74a71",
     "semantic_hash": ""
   },
@@ -690,75 +690,81 @@
     "semantic_hash": "a70518b94bf349f0492a9583d5114da6"
   },
   "web/src/apps/terminal/reconnect.test.ts": {
-    "mtime": 1787680508.2065296,
-    "seen": 1787714737.1691027,
+    "mtime": 1787714920.052385,
+    "seen": 1787721265.0974092,
     "ast_hash": "b86c8ea9807e4d4f59b498e197a017df",
     "semantic_hash": "b86c8ea9807e4d4f59b498e197a017df"
   },
   "web/src/apps/terminal/reconnect.ts": {
-    "mtime": 1787680493.2433486,
-    "seen": 1787714737.169104,
+    "mtime": 1787714920.0531542,
+    "seen": 1787721265.0974107,
     "ast_hash": "df2fa3d56cc6b1a8143f40974386f1a4",
     "semantic_hash": "df2fa3d56cc6b1a8143f40974386f1a4"
   },
   "Cargo.toml": {
-    "mtime": 1787683104.7130818,
-    "seen": 1787714737.166818,
+    "mtime": 1787714920.0962105,
+    "seen": 1787721265.0972946,
     "ast_hash": "cce452e37f9b6fe5877f02c772bcfeec",
     "semantic_hash": "cce452e37f9b6fe5877f02c772bcfeec"
   },
   "src/agent_cfg.rs": {
-    "mtime": 1787683104.8259635,
-    "seen": 1787714737.1671057,
+    "mtime": 1787714920.0979424,
+    "seen": 1787721265.0973067,
     "ast_hash": "a370215af99b61c2329ecff70242053f",
     "semantic_hash": "a370215af99b61c2329ecff70242053f"
   },
   "src/agent_pkg.rs": {
-    "mtime": 1787683347.8342218,
-    "seen": 1787714737.1671078,
+    "mtime": 1787714920.0985627,
+    "seen": 1787721265.0973086,
     "ast_hash": "f1b9acd9cccd1c9e3e900015c6b1257a",
     "semantic_hash": "f1b9acd9cccd1c9e3e900015c6b1257a"
   },
   "src/router9.rs": {
-    "mtime": 1787683104.8949487,
-    "seen": 1787714737.1678271,
+    "mtime": 1787714920.1031415,
+    "seen": 1787721265.097338,
     "ast_hash": "153e5da867be4644a9e0767901d281f6",
     "semantic_hash": "153e5da867be4644a9e0767901d281f6"
   },
   "tests/agent_pkg_tests.rs": {
-    "mtime": 1787683105.0091646,
-    "seen": 1787714737.1678326,
+    "mtime": 1787714920.103757,
+    "seen": 1787721265.0973423,
     "ast_hash": "65ad5770398b77622f9f4d6668256c4e",
     "semantic_hash": "65ad5770398b77622f9f4d6668256c4e"
   },
   "web/src/apps/support/SupportHubView.tsx": {
-    "mtime": 1787683074.1914742,
-    "seen": 1787714737.1690967,
+    "mtime": 1787714920.1193957,
+    "seen": 1787721265.0974045,
     "ast_hash": "5c4576463213e38e1e0e2c0f3959fa11",
     "semantic_hash": "5c4576463213e38e1e0e2c0f3959fa11"
   },
   "web/src/apps/support/supportLogic.test.ts": {
-    "mtime": 1787683280.9983015,
-    "seen": 1787714737.1690981,
+    "mtime": 1787714920.1201174,
+    "seen": 1787721265.0974054,
     "ast_hash": "31076ae93fb2dc3a482294016d416558",
     "semantic_hash": "31076ae93fb2dc3a482294016d416558"
   },
   "web/src/apps/support/supportLogic.ts": {
-    "mtime": 1787682849.1278603,
-    "seen": 1787714737.1690998,
+    "mtime": 1787714920.1206174,
+    "seen": 1787721265.0974066,
     "ast_hash": "d380d47d9e6f77c5a88feb106c35f958",
     "semantic_hash": "d380d47d9e6f77c5a88feb106c35f958"
   },
   "spec/specs/013.plan-v0.6.3-agents-package-center-9router-support-hub.md": {
-    "mtime": 1787683548.875407,
-    "seen": 1787714737.1698887,
+    "mtime": 1787714920.0968635,
+    "seen": 1787721265.0974941,
     "ast_hash": "b3d7b3e6c945d98df8e1d2647313a372",
     "semantic_hash": "b3d7b3e6c945d98df8e1d2647313a372"
   },
   "spec/specs/013b.plan-checklist.md": {
-    "mtime": 1787683541.6264212,
-    "seen": 1787714737.1698902,
+    "mtime": 1787714920.0974214,
+    "seen": 1787721265.0974953,
     "ast_hash": "3be532ac3b5d3bae21e73de5f4693737",
     "semantic_hash": "3be532ac3b5d3bae21e73de5f4693737"
+  },
+  "spec/handoff/009.v062-afk-reconnect-v063-support-hub.md": {
+    "mtime": 1787721239.629519,
+    "seen": 1787721265.0974565,
+    "ast_hash": "a7bf7db339e646e5be18e5e6ed7355e6",
+    "semantic_hash": ""
   }
 }
