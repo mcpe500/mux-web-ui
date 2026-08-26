@@ -983,3 +983,52 @@ async fn test_sess_010_idle_timeout_zero_disables_reap() {
     assert_eq!(del.status(), 204);
     server.shutdown().await;
 }
+
+// ── spec 012 (v0.6.2): AFK resilience — session retention between WS close & reconnect ──
+
+/// AFK-009: default idle grace is 120s (was 60s) so a backgrounded tab does
+/// not reap a live PTY too quickly. `0` still disables reap entirely (SESS-010).
+#[test]
+fn test_sess_010_default_idle_grace_is_120s() {
+    assert_eq!(
+        mux_web::session::SessionConfig::default().grace_period,
+        std::time::Duration::from_secs(120)
+    );
+}
+
+/// AFK-010: after a WS drop (detach), `attach_session` clears the idle
+/// deadline so the janitor never reaps the session in the gap between a WS
+/// close and the client's auto-reconnect.
+#[tokio::test]
+async fn test_sess_010_attach_clears_idle_deadline_after_detach() {
+    let server = start_health_server().await;
+    let id = create_terminal(&server).await;
+
+    let attach = request_attach(&server, &id).await;
+    let token = attach["ws_token"].as_str().unwrap().to_string();
+    let ws = connect(&server, &id, &token).await;
+    drop(ws); // simulate WS drop (AFK background)
+
+    // Give the server WS handler a moment to observe the closure and detach.
+    tokio::time::sleep(Duration::from_millis(300)).await;
+
+    let inst = server
+        .sessions
+        .get_session(&id)
+        .expect("session must still be alive (grace period running)");
+    assert!(
+        inst.idle_deadline.lock().unwrap().is_some(),
+        "detach restarts the grace deadline"
+    );
+
+    // Auto-reconnect: fresh attach token + WS attach → deadline cleared.
+    let attach = request_attach(&server, &id).await;
+    let token = attach["ws_token"].as_str().unwrap().to_string();
+    let ws = connect(&server, &id, &token).await;
+    assert!(
+        inst.idle_deadline.lock().unwrap().is_none(),
+        "attach clears the idle deadline so the janitor does not reap"
+    );
+    drop(ws);
+    server.shutdown().await;
+}

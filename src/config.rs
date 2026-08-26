@@ -58,9 +58,11 @@ pub struct Config {
     #[arg(long, env = "MUX_WEB_MAX_SESSIONS", default_value_t = 4)]
     pub max_sessions: usize,
 
-    /// Grace period (seconds) before an unattached session is terminated
+    /// Grace period (seconds) before an unattached session is terminated.
+    /// Raised from 60 to 120 on AFK resilience (spec 012) so a backgrounded tab
+    /// does not reap a live PTY too quickly. Env override MUX_WEB_SESSION_IDLE_TIMEOUT.
     /// 0 = idle reap disabled (SESS-010)
-    #[arg(long, default_value_t = 60)]
+    #[arg(long, env = "MUX_WEB_SESSION_IDLE_TIMEOUT", default_value_t = 120)]
     pub session_idle_timeout: u64,
 
     /// Busy-grace window (seconds) that auto-extends detached deadline while output flows (SESS-009)

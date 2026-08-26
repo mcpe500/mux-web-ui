@@ -52,7 +52,7 @@ pub struct SessionConfig {
 impl Default for SessionConfig {
     fn default() -> Self {
         Self {
-            grace_period: Duration::from_secs(60),
+            grace_period: Duration::from_secs(120),
             output_buffer: 256 * 1024,
             ws_token_ttl: Duration::from_secs(10),
             max_sessions: MAX_SESSIONS,

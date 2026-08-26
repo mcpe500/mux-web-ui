@@ -225,6 +225,32 @@ button {
   font-size: 0.9rem;
 }
 
+/* Terminal reconnect indicator (spec 012 AFK-007) */
+.term-reconnect {
+  position: absolute;
+  bottom: 8px;
+  right: 10px;
+  z-index: 5;
+  padding: 3px 8px;
+  border-radius: 4px;
+  background: rgba(99, 102, 241, 0.25);
+  color: #a5b4fc;
+  font-size: 0.75rem;
+  font-weight: 600;
+  pointer-events: none;
+  animation: term-reconnect-pulse 1.6s ease-in-out infinite;
+}
+
+@keyframes term-reconnect-pulse {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.55;
+  }
+}
+
 /* Window Resize Handles */
 .resize-handle {
   position: absolute;
