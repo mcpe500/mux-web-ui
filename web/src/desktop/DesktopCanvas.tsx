@@ -7,6 +7,7 @@ import { TextEditorView } from '../apps/editor/TextEditorView';
 import { SystemMonitorView } from '../apps/monitor/SystemMonitorView';
 import { GitView } from '../apps/git/GitView';
 import { PackageCenterView } from '../apps/packages/PackageCenterView';
+import { SupportHubView } from '../apps/support/SupportHubView';
 import { ShareModal } from '../apps/share/ShareModal';
 import { BrowserView } from '../apps/browser/BrowserView';
 import { Toolbar } from './Toolbar';
@@ -45,6 +46,7 @@ export function DesktopCanvas() {
     else if (appId === 'packages') openPackages();
     else if (appId === 'share') openShare();
     else if (appId === 'monitor') openMonitor();
+    else if (appId === 'support') openSupport();
   };
 
   const getCanvasBounds = () => {
@@ -218,6 +220,24 @@ export function DesktopCanvas() {
     });
   };
 
+  // DISC-001 (spec 013): Support Hub window
+  const openSupport = () => {
+    const id = `support-${Date.now()}`;
+    dispatch({
+      type: 'OPEN_WINDOW',
+      payload: {
+        id,
+        appId: 'support',
+        title: 'Support Hub',
+        icon: '🛟',
+        x: 120,
+        y: 70,
+        width: 720,
+        height: 560,
+      },
+    });
+  };
+
   const openShare = () => {
     const id = `share-${Date.now()}`;
     dispatch({
@@ -290,6 +310,7 @@ export function DesktopCanvas() {
             {win.appId === 'monitor' && <SystemMonitorView />}
             {win.appId === 'git' && <GitView rootId={win.props?.rootId} repoPath={win.props?.repoPath} />}
             {win.appId === 'packages' && <PackageCenterView />}
+            {win.appId === 'support' && <SupportHubView />}
             {win.appId === 'share' && <ShareModal />}
             {win.appId === 'browser' && <BrowserView />}
           </WindowFrame>

@@ -1,4 +1,6 @@
 #![allow(dead_code)]
+pub mod agent_cfg;
+pub mod agent_pkg;
 pub mod agents;
 pub mod archive;
 pub mod assets;
@@ -13,5 +15,6 @@ pub mod packages;
 pub mod paths;
 pub mod protocol;
 pub mod pty;
+pub mod router9;
 pub mod session;
 pub mod share;

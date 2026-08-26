@@ -16,6 +16,7 @@ const APPS = [
   { id: 'packages', icon: '📦', name: 'Store', desc: 'Package Center' },
   { id: 'share', icon: '🔗', name: 'Share', desc: 'Share links' },
   { id: 'monitor', icon: '📊', name: 'Task Manager', desc: 'System monitor' },
+  { id: 'support', icon: '🛟', name: 'Support', desc: 'Support Hub & panduan' },
 ];
 
 export function StartMenu({ open, onClose, onOpenApp }: StartMenuProps) {

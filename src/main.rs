@@ -1,4 +1,6 @@
 #![allow(dead_code)]
+mod agent_cfg;
+mod agent_pkg;
 mod agents;
 mod archive;
 mod assets;
@@ -13,6 +15,7 @@ mod packages;
 mod paths;
 mod protocol;
 mod pty;
+mod router9;
 mod session;
 mod share;
 

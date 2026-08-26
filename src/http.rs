@@ -104,6 +104,25 @@ pub fn create_router(state: AppState) -> Router {
             "/api/v1/environments/:id/agents",
             get(list_env_agents_handler),
         )
+        // APKG-005 / RTR-003 / ACFG-002..004 (spec 013)
+        .route("/api/v1/tools/catalog", get(tools_catalog_handler))
+        .route("/api/v1/tools/:id/install", post(tool_install_handler))
+        .route("/api/v1/tools/:id/uninstall", post(tool_uninstall_handler))
+        .route(
+            "/api/v1/tools/tasks/:id/stream",
+            get(tool_task_stream_handler),
+        )
+        .route("/api/v1/tools/tasks/:id", delete(tool_task_cancel_handler))
+        .route("/api/v1/router/status", get(router_status_handler))
+        .route("/api/v1/router/models", get(router_models_handler))
+        .route(
+            "/api/v1/agents/:id/config",
+            get(agent_config_get_handler).put(agent_config_put_handler),
+        )
+        .route(
+            "/api/v1/agents/:id/config/router9",
+            post(agent_config_router9_handler),
+        )
         .route(
             "/api/v1/terminals",
             get(list_terminals_handler).post(create_terminal_handler),
@@ -332,6 +351,331 @@ async fn env_task_cancel_handler(
             "error": {"code": "TASK_NOT_RUNNING", "message": format!("no running task '{id}'")}
         });
         (StatusCode::NOT_FOUND, Json(body)).into_response()
+    }
+}
+
+// ── APKG (spec 013): coding-agent package center ────────────────────────────
+
+#[derive(Deserialize)]
+pub struct ToolTaskReq {
+    pub env_id: String,
+}
+
+#[derive(Deserialize)]
+pub struct ToolsCatalogQuery {
+    #[serde(default = "default_env")]
+    pub env: String,
+}
+
+fn default_env() -> String {
+    "termux".to_string()
+}
+
+/// APKG-005: per-agent catalog with live probe + npm installability.
+async fn tools_catalog_handler(Query(q): Query<ToolsCatalogQuery>) -> Response {
+    let tools: Vec<serde_json::Value> = crate::agents::registry()
+        .iter()
+        .map(|a| {
+            let pkg = crate::agent_pkg::npm_package(&a.id);
+            serde_json::json!({
+                "id": a.id,
+                "label": a.label,
+                "color": a.color,
+                "binary": a.binary,
+                "found": crate::agents::probe_agent(&q.env, &a.id),
+                "package": pkg,
+                "installable": pkg.is_some(),
+                "install_hint": a.install_hint,
+            })
+        })
+        .collect();
+    Json(serde_json::json!(tools)).into_response()
+}
+
+async fn tool_install_handler(Path(id): Path<String>, Json(req): Json<ToolTaskReq>) -> Response {
+    tool_mgmt_start("install", &id, &req.env_id).await
+}
+
+async fn tool_uninstall_handler(Path(id): Path<String>, Json(req): Json<ToolTaskReq>) -> Response {
+    tool_mgmt_start("uninstall", &id, &req.env_id).await
+}
+
+async fn tool_mgmt_start(kind: &str, agent_id: &str, env_id: &str) -> Response {
+    // allowlist gates FIRST (argv-only builders reject unknowns)
+    let argv = match kind {
+        "install" => crate::agent_pkg::pkg_install_argv(env_id, agent_id),
+        "uninstall" => crate::agent_pkg::pkg_uninstall_argv(env_id, agent_id),
+        _ => Err(String::from("BAD_KIND")),
+    };
+    let argv = match argv {
+        Ok(a) => a,
+        Err(e) => {
+            let code = match e.as_str() {
+                "UNKNOWN_AGENT" => "TOOL_UNKNOWN",
+                "UNKNOWN_ENV" => "ENV_UNKNOWN",
+                _ => "BAD_REQUEST",
+            };
+            let body = serde_json::json!({
+                "error": {"code": code, "message": format!("{kind} {agent_id}@{env_id}: {e}")}
+            });
+            return (StatusCode::BAD_REQUEST, Json(body)).into_response();
+        }
+    };
+    // APKG-004: pre-check node presence before wasting the single slot
+    if let Err(hint) = crate::agent_pkg::node_present(env_id) {
+        let body = serde_json::json!({
+            "error": {"code": "NODE_MISSING", "message": hint}
+        });
+        return (StatusCode::BAD_REQUEST, Json(body)).into_response();
+    }
+    let reg_arc = crate::agent_pkg::shared_registry();
+    let mut reg = reg_arc.lock().await;
+    match reg.spawn_argv(kind, agent_id, &argv).await {
+        Ok(task_id) => {
+            info!(task = %task_id, kind, tool = %agent_id, env = %env_id, "tool mgmt task started");
+            Json(serde_json::json!({ "task_id": task_id })).into_response()
+        }
+        Err(e) => {
+            let (code, status): (&str, StatusCode) = match e.as_str() {
+                "TASK_BUSY" => ("TASK_BUSY", StatusCode::CONFLICT),
+                _ => ("TASK_SPAWN_FAILED", StatusCode::INTERNAL_SERVER_ERROR),
+            };
+            let body = serde_json::json!({
+                "error": {"code": code, "message": format!("{kind} {agent_id}: {e}")}
+            });
+            (status, Json(body)).into_response()
+        }
+    }
+}
+
+/// APKG-005: WS stream of task output + final exit frame.
+async fn tool_task_stream_handler(Path(task_id): Path<String>, ws: WebSocketUpgrade) -> Response {
+    ws.on_upgrade(move |socket| async move {
+        tool_task_stream_socket(socket, task_id).await;
+    })
+}
+
+async fn tool_task_stream_socket(mut socket: WebSocket, task_id: String) {
+    let rx = {
+        let reg_arc = crate::agent_pkg::shared_registry();
+        let reg = reg_arc.lock().await;
+        reg.subscribe(&task_id)
+    };
+    let Some(mut rx) = rx else {
+        let _ = socket
+            .send(Message::Text(
+                serde_json::json!({"type":"error","message":"unknown task"}).to_string(),
+            ))
+            .await;
+        return;
+    };
+    loop {
+        tokio::select! {
+            line = rx.recv() => {
+                match line {
+                    Ok(l) => {
+                        if socket.send(Message::Text(serde_json::json!({"type":"line","data":l}).to_string())).await.is_err() {
+                            return;
+                        }
+                    }
+                    Err(tokio::sync::broadcast::error::RecvError::Lagged(_)) => continue,
+                    Err(_) => break,
+                }
+            }
+            _ = tokio::time::sleep(Duration::from_millis(150)) => {
+                let reg_arc = crate::agent_pkg::shared_registry();
+                let mut reg = reg_arc.lock().await;
+                if let Some((tid, st)) = reg.reap_if_done().await {
+                    if tid == task_id {
+                        let _ = socket.send(Message::Text(
+                            serde_json::json!({"type":"exit","code":st.exit_code}).to_string(),
+                        )).await;
+                        return;
+                    }
+                }
+            }
+        }
+    }
+}
+
+/// APKG-005: cancel the running tool task.
+async fn tool_task_cancel_handler(Path(id): Path<String>) -> Response {
+    let reg_arc = crate::agent_pkg::shared_registry();
+    let mut reg = reg_arc.lock().await;
+    if reg.cancel(&id).await {
+        StatusCode::NO_CONTENT.into_response()
+    } else {
+        let body = serde_json::json!({
+            "error": {"code": "TASK_NOT_RUNNING", "message": format!("no running task '{id}'")}
+        });
+        (StatusCode::NOT_FOUND, Json(body)).into_response()
+    }
+}
+
+// ── RTR (spec 013): 9Router status & models ─────────────────────────────────
+
+/// RTR-003: is the local 9Router gateway up?
+async fn router_status_handler() -> Response {
+    let port = crate::router9::configured_port();
+    let running = crate::router9::router_running(port);
+    Json(serde_json::json!({ "running": running, "port": port })).into_response()
+}
+
+/// RTR-003: list models exposed by the local router (503 ROUTER_DOWN when off).
+async fn router_models_handler() -> Response {
+    let port = crate::router9::configured_port();
+    match crate::router9::fetch_models(port).await {
+        Ok(models) => Json(serde_json::json!({ "models": models, "port": port })).into_response(),
+        Err(e) => {
+            let body = serde_json::json!({
+                "error": {"code": "ROUTER_DOWN", "message": format!("9Router tidak merespons di 127.0.0.1:{port} ({e}) — jalankan `9router` dulu.")}
+            });
+            (StatusCode::SERVICE_UNAVAILABLE, Json(body)).into_response()
+        }
+    }
+}
+
+// ── ACFG (spec 013): agent config read/write + route-via-9Router ────────────
+
+fn home_dir() -> Result<std::path::PathBuf, Box<Response>> {
+    std::env::var("HOME")
+        .map(std::path::PathBuf::from)
+        .map_err(|_| {
+            let body = serde_json::json!({
+                "error": {"code": "NO_HOME", "message": "HOME tidak tersedia di server"}
+            });
+            let resp: Response = (StatusCode::INTERNAL_SERVER_ERROR, Json(body)).into_response();
+            Box::new(resp)
+        })
+}
+
+fn config_unsupported(id: &str) -> Response {
+    let body = serde_json::json!({
+        "error": {"code": "CONFIG_UNSUPPORTED", "message": format!("agent '{id}' tidak punya config yang bisa diedit")}
+    });
+    (StatusCode::NOT_FOUND, Json(body)).into_response()
+}
+
+/// ACFG-002: read current config for an agent.
+async fn agent_config_get_handler(Path(id): Path<String>) -> Response {
+    if crate::agent_cfg::config_rel_path(&id).is_none() {
+        return config_unsupported(&id);
+    }
+    let home = match home_dir() {
+        Ok(h) => h,
+        Err(resp) => return *resp,
+    };
+    match crate::agent_cfg::read_config(&home, &id) {
+        Ok(content) => Json(serde_json::json!({
+            "path": crate::agent_cfg::config_rel_path(&id).unwrap_or_default(),
+            "exists": content.is_some(),
+            "content": content.unwrap_or_default(),
+        }))
+        .into_response(),
+        Err(e) => {
+            let body = serde_json::json!({
+                "error": {"code": "READ_FAILED", "message": e}
+            });
+            (StatusCode::INTERNAL_SERVER_ERROR, Json(body)).into_response()
+        }
+    }
+}
+
+#[derive(Deserialize)]
+pub struct AgentConfigPutReq {
+    pub content: String,
+}
+
+/// ACFG-003: write config with automatic .bak backup; size-capped.
+async fn agent_config_put_handler(
+    Path(id): Path<String>,
+    Json(req): Json<AgentConfigPutReq>,
+) -> Response {
+    if crate::agent_cfg::config_rel_path(&id).is_none() {
+        return config_unsupported(&id);
+    }
+    let home = match home_dir() {
+        Ok(h) => h,
+        Err(resp) => return *resp,
+    };
+    match crate::agent_cfg::write_config_with_backup(&home, &id, &req.content) {
+        Ok(backup_written) => Json(serde_json::json!({
+            "ok": true,
+            "backup_written": backup_written,
+        }))
+        .into_response(),
+        Err(e) if e == "TOO_LARGE" || e == "CONFIG_UNSUPPORTED" => {
+            let body = serde_json::json!({
+                "error": {"code": e, "message": "payload >256 KiB atau agent tidak didukung"}
+            });
+            (StatusCode::BAD_REQUEST, Json(body)).into_response()
+        }
+        Err(e) => {
+            let body = serde_json::json!({
+                "error": {"code": "WRITE_FAILED", "message": e}
+            });
+            (StatusCode::INTERNAL_SERVER_ERROR, Json(body)).into_response()
+        }
+    }
+}
+
+#[derive(Deserialize)]
+pub struct Router9PatchReq {
+    pub port: Option<u16>,
+}
+
+/// ACFG-004: one-click "route this agent via 9Router".
+async fn agent_config_router9_handler(
+    Path(id): Path<String>,
+    Json(req): Json<Router9PatchReq>,
+) -> Response {
+    let port = req.port.unwrap_or_else(crate::router9::configured_port);
+    if crate::agent_cfg::config_rel_path(&id).is_none() {
+        return config_unsupported(&id);
+    }
+    let home = match home_dir() {
+        Ok(h) => h,
+        Err(resp) => return *resp,
+    };
+    let current = match crate::agent_cfg::read_config(&home, &id) {
+        Ok(c) => c,
+        Err(e) => {
+            let body = serde_json::json!({
+                "error": {"code": "READ_FAILED", "message": e}
+            });
+            return (StatusCode::INTERNAL_SERVER_ERROR, Json(body)).into_response();
+        }
+    };
+    let patched = match id.as_str() {
+        "claude-code" => crate::agent_cfg::patch_claude_settings(current.as_deref(), port),
+        "opencode" => crate::agent_cfg::patch_opencode_config(current.as_deref(), port),
+        "codex" => Ok(crate::agent_cfg::upsert_router9_toml(
+            current.as_deref().unwrap_or(""),
+            port,
+        )),
+        _ => return config_unsupported(&id),
+    };
+    let content = match patched {
+        Ok(c) => c,
+        Err(e) => {
+            let body = serde_json::json!({
+                "error": {"code": "PATCH_FAILED", "message": e}
+            });
+            return (StatusCode::BAD_REQUEST, Json(body)).into_response();
+        }
+    };
+    match crate::agent_cfg::write_config_with_backup(&home, &id, &content) {
+        Ok(_) => Json(serde_json::json!({
+            "ok": true,
+            "base_url": format!("http://127.0.0.1:{port}/v1"),
+        }))
+        .into_response(),
+        Err(e) => {
+            let body = serde_json::json!({
+                "error": {"code": "WRITE_FAILED", "message": e}
+            });
+            (StatusCode::INTERNAL_SERVER_ERROR, Json(body)).into_response()
+        }
     }
 }
 

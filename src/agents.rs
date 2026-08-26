@@ -44,6 +44,14 @@ pub fn registry() -> Vec<AgentDef> {
             install_hint: "unduh CLI Antigravity dari situs resmi lalu taruh 'agy' di PATH distro"
                 .to_string(),
         },
+        AgentDef {
+            // RTR-001 (spec 013): local AI gateway — https://9router.com/
+            id: "9router".to_string(),
+            binary: "9router".to_string(),
+            label: "9Router".to_string(),
+            color: "#38bdf8".to_string(),
+            install_hint: "npm i -g 9router  (di dalam distro)".to_string(),
+        },
     ]
 }
 
@@ -146,8 +154,11 @@ mod tests {
     use super::*;
 
     #[test]
-    fn test_registry_has_four() {
-        assert_eq!(registry().len(), 4);
+    fn test_registry_has_five() {
+        // spec 013 RTR-001: 9Router added to the static registry
+        let ids: Vec<String> = registry().iter().map(|a| a.id.clone()).collect();
+        assert_eq!(registry().len(), 5);
+        assert!(ids.contains(&"9router".to_string()));
     }
 
     #[test]
