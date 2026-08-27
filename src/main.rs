@@ -11,6 +11,7 @@ mod environments;
 mod files;
 mod git;
 mod http;
+mod notebook_exec;
 mod packages;
 mod paths;
 mod protocol;

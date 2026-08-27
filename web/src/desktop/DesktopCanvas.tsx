@@ -10,6 +10,10 @@ import { PackageCenterView } from '../apps/packages/PackageCenterView';
 import { SupportHubView } from '../apps/support/SupportHubView';
 import { ShareModal } from '../apps/share/ShareModal';
 import { BrowserView } from '../apps/browser/BrowserView';
+import { NotebookView } from '../apps/notebooks/NotebookView';
+import { PdfViewerView } from '../apps/pdf/PdfViewerView';
+import { AgentCodexView } from '../apps/agent/AgentCodexView';
+import { routeForFile } from './windowRouter';
 import { Toolbar } from './Toolbar';
 import { StartMenu } from './StartMenu';
 import { SearchApp } from './SearchApp';
@@ -47,6 +51,9 @@ export function DesktopCanvas() {
     else if (appId === 'share') openShare();
     else if (appId === 'monitor') openMonitor();
     else if (appId === 'support') openSupport();
+    else if (appId === 'notebooks') openNotebooks();
+    else if (appId === 'pdf') openPdf();
+    else if (appId === 'codex') openCodex();
   };
 
   const getCanvasBounds = () => {
@@ -238,6 +245,62 @@ export function DesktopCanvas() {
     });
   };
 
+  const openNotebooks = (rootId?: string, filePath?: string) => {
+    const id = `notebooks-${Date.now()}`;
+    const title = filePath ? `Notebooks - ${filePath.split('/').pop() || filePath}` : 'Notebooks';
+    dispatch({
+      type: 'OPEN_WINDOW',
+      payload: {
+        id,
+        appId: 'notebooks',
+        title,
+        icon: '📓',
+        x: 80,
+        y: 40,
+        width: 900,
+        height: 600,
+        props: { rootId: rootId ?? 'home', filePath: filePath ?? '' },
+      },
+    });
+  };
+
+  const openPdf = (rootId?: string, filePath?: string) => {
+    const id = `pdf-${Date.now()}`;
+    const title = filePath ? `PDF - ${filePath.split('/').pop() || filePath}` : 'PDF Reader';
+    dispatch({
+      type: 'OPEN_WINDOW',
+      payload: {
+        id,
+        appId: 'pdf',
+        title,
+        icon: '📄',
+        x: 90,
+        y: 50,
+        width: 900,
+        height: 640,
+        props: { rootId: rootId ?? 'home', filePath: filePath ?? '' },
+      },
+    });
+  };
+
+  const openCodex = () => {
+    const id = `codex-${Date.now()}`;
+    dispatch({
+      type: 'OPEN_WINDOW',
+      payload: {
+        id,
+        appId: 'codex',
+        title: 'Codex',
+        icon: '🤖',
+        x: 100,
+        y: 60,
+        width: 900,
+        height: 600,
+        props: {},
+      },
+    });
+  };
+
   const openShare = () => {
     const id = `share-${Date.now()}`;
     dispatch({
@@ -294,7 +357,12 @@ export function DesktopCanvas() {
             {win.appId === 'terminal' && <TerminalView terminalId={win.props?.terminalId} />}
             {win.appId === 'files' && (
               <FileExplorerView
-                onOpenFile={(root, path) => openEditor(root, path)}
+                onOpenFile={(root, path) => {
+                  const routed = routeForFile(path);
+                  if (routed === 'notebooks') openNotebooks(root, path);
+                  else if (routed === 'pdf') openPdf(root, path);
+                  else openEditor(root, path);
+                }}
                 onOpenTerminalHere={(_root, path) => openTerminal(path)}
                 onOpenInGit={(root, path) => openGit(root, path)}
               />
@@ -313,6 +381,9 @@ export function DesktopCanvas() {
             {win.appId === 'support' && <SupportHubView />}
             {win.appId === 'share' && <ShareModal />}
             {win.appId === 'browser' && <BrowserView />}
+            {win.appId === 'notebooks' && <NotebookView rootId={win.props?.rootId ?? 'home'} filePath={win.props?.filePath ?? ''} />}
+            {win.appId === 'pdf' && <PdfViewerView rootId={win.props?.rootId ?? 'home'} filePath={win.props?.filePath ?? ''} />}
+            {win.appId === 'codex' && <AgentCodexView />}
           </WindowFrame>
         ))}
       </div>

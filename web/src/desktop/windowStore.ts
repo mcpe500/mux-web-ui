@@ -1,6 +1,6 @@
 export interface WindowState {
   id: string;
-  appId: 'terminal' | 'files' | 'editor' | 'monitor' | 'settings' | 'git' | 'packages' | 'archive' | 'share' | 'browser' | 'support';
+  appId: 'terminal' | 'files' | 'editor' | 'monitor' | 'settings' | 'git' | 'packages' | 'archive' | 'share' | 'browser' | 'support' | 'notebooks' | 'pdf' | 'codex';
   title: string;
   icon: string;
   x: number;

@@ -120,6 +120,15 @@ pub fn create_router(state: AppState) -> Router {
             "/api/v1/run/python/:task_id/cancel",
             post(run_python_cancel_handler),
         )
+        // NB-004..009 (spec 014): notebooks — L1 execute-all, executed-bytes
+        // retrieval, progress WS, L2 single-cell run (additive block only).
+        .route("/api/v1/notebooks/execute", post(nb_execute_handler))
+        .route("/api/v1/notebooks/cell", post(nb_cell_handler))
+        .route(
+            "/api/v1/notebooks/executed/:task_id",
+            get(nb_executed_get_handler),
+        )
+        .route("/api/v1/notebooks/:task_id/ws", get(nb_ws_handler))
         .route("/api/v1/router/status", get(router_status_handler))
         .route("/api/v1/router/models", get(router_models_handler))
         .route(
@@ -683,6 +692,316 @@ async fn run_python_cancel_handler(Path(id): Path<String>) -> Response {
             "TASK_NOT_RUNNING",
             format!("no running python task '{id}'"),
         )
+    }
+}
+
+// ── NB-004..009 (spec 014): notebooks ────────────────────────────────────────
+
+#[derive(Deserialize)]
+pub struct NbExecuteReq {
+    pub root: String,
+    pub path: String,
+    /// NB-007: environment id; defaults to termux.
+    #[serde(default)]
+    pub env_id: Option<String>,
+}
+
+#[derive(Deserialize)]
+pub struct NbCellReq {
+    pub root: String,
+    pub path: String,
+    pub prefix_src: String,
+    pub cell_src: String,
+    /// NB-008: environment id; defaults to termux.
+    #[serde(default)]
+    pub env_id: Option<String>,
+}
+
+const NB_CELL_SRC_MAX: usize = 512 * 1024;
+
+/// NB-007 L1 Execute All: run `jupyter nbconvert --execute` on the notebook
+/// file. Result path is remembered SERVER-SIDE keyed by task_id — clients
+/// retrieve bytes by id only, never by path (SEC).
+async fn nb_execute_handler(
+    State(state): State<AppState>,
+    Json(req): Json<NbExecuteReq>,
+) -> Response {
+    let abs = match state.allowed_roots.resolve_path(&req.root, &req.path) {
+        Ok(p) => p,
+        Err(e) => return run_error(StatusCode::BAD_REQUEST, "PATH_TRAVERSAL", e.to_string()),
+    };
+    let env = req.env_id.unwrap_or_else(|| "termux".to_string());
+    let argv = match crate::notebook_exec::jupyter_run_argv(&env, &abs.to_string_lossy()) {
+        Ok(a) => a,
+        Err(e) => {
+            let code = match e.as_str() {
+                "UNKNOWN_ENV" => "ENV_UNKNOWN",
+                _ => "BAD_REQUEST",
+            };
+            return run_error(
+                StatusCode::BAD_REQUEST,
+                code,
+                format!("notebook execute {}: {e}", req.path),
+            );
+        }
+    };
+    // JUPYTER_MISSING pre-check BEFORE consuming the single slot
+    if let Err(hint) = crate::notebook_exec::jupyter_present(&env) {
+        return run_error(StatusCode::BAD_REQUEST, "JUPYTER_MISSING", hint);
+    }
+    let home = home_dir().unwrap_or_else(|_| std::path::PathBuf::from("."));
+    let cwd = crate::run_tools::host_cwd_for(abs.to_string_lossy().as_ref()).and_then(|p| {
+        if env == "termux" {
+            Some(p)
+        } else {
+            crate::environments::translate_cwd_for_env(Some(&p), Some(&env), &home)
+        }
+    });
+    let Some(out_abs) = crate::notebook_exec::exec_output_tmp_name(abs.to_string_lossy().as_ref())
+    else {
+        return run_error(
+            StatusCode::BAD_REQUEST,
+            "BAD_PATH",
+            format!("notebook execute {}: bad file name", req.path),
+        );
+    };
+    let timeout = crate::notebook_exec::effective_run_timeout(state.config.run_timeout_secs);
+    let reg_arc = crate::run_tools::shared_registry();
+    let mut reg = reg_arc.lock().await;
+    // reap-before-busy precedent (run_python_handler)
+    let _ = reg.reap_if_done().await;
+    match reg
+        .spawn_run("jupyter", &req.path, &argv, cwd.as_deref(), timeout)
+        .await
+    {
+        Ok(task_id) => {
+            // absolute output location is server-side knowledge ONLY
+            crate::notebook_exec::remember_exec_output(&task_id, &out_abs.to_string_lossy());
+            info!(task = %task_id, path = %req.path, env = %env, "notebook execute started");
+            Json(serde_json::json!({ "task_id": task_id })).into_response()
+        }
+        Err(e) => {
+            let (code, status): (&str, StatusCode) = match e.as_str() {
+                "TASK_BUSY" => ("TASK_BUSY", StatusCode::CONFLICT),
+                _ => ("TASK_SPAWN_FAILED", StatusCode::INTERNAL_SERVER_ERROR),
+            };
+            run_error(status, code, format!("notebook execute: {e}"))
+        }
+    }
+}
+
+/// NB-007: raw executed ipynb bytes. Purge-on-retrieval semantics:
+/// first successful read consumes the stored-path entry; a second fetch
+/// reports UNKNOWN_TASK and the client is expected to cache locally.
+async fn nb_executed_get_handler(Path(task_id): Path<String>) -> Response {
+    let status_now = crate::run_tools::shared_registry()
+        .lock()
+        .await
+        .status(&task_id);
+    if status_now.map(|st| st.running).unwrap_or(false) {
+        return run_error(
+            StatusCode::NOT_FOUND,
+            "NOT_READY",
+            format!("task '{task_id}' still running"),
+        );
+    }
+    let Some(path) = crate::notebook_exec::take_exec_output(&task_id) else {
+        return run_error(
+            StatusCode::NOT_FOUND,
+            "UNKNOWN_TASK",
+            format!("no executed result stored for '{task_id}'"),
+        );
+    };
+    match std::fs::read(&path) {
+        Ok(bytes) => ([(header::CONTENT_TYPE, "application/json")], bytes).into_response(),
+        Err(_) => run_error(
+            StatusCode::NOT_FOUND,
+            "FILE_MISSING",
+            format!("executed output tmp gone ({path}) — disk cleaned up before retrieval"),
+        ),
+    }
+}
+
+/// NB-008 L2 Run Cell: write combined prefix+marker+cell to a hidden tmp
+/// script INSIDE the resolved parent dir so proot sees it; run through the
+/// shared registry as kind "python-cell". Cleanup happens on the WS exit
+/// frame (delayed unlink, see nb_ws_stream_socket).
+async fn nb_cell_handler(State(state): State<AppState>, Json(req): Json<NbCellReq>) -> Response {
+    if req.prefix_src.len() > NB_CELL_SRC_MAX || req.cell_src.len() > NB_CELL_SRC_MAX {
+        return run_error(
+            StatusCode::BAD_REQUEST,
+            "CELL_TOO_LARGE",
+            format!("prefix/cell source must be <= {NB_CELL_SRC_MAX} bytes each"),
+        );
+    }
+    let abs = match state.allowed_roots.resolve_path(&req.root, &req.path) {
+        Ok(p) => p,
+        Err(e) => return run_error(StatusCode::BAD_REQUEST, "PATH_TRAVERSAL", e.to_string()),
+    };
+    let env = req.env_id.unwrap_or_else(|| "termux".to_string());
+    if let Err(hint) = crate::run_tools::python_present(&env) {
+        return run_error(StatusCode::BAD_REQUEST, "PYTHON_MISSING", hint);
+    }
+    let Some(parent) = abs.parent().map(|p| p.to_path_buf()) else {
+        return run_error(StatusCode::BAD_REQUEST, "BAD_PATH", req.path);
+    };
+    let tmp = parent.join(format!(
+        ".mux_cell_{}.py",
+        crate::notebook_exec::rand_tag6()
+    ));
+    let body = crate::notebook_exec::cell_script_body(&req.prefix_src, &req.cell_src);
+    if let Err(e) = std::fs::write(&tmp, body) {
+        return run_error(
+            StatusCode::INTERNAL_SERVER_ERROR,
+            "TMP_WRITE_FAILED",
+            format!("cell tmp write failed: {e}"),
+        );
+    }
+    let argv = match crate::run_tools::python_run_argv(&env, &tmp.to_string_lossy()) {
+        Ok(a) => a,
+        Err(e) => return run_error(StatusCode::BAD_REQUEST, "ENV_UNKNOWN", e),
+    };
+    let home = home_dir().unwrap_or_else(|_| std::path::PathBuf::from("."));
+    let cwd = if env == "termux" {
+        Some(parent.clone())
+    } else {
+        crate::environments::translate_cwd_for_env(Some(&parent), Some(&env), &home)
+    };
+    let timeout = crate::notebook_exec::effective_run_timeout(state.config.run_timeout_secs);
+    let target = tmp
+        .file_name()
+        .map(|n| n.to_string_lossy().into_owned())
+        .unwrap_or_default();
+    let reg_arc = crate::run_tools::shared_registry();
+    let mut reg = reg_arc.lock().await;
+    let _ = reg.reap_if_done().await;
+    match reg
+        .spawn_run("python-cell", &target, &argv, cwd.as_deref(), timeout)
+        .await
+    {
+        Ok(task_id) => {
+            crate::notebook_exec::remember_cell_tmp(&task_id, &tmp.to_string_lossy());
+            info!(task = %task_id, path = %req.path, env = %env, "notebook cell run started");
+            Json(serde_json::json!({ "task_id": task_id })).into_response()
+        }
+        Err(e) => {
+            let _ = std::fs::remove_file(&tmp);
+            let (code, status): (&str, StatusCode) = match e.as_str() {
+                "TASK_BUSY" => ("TASK_BUSY", StatusCode::CONFLICT),
+                _ => ("TASK_SPAWN_FAILED", StatusCode::INTERNAL_SERVER_ERROR),
+            };
+            run_error(status, code, format!("notebook cell run: {e}"))
+        }
+    }
+}
+
+/// Notebook progress WS — same frame shape {type:"line"|"exit"|"error"} as the
+/// python runner socket; on the exit frame of a "python-cell" task it also
+/// schedules the deferred unlink of the cell tmp script (grace covers tail
+/// pump flush). For "jupyter" tasks no cleanup is attempted here (executed
+/// output stays for diff re-read; FILE_MISSING documents the race honestly).
+async fn nb_ws_handler(Path(task_id): Path<String>, ws: WebSocketUpgrade) -> Response {
+    ws.on_upgrade(move |socket| async move {
+        nb_ws_stream_socket(socket, task_id).await;
+    })
+}
+
+fn nb_exit_frame_json(st: &crate::run_tools::RunTaskStatus) -> serde_json::Value {
+    serde_json::json!({
+        "type":"exit",
+        "code":st.exit_code,
+        "reason": if st.timed_out { "timeout" } else { "code" },
+    })
+}
+
+async fn nb_cleanup_cell_tmp(task_id: &str) {
+    if let Some(tmp) = crate::notebook_exec::take_cell_tmp(task_id) {
+        tokio::spawn(async move {
+            // small grace so trailing stdout pumps finish reading the child
+            tokio::time::sleep(Duration::from_millis(1200)).await;
+            let _ = std::fs::remove_file(&tmp);
+        });
+    }
+}
+
+/// Kind-gated cleanup for paths without a terminal RunTaskStatus at hand
+/// (client disconnect / channel close): only python-cell tmp files unlink.
+async fn nb_cleanup_cell_tmp_if_kind(task_id: &str) {
+    let kind = crate::run_tools::shared_registry()
+        .lock()
+        .await
+        .status(task_id)
+        .map(|st| st.kind);
+    if kind.as_deref() == Some("python-cell") {
+        nb_cleanup_cell_tmp(task_id).await;
+    }
+}
+
+async fn nb_ws_stream_socket(mut socket: WebSocket, task_id: String) {
+    let rx = {
+        let reg_arc = crate::run_tools::shared_registry();
+        let reg = reg_arc.lock().await;
+        reg.subscribe(&task_id)
+    };
+    let Some(mut rx) = rx else {
+        let _ = socket
+            .send(Message::Text(
+                serde_json::json!({"type":"error","message":"unknown task"}).to_string(),
+            ))
+            .await;
+        return;
+    };
+    loop {
+        tokio::select! {
+            line = rx.recv() => {
+                match line {
+                    Ok(l) => {
+                        if socket.send(Message::Text(serde_json::json!({"type":"line","data":l}).to_string())).await.is_err() {
+                            nb_cleanup_cell_tmp_if_kind(&task_id).await;
+                            return;
+                        }
+                    }
+                    Err(tokio::sync::broadcast::error::RecvError::Lagged(n)) => {
+                        let note = format!("<…{n} lines truncated>");
+                        if socket.send(Message::Text(serde_json::json!({"type":"line","data":note}).to_string())).await.is_err() {
+                            nb_cleanup_cell_tmp_if_kind(&task_id).await;
+                            return;
+                        }
+                    }
+                    Err(_) => {
+                        nb_cleanup_cell_tmp_if_kind(&task_id).await;
+                        return;
+                    }
+                }
+            }
+            _ = tokio::time::sleep(Duration::from_millis(150)) => {
+                let kind_done: Option<crate::run_tools::RunTaskStatus> = {
+                    let reg_arc = crate::run_tools::shared_registry();
+                    let mut reg = reg_arc.lock().await;
+                    if let Some((tid, st)) = reg.reap_if_done().await {
+                        if tid == task_id {
+                            Some(st)
+                        } else {
+                            None
+                        }
+                    } else {
+                        reg.status(&task_id).filter(|st| !st.running)
+                    }
+                };
+                if let Some(st) = kind_done {
+                    let frame = nb_exit_frame_json(&st);
+                    let sent = socket.send(Message::Text(frame.to_string())).await.is_ok();
+                    // deferred unlink of the cell tmp script — python-cell
+                    // ONLY, so the jupyter executed-path entry survives for
+                    // the executed/:id retrieval.
+                    if st.kind == "python-cell" {
+                        nb_cleanup_cell_tmp(&task_id).await;
+                    }
+                    let _ = sent;
+                    return;
+                }
+            }
+        }
     }
 }
 

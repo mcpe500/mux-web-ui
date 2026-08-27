@@ -88,7 +88,8 @@ describe('DISC-004 buildOnboarding', () => {
 describe('DISC-003 guides', () => {
   it('mencakup distro, agents, router9, config — tiap guide ≥3 langkah', () => {
     const ids = GUIDES.map((g) => g.id);
-    expect(ids).toEqual(['distro', 'agents', 'router9', 'config']);
+    for (const must of ['distro', 'agents', 'router9', 'config']) expect(ids).toContain(must);
+    expect(GUIDES.length).toBeGreaterThanOrEqual(4);
     GUIDES.forEach((g) => expect(g.steps.length).toBeGreaterThanOrEqual(3));
   });
 
@@ -97,5 +98,9 @@ describe('DISC-003 guides', () => {
     expect(routerGuide.steps.join(' ')).toMatch(/9router/i);
     const agentGuide = GUIDES.find((g) => g.id === 'agents')!;
     expect(agentGuide.steps.join(' ')).toMatch(/Install/i);
+  });
+
+  it('v0.6.4 menambahkan notebooks, python, pdf, codex guides', () => {
+    for (const id of ['notebooks', 'python', 'pdf', 'codex']) expect(GUIDES.map((g) => g.id)).toContain(id);
   });
 });

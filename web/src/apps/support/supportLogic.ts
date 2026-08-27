@@ -123,4 +123,44 @@ export const GUIDES: Guide[] = [
       'Pilih model dari dropdown (daftar datang dari 9Router /v1/models).',
     ],
   },
+  {
+    id: 'notebooks',
+    title: '📓 Cara pakai Notebooks (.ipynb)',
+    steps: [
+      'Double-klik file .ipynb di File Explorer — jendela Notebooks terbuka otomatis (routing by extension).',
+      'Baca markdown, lihat output; edit source cell lalu Save — file .ipynb valid tersimpan via PUT fs/file.',
+      'Jalankan Execute All (membutuhkan jupyter di env) atau Run Cell ▶ (prefix snapshot) untuk mengeksekusi tanpa laptop.',
+      'Dokumen besar >5 MiB ditolak ramah; output >256 KiB collapsed — tap "show more" untuk expand.',
+    ],
+  },
+  {
+    id: 'python',
+    title: '🐍 Cara jalankan Python (▶ Run)',
+    steps: [
+      'Buka file .py di editor — tombol ▶ Run muncul di toolbar hanya untuk .py.',
+      'Pilih env Termux/Ubuntu di chip; klik Run — stream output live di drawer bawah + chip exit code.',
+      'Env tanpa python3 menampilkan hint PYTHON_MISSING; tombol ■ Stop mengirim SIGKILL.',
+      'Traceback klik → buka file:line terkait di editor; afk-safe via reconnect backoff.',
+    ],
+  },
+  {
+    id: 'pdf',
+    title: '📄 Cara pakai PDF Reader',
+    steps: [
+      'Double-klik *.pdf di File Explorer — reader lazy chunk terbuka (fit-width default).',
+      'Gunakan thumbnail rail, outline, goto halaman, pinch/button zoom, dan pencarian hit-counter.',
+      'Dokumen >25 MiB (default MUX_WEB_DOC_MAX_BYTES) ditolak ramah; tombol Open ↗ selalu tersedia fallback.',
+      'Enkripsi atau korup menampilkan pesan Indonesian + saran buka di tab baru.',
+    ],
+  },
+  {
+    id: 'codex',
+    title: '🤖 Cara pakai Codex Window',
+    steps: [
+      'Buka Codex dari Start Menu — pilih root/env/model & sandbox (read-only/workspace-write) lalu 🚀 Jalankan.',
+      'Lihat Chat (bubbles, tool cards, diff mini, error banner) dan Terminal (xterm) sebagai fallback permanen; toggle kapan saja satu PTY.',
+      'Ketika approval diminta, pakai kartu Approve/Deny (hanya forward keystroke persis ke PTY — default-deny).',
+      'Drift format CLI (>20% unparsable) otomatis fallback ke Terminal dengan toast; prompt library per-workspace + history drawer tersedia.',
+    ],
+  },
 ];

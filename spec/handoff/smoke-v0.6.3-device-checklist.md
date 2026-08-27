@@ -93,6 +93,58 @@
 
 ---
 
+## S9 — Notebooks 📓 (spec 014 M-A)
+
+| Langkah | Harapan |
+|---|---|
+| File Explorer → double-klik `analysis.ipynb` 1–5 MiB | Jendela 📓 Notebooks terbuka via `windowRouter.ts:11` routing `*.ipynb→notebooks`; render <1.5 s mid-range device, scroll mulus; toolbar + tabs Origin/Hasil terlihat |
+| Edit markdown cell → double-klik → ubah teks → Save | Perubahan persist setelah reload; `PUT /api/v1/fs/file` menyimpan nbformat valid (buka lagi parser tidak error); file `.ipynb` tetap valid JSON di disk |
+| Execute All di env berjupyter → toolbar ▶ Jalankan Semua | Status bar busy spinner; `POST /api/v1/notebooks/execute` → WS `/api/v1/notebooks/:id/ws` stream `line` → `GET /api/v1/notebooks/executed/:id` mengisi tab Hasil dengan outputs baru yang hanya cell berubah re-render |
+| Execute All di env tanpa jupyter | Pesan ramah `JUPYTER_MISSING` + hint `pip install jupyter` di Support Hub; tidak ada spawn jupyter sia-sia; status WS langsung `exit` error |
+| Run Cell ▶ di cell ke-3 (L2) | `POST /api/v1/notebooks/cell` `{prefix_src,cell_src}` memakai `cellsToScript` marker `# %% MUXCELL N` → stdout segmen tepat masuk output cell tersebut (text/error saja; badge rich-media-limited); progress live |
+| Dokumen bomb-lite 2500 cells / output >256 KiB | Editor menolak ramah `NOTEBOOK_CORRUPT`; output besar collapsed “show more” / banner `big` — webview tidak OOM (guard `notebookModel.ts:6-8`) |
+| Kernel Bridge toggle (gear → checkbox) | Default OFF; hidden panel saat OFF; ON menampilkan info `EXPERIMENTAL — tersedia di gelombang berikutnya` — flag persist `mux_kernel_bridge` |
+
+## S10 — Python Runner 🐍 (spec 014 M-B)
+
+| Langkah | Harapan |
+|---|---|
+| Buka `main.py` di editor → toolbar | Tombol ▶ Run muncul hanya untuk `.py` (deteksi `.endsWith('.py')` di `TextEditorView.tsx`); picker env Termux/ubuntu |
+| `print` loop di env ubuntu ber-python → ▶ Run | Drawer bawah stream live via WS `/api/v1/run/python/:id/ws` (`type:line`), chip exit `code` akurat; scroll panel |
+| Tekan ■ Stop saat run panjang | Cancel = SIGKILL group (`run_tools.rs:282`); stream `exit` segera; `ps` di shell: proses hilang |
+| Env tanpa `python3` → ▶ Run | `400 PYTHON_MISSING` + hint install python per-distro di notice banner; tidak spawn |
+| Traceback `File "main.py", line 12` muncul di output | Baris link klik → membuka file `main.py:12` di editor (mapper `runPanelLogic.ts` last-frame-first) |
+| Screen-off 10 menit saat run streaming → bangun | Session tetap hidup (busy-grace `src/config.rs:112` `run_timeout_secs`); drawer sinkron setelah reconnect backoff `500→10s` |
+
+## S11 — PDF Reader 📄 (spec 014 M-C)
+
+| Langkah | Harapan |
+|---|---|
+| Double-klik `paper.pdf` 1–10 MiB di File Explorer | Jendela 📄 PDF Reader terbuka via routing `*.pdf→pdf` (`windowRouter.ts`); render continuous scroll `±2` viewport; fitur fit-width default |
+| Outline/bookmark ada → sidebar ☰ Outline | Tree `outlineFlatten` tampil; klik item jump ke halaman benar |
+| Thumbnail rail ▦ → scroll | Small canvases lazy 110px width, click goto |
+| Goto halaman input “42” Enter | Scroll ke halaman 42 |
+| Pinch atau tombol ± / Fit | Zoom 0.25…4 step 0.25, fit-width reset |
+| Cari “convolution” → Enter → ◀/▶ | Iterasi `getTextContent` + `searchPlan` page-scoped, hit counter `3/12` akurat; jump ke hit benar |
+| Dokumen >25 MiB (default `MUX_WEB_DOC_MAX_BYTES`) | Pesan ramah `Ukuran dokumen melebihi batas 25 MiB … mux_doc_max_bytes`; tombol `Open ↗` / fallback membuka `/api/v1/fs/file` mentah di tab baru |
+| Dokumen enkripsi / korup | Banner Indonesian spesifik `terenkripsi — dibuka tanpa sandi tidak didukung` / `File bukan PDF valid` sesuai `PdfViewerView.tsx:392` |
+| Budget | `npm run build` + `scripts/check_budget.sh` kirim `Frontend Gzip 537 KiB` (index 141 + pdf chunk 118 + worker 279) — hard PASS `<750` |
+
+## S12 — Codex Window 🤖 (spec 014 M-D)
+
+| Langkah | Harapan |
+|---|---|
+| Start Menu → 🤖 Codex → launcher | Picker env (fetch `/api/v1/environments` fallback `termux`), models (fetch `/api/v1/router/models` deep-link Config Editor; `503 ROUTER_DOWN` notice), sandbox `read-only`/`workspace-write` radio + danger disabled, task prompt satu baris; gate `validateCodexOpts` tampil bila model mengandung metachar `;` atau sandbox bahaya |
+| Isi task “jelaskan repo ini” → 🚀 Jalankan Sesi | Satu PTY dibuat via `POST /api/v1/terminals` (cwd/env); line `codex exec --json "tugas"` diketik persis sekali (via `composeLaunchInput` quoting) — satu-satunya channel eksekusi |
+| Chat view (default) saat codex berjalan | Bubbles user kanan / assistant kiri, tool-call card collapsible nama+args, tool-result dim, error banner merah — stream `OutputPump` parsing `codexEvents.ts` tolerant ≥2 skema CLI |
+| Approval muncul (tool meminta izin) | Kartu Approve/Deny → mengirim persis `keystrokesFor('y'/'n'/'esc')` (`'\n'` / `'\x1b'`) ke PTY yang sama; tidak ada jalur eksekusi kedua; default-deny |
+| Prompt library drawer 📚 | CRUD per-workspace namespace `mux_codex_prompts_<sanitize>`; flag ⚠ untuk entry mengandung flag berbahaya; insert ke prompt → launcher terisi; quota penuh lapor `PROMPT_STORE_FULL` |
+| Drift simulasi: edit `codexFixtures.ts` fixture tampered / CLI ubah format | Dalam window event, `unparsableRatio >0.2` atau `errorBurst ≥3` → toast `Mode chat dinonaktifkan sementara — beralih ke terminal` + otomatis switch Chat→Terminal; toggle manual tetap bisa Chat⇄Terminal satu sesi |
+| History drawer (launcher) | Daftar 20 sesi terakhir ×200 event tertrim `trimHistory`; audit mini-log 50 entri |
+| AFK: streaming codex → matikan layar 5 menit → nyala | Session PTY tetap jalan; client backoff retry `500→10s` (reuse `reconnect.ts` trio `canOpenSocket` single-guard); reconnect otomatis; exit `EXIT`/`ERROR` frame mengakhiri loop dengan overlay `Sesi codex selesai` |
+
+---
+
 ## Peta perbaikan cepat
 
 | Gejala | Fix |
@@ -100,3 +152,7 @@
 | `S2-agy`: binary antigravity bukan `agy` | 1 baris registry `src/agents.rs` → commit → tag patch |
 | Reconnect tidak jalan | Periksa konsol browser (backoff timer), laporkan `S5-*` |
 | Signature gagal saat update | Cek pubkey ter-embed = `minisign.pub` ceremony; `MUX_WEB_MINISIGN_PUB` override untuk uji |
+| Notebooks Execute All hang `TASK_BUSY` | `POST /api/v1/notebooks/execute` melakukan `reap_if_done` sebelum `spawn_run` — cek `src/http.rs:596` |
+| Python Run line-flood OOM | Cek `MAX_LINE_BYTES 256 KiB` truncate di `src/run_tools.rs:152` + marker `<…truncated>` |
+| PDF worker blank di WebView | Pastikan asset lokal `pdf.worker.min.mjs` terbawa di `web/dist/assets/` — bukan CDN; `pdfLoader.ts:7` `new URL(...)` |
+| Codex approval tidak merespon | Tombol harus kirim `keystrokesFor` persis; cek `codexBridge.ts:91` mapping `y→\n` `esc→\x1b`; sandbox allowlist hanya `read-only`/`workspace-write` |

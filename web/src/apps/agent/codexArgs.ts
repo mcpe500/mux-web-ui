@@ -23,9 +23,11 @@ export function matchesDangerousFlag(text: string): boolean {
 /** Default-deny sandbox allowlist (AGX-005/010); undefined → builder default. */
 export const ALLOWED_SANDBOXES = ['read-only', 'workspace-write'] as const;
 
+export type SandboxMode = (typeof ALLOWED_SANDBOXES)[number];
+
 export interface CodexExecOpts {
   model?: string;
-  sandbox?: 'read-only' | 'workspace-write' | 'danger-full-access';
+  sandbox?: SandboxMode;
   prompt: string;
 }
 

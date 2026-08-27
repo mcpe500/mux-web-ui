@@ -27,8 +27,8 @@ else
   exit 1
 fi
 
-# 2. Frontend Assets Size (PERF-002)
-JS_GZIP=$(gzip -c web/dist/assets/*.js 2>/dev/null | wc -c || echo 0)
+# 2. Frontend Assets Size (PERF-002) — count both js and mjs chunks (pdf worker)
+JS_GZIP=$(cat web/dist/assets/*.js web/dist/assets/*.mjs 2>/dev/null | gzip -c | wc -c || echo 0)
 CSS_GZIP=$(gzip -c web/dist/assets/*.css 2>/dev/null | wc -c || echo 0)
 HTML_GZIP=$(gzip -c web/dist/index.html 2>/dev/null | wc -c || echo 0)
 

@@ -11,6 +11,7 @@ pub mod environments;
 pub mod files;
 pub mod git;
 pub mod http;
+pub mod notebook_exec;
 pub mod packages;
 pub mod paths;
 pub mod protocol;
