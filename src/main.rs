@@ -16,6 +16,7 @@ mod paths;
 mod protocol;
 mod pty;
 mod router9;
+mod run_tools;
 mod session;
 mod share;
 

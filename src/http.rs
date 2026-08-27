@@ -113,6 +113,13 @@ pub fn create_router(state: AppState) -> Router {
             get(tool_task_stream_handler),
         )
         .route("/api/v1/tools/tasks/:id", delete(tool_task_cancel_handler))
+        // PY-001..004 (spec 014): python runner (separate run slot)
+        .route("/api/v1/run/python", post(run_python_handler))
+        .route("/api/v1/run/python/:task_id/ws", get(run_python_ws_handler))
+        .route(
+            "/api/v1/run/python/:task_id/cancel",
+            post(run_python_cancel_handler),
+        )
         .route("/api/v1/router/status", get(router_status_handler))
         .route("/api/v1/router/models", get(router_models_handler))
         .route(
@@ -509,6 +516,173 @@ async fn tool_task_cancel_handler(Path(id): Path<String>) -> Response {
             "error": {"code": "TASK_NOT_RUNNING", "message": format!("no running task '{id}'")}
         });
         (StatusCode::NOT_FOUND, Json(body)).into_response()
+    }
+}
+
+// ── PY-001..005 (spec 014): python runner ───────────────────────────────────
+
+#[derive(Deserialize)]
+pub struct RunPythonReq {
+    pub root: String,
+    pub path: String,
+    /// House convention (ToolTaskReq): env id is required and validated.
+    pub env_id: String,
+}
+
+fn run_error(status: StatusCode, code: &str, message: String) -> Response {
+    (
+        status,
+        Json(serde_json::json!({ "error": {"code": code, "message": message} })),
+    )
+        .into_response()
+}
+
+/// PY-001/002/004: start a python run of one file inside an environment.
+async fn run_python_handler(
+    State(state): State<AppState>,
+    Json(req): Json<RunPythonReq>,
+) -> Response {
+    // Path comes from AllowedRoots ONLY — anything unresolvable is a 400.
+    let abs = match state.allowed_roots.resolve_path(&req.root, &req.path) {
+        Ok(p) => p,
+        Err(e) => return run_error(StatusCode::BAD_REQUEST, "PATH_TRAVERSAL", e.to_string()),
+    };
+    // static interpreter allowlist + env validation in the pure builder
+    let argv = match crate::run_tools::python_run_argv(&req.env_id, &abs.to_string_lossy()) {
+        Ok(a) => a,
+        Err(e) => {
+            let code = match e.as_str() {
+                "UNKNOWN_ENV" => "ENV_UNKNOWN",
+                _ => "BAD_REQUEST",
+            };
+            return run_error(
+                StatusCode::BAD_REQUEST,
+                code,
+                format!("python run {}: {e}", req.path),
+            );
+        }
+    };
+    // pre-check python presence BEFORE consuming the single slot
+    if let Err(hint) = crate::run_tools::python_present(&req.env_id) {
+        return run_error(StatusCode::BAD_REQUEST, "PYTHON_MISSING", hint);
+    }
+    // PY-001: host cwd = parent of the script; shared prefixes survive proot
+    let home = home_dir().unwrap_or_else(|_| std::path::PathBuf::from("."));
+    let cwd = crate::run_tools::host_cwd_for(abs.to_string_lossy().as_ref()).and_then(|p| {
+        if req.env_id == "termux" {
+            Some(p)
+        } else {
+            crate::environments::translate_cwd_for_env(Some(&p), Some(&req.env_id), &home)
+        }
+    });
+    let timeout = match state.config.run_timeout_secs {
+        0 => None,
+        secs => Some(Duration::from_secs(secs)),
+    };
+    let reg_arc = crate::run_tools::shared_registry();
+    let mut reg = reg_arc.lock().await;
+    // A task may have finished with NO WS client streaming (no socket tick to
+    // reap it) — release the completed slot before the busy-check so a second
+    // run never wedges on 409 TASK_BUSY.
+    let _ = reg.reap_if_done().await;
+    match reg
+        .spawn_run("python", &req.path, &argv, cwd.as_deref(), timeout)
+        .await
+    {
+        Ok(task_id) => {
+            info!(task = %task_id, path = %req.path, env = %req.env_id, "python run started");
+            Json(serde_json::json!({ "task_id": task_id })).into_response()
+        }
+        Err(e) => {
+            let (code, status): (&str, StatusCode) = match e.as_str() {
+                "TASK_BUSY" => ("TASK_BUSY", StatusCode::CONFLICT),
+                _ => ("TASK_SPAWN_FAILED", StatusCode::INTERNAL_SERVER_ERROR),
+            };
+            run_error(status, code, format!("python run: {e}"))
+        }
+    }
+}
+
+/// PY-003: stream run output; frames {type:"line"|"exit"|"error"}.
+async fn run_python_ws_handler(Path(task_id): Path<String>, ws: WebSocketUpgrade) -> Response {
+    ws.on_upgrade(move |socket| async move {
+        run_python_stream_socket(socket, task_id).await;
+    })
+}
+
+async fn run_python_stream_socket(mut socket: WebSocket, task_id: String) {
+    let rx = {
+        let reg_arc = crate::run_tools::shared_registry();
+        let reg = reg_arc.lock().await;
+        reg.subscribe(&task_id)
+    };
+    let Some(mut rx) = rx else {
+        let _ = socket
+            .send(Message::Text(
+                serde_json::json!({"type":"error","message":"unknown task"}).to_string(),
+            ))
+            .await;
+        return;
+    };
+    loop {
+        tokio::select! {
+            line = rx.recv() => {
+                match line {
+                    Ok(l) => {
+                        if socket.send(Message::Text(serde_json::json!({"type":"line","data":l}).to_string())).await.is_err() {
+                            return;
+                        }
+                    }
+                    // flood guard (spec threat row): emit ONE truncation marker
+                    Err(tokio::sync::broadcast::error::RecvError::Lagged(n)) => {
+                        let note = format!("<…{n} lines truncated>");
+                        if socket.send(Message::Text(serde_json::json!({"type":"line","data":note}).to_string())).await.is_err() {
+                            return;
+                        }
+                    }
+                    Err(_) => break,
+                }
+            }
+            _ = tokio::time::sleep(Duration::from_millis(150)) => {
+                let reg_arc = crate::run_tools::shared_registry();
+                let mut reg = reg_arc.lock().await;
+                if let Some((tid, st)) = reg.reap_if_done().await {
+                    if tid == task_id {
+                        let reason = if st.timed_out { "timeout" } else { "code" };
+                        let _ = socket.send(Message::Text(
+                            serde_json::json!({"type":"exit","code":st.exit_code,"reason":reason}).to_string(),
+                        )).await;
+                        return;
+                    }
+                }
+                // PY-003: a CANCELLED task skips reap_if_done (already moved
+                // out of the current slot) — surface its terminal state here.
+                if let Some(st) = reg.status(&task_id) {
+                    if !st.running {
+                        let reason = if st.timed_out { "timeout" } else { "code" };
+                        let _ = socket.send(Message::Text(
+                            serde_json::json!({"type":"exit","code":st.exit_code,"reason":reason}).to_string(),
+                        )).await;
+                        return;
+                    }
+                }
+            }
+        }
+    }
+}
+
+/// PY-003: stop button — SIGKILL the running task. Absent/done → 409.
+async fn run_python_cancel_handler(Path(id): Path<String>) -> Response {
+    let reg_arc = crate::run_tools::shared_registry();
+    let mut reg = reg_arc.lock().await;
+    if reg.cancel(&id).await {
+        Json(serde_json::json!({})).into_response()
+    } else {
+        run_error(
+            StatusCode::CONFLICT,
+            "TASK_NOT_RUNNING",
+            format!("no running python task '{id}'"),
+        )
     }
 }
 

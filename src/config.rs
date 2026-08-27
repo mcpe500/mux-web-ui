@@ -109,6 +109,11 @@ pub struct Config {
     /// legacy behavior (forwarded headers ignored entirely).
     #[arg(long, env = "MUX_WEB_TRUSTED_PROXIES")]
     pub trusted_proxies: Option<String>,
+
+    /// PY-001..004 (spec 014): max seconds for one python/notebook run before
+    /// SIGKILL. Env override MUX_WEB_RUN_TIMEOUT_SECS; 0 = unbounded.
+    #[arg(long, env = "MUX_WEB_RUN_TIMEOUT_SECS", default_value_t = 300)]
+    pub run_timeout_secs: u64,
 }
 
 /// NET-007 (spec 011): one trusted-proxy entry — a bare IP or a CIDR range.

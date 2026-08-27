@@ -1,6 +1,8 @@
 import { useState, useEffect, useCallback, useMemo, useRef } from 'preact/hooks';
 import { TerminalView } from '../terminal/TerminalView';
 import { FolderPicker } from '../files/FolderPicker';
+import { RunPanel } from './RunPanel';
+import type { TraceTarget } from './runPanelLogic';
 import {
   type EditorWS,
   clampRatio,
@@ -90,6 +92,9 @@ export function TextEditorView({ rootId: propRootId, filePath: propFilePath, ini
   // EDIT-014 (spec 011): word-wrap toggle, persisted per window
   const [wrapOn, setWrapOn] = useState<boolean>(() => loadWrapPref(winId));
   const [menuOpen, setMenuOpen] = useState<string|null>(null);
+  // PY-001/003 (spec 014): python run drawer for .py tabs
+  const [runOpen, setRunOpen] = useState(false);
+  const onRunTrace = (t: TraceTarget) => { openFile(t.rootId, t.path); };
   // AGT-006 (spec 011): cwd override for agent quick-launch + its picker
   const [agentCwd, setAgentCwd] = useState<{ rootId: string; path: string } | null>(null);
   const [agentPickerOpen, setAgentPickerOpen] = useState(false);
@@ -1105,8 +1110,17 @@ export function TextEditorView({ rootId: propRootId, filePath: propFilePath, ini
           </button>
           <button onClick={()=> setHighlight(!highlight)} style={{ padding: '4px 8px', background: highlight?'#f59e0b':'#334155', color: 'white', borderRadius: '3px' }}>{highlight?'✨ Highlight ON':'✨ Highlight OFF'}</button>
           <button data-testid="wrap-toggle" onClick={toggleWrap} title="Word wrap" style={{ padding: '4px 8px', background: wrapOn?'#f59e0b':'#334155', color: 'white', borderRadius: '3px' }}>⮐ Wrap {wrapOn?'ON':'OFF'}</button>
+          {/* PY-001 (spec 014): Run ▶ visible only for .py tabs */}
+          {activeTab && activeTab.fileName.endsWith('.py') && (
+            <button data-testid="run-toggle" onClick={()=> setRunOpen(!runOpen)} title="Run Python" style={{ padding: '4px 8px', background: runOpen?'#10b981':'#334155', color: 'white', borderRadius: '3px' }}>▶ Run</button>
+          )}
           <span style={{ marginLeft: 'auto', color: '#64748b' }}>{activeTab ? `${activeTab.content.split('\n').length} lines` : ''}</span>
         </div>
+
+        {/* PY-003 (spec 014): bottom run drawer */}
+        {runOpen && activeTab && (
+          <RunPanel rootId={activeTab.rootId} filePath={activeTab.filePath} onClose={()=> setRunOpen(false)} onSelectTrace={onRunTrace} />
+        )}
 
         {/* VS Code Find/Replace Bar */}
         {showFind && activeTab && (

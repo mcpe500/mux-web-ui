@@ -16,5 +16,6 @@ pub mod paths;
 pub mod protocol;
 pub mod pty;
 pub mod router9;
+pub mod run_tools;
 pub mod session;
 pub mod share;

@@ -18,10 +18,10 @@
     "semantic_hash": "d3bd23ff3bc95807caa5fccd340468e8"
   },
   "src/config.rs": {
-    "mtime": 1787679819.442711,
-    "seen": 1787714737.1673503,
-    "ast_hash": "92d5fb389b650a34103f3fa76714fb2d",
-    "semantic_hash": "92d5fb389b650a34103f3fa76714fb2d"
+    "mtime": 1787830562.6544833,
+    "seen": 1787833597.3950915,
+    "ast_hash": "b51e4d0ccd46bd09df1663f3be730027",
+    "semantic_hash": ""
   },
   "src/files.rs": {
     "mtime": 1786125597.9017458,
@@ -30,22 +30,22 @@
     "semantic_hash": "96a162b5abf6f90bfe36d36c7e8ab226"
   },
   "src/http.rs": {
-    "mtime": 1787714920.1015077,
-    "seen": 1787721265.097327,
-    "ast_hash": "d4e6c43432f25434bd855654fde64c36",
-    "semantic_hash": "d4e6c43432f25434bd855654fde64c36"
+    "mtime": 1787835190.9579413,
+    "seen": 1787836481.4425154,
+    "ast_hash": "c779a36b53316e771ceed394f42bb841",
+    "semantic_hash": ""
   },
   "src/lib.rs": {
-    "mtime": 1787714920.1020167,
-    "seen": 1787721265.0973294,
-    "ast_hash": "79b37ca67b43552ee369f7249395e0b0",
-    "semantic_hash": "79b37ca67b43552ee369f7249395e0b0"
+    "mtime": 1787829439.9379287,
+    "seen": 1787829649.876329,
+    "ast_hash": "fa10781008dbd76350102babe56deac0",
+    "semantic_hash": ""
   },
   "src/main.rs": {
-    "mtime": 1787714920.1025693,
-    "seen": 1787721265.097331,
-    "ast_hash": "b71766679814a7ad7ce169a57bd48a60",
-    "semantic_hash": "b71766679814a7ad7ce169a57bd48a60"
+    "mtime": 1787831152.5357873,
+    "seen": 1787833597.3951035,
+    "ast_hash": "af1b438478e6d637a2d061e0e99b3239",
+    "semantic_hash": ""
   },
   "src/paths.rs": {
     "mtime": 1787131718.379735,
@@ -102,10 +102,10 @@
     "semantic_hash": "31d257b277c4606d05789ffc1d2d0805"
   },
   "web/package.json": {
-    "mtime": 1787714920.1184099,
-    "seen": 1787721265.0973687,
-    "ast_hash": "e5e7bbf463546f744a570179521ef2c6",
-    "semantic_hash": "e5e7bbf463546f744a570179521ef2c6"
+    "mtime": 1787829195.6651554,
+    "seen": 1787829649.8763723,
+    "ast_hash": "d049c290109f1e8f1aa2b0782cbae122",
+    "semantic_hash": ""
   },
   "web/src/app.tsx": {
     "mtime": 1786126388.9740207,
@@ -114,10 +114,10 @@
     "semantic_hash": "b200590443cb590d2d4911b46bba4b1d"
   },
   "web/src/apps/editor/TextEditorView.tsx": {
-    "mtime": 1787661435.9288454,
-    "seen": 1787714737.1685932,
-    "ast_hash": "3648b6c3b185ac50022272482b0dfb88",
-    "semantic_hash": "3648b6c3b185ac50022272482b0dfb88"
+    "mtime": 1787832777.779638,
+    "seen": 1787833597.395173,
+    "ast_hash": "3cee51ca0b060cfc3031b15ecb15fc0b",
+    "semantic_hash": ""
   },
   "web/src/apps/files/FileExplorerView.tsx": {
     "mtime": 1787313020.2518816,
@@ -807,6 +807,108 @@
     "mtime": 1787828041.2572188,
     "seen": 1787828057.3860126,
     "ast_hash": "ccb9faf49c4bc5470a1c4f14e7e566cd",
+    "semantic_hash": ""
+  },
+  "src/run_tools.rs": {
+    "mtime": 1787836193.579758,
+    "seen": 1787836481.4425385,
+    "ast_hash": "d40b2945f9b92cff54dbb0102e730694",
+    "semantic_hash": ""
+  },
+  "tests/run_tools_tests.rs": {
+    "mtime": 1787836103.6434622,
+    "seen": 1787836481.4425826,
+    "ast_hash": "e9740d625516acfad5c2d8043222238b",
+    "semantic_hash": ""
+  },
+  "web/src/apps/agent/__fixtures__/codexFixtures.ts": {
+    "mtime": 1787829516.7686343,
+    "seen": 1787829649.8763752,
+    "ast_hash": "3e4ca9b866ef39499b7542d1aa645bea",
+    "semantic_hash": ""
+  },
+  "web/src/apps/agent/codexArgs.test.ts": {
+    "mtime": 1787835141.0632136,
+    "seen": 1787836481.4426093,
+    "ast_hash": "88a9804f0fece28ee29b5fe42e3b0309",
+    "semantic_hash": ""
+  },
+  "web/src/apps/agent/codexArgs.ts": {
+    "mtime": 1787835170.763072,
+    "seen": 1787836481.442612,
+    "ast_hash": "189835c3cb42ef5dd99f3b437428cd7b",
+    "semantic_hash": ""
+  },
+  "web/src/apps/agent/codexEvents.test.ts": {
+    "mtime": 1787830143.4104383,
+    "seen": 1787830541.542214,
+    "ast_hash": "ed6c02fd91c593fdeaba30137a67c7e1",
+    "semantic_hash": ""
+  },
+  "web/src/apps/agent/codexEvents.ts": {
+    "mtime": 1787829625.8266296,
+    "seen": 1787829649.8763804,
+    "ast_hash": "a8d7de6ff2642bb9131185956359bf05",
+    "semantic_hash": ""
+  },
+  "web/src/apps/agent/promptLibrary.test.ts": {
+    "mtime": 1787830143.382826,
+    "seen": 1787830541.5422165,
+    "ast_hash": "5831d31129ddf58811a835842c584b97",
+    "semantic_hash": ""
+  },
+  "web/src/apps/pdf/PdfViewerView.tsx": {
+    "mtime": 1787829527.0987518,
+    "seen": 1787829649.8764136,
+    "ast_hash": "56b854b1c57da9541a8bd1484ee73ed2",
+    "semantic_hash": ""
+  },
+  "web/src/apps/pdf/index.ts": {
+    "mtime": 1787829501.541658,
+    "seen": 1787829649.876415,
+    "ast_hash": "2948ddacda2c10903bcc6526db63ffe6",
+    "semantic_hash": ""
+  },
+  "web/src/apps/pdf/pdfLoader.ts": {
+    "mtime": 1787829555.287954,
+    "seen": 1787829649.8764162,
+    "ast_hash": "384c3bf67b89c7803b47908d87fd0a99",
+    "semantic_hash": ""
+  },
+  "web/src/apps/pdf/pdfLogic.test.ts": {
+    "mtime": 1787829538.1134112,
+    "seen": 1787829649.876417,
+    "ast_hash": "2cd607a1048452ddc9d6083472c31ef6",
+    "semantic_hash": ""
+  },
+  "web/src/apps/pdf/pdfLogic.ts": {
+    "mtime": 1787829315.3560605,
+    "seen": 1787829649.8764184,
+    "ast_hash": "b2077898cd4de446a712ca528142632e",
+    "semantic_hash": ""
+  },
+  "web/src/apps/agent/promptLibrary.ts": {
+    "mtime": 1787829684.3341,
+    "seen": 1787830541.5422184,
+    "ast_hash": "cc23f298a5263b10ebca2ebb43f7f93b",
+    "semantic_hash": ""
+  },
+  "web/src/apps/editor/RunPanel.tsx": {
+    "mtime": 1787832627.301481,
+    "seen": 1787833597.3951714,
+    "ast_hash": "45f1b96d595e70207223f8857d3ee4bf",
+    "semantic_hash": ""
+  },
+  "web/src/apps/editor/runPanelLogic.test.ts": {
+    "mtime": 1787832424.7302034,
+    "seen": 1787833597.3951883,
+    "ast_hash": "9bc852ea1b58aa63788dd0de20b75fc3",
+    "semantic_hash": ""
+  },
+  "web/src/apps/editor/runPanelLogic.ts": {
+    "mtime": 1787832543.131043,
+    "seen": 1787833597.3951895,
+    "ast_hash": "90cb8c34912d82967513a5fee400eed8",
     "semantic_hash": ""
   }
 }
