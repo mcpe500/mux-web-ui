@@ -258,10 +258,10 @@
     "semantic_hash": "3bd7278b4a607c75aae38fb500d5d2ee"
   },
   ".github/workflows/ci.yml": {
-    "mtime": 1787661533.3162506,
-    "seen": 1787714737.1698647,
-    "ast_hash": "953f5ea73f2a722dfa36c5f54645203a",
-    "semantic_hash": "953f5ea73f2a722dfa36c5f54645203a"
+    "mtime": 1787723239.648779,
+    "seen": 1787723812.7905655,
+    "ast_hash": "e53d87e61d62e7c42fefa82bac34e25d",
+    "semantic_hash": ""
   },
   "spec/specs/002.plan-v0.2.1.md": {
     "mtime": 1787117400.5243764,
@@ -765,6 +765,48 @@
     "mtime": 1787721239.629519,
     "seen": 1787721265.0974565,
     "ast_hash": "a7bf7db339e646e5be18e5e6ed7355e6",
+    "semantic_hash": ""
+  },
+  "spec/handoff/smoke-v0.6.3-device-checklist.md": {
+    "mtime": 1787723777.2147498,
+    "seen": 1787723812.7906265,
+    "ast_hash": "a901cdbfc6ec4b4e33c95193ff25d5c6",
+    "semantic_hash": ""
+  },
+  "spec/posts/post1.md": {
+    "mtime": 1787680891.6282227,
+    "seen": 1787723812.790632,
+    "ast_hash": "56be59c7adf7834bc36b0c9446b18ece",
+    "semantic_hash": ""
+  },
+  "spec/posts/post2.md": {
+    "mtime": 1787724274.465593,
+    "seen": 1787724294.478086,
+    "ast_hash": "b32b5fddce7ce9914fb863d77b79aa5a",
+    "semantic_hash": ""
+  },
+  "spec/posts/comment-post-2.md": {
+    "mtime": 1787724047.2671301,
+    "seen": 1787724209.9120438,
+    "ast_hash": "9cd4740c78dc20d3c42c9e65a4b38895",
+    "semantic_hash": ""
+  },
+  "spec/posts/image.png": {
+    "mtime": 1787724046.6389785,
+    "seen": 1787724209.912159,
+    "ast_hash": "abc99a81d9153cdbfa982ea8b78569fd",
+    "semantic_hash": ""
+  },
+  "spec/specs/014.plan-v0.6.4-documents-agents-experience.md": {
+    "mtime": 1787827988.39146,
+    "seen": 1787828057.3860095,
+    "ast_hash": "f7678ed442ddb9e05c02bc234d734aa9",
+    "semantic_hash": ""
+  },
+  "spec/specs/014b.plan-checklist.md": {
+    "mtime": 1787828041.2572188,
+    "seen": 1787828057.3860126,
+    "ast_hash": "ccb9faf49c4bc5470a1c4f14e7e566cd",
     "semantic_hash": ""
   }
 }
