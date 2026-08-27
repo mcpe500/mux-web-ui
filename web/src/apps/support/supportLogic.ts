@@ -163,4 +163,14 @@ export const GUIDES: Guide[] = [
       'Drift format CLI (>20% unparsable) otomatis fallback ke Terminal dengan toast; prompt library per-workspace + history drawer tersedia.',
     ],
   },
+  {
+    id: 'update',
+    title: '🔄 Cara update mux-web (mux-web update)',
+    steps: [
+      'Bila sudah terpasang, cukup jalankan `mux-web update` di terminal Termux — itu menjalankan `curl -fsSL https://raw.githubusercontent.com/mcpe500/mux-web-ui/main/install.sh | bash` yang sudah terverifikasi (sig + sha256).',
+      'Untuk cek dulu tanpa install, jalankan `mux-web update --check` — akan menampilkan versi terbaru vs saat ini.',
+      'Jika ingin URL custom, pakai `mux-web update --url https://raw.githubusercontent.com/mcpe500/mux-web-ui/main/install.sh` (harus allowlisted) atau set env `MUX_WEB_UPDATE_URL`.',
+      'Setelah update sukses, restart service mux-web yang sedang jalan untuk memakai binary baru.',
+    ],
+  },
 ];

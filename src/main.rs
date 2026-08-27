@@ -20,6 +20,7 @@ mod router9;
 mod run_tools;
 mod session;
 mod share;
+mod update;
 
 use clap::Parser;
 use config::Config;
@@ -99,6 +100,21 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
         .init();
 
     let mut config = Config::parse();
+
+    // UPD (spec 015): early dispatch for `mux-web update` — before server bootstrap
+    if let Some(cmd) = config.command.clone() {
+        match cmd {
+            config::Commands::Update { check, url } => {
+                match update::handle_update(check, url).await {
+                    Ok(()) => std::process::exit(0),
+                    Err(e) => {
+                        eprintln!("{e}");
+                        std::process::exit(1);
+                    }
+                }
+            }
+        }
+    }
 
     // NET-006 (spec 009): fail fast on invalid allowlist/advertise input so a
     // typo can never silently widen (or break) the Host gate.

@@ -1,4 +1,4 @@
-use clap::Parser;
+use clap::{Parser, Subcommand};
 use std::net::{IpAddr, Ipv4Addr, Ipv6Addr};
 use std::path::PathBuf;
 
@@ -114,6 +114,24 @@ pub struct Config {
     /// SIGKILL. Env override MUX_WEB_RUN_TIMEOUT_SECS; 0 = unbounded.
     #[arg(long, env = "MUX_WEB_RUN_TIMEOUT_SECS", default_value_t = 300)]
     pub run_timeout_secs: u64,
+
+    /// UPD (spec 015): optional subcommand — `mux-web update`
+    #[command(subcommand)]
+    pub command: Option<Commands>,
+}
+
+/// UPD (spec 015) — `mux-web update` (opsi A single binary).
+#[derive(Subcommand, Debug, Clone)]
+pub enum Commands {
+    /// Update mux-web ke rilis terbaru (curl | bash)
+    Update {
+        /// Hanya cek apakah update tersedia, jangan install
+        #[arg(long, default_value_t = false)]
+        check: bool,
+        /// Override URL update (harus allowlisted)
+        #[arg(long, env = "MUX_WEB_UPDATE_URL")]
+        url: Option<String>,
+    },
 }
 
 /// NET-007 (spec 011): one trusted-proxy entry — a bare IP or a CIDR range.

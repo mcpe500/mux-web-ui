@@ -143,6 +143,17 @@
 | History drawer (launcher) | Daftar 20 sesi terakhir ×200 event tertrim `trimHistory`; audit mini-log 50 entri |
 | AFK: streaming codex → matikan layar 5 menit → nyala | Session PTY tetap jalan; client backoff retry `500→10s` (reuse `reconnect.ts` trio `canOpenSocket` single-guard); reconnect otomatis; exit `EXIT`/`ERROR` frame mengakhiri loop dengan overlay `Sesi codex selesai` |
 
+## S13 — Update Command `mux-web update` (spec 015)
+
+| Langkah | Harapan |
+|---|---|
+| Sudah terpasang v0.6.5 → `mux-web --help` | Baris `Commands: update` terlihat; `mux-web --version` `0.6.5` |
+| `mux-web update --help` | Menampilkan `Options: --check, --url <URL>` |
+| `mux-web update --check` | Cek `api.github.com/repos/.../releases/latest` → `Sudah versi terbaru v0.6.5` atau `Update tersedia vX (saat ini v0.6.5)` |
+| `mux-web update --url https://evil.com/payload.sh` | Ditolak pre-curl `INVALID_URL` exit 1, tidak spawn curl; pesan allowlist |
+| Sudah terpasang → `mux-web update` | `Menjalankan update dari: https://raw.githubusercontent.com/mcpe500/mux-web-ui/main/install.sh` streaming `curl | bash` inherit stdout (sig → sha256 → `install -m 0755` → smoke `--version`) — selesai `Update selesai. restart service` |
+| `MUX_WEB_UPDATE_URL=file:///tmp/fake-install.sh mux-web update` | Allowlist `file://` untuk smoke lokal — stream dummy `fake-install.sh` terlihat |
+
 ---
 
 ## Peta perbaikan cepat
@@ -156,3 +167,4 @@
 | Python Run line-flood OOM | Cek `MAX_LINE_BYTES 256 KiB` truncate di `src/run_tools.rs:152` + marker `<…truncated>` |
 | PDF worker blank di WebView | Pastikan asset lokal `pdf.worker.min.mjs` terbawa di `web/dist/assets/` — bukan CDN; `pdfLoader.ts:7` `new URL(...)` |
 | Codex approval tidak merespon | Tombol harus kirim `keystrokesFor` persis; cek `codexBridge.ts:91` mapping `y→\n` `esc→\x1b`; sandbox allowlist hanya `read-only`/`workspace-write` |
+| `mux-web update` INVALID_URL | URL harus prefix `https://raw.githubusercontent.com/mcpe500/mux-web-ui/` atau `https://github.com/.../releases/` — cek `src/update.rs:13` `ALLOWED_PREFIXES` |

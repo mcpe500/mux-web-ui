@@ -20,3 +20,4 @@ pub mod router9;
 pub mod run_tools;
 pub mod session;
 pub mod share;
+pub mod update;

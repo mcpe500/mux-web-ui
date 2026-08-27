@@ -18,9 +18,9 @@
     "semantic_hash": "d3bd23ff3bc95807caa5fccd340468e8"
   },
   "src/config.rs": {
-    "mtime": 1787830562.6544833,
-    "seen": 1787833597.3950915,
-    "ast_hash": "b51e4d0ccd46bd09df1663f3be730027",
+    "mtime": 1787847417.7584183,
+    "seen": 1787848159.1018236,
+    "ast_hash": "5fa19c9d4e3a85a814c0e41135b5f3b4",
     "semantic_hash": ""
   },
   "src/files.rs": {
@@ -36,15 +36,15 @@
     "semantic_hash": ""
   },
   "src/lib.rs": {
-    "mtime": 1787837974.521278,
-    "seen": 1787838426.9613078,
-    "ast_hash": "027866051c2a6f076907b034e83dfb59",
+    "mtime": 1787847424.388343,
+    "seen": 1787848159.101834,
+    "ast_hash": "c42ad3f81627a2b8c399434878691f65",
     "semantic_hash": ""
   },
   "src/main.rs": {
-    "mtime": 1787837974.979277,
-    "seen": 1787838426.9613104,
-    "ast_hash": "fe38ea2cab7b6f06d0020a17ffd9e8ef",
+    "mtime": 1787847436.417158,
+    "seen": 1787848159.1018355,
+    "ast_hash": "15e7ddb892a0fc6a8217f44c9607852b",
     "semantic_hash": ""
   },
   "src/paths.rs": {
@@ -102,9 +102,9 @@
     "semantic_hash": "31d257b277c4606d05789ffc1d2d0805"
   },
   "web/package.json": {
-    "mtime": 1787843813.4521234,
-    "seen": 1787844832.8417366,
-    "ast_hash": "2104ef5c26c1f243cad9c318e89b0270",
+    "mtime": 1787847454.7969918,
+    "seen": 1787848159.1018815,
+    "ast_hash": "4b5203ed42db8d12dafadcfc9d97afcb",
     "semantic_hash": ""
   },
   "web/src/app.tsx": {
@@ -702,9 +702,9 @@
     "semantic_hash": "df2fa3d56cc6b1a8143f40974386f1a4"
   },
   "Cargo.toml": {
-    "mtime": 1787843808.2765584,
-    "seen": 1787844832.8415818,
-    "ast_hash": "3a0a6acc400e919a22dd21ef33747f61",
+    "mtime": 1787847448.2302635,
+    "seen": 1787848159.1018004,
+    "ast_hash": "50f876804280426a7a84085bbca939db",
     "semantic_hash": ""
   },
   "src/agent_cfg.rs": {
@@ -744,9 +744,9 @@
     "semantic_hash": ""
   },
   "web/src/apps/support/supportLogic.ts": {
-    "mtime": 1787843801.9030933,
-    "seen": 1787844832.841862,
-    "ast_hash": "c0fe8998755c1f4d15ad16ed633ed011",
+    "mtime": 1787847667.8958457,
+    "seen": 1787848159.1019597,
+    "ast_hash": "0191b99ebc3f54f62c5dba24bb87e0f3",
     "semantic_hash": ""
   },
   "spec/specs/013.plan-v0.6.3-agents-package-center-9router-support-hub.md": {
@@ -768,9 +768,9 @@
     "semantic_hash": ""
   },
   "spec/handoff/smoke-v0.6.3-device-checklist.md": {
-    "mtime": 1787844718.1439693,
-    "seen": 1787844832.8419106,
-    "ast_hash": "a1d96360f63591a651b6fc894a23f31f",
+    "mtime": 1787848137.373007,
+    "seen": 1787848159.1020014,
+    "ast_hash": "a4a3ad5d2fe72d06b886bd05f06ea8b7",
     "semantic_hash": ""
   },
   "spec/posts/post1.md": {
@@ -960,9 +960,9 @@
     "semantic_hash": ""
   },
   ".vite/vitest/results.json": {
-    "mtime": 1787844528.9208937,
-    "seen": 1787844832.8415737,
-    "ast_hash": "d803dd1e7ee24a0a499ba140b6dd17e0",
+    "mtime": 1787847730.2717881,
+    "seen": 1787848159.1017947,
+    "ast_hash": "4e89a1a193437e0b748fdab6b515d7b8",
     "semantic_hash": ""
   },
   "web/src/apps/notebooks/NotebookView.tsx": {
@@ -1029,6 +1029,30 @@
     "mtime": 1787844813.948635,
     "seen": 1787844832.8419092,
     "ast_hash": "e8917efc2b1e83af995c997de61ded3a",
+    "semantic_hash": ""
+  },
+  "src/update.rs": {
+    "mtime": 1787847689.9187684,
+    "seen": 1787848159.1018503,
+    "ast_hash": "62d3f46615c97a52ac5c66f86902adc9",
+    "semantic_hash": ""
+  },
+  "tests/update_cmd_tests.rs": {
+    "mtime": 1787847690.1908143,
+    "seen": 1787848159.1018782,
+    "ast_hash": "25aca7e0868f5bf227d5c153d6610e50",
+    "semantic_hash": ""
+  },
+  "spec/specs/015.plan-v0.6.5-update-command.md": {
+    "mtime": 1787848092.9111657,
+    "seen": 1787848159.102046,
+    "ast_hash": "d0f92e033029048d74846f9d63d8bdd4",
+    "semantic_hash": ""
+  },
+  "spec/specs/015b.plan-checklist.md": {
+    "mtime": 1787848108.9327633,
+    "seen": 1787848159.1020472,
+    "ast_hash": "2099d432a8f7d3d315b19ddf9a1d5a26",
     "semantic_hash": ""
   }
 }

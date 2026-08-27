@@ -495,19 +495,6 @@
       "source_location": "L21"
     },
     {
-      "id": "web_src_apps_browser_browserview_tab",
-      "label": "Tab",
-      "_callable": true,
-      "_callable_class": true,
-      "_origin": "ast",
-      "community": 145,
-      "community_name": "BrowserView.tsx",
-      "file_type": "code",
-      "norm_label": "tab",
-      "source_file": "web/src/apps/browser/BrowserView.tsx",
-      "source_location": "L3"
-    },
-    {
       "id": "web_src_apps_terminal_reconnect_frameopcode",
       "label": "FrameOpcode",
       "_callable": true,
@@ -519,19 +506,6 @@
       "norm_label": "frameopcode",
       "source_file": "web/src/apps/terminal/reconnect.ts",
       "source_location": "L13"
-    },
-    {
-      "id": "web_src_desktop_startmenu_startmenuprops",
-      "label": "StartMenuProps",
-      "_callable": true,
-      "_callable_class": true,
-      "_origin": "ast",
-      "community": 159,
-      "community_name": "StartMenu.tsx",
-      "file_type": "code",
-      "norm_label": "startmenuprops",
-      "source_file": "web/src/desktop/StartMenu.tsx",
-      "source_location": "L3"
     },
     {
       "id": "web_src_apps_editor_terminaltabslogic_serializedgroup",
@@ -768,6 +742,19 @@
       "source_location": "L4"
     },
     {
+      "id": "web_src_apps_browser_browserview_tab",
+      "label": "Tab",
+      "_callable": true,
+      "_callable_class": true,
+      "_origin": "ast",
+      "community": 26,
+      "community_name": "DesktopCanvas.tsx",
+      "file_type": "code",
+      "norm_label": "tab",
+      "source_file": "web/src/apps/browser/BrowserView.tsx",
+      "source_location": "L3"
+    },
+    {
       "id": "web_src_apps_git_gitview_gitviewprops",
       "label": "GitViewProps",
       "_callable": true,
@@ -804,6 +791,19 @@
       "file_type": "code",
       "norm_label": "searchappprops",
       "source_file": "web/src/desktop/SearchApp.tsx",
+      "source_location": "L3"
+    },
+    {
+      "id": "web_src_desktop_startmenu_startmenuprops",
+      "label": "StartMenuProps",
+      "_callable": true,
+      "_callable_class": true,
+      "_origin": "ast",
+      "community": 26,
+      "community_name": "DesktopCanvas.tsx",
+      "file_type": "code",
+      "norm_label": "startmenuprops",
+      "source_file": "web/src/desktop/StartMenu.tsx",
       "source_location": "L3"
     },
     {
@@ -974,6 +974,19 @@
       "norm_label": "outputpump",
       "source_file": "web/src/apps/agent/codexBridge.ts",
       "source_location": "L10"
+    },
+    {
+      "id": "web_src_apps_agent_codexevents_driftreport",
+      "label": "DriftReport",
+      "_callable": true,
+      "_callable_class": true,
+      "_origin": "ast",
+      "community": 41,
+      "community_name": "AgentCodexView.tsx",
+      "file_type": "code",
+      "norm_label": "driftreport",
+      "source_file": "web/src/apps/agent/codexEvents.ts",
+      "source_location": "L30"
     },
     {
       "id": "web_src_apps_pdf_pdfloader_pdfjsmodule",
@@ -1338,19 +1351,6 @@
       "norm_label": "codexevent",
       "source_file": "web/src/apps/agent/codexEvents.ts",
       "source_location": "L12"
-    },
-    {
-      "id": "web_src_apps_agent_codexevents_driftreport",
-      "label": "DriftReport",
-      "_callable": true,
-      "_callable_class": true,
-      "_origin": "ast",
-      "community": 57,
-      "community_name": "codexEvents.ts",
-      "file_type": "code",
-      "norm_label": "driftreport",
-      "source_file": "web/src/apps/agent/codexEvents.ts",
-      "source_location": "L30"
     },
     {
       "id": "web_src_apps_agent_codexevents_rec",
@@ -1942,6 +1942,30 @@
       "source_location": "L75"
     },
     {
+      "id": "web_src_app_app",
+      "label": "App()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 116,
+      "community_name": "windowRouter.ts",
+      "file_type": "code",
+      "norm_label": "app()",
+      "source_file": "web/src/app.tsx",
+      "source_location": "L4"
+    },
+    {
+      "id": "web_src_desktop_desktopcanvas_desktopcanvas",
+      "label": "DesktopCanvas()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 116,
+      "community_name": "windowRouter.ts",
+      "file_type": "code",
+      "norm_label": "desktopcanvas()",
+      "source_file": "web/src/desktop/DesktopCanvas.tsx",
+      "source_location": "L21"
+    },
+    {
       "id": "web_src_desktop_windowrouter_routedappforfile",
       "label": "routedAppForFile()",
       "_callable": true,
@@ -2012,30 +2036,6 @@
       "norm_label": ".startsession()",
       "source_file": "web/src/apps/agent/adapterTypes.ts",
       "source_location": "L22"
-    },
-    {
-      "id": "web_src_apps_browser_browserview_browserview",
-      "label": "BrowserView()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 145,
-      "community_name": "BrowserView.tsx",
-      "file_type": "code",
-      "norm_label": "browserview()",
-      "source_file": "web/src/apps/browser/BrowserView.tsx",
-      "source_location": "L10"
-    },
-    {
-      "id": "web_src_desktop_startmenu_startmenu",
-      "label": "StartMenu()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 159,
-      "community_name": "StartMenu.tsx",
-      "file_type": "code",
-      "norm_label": "startmenu()",
-      "source_file": "web/src/desktop/StartMenu.tsx",
-      "source_location": "L25"
     },
     {
       "id": "web_src_apps_editor_terminaltabslogic_adjustgroupflex",
@@ -2710,6 +2710,18 @@
       "source_location": "L191"
     },
     {
+      "id": "web_src_apps_browser_browserview_browserview",
+      "label": "BrowserView()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 26,
+      "community_name": "DesktopCanvas.tsx",
+      "file_type": "code",
+      "norm_label": "browserview()",
+      "source_file": "web/src/apps/browser/BrowserView.tsx",
+      "source_location": "L10"
+    },
+    {
       "id": "web_src_apps_git_gitview_gitview",
       "label": "GitView()",
       "_callable": true,
@@ -2768,6 +2780,18 @@
       "norm_label": "searchapp()",
       "source_file": "web/src/desktop/SearchApp.tsx",
       "source_location": "L20"
+    },
+    {
+      "id": "web_src_desktop_startmenu_startmenu",
+      "label": "StartMenu()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 26,
+      "community_name": "DesktopCanvas.tsx",
+      "file_type": "code",
+      "norm_label": "startmenu()",
+      "source_file": "web/src/desktop/StartMenu.tsx",
+      "source_location": "L25"
     },
     {
       "id": "web_src_desktop_toolbar_toolbar",
@@ -2914,6 +2938,18 @@
       "source_location": "L62"
     },
     {
+      "id": "web_src_apps_agent_codexargs_buildcodexexecargs",
+      "label": "buildCodexExecArgs()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 41,
+      "community_name": "AgentCodexView.tsx",
+      "file_type": "code",
+      "norm_label": "buildcodexexecargs()",
+      "source_file": "web/src/apps/agent/codexArgs.ts",
+      "source_location": "L42"
+    },
+    {
       "id": "web_src_apps_agent_codexbridge_buildauditentry",
       "label": "buildAuditEntry()",
       "_callable": true,
@@ -2996,6 +3032,18 @@
       "norm_label": ".push()",
       "source_file": "web/src/apps/agent/codexBridge.ts",
       "source_location": "L15"
+    },
+    {
+      "id": "web_src_apps_agent_codexbridge_outputpump_report",
+      "label": ".report()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 41,
+      "community_name": "AgentCodexView.tsx",
+      "file_type": "code",
+      "norm_label": ".report()",
+      "source_file": "web/src/apps/agent/codexBridge.ts",
+      "source_location": "L19"
     },
     {
       "id": "web_src_apps_agent_codexbridge_outputpump_reset",
@@ -3610,18 +3658,6 @@
       "source_location": "L29"
     },
     {
-      "id": "web_src_apps_agent_codexbridge_outputpump_report",
-      "label": ".report()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 57,
-      "community_name": "codexEvents.ts",
-      "file_type": "code",
-      "norm_label": ".report()",
-      "source_file": "web/src/apps/agent/codexBridge.ts",
-      "source_location": "L19"
-    },
-    {
       "id": "web_src_apps_agent_codexevents_analyzetranscript",
       "label": "analyzeTranscript()",
       "_callable": true,
@@ -4066,42 +4102,6 @@
       "source_location": "L17"
     },
     {
-      "id": "web_src_apps_agent_promptlibrary_validatecodexprompt",
-      "label": "validateCodexPrompt()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 88,
-      "community_name": "promptLibrary.ts",
-      "file_type": "code",
-      "norm_label": "validatecodexprompt()",
-      "source_file": "web/src/apps/agent/promptLibrary.ts",
-      "source_location": "L107"
-    },
-    {
-      "id": "web_src_app_app",
-      "label": "App()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 89,
-      "community_name": "app.tsx",
-      "file_type": "code",
-      "norm_label": "app()",
-      "source_file": "web/src/app.tsx",
-      "source_location": "L4"
-    },
-    {
-      "id": "web_src_desktop_desktopcanvas_desktopcanvas",
-      "label": "DesktopCanvas()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 89,
-      "community_name": "app.tsx",
-      "file_type": "code",
-      "norm_label": "desktopcanvas()",
-      "source_file": "web/src/desktop/DesktopCanvas.tsx",
-      "source_location": "L21"
-    },
-    {
       "id": "web_src_apps_editor_runpanel_runpanel",
       "label": "RunPanel()",
       "_callable": true,
@@ -4162,18 +4162,6 @@
       "source_location": "L16"
     },
     {
-      "id": "web_src_apps_agent_codexargs_buildcodexexecargs",
-      "label": "buildCodexExecArgs()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 98,
-      "community_name": "codexArgs.ts",
-      "file_type": "code",
-      "norm_label": "buildcodexexecargs()",
-      "source_file": "web/src/apps/agent/codexArgs.ts",
-      "source_location": "L42"
-    },
-    {
       "id": "web_src_apps_agent_codexargs_matchesdangerousflag",
       "label": "matchesDangerousFlag()",
       "_callable": true,
@@ -4198,6 +4186,18 @@
       "source_location": "L51"
     },
     {
+      "id": "web_src_apps_agent_promptlibrary_validatecodexprompt",
+      "label": "validateCodexPrompt()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 98,
+      "community_name": "codexArgs.ts",
+      "file_type": "code",
+      "norm_label": "validatecodexprompt()",
+      "source_file": "web/src/apps/agent/promptLibrary.ts",
+      "source_location": "L107"
+    },
+    {
       "id": "readme",
       "label": "README.md",
       "_origin": "ast",
@@ -4208,6 +4208,21 @@
       "norm_label": "readme.md",
       "source_file": "README.md",
       "source_location": "L1"
+    },
+    {
+      "id": "web_index_spa_mount",
+      "label": "SPA mount point (#app + main.tsx)",
+      "_origin": "ast",
+      "author": null,
+      "captured_at": null,
+      "community": 116,
+      "community_name": "windowRouter.ts",
+      "contributor": null,
+      "file_type": "document",
+      "norm_label": "spa mount point (#app + main.tsx)",
+      "source_file": "web/index.html",
+      "source_location": "L9-L12",
+      "source_url": null
     },
     {
       "id": "github_workflows_ci_budget_check",
@@ -4312,7 +4327,7 @@
       "author": null,
       "captured_at": null,
       "community": 67,
-      "community_name": "traceability.md",
+      "community_name": "000a.plan-test.md",
       "contributor": null,
       "file_type": "code",
       "norm_label": "ci.yml",
@@ -4336,21 +4351,6 @@
       "rationale": null,
       "source_file": "spec/specs/012b.plan-checklist.md",
       "source_location": "L1",
-      "source_url": null
-    },
-    {
-      "id": "web_index_spa_mount",
-      "label": "SPA mount point (#app + main.tsx)",
-      "_origin": "ast",
-      "author": null,
-      "captured_at": null,
-      "community": 89,
-      "community_name": "app.tsx",
-      "contributor": null,
-      "file_type": "document",
-      "norm_label": "spa mount point (#app + main.tsx)",
-      "source_file": "web/index.html",
-      "source_location": "L9-L12",
       "source_url": null
     },
     {
@@ -10027,6 +10027,17 @@
       "source_location": "L70"
     },
     {
+      "id": "web_src_app",
+      "label": "app.tsx",
+      "_origin": "ast",
+      "community": 116,
+      "community_name": "windowRouter.ts",
+      "file_type": "code",
+      "norm_label": "app.tsx",
+      "source_file": "web/src/app.tsx",
+      "source_location": "L1"
+    },
+    {
       "id": "web_src_desktop_windowrouter",
       "label": "windowRouter.ts",
       "_origin": "ast",
@@ -10058,6 +10069,28 @@
       "norm_label": "windowrouter.test.ts",
       "source_file": "web/src/desktop/windowRouter.test.ts",
       "source_location": "L1"
+    },
+    {
+      "id": "web_src_main",
+      "label": "main.tsx",
+      "_origin": "ast",
+      "community": 116,
+      "community_name": "windowRouter.ts",
+      "file_type": "code",
+      "norm_label": "main.tsx",
+      "source_file": "web/src/main.tsx",
+      "source_location": "L1"
+    },
+    {
+      "id": "web_src_main_root",
+      "label": "root",
+      "_origin": "ast",
+      "community": 116,
+      "community_name": "windowRouter.ts",
+      "file_type": "code",
+      "norm_label": "root",
+      "source_file": "web/src/main.tsx",
+      "source_location": "L5"
     },
     {
       "id": "web_src_apps_agent_adaptertypes",
@@ -10687,149 +10720,6 @@
       "source_location": "L423"
     },
     {
-      "id": "tests_archive_tests",
-      "label": "archive_tests.rs",
-      "_origin": "ast",
-      "community": 118,
-      "community_name": "PtySession",
-      "file_type": "code",
-      "norm_label": "archive_tests.rs",
-      "source_file": "tests/archive_tests.rs",
-      "source_location": "L1"
-    },
-    {
-      "id": "tests_archive_tests_create_sample_tar_gz",
-      "label": "create_sample_tar_gz()",
-      "_origin": "ast",
-      "community": 118,
-      "community_name": "PtySession",
-      "file_type": "code",
-      "norm_label": "create_sample_tar_gz()",
-      "source_file": "tests/archive_tests.rs",
-      "source_location": "L24"
-    },
-    {
-      "id": "tests_archive_tests_create_sample_zip",
-      "label": "create_sample_zip()",
-      "_origin": "ast",
-      "community": 118,
-      "community_name": "PtySession",
-      "file_type": "code",
-      "norm_label": "create_sample_zip()",
-      "source_file": "tests/archive_tests.rs",
-      "source_location": "L9"
-    },
-    {
-      "id": "tests_archive_tests_create_traversal_zip",
-      "label": "create_traversal_zip()",
-      "_origin": "ast",
-      "community": 118,
-      "community_name": "PtySession",
-      "file_type": "code",
-      "norm_label": "create_traversal_zip()",
-      "source_file": "tests/archive_tests.rs",
-      "source_location": "L40"
-    },
-    {
-      "id": "tests_archive_tests_rs_path",
-      "label": "Path",
-      "_origin": "ast",
-      "community": 118,
-      "community_name": "PtySession",
-      "file_type": "code",
-      "norm_label": "path",
-      "source_file": "",
-      "source_location": ""
-    },
-    {
-      "id": "tests_archive_tests_rs_pathbuf",
-      "label": "PathBuf",
-      "_origin": "ast",
-      "community": 118,
-      "community_name": "PtySession",
-      "file_type": "code",
-      "norm_label": "pathbuf",
-      "source_file": "",
-      "source_location": ""
-    },
-    {
-      "id": "tests_archive_tests_test_arc_001_inspect_zip_and_tar",
-      "label": "test_arc_001_inspect_zip_and_tar()",
-      "_origin": "ast",
-      "community": 118,
-      "community_name": "PtySession",
-      "file_type": "code",
-      "norm_label": "test_arc_001_inspect_zip_and_tar()",
-      "source_file": "tests/archive_tests.rs",
-      "source_location": "L56"
-    },
-    {
-      "id": "tests_archive_tests_test_arc_002_extract_zip_clean",
-      "label": "test_arc_002_extract_zip_clean()",
-      "_origin": "ast",
-      "community": 118,
-      "community_name": "PtySession",
-      "file_type": "code",
-      "norm_label": "test_arc_002_extract_zip_clean()",
-      "source_file": "tests/archive_tests.rs",
-      "source_location": "L79"
-    },
-    {
-      "id": "tests_archive_tests_test_arc_003_extract_tar_gz_clean",
-      "label": "test_arc_003_extract_tar_gz_clean()",
-      "_origin": "ast",
-      "community": 118,
-      "community_name": "PtySession",
-      "file_type": "code",
-      "norm_label": "test_arc_003_extract_tar_gz_clean()",
-      "source_file": "tests/archive_tests.rs",
-      "source_location": "L94"
-    },
-    {
-      "id": "tests_archive_tests_test_arc_004_zip_slip_traversal_rejected",
-      "label": "test_arc_004_zip_slip_traversal_rejected()",
-      "_origin": "ast",
-      "community": 118,
-      "community_name": "PtySession",
-      "file_type": "code",
-      "norm_label": "test_arc_004_zip_slip_traversal_rejected()",
-      "source_file": "tests/archive_tests.rs",
-      "source_location": "L109"
-    },
-    {
-      "id": "tests_archive_tests_test_arc_005_zip_bomb_byte_budget_enforced",
-      "label": "test_arc_005_zip_bomb_byte_budget_enforced()",
-      "_origin": "ast",
-      "community": 118,
-      "community_name": "PtySession",
-      "file_type": "code",
-      "norm_label": "test_arc_005_zip_bomb_byte_budget_enforced()",
-      "source_file": "tests/archive_tests.rs",
-      "source_location": "L130"
-    },
-    {
-      "id": "tests_archive_tests_test_arc_006_archive_create_roundtrip",
-      "label": "test_arc_006_archive_create_roundtrip()",
-      "_origin": "ast",
-      "community": 118,
-      "community_name": "PtySession",
-      "file_type": "code",
-      "norm_label": "test_arc_006_archive_create_roundtrip()",
-      "source_file": "tests/archive_tests.rs",
-      "source_location": "L161"
-    },
-    {
-      "id": "tests_archive_tests_test_arc_http_inspect_and_extract",
-      "label": "test_arc_http_inspect_and_extract()",
-      "_origin": "ast",
-      "community": 118,
-      "community_name": "PtySession",
-      "file_type": "code",
-      "norm_label": "test_arc_http_inspect_and_extract()",
-      "source_file": "tests/archive_tests.rs",
-      "source_location": "L204"
-    },
-    {
       "id": "tests_term_tests",
       "label": "term_tests.rs",
       "_origin": "ast",
@@ -11377,17 +11267,6 @@
       "norm_label": "mux web ui \u2014 v0.2 plan: auth + tls, session persistence, test suite & ci",
       "source_file": "spec/specs/001.plan-v0.2.md",
       "source_location": "L1"
-    },
-    {
-      "id": "pdfjs_dist_pdfjs_dist",
-      "label": "pdfjs-dist",
-      "_origin": "ast",
-      "community": 120,
-      "community_name": "pdfjs-dist",
-      "confidence": "EXTRACTED",
-      "file_type": "code",
-      "norm_label": "pdfjs-dist",
-      "source_file": "pdfjs-dist"
     },
     {
       "id": "spec_specs_014_plan_v0_6_4_documents_agents_experience_11_1_daftar_subagent_total_7_4_builder_2_verifier_1_investigator",
@@ -11971,14 +11850,63 @@
       "source_location": "L11"
     },
     {
-      "id": "web_src_apps_browser_browserview",
-      "label": "BrowserView.tsx",
+      "id": "spec_handoff_008_v062_editor_agents_network_signing_distro_1_yang_dikerjakan_semua_milestone_a_h",
+      "label": "1. Yang dikerjakan (semua milestone A\u2013H)",
       "_origin": "ast",
       "community": 145,
-      "community_name": "BrowserView.tsx",
-      "file_type": "code",
-      "norm_label": "browserview.tsx",
-      "source_file": "web/src/apps/browser/BrowserView.tsx",
+      "community_name": "Handoff 008 \u2014 v0.6.2 Editor Polish & Virtualisasi Penuh, Agents UX, Persist Layout, Network Hardening, Signing, Distro Mgmt",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "1. yang dikerjakan (semua milestone a\u2013h)",
+      "source_file": "spec/handoff/008.v062-editor-agents-network-signing-distro.md",
+      "source_location": "L7"
+    },
+    {
+      "id": "spec_handoff_008_v062_editor_agents_network_signing_distro_2_keputusan_implementasi_d_log",
+      "label": "2. Keputusan implementasi (D-log)",
+      "_origin": "ast",
+      "community": 145,
+      "community_name": "Handoff 008 \u2014 v0.6.2 Editor Polish & Virtualisasi Penuh, Agents UX, Persist Layout, Network Hardening, Signing, Distro Mgmt",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "2. keputusan implementasi (d-log)",
+      "source_file": "spec/handoff/008.v062-editor-agents-network-signing-distro.md",
+      "source_location": "L22"
+    },
+    {
+      "id": "spec_handoff_008_v062_editor_agents_network_signing_distro_3_gates_semua_hijau",
+      "label": "3. Gates (semua hijau)",
+      "_origin": "ast",
+      "community": 145,
+      "community_name": "Handoff 008 \u2014 v0.6.2 Editor Polish & Virtualisasi Penuh, Agents UX, Persist Layout, Network Hardening, Signing, Distro Mgmt",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "3. gates (semua hijau)",
+      "source_file": "spec/handoff/008.v062-editor-agents-network-signing-distro.md",
+      "source_location": "L31"
+    },
+    {
+      "id": "spec_handoff_008_v062_editor_agents_network_signing_distro_4_pending_user_side",
+      "label": "4. Pending (user-side)",
+      "_origin": "ast",
+      "community": 145,
+      "community_name": "Handoff 008 \u2014 v0.6.2 Editor Polish & Virtualisasi Penuh, Agents UX, Persist Layout, Network Hardening, Signing, Distro Mgmt",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "4. pending (user-side)",
+      "source_file": "spec/handoff/008.v062-editor-agents-network-signing-distro.md",
+      "source_location": "L40"
+    },
+    {
+      "id": "spec_handoff_008_v062_editor_agents_network_signing_distro_handoff_008_v0_6_2_editor_polish_virtualisasi_penuh_agents_ux_persist_layout_network_hardening_signing_distro_mgmt",
+      "label": "Handoff 008 \u2014 v0.6.2 Editor Polish & Virtualisasi Penuh, Agents UX, Persist Layout, Network Hardening, Signing, Distro Mgmt",
+      "_origin": "ast",
+      "community": 145,
+      "community_name": "Handoff 008 \u2014 v0.6.2 Editor Polish & Virtualisasi Penuh, Agents UX, Persist Layout, Network Hardening, Signing, Distro Mgmt",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "handoff 008 \u2014 v0.6.2 editor polish & virtualisasi penuh, agents ux, persist layout, network hardening, signing, distro mgmt",
+      "source_file": "spec/handoff/008.v062-editor-agents-network-signing-distro.md",
       "source_location": "L1"
     },
     {
@@ -12694,29 +12622,55 @@
       "source_file": "Cargo.toml",
       "source_location": "L1",
       "type": "package",
-      "version": "0.6.4"
+      "version": "0.6.5"
     },
     {
-      "id": "web_src_desktop_startmenu",
-      "label": "StartMenu.tsx",
+      "id": "spec_specs_010_plan_v0_6_1_coding_agents_proot_performance_editor_1_1_skenario_user",
+      "label": "1.1 Skenario User",
       "_origin": "ast",
       "community": 159,
-      "community_name": "StartMenu.tsx",
-      "file_type": "code",
-      "norm_label": "startmenu.tsx",
-      "source_file": "web/src/desktop/StartMenu.tsx",
-      "source_location": "L1"
+      "community_name": "1. Latar Belakang & Risiko",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "1.1 skenario user",
+      "source_file": "spec/specs/010.plan-v0.6.1-coding-agents-proot-performance-editor.md",
+      "source_location": "L34"
     },
     {
-      "id": "web_src_desktop_startmenu_apps",
-      "label": "APPS",
+      "id": "spec_specs_010_plan_v0_6_1_coding_agents_proot_performance_editor_1_2_kondisi_saat_ini_fakta_kode_titik_awal",
+      "label": "1.2 Kondisi Saat Ini (fakta kode \u2014 titik awal)",
       "_origin": "ast",
       "community": 159,
-      "community_name": "StartMenu.tsx",
-      "file_type": "code",
-      "norm_label": "apps",
-      "source_file": "web/src/desktop/StartMenu.tsx",
-      "source_location": "L10"
+      "community_name": "1. Latar Belakang & Risiko",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "1.2 kondisi saat ini (fakta kode \u2014 titik awal)",
+      "source_file": "spec/specs/010.plan-v0.6.1-coding-agents-proot-performance-editor.md",
+      "source_location": "L48"
+    },
+    {
+      "id": "spec_specs_010_plan_v0_6_1_coding_agents_proot_performance_editor_1_3_risiko_tanpa_desain",
+      "label": "1.3 Risiko Tanpa Desain",
+      "_origin": "ast",
+      "community": 159,
+      "community_name": "1. Latar Belakang & Risiko",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "1.3 risiko tanpa desain",
+      "source_file": "spec/specs/010.plan-v0.6.1-coding-agents-proot-performance-editor.md",
+      "source_location": "L61"
+    },
+    {
+      "id": "spec_specs_010_plan_v0_6_1_coding_agents_proot_performance_editor_1_latar_belakang_risiko",
+      "label": "1. Latar Belakang & Risiko",
+      "_origin": "ast",
+      "community": 159,
+      "community_name": "1. Latar Belakang & Risiko",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "1. latar belakang & risiko",
+      "source_file": "spec/specs/010.plan-v0.6.1-coding-agents-proot-performance-editor.md",
+      "source_location": "L32"
     },
     {
       "id": "web_src_apps_editor_terminaltabslogic",
@@ -13396,6 +13350,316 @@
       "norm_label": "@xterm/xterm",
       "source_file": "web/package.json",
       "source_location": "L15"
+    },
+    {
+      "id": "pdfjs_dist_pdfjs_dist",
+      "label": "pdfjs-dist",
+      "_origin": "ast",
+      "community": 181,
+      "community_name": "pdfjs-dist",
+      "confidence": "EXTRACTED",
+      "file_type": "code",
+      "norm_label": "pdfjs-dist",
+      "source_file": "pdfjs-dist"
+    },
+    {
+      "id": "spec_specs_003_plan_v0_3_terminal_resize_1_1_fakta_kode_titik_awal",
+      "label": "1.1 Fakta Kode Titik Awal",
+      "_origin": "ast",
+      "community": 183,
+      "community_name": "Mux Web UI \u2014 v0.3 plan: Terminal Resizing & Window Control Hardening",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "1.1 fakta kode titik awal",
+      "source_file": "spec/specs/003.plan-v0.3-terminal-resize.md",
+      "source_location": "L18"
+    },
+    {
+      "id": "spec_specs_003_plan_v0_3_terminal_resize_1_latar_belakang_dan_fakta_kode",
+      "label": "1. Latar Belakang dan Fakta Kode",
+      "_origin": "ast",
+      "community": 183,
+      "community_name": "Mux Web UI \u2014 v0.3 plan: Terminal Resizing & Window Control Hardening",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "1. latar belakang dan fakta kode",
+      "source_file": "spec/specs/003.plan-v0.3-terminal-resize.md",
+      "source_location": "L14"
+    },
+    {
+      "id": "spec_specs_003_plan_v0_3_terminal_resize_2_hubungan_dengan_rencana_dan_requirement",
+      "label": "2. Hubungan dengan Rencana dan Requirement",
+      "_origin": "ast",
+      "community": 183,
+      "community_name": "Mux Web UI \u2014 v0.3 plan: Terminal Resizing & Window Control Hardening",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "2. hubungan dengan rencana dan requirement",
+      "source_file": "spec/specs/003.plan-v0.3-terminal-resize.md",
+      "source_location": "L29"
+    },
+    {
+      "id": "spec_specs_003_plan_v0_3_terminal_resize_3_threat_model",
+      "label": "3. Threat Model",
+      "_origin": "ast",
+      "community": 183,
+      "community_name": "Mux Web UI \u2014 v0.3 plan: Terminal Resizing & Window Control Hardening",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "3. threat model",
+      "source_file": "spec/specs/003.plan-v0.3-terminal-resize.md",
+      "source_location": "L48"
+    },
+    {
+      "id": "spec_specs_003_plan_v0_3_terminal_resize_4_milestone_a_backend_dimension_clamping_robustness",
+      "label": "4. Milestone A \u2014 Backend Dimension Clamping & Robustness",
+      "_origin": "ast",
+      "community": 183,
+      "community_name": "Mux Web UI \u2014 v0.3 plan: Terminal Resizing & Window Control Hardening",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "4. milestone a \u2014 backend dimension clamping & robustness",
+      "source_file": "spec/specs/003.plan-v0.3-terminal-resize.md",
+      "source_location": "L58"
+    },
+    {
+      "id": "spec_specs_003_plan_v0_3_terminal_resize_5_milestone_b_frontend_window_resize_handles_debounce",
+      "label": "5. Milestone B \u2014 Frontend Window Resize Handles & Debounce",
+      "_origin": "ast",
+      "community": 183,
+      "community_name": "Mux Web UI \u2014 v0.3 plan: Terminal Resizing & Window Control Hardening",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "5. milestone b \u2014 frontend window resize handles & debounce",
+      "source_file": "spec/specs/003.plan-v0.3-terminal-resize.md",
+      "source_location": "L81"
+    },
+    {
+      "id": "spec_specs_003_plan_v0_3_terminal_resize_6_milestone_c_automated_test_suite_traceability",
+      "label": "6. Milestone C \u2014 Automated Test Suite & Traceability",
+      "_origin": "ast",
+      "community": 183,
+      "community_name": "Mux Web UI \u2014 v0.3 plan: Terminal Resizing & Window Control Hardening",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "6. milestone c \u2014 automated test suite & traceability",
+      "source_file": "spec/specs/003.plan-v0.3-terminal-resize.md",
+      "source_location": "L98"
+    },
+    {
+      "id": "spec_specs_003_plan_v0_3_terminal_resize_7_definition_of_done_dod",
+      "label": "7. Definition of Done (DoD)",
+      "_origin": "ast",
+      "community": 183,
+      "community_name": "Mux Web UI \u2014 v0.3 plan: Terminal Resizing & Window Control Hardening",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "7. definition of done (dod)",
+      "source_file": "spec/specs/003.plan-v0.3-terminal-resize.md",
+      "source_location": "L106"
+    },
+    {
+      "id": "spec_specs_003_plan_v0_3_terminal_resize_a_1_batas_dimensi_constants",
+      "label": "A.1 Batas Dimensi (Constants)",
+      "_origin": "ast",
+      "community": 183,
+      "community_name": "Mux Web UI \u2014 v0.3 plan: Terminal Resizing & Window Control Hardening",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "a.1 batas dimensi (constants)",
+      "source_file": "spec/specs/003.plan-v0.3-terminal-resize.md",
+      "source_location": "L60"
+    },
+    {
+      "id": "spec_specs_003_plan_v0_3_terminal_resize_a_2_perilaku_sesi_dan_sinyal",
+      "label": "A.2 Perilaku Sesi dan Sinyal",
+      "_origin": "ast",
+      "community": 183,
+      "community_name": "Mux Web UI \u2014 v0.3 plan: Terminal Resizing & Window Control Hardening",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "a.2 perilaku sesi dan sinyal",
+      "source_file": "spec/specs/003.plan-v0.3-terminal-resize.md",
+      "source_location": "L74"
+    },
+    {
+      "id": "spec_specs_003_plan_v0_3_terminal_resize_b_1_windowframe_8_way_resizing",
+      "label": "B.1 WindowFrame 8-Way Resizing",
+      "_origin": "ast",
+      "community": 183,
+      "community_name": "Mux Web UI \u2014 v0.3 plan: Terminal Resizing & Window Control Hardening",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "b.1 windowframe 8-way resizing",
+      "source_file": "spec/specs/003.plan-v0.3-terminal-resize.md",
+      "source_location": "L83"
+    },
+    {
+      "id": "spec_specs_003_plan_v0_3_terminal_resize_b_2_terminalview_debounced_fit",
+      "label": "B.2 TerminalView Debounced Fit",
+      "_origin": "ast",
+      "community": 183,
+      "community_name": "Mux Web UI \u2014 v0.3 plan: Terminal Resizing & Window Control Hardening",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "b.2 terminalview debounced fit",
+      "source_file": "spec/specs/003.plan-v0.3-terminal-resize.md",
+      "source_location": "L91"
+    },
+    {
+      "id": "spec_specs_003_plan_v0_3_terminal_resize_mux_web_ui_v0_3_plan_terminal_resizing_window_control_hardening",
+      "label": "Mux Web UI \u2014 v0.3 plan: Terminal Resizing & Window Control Hardening",
+      "_origin": "ast",
+      "community": 183,
+      "community_name": "Mux Web UI \u2014 v0.3 plan: Terminal Resizing & Window Control Hardening",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "mux web ui \u2014 v0.3 plan: terminal resizing & window control hardening",
+      "source_file": "spec/specs/003.plan-v0.3-terminal-resize.md",
+      "source_location": "L1"
+    },
+    {
+      "id": "tests_archive_tests",
+      "label": "archive_tests.rs",
+      "_origin": "ast",
+      "community": 184,
+      "community_name": "archive_tests.rs",
+      "file_type": "code",
+      "norm_label": "archive_tests.rs",
+      "source_file": "tests/archive_tests.rs",
+      "source_location": "L1"
+    },
+    {
+      "id": "tests_archive_tests_create_sample_tar_gz",
+      "label": "create_sample_tar_gz()",
+      "_origin": "ast",
+      "community": 184,
+      "community_name": "archive_tests.rs",
+      "file_type": "code",
+      "norm_label": "create_sample_tar_gz()",
+      "source_file": "tests/archive_tests.rs",
+      "source_location": "L24"
+    },
+    {
+      "id": "tests_archive_tests_create_sample_zip",
+      "label": "create_sample_zip()",
+      "_origin": "ast",
+      "community": 184,
+      "community_name": "archive_tests.rs",
+      "file_type": "code",
+      "norm_label": "create_sample_zip()",
+      "source_file": "tests/archive_tests.rs",
+      "source_location": "L9"
+    },
+    {
+      "id": "tests_archive_tests_create_traversal_zip",
+      "label": "create_traversal_zip()",
+      "_origin": "ast",
+      "community": 184,
+      "community_name": "archive_tests.rs",
+      "file_type": "code",
+      "norm_label": "create_traversal_zip()",
+      "source_file": "tests/archive_tests.rs",
+      "source_location": "L40"
+    },
+    {
+      "id": "tests_archive_tests_rs_path",
+      "label": "Path",
+      "_origin": "ast",
+      "community": 184,
+      "community_name": "archive_tests.rs",
+      "file_type": "code",
+      "norm_label": "path",
+      "source_file": "",
+      "source_location": ""
+    },
+    {
+      "id": "tests_archive_tests_rs_pathbuf",
+      "label": "PathBuf",
+      "_origin": "ast",
+      "community": 184,
+      "community_name": "archive_tests.rs",
+      "file_type": "code",
+      "norm_label": "pathbuf",
+      "source_file": "",
+      "source_location": ""
+    },
+    {
+      "id": "tests_archive_tests_test_arc_001_inspect_zip_and_tar",
+      "label": "test_arc_001_inspect_zip_and_tar()",
+      "_origin": "ast",
+      "community": 184,
+      "community_name": "archive_tests.rs",
+      "file_type": "code",
+      "norm_label": "test_arc_001_inspect_zip_and_tar()",
+      "source_file": "tests/archive_tests.rs",
+      "source_location": "L56"
+    },
+    {
+      "id": "tests_archive_tests_test_arc_002_extract_zip_clean",
+      "label": "test_arc_002_extract_zip_clean()",
+      "_origin": "ast",
+      "community": 184,
+      "community_name": "archive_tests.rs",
+      "file_type": "code",
+      "norm_label": "test_arc_002_extract_zip_clean()",
+      "source_file": "tests/archive_tests.rs",
+      "source_location": "L79"
+    },
+    {
+      "id": "tests_archive_tests_test_arc_003_extract_tar_gz_clean",
+      "label": "test_arc_003_extract_tar_gz_clean()",
+      "_origin": "ast",
+      "community": 184,
+      "community_name": "archive_tests.rs",
+      "file_type": "code",
+      "norm_label": "test_arc_003_extract_tar_gz_clean()",
+      "source_file": "tests/archive_tests.rs",
+      "source_location": "L94"
+    },
+    {
+      "id": "tests_archive_tests_test_arc_004_zip_slip_traversal_rejected",
+      "label": "test_arc_004_zip_slip_traversal_rejected()",
+      "_origin": "ast",
+      "community": 184,
+      "community_name": "archive_tests.rs",
+      "file_type": "code",
+      "norm_label": "test_arc_004_zip_slip_traversal_rejected()",
+      "source_file": "tests/archive_tests.rs",
+      "source_location": "L109"
+    },
+    {
+      "id": "tests_archive_tests_test_arc_005_zip_bomb_byte_budget_enforced",
+      "label": "test_arc_005_zip_bomb_byte_budget_enforced()",
+      "_origin": "ast",
+      "community": 184,
+      "community_name": "archive_tests.rs",
+      "file_type": "code",
+      "norm_label": "test_arc_005_zip_bomb_byte_budget_enforced()",
+      "source_file": "tests/archive_tests.rs",
+      "source_location": "L130"
+    },
+    {
+      "id": "tests_archive_tests_test_arc_006_archive_create_roundtrip",
+      "label": "test_arc_006_archive_create_roundtrip()",
+      "_origin": "ast",
+      "community": 184,
+      "community_name": "archive_tests.rs",
+      "file_type": "code",
+      "norm_label": "test_arc_006_archive_create_roundtrip()",
+      "source_file": "tests/archive_tests.rs",
+      "source_location": "L161"
+    },
+    {
+      "id": "tests_archive_tests_test_arc_http_inspect_and_extract",
+      "label": "test_arc_http_inspect_and_extract()",
+      "_origin": "ast",
+      "community": 184,
+      "community_name": "archive_tests.rs",
+      "file_type": "code",
+      "norm_label": "test_arc_http_inspect_and_extract()",
+      "source_file": "tests/archive_tests.rs",
+      "source_location": "L204"
     },
     {
       "id": "spec_specs_011_plan_v0_6_2_editor_agents_network_signing_distro_011_v0_6_2_editor_polish_virtualisasi_penuh_agents_ux_persist_layout_network_hardening_release_signing_manajemen_distro",
@@ -16035,184 +16299,15 @@
       "source_location": "L207"
     },
     {
-      "id": "spec_specs_009b_plan_checklist_0_ringkasan_deliverable",
-      "label": "0. Ringkasan Deliverable",
+      "id": "web_src_apps_browser_browserview",
+      "label": "BrowserView.tsx",
       "_origin": "ast",
-      "community": 25,
-      "community_name": "009 \u2014 v0.5.3 Akses VPN / Jaringan Khusus / Domain Kustom (Host Allowlist & Advertise)",
-      "file_type": "document",
-      "node_kind": "heading",
-      "norm_label": "0. ringkasan deliverable",
-      "source_file": "spec/specs/009b.plan-checklist.md",
-      "source_location": "L10"
-    },
-    {
-      "id": "spec_specs_009b_plan_checklist_1_milestone_a_parser_gate_net_001_net_002_net_006_net_007",
-      "label": "1. Milestone A \u2014 Parser & Gate (`NET-001`, `NET-002`, `NET-006`, `NET-007`)",
-      "_origin": "ast",
-      "community": 25,
-      "community_name": "009 \u2014 v0.5.3 Akses VPN / Jaringan Khusus / Domain Kustom (Host Allowlist & Advertise)",
-      "file_type": "document",
-      "node_kind": "heading",
-      "norm_label": "1. milestone a \u2014 parser & gate (`net-001`, `net-002`, `net-006`, `net-007`)",
-      "source_file": "spec/specs/009b.plan-checklist.md",
-      "source_location": "L22"
-    },
-    {
-      "id": "spec_specs_009b_plan_checklist_2_milestone_b_advertise_banner_net_003_net_004_net_005",
-      "label": "2. Milestone B \u2014 Advertise & Banner (`NET-003`, `NET-004`, `NET-005`)",
-      "_origin": "ast",
-      "community": 25,
-      "community_name": "009 \u2014 v0.5.3 Akses VPN / Jaringan Khusus / Domain Kustom (Host Allowlist & Advertise)",
-      "file_type": "document",
-      "node_kind": "heading",
-      "norm_label": "2. milestone b \u2014 advertise & banner (`net-003`, `net-004`, `net-005`)",
-      "source_file": "spec/specs/009b.plan-checklist.md",
-      "source_location": "L46"
-    },
-    {
-      "id": "spec_specs_009b_plan_checklist_3_milestone_c_docs_traceability_net_004_net_007",
-      "label": "3. Milestone C \u2014 Docs & Traceability (`NET-004`, `NET-007`)",
-      "_origin": "ast",
-      "community": 25,
-      "community_name": "009 \u2014 v0.5.3 Akses VPN / Jaringan Khusus / Domain Kustom (Host Allowlist & Advertise)",
-      "file_type": "document",
-      "node_kind": "heading",
-      "norm_label": "3. milestone c \u2014 docs & traceability (`net-004`, `net-007`)",
-      "source_file": "spec/specs/009b.plan-checklist.md",
-      "source_location": "L64"
-    },
-    {
-      "id": "spec_specs_009b_plan_checklist_4_quality_gates_dod",
-      "label": "4. Quality Gates & DoD",
-      "_origin": "ast",
-      "community": 25,
-      "community_name": "009 \u2014 v0.5.3 Akses VPN / Jaringan Khusus / Domain Kustom (Host Allowlist & Advertise)",
-      "file_type": "document",
-      "node_kind": "heading",
-      "norm_label": "4. quality gates & dod",
-      "source_file": "spec/specs/009b.plan-checklist.md",
-      "source_location": "L72"
-    },
-    {
-      "id": "spec_specs_009b_plan_checklist_5_out_of_scope_ingat",
-      "label": "5. Out of Scope (ingat)",
-      "_origin": "ast",
-      "community": 25,
-      "community_name": "009 \u2014 v0.5.3 Akses VPN / Jaringan Khusus / Domain Kustom (Host Allowlist & Advertise)",
-      "file_type": "document",
-      "node_kind": "heading",
-      "norm_label": "5. out of scope (ingat)",
-      "source_file": "spec/specs/009b.plan-checklist.md",
-      "source_location": "L81"
-    },
-    {
-      "id": "spec_specs_009b_plan_checklist_6_keputusan_open_question_log",
-      "label": "6. Keputusan & Open Question Log",
-      "_origin": "ast",
-      "community": 25,
-      "community_name": "009 \u2014 v0.5.3 Akses VPN / Jaringan Khusus / Domain Kustom (Host Allowlist & Advertise)",
-      "file_type": "document",
-      "node_kind": "heading",
-      "norm_label": "6. keputusan & open question log",
-      "source_file": "spec/specs/009b.plan-checklist.md",
-      "source_location": "L87"
-    },
-    {
-      "id": "spec_specs_009b_plan_checklist_companion_checklist_v0_5_3_vpn_jaringan_khusus_domain_kustom",
-      "label": "Companion Checklist \u2014 v0.5.3 VPN / Jaringan Khusus / Domain Kustom",
-      "_origin": "ast",
-      "community": 25,
-      "community_name": "009 \u2014 v0.5.3 Akses VPN / Jaringan Khusus / Domain Kustom (Host Allowlist & Advertise)",
-      "file_type": "document",
-      "node_kind": "heading",
-      "norm_label": "companion checklist \u2014 v0.5.3 vpn / jaringan khusus / domain kustom",
-      "source_file": "spec/specs/009b.plan-checklist.md",
+      "community": 26,
+      "community_name": "DesktopCanvas.tsx",
+      "file_type": "code",
+      "norm_label": "browserview.tsx",
+      "source_file": "web/src/apps/browser/BrowserView.tsx",
       "source_location": "L1"
-    },
-    {
-      "id": "spec_specs_009b_plan_checklist_green",
-      "label": "Green",
-      "_origin": "ast",
-      "community": 25,
-      "community_name": "009 \u2014 v0.5.3 Akses VPN / Jaringan Khusus / Domain Kustom (Host Allowlist & Advertise)",
-      "file_type": "document",
-      "node_kind": "heading",
-      "norm_label": "green",
-      "source_file": "spec/specs/009b.plan-checklist.md",
-      "source_location": "L41"
-    },
-    {
-      "id": "spec_specs_009b_plan_checklist_green_58",
-      "label": "Green",
-      "_origin": "ast",
-      "community": 25,
-      "community_name": "009 \u2014 v0.5.3 Akses VPN / Jaringan Khusus / Domain Kustom (Host Allowlist & Advertise)",
-      "file_type": "document",
-      "node_kind": "heading",
-      "norm_label": "green",
-      "source_file": "spec/specs/009b.plan-checklist.md",
-      "source_location": "L58"
-    },
-    {
-      "id": "spec_specs_009b_plan_checklist_impl",
-      "label": "Impl",
-      "_origin": "ast",
-      "community": 25,
-      "community_name": "009 \u2014 v0.5.3 Akses VPN / Jaringan Khusus / Domain Kustom (Host Allowlist & Advertise)",
-      "file_type": "document",
-      "node_kind": "heading",
-      "norm_label": "impl",
-      "source_file": "spec/specs/009b.plan-checklist.md",
-      "source_location": "L53"
-    },
-    {
-      "id": "spec_specs_009b_plan_checklist_impl_backend",
-      "label": "Impl backend",
-      "_origin": "ast",
-      "community": 25,
-      "community_name": "009 \u2014 v0.5.3 Akses VPN / Jaringan Khusus / Domain Kustom (Host Allowlist & Advertise)",
-      "file_type": "document",
-      "node_kind": "heading",
-      "norm_label": "impl backend",
-      "source_file": "spec/specs/009b.plan-checklist.md",
-      "source_location": "L35"
-    },
-    {
-      "id": "spec_specs_009b_plan_checklist_red",
-      "label": "Red",
-      "_origin": "ast",
-      "community": 25,
-      "community_name": "009 \u2014 v0.5.3 Akses VPN / Jaringan Khusus / Domain Kustom (Host Allowlist & Advertise)",
-      "file_type": "document",
-      "node_kind": "heading",
-      "norm_label": "red",
-      "source_file": "spec/specs/009b.plan-checklist.md",
-      "source_location": "L48"
-    },
-    {
-      "id": "spec_specs_009b_plan_checklist_red_gate_security_tests_rs",
-      "label": "Red (gate \u2014 `security_tests.rs`)",
-      "_origin": "ast",
-      "community": 25,
-      "community_name": "009 \u2014 v0.5.3 Akses VPN / Jaringan Khusus / Domain Kustom (Host Allowlist & Advertise)",
-      "file_type": "document",
-      "node_kind": "heading",
-      "norm_label": "red (gate \u2014 `security_tests.rs`)",
-      "source_file": "spec/specs/009b.plan-checklist.md",
-      "source_location": "L28"
-    },
-    {
-      "id": "spec_specs_009b_plan_checklist_red_parser_field_belum_ada_compile_error_red",
-      "label": "Red (parser \u2014 field belum ada \u2192 compile error = RED)",
-      "_origin": "ast",
-      "community": 25,
-      "community_name": "009 \u2014 v0.5.3 Akses VPN / Jaringan Khusus / Domain Kustom (Host Allowlist & Advertise)",
-      "file_type": "document",
-      "node_kind": "heading",
-      "norm_label": "red (parser \u2014 field belum ada \u2192 compile error = red)",
-      "source_file": "spec/specs/009b.plan-checklist.md",
-      "source_location": "L24"
     },
     {
       "id": "web_src_apps_git_gitview",
@@ -16292,6 +16387,28 @@
       "source_location": "L9"
     },
     {
+      "id": "web_src_desktop_startmenu",
+      "label": "StartMenu.tsx",
+      "_origin": "ast",
+      "community": 26,
+      "community_name": "DesktopCanvas.tsx",
+      "file_type": "code",
+      "norm_label": "startmenu.tsx",
+      "source_file": "web/src/desktop/StartMenu.tsx",
+      "source_location": "L1"
+    },
+    {
+      "id": "web_src_desktop_startmenu_apps",
+      "label": "APPS",
+      "_origin": "ast",
+      "community": 26,
+      "community_name": "DesktopCanvas.tsx",
+      "file_type": "code",
+      "norm_label": "apps",
+      "source_file": "web/src/desktop/StartMenu.tsx",
+      "source_location": "L10"
+    },
+    {
       "id": "web_src_desktop_toolbar",
       "label": "Toolbar.tsx",
       "_origin": "ast",
@@ -16349,54 +16466,6 @@
       "norm_label": "12. definition of done",
       "source_file": "spec/specs/010.plan-v0.6.1-coding-agents-proot-performance-editor.md",
       "source_location": "L340"
-    },
-    {
-      "id": "spec_specs_010_plan_v0_6_1_coding_agents_proot_performance_editor_1_1_skenario_user",
-      "label": "1.1 Skenario User",
-      "_origin": "ast",
-      "community": 27,
-      "community_name": "010 \u2014 v0.6.1 Coding Agents & proot-distro, Anti-Timeout/Banter, dan Editor Engine In-house",
-      "file_type": "document",
-      "node_kind": "heading",
-      "norm_label": "1.1 skenario user",
-      "source_file": "spec/specs/010.plan-v0.6.1-coding-agents-proot-performance-editor.md",
-      "source_location": "L34"
-    },
-    {
-      "id": "spec_specs_010_plan_v0_6_1_coding_agents_proot_performance_editor_1_2_kondisi_saat_ini_fakta_kode_titik_awal",
-      "label": "1.2 Kondisi Saat Ini (fakta kode \u2014 titik awal)",
-      "_origin": "ast",
-      "community": 27,
-      "community_name": "010 \u2014 v0.6.1 Coding Agents & proot-distro, Anti-Timeout/Banter, dan Editor Engine In-house",
-      "file_type": "document",
-      "node_kind": "heading",
-      "norm_label": "1.2 kondisi saat ini (fakta kode \u2014 titik awal)",
-      "source_file": "spec/specs/010.plan-v0.6.1-coding-agents-proot-performance-editor.md",
-      "source_location": "L48"
-    },
-    {
-      "id": "spec_specs_010_plan_v0_6_1_coding_agents_proot_performance_editor_1_3_risiko_tanpa_desain",
-      "label": "1.3 Risiko Tanpa Desain",
-      "_origin": "ast",
-      "community": 27,
-      "community_name": "010 \u2014 v0.6.1 Coding Agents & proot-distro, Anti-Timeout/Banter, dan Editor Engine In-house",
-      "file_type": "document",
-      "node_kind": "heading",
-      "norm_label": "1.3 risiko tanpa desain",
-      "source_file": "spec/specs/010.plan-v0.6.1-coding-agents-proot-performance-editor.md",
-      "source_location": "L61"
-    },
-    {
-      "id": "spec_specs_010_plan_v0_6_1_coding_agents_proot_performance_editor_1_latar_belakang_risiko",
-      "label": "1. Latar Belakang & Risiko",
-      "_origin": "ast",
-      "community": 27,
-      "community_name": "010 \u2014 v0.6.1 Coding Agents & proot-distro, Anti-Timeout/Banter, dan Editor Engine In-house",
-      "file_type": "document",
-      "node_kind": "heading",
-      "norm_label": "1. latar belakang & risiko",
-      "source_file": "spec/specs/010.plan-v0.6.1-coding-agents-proot-performance-editor.md",
-      "source_location": "L32"
     },
     {
       "id": "spec_specs_010_plan_v0_6_1_coding_agents_proot_performance_editor_2_hubungan_dengan_rencana_requirement",
@@ -16948,7 +17017,7 @@
       "file_type": "code",
       "norm_label": "generate_self_signed_cert()",
       "source_file": "src/main.rs",
-      "source_location": "L61"
+      "source_location": "L62"
     },
     {
       "id": "src_main_main",
@@ -16959,7 +17028,7 @@
       "file_type": "code",
       "norm_label": "main()",
       "source_file": "src/main.rs",
-      "source_location": "L96"
+      "source_location": "L97"
     },
     {
       "id": "src_main_private_ips",
@@ -16970,7 +17039,7 @@
       "file_type": "code",
       "norm_label": "private_ips()",
       "source_file": "src/main.rs",
-      "source_location": "L32"
+      "source_location": "L33"
     },
     {
       "id": "src_main_rs_box",
@@ -18886,167 +18955,11 @@
       "source_location": "L11"
     },
     {
-      "id": "spec_specs_003_plan_v0_3_terminal_resize_1_1_fakta_kode_titik_awal",
-      "label": "1.1 Fakta Kode Titik Awal",
-      "_origin": "ast",
-      "community": 39,
-      "community_name": "Mux Web UI \u2014 v0.3 plan: Terminal Resizing & Window Control Hardening",
-      "file_type": "document",
-      "node_kind": "heading",
-      "norm_label": "1.1 fakta kode titik awal",
-      "source_file": "spec/specs/003.plan-v0.3-terminal-resize.md",
-      "source_location": "L18"
-    },
-    {
-      "id": "spec_specs_003_plan_v0_3_terminal_resize_1_latar_belakang_dan_fakta_kode",
-      "label": "1. Latar Belakang dan Fakta Kode",
-      "_origin": "ast",
-      "community": 39,
-      "community_name": "Mux Web UI \u2014 v0.3 plan: Terminal Resizing & Window Control Hardening",
-      "file_type": "document",
-      "node_kind": "heading",
-      "norm_label": "1. latar belakang dan fakta kode",
-      "source_file": "spec/specs/003.plan-v0.3-terminal-resize.md",
-      "source_location": "L14"
-    },
-    {
-      "id": "spec_specs_003_plan_v0_3_terminal_resize_2_hubungan_dengan_rencana_dan_requirement",
-      "label": "2. Hubungan dengan Rencana dan Requirement",
-      "_origin": "ast",
-      "community": 39,
-      "community_name": "Mux Web UI \u2014 v0.3 plan: Terminal Resizing & Window Control Hardening",
-      "file_type": "document",
-      "node_kind": "heading",
-      "norm_label": "2. hubungan dengan rencana dan requirement",
-      "source_file": "spec/specs/003.plan-v0.3-terminal-resize.md",
-      "source_location": "L29"
-    },
-    {
-      "id": "spec_specs_003_plan_v0_3_terminal_resize_3_threat_model",
-      "label": "3. Threat Model",
-      "_origin": "ast",
-      "community": 39,
-      "community_name": "Mux Web UI \u2014 v0.3 plan: Terminal Resizing & Window Control Hardening",
-      "file_type": "document",
-      "node_kind": "heading",
-      "norm_label": "3. threat model",
-      "source_file": "spec/specs/003.plan-v0.3-terminal-resize.md",
-      "source_location": "L48"
-    },
-    {
-      "id": "spec_specs_003_plan_v0_3_terminal_resize_4_milestone_a_backend_dimension_clamping_robustness",
-      "label": "4. Milestone A \u2014 Backend Dimension Clamping & Robustness",
-      "_origin": "ast",
-      "community": 39,
-      "community_name": "Mux Web UI \u2014 v0.3 plan: Terminal Resizing & Window Control Hardening",
-      "file_type": "document",
-      "node_kind": "heading",
-      "norm_label": "4. milestone a \u2014 backend dimension clamping & robustness",
-      "source_file": "spec/specs/003.plan-v0.3-terminal-resize.md",
-      "source_location": "L58"
-    },
-    {
-      "id": "spec_specs_003_plan_v0_3_terminal_resize_5_milestone_b_frontend_window_resize_handles_debounce",
-      "label": "5. Milestone B \u2014 Frontend Window Resize Handles & Debounce",
-      "_origin": "ast",
-      "community": 39,
-      "community_name": "Mux Web UI \u2014 v0.3 plan: Terminal Resizing & Window Control Hardening",
-      "file_type": "document",
-      "node_kind": "heading",
-      "norm_label": "5. milestone b \u2014 frontend window resize handles & debounce",
-      "source_file": "spec/specs/003.plan-v0.3-terminal-resize.md",
-      "source_location": "L81"
-    },
-    {
-      "id": "spec_specs_003_plan_v0_3_terminal_resize_6_milestone_c_automated_test_suite_traceability",
-      "label": "6. Milestone C \u2014 Automated Test Suite & Traceability",
-      "_origin": "ast",
-      "community": 39,
-      "community_name": "Mux Web UI \u2014 v0.3 plan: Terminal Resizing & Window Control Hardening",
-      "file_type": "document",
-      "node_kind": "heading",
-      "norm_label": "6. milestone c \u2014 automated test suite & traceability",
-      "source_file": "spec/specs/003.plan-v0.3-terminal-resize.md",
-      "source_location": "L98"
-    },
-    {
-      "id": "spec_specs_003_plan_v0_3_terminal_resize_7_definition_of_done_dod",
-      "label": "7. Definition of Done (DoD)",
-      "_origin": "ast",
-      "community": 39,
-      "community_name": "Mux Web UI \u2014 v0.3 plan: Terminal Resizing & Window Control Hardening",
-      "file_type": "document",
-      "node_kind": "heading",
-      "norm_label": "7. definition of done (dod)",
-      "source_file": "spec/specs/003.plan-v0.3-terminal-resize.md",
-      "source_location": "L106"
-    },
-    {
-      "id": "spec_specs_003_plan_v0_3_terminal_resize_a_1_batas_dimensi_constants",
-      "label": "A.1 Batas Dimensi (Constants)",
-      "_origin": "ast",
-      "community": 39,
-      "community_name": "Mux Web UI \u2014 v0.3 plan: Terminal Resizing & Window Control Hardening",
-      "file_type": "document",
-      "node_kind": "heading",
-      "norm_label": "a.1 batas dimensi (constants)",
-      "source_file": "spec/specs/003.plan-v0.3-terminal-resize.md",
-      "source_location": "L60"
-    },
-    {
-      "id": "spec_specs_003_plan_v0_3_terminal_resize_a_2_perilaku_sesi_dan_sinyal",
-      "label": "A.2 Perilaku Sesi dan Sinyal",
-      "_origin": "ast",
-      "community": 39,
-      "community_name": "Mux Web UI \u2014 v0.3 plan: Terminal Resizing & Window Control Hardening",
-      "file_type": "document",
-      "node_kind": "heading",
-      "norm_label": "a.2 perilaku sesi dan sinyal",
-      "source_file": "spec/specs/003.plan-v0.3-terminal-resize.md",
-      "source_location": "L74"
-    },
-    {
-      "id": "spec_specs_003_plan_v0_3_terminal_resize_b_1_windowframe_8_way_resizing",
-      "label": "B.1 WindowFrame 8-Way Resizing",
-      "_origin": "ast",
-      "community": 39,
-      "community_name": "Mux Web UI \u2014 v0.3 plan: Terminal Resizing & Window Control Hardening",
-      "file_type": "document",
-      "node_kind": "heading",
-      "norm_label": "b.1 windowframe 8-way resizing",
-      "source_file": "spec/specs/003.plan-v0.3-terminal-resize.md",
-      "source_location": "L83"
-    },
-    {
-      "id": "spec_specs_003_plan_v0_3_terminal_resize_b_2_terminalview_debounced_fit",
-      "label": "B.2 TerminalView Debounced Fit",
-      "_origin": "ast",
-      "community": 39,
-      "community_name": "Mux Web UI \u2014 v0.3 plan: Terminal Resizing & Window Control Hardening",
-      "file_type": "document",
-      "node_kind": "heading",
-      "norm_label": "b.2 terminalview debounced fit",
-      "source_file": "spec/specs/003.plan-v0.3-terminal-resize.md",
-      "source_location": "L91"
-    },
-    {
-      "id": "spec_specs_003_plan_v0_3_terminal_resize_mux_web_ui_v0_3_plan_terminal_resizing_window_control_hardening",
-      "label": "Mux Web UI \u2014 v0.3 plan: Terminal Resizing & Window Control Hardening",
-      "_origin": "ast",
-      "community": 39,
-      "community_name": "Mux Web UI \u2014 v0.3 plan: Terminal Resizing & Window Control Hardening",
-      "file_type": "document",
-      "node_kind": "heading",
-      "norm_label": "mux web ui \u2014 v0.3 plan: terminal resizing & window control hardening",
-      "source_file": "spec/specs/003.plan-v0.3-terminal-resize.md",
-      "source_location": "L1"
-    },
-    {
       "id": "spec_specs_004b_plan_checklist_0_milestone_pre_hardening_gate_sec_004_006_wajib_pertama",
       "label": "0. Milestone PRE \u2014 Hardening Gate (SEC-004..006) \u2014 WAJIB PERTAMA",
       "_origin": "ast",
       "community": 39,
-      "community_name": "Mux Web UI \u2014 v0.3 plan: Terminal Resizing & Window Control Hardening",
+      "community_name": "Companion Checklist \u2014 v0.4 Plan: Developer Suite",
       "file_type": "document",
       "node_kind": "heading",
       "norm_label": "0. milestone pre \u2014 hardening gate (sec-004..006) \u2014 wajib pertama",
@@ -19058,7 +18971,7 @@
       "label": "1. Milestone A \u2014 Git UI (`GIT-001..010`) \u2014 v0.4.1",
       "_origin": "ast",
       "community": 39,
-      "community_name": "Mux Web UI \u2014 v0.3 plan: Terminal Resizing & Window Control Hardening",
+      "community_name": "Companion Checklist \u2014 v0.4 Plan: Developer Suite",
       "file_type": "document",
       "node_kind": "heading",
       "norm_label": "1. milestone a \u2014 git ui (`git-001..010`) \u2014 v0.4.1",
@@ -19070,7 +18983,7 @@
       "label": "2. Milestone B \u2014 Package Center (`PKG-001..008`) \u2014 v0.4.2 (Terakhir, Non-Sudo Dulu)",
       "_origin": "ast",
       "community": 39,
-      "community_name": "Mux Web UI \u2014 v0.3 plan: Terminal Resizing & Window Control Hardening",
+      "community_name": "Companion Checklist \u2014 v0.4 Plan: Developer Suite",
       "file_type": "document",
       "node_kind": "heading",
       "norm_label": "2. milestone b \u2014 package center (`pkg-001..008`) \u2014 v0.4.2 (terakhir, non-sudo dulu)",
@@ -19082,7 +18995,7 @@
       "label": "3. Milestone C \u2014 Read-only Share Links (`SHR-001..008`) \u2014 v0.4.0 (Bersama Archive)",
       "_origin": "ast",
       "community": 39,
-      "community_name": "Mux Web UI \u2014 v0.3 plan: Terminal Resizing & Window Control Hardening",
+      "community_name": "Companion Checklist \u2014 v0.4 Plan: Developer Suite",
       "file_type": "document",
       "node_kind": "heading",
       "norm_label": "3. milestone c \u2014 read-only share links (`shr-001..008`) \u2014 v0.4.0 (bersama archive)",
@@ -19094,7 +19007,7 @@
       "label": "4. Milestone D \u2014 Archive Manager (`ARC-001..008`) \u2014 v0.4.0 (Bersama Share)",
       "_origin": "ast",
       "community": 39,
-      "community_name": "Mux Web UI \u2014 v0.3 plan: Terminal Resizing & Window Control Hardening",
+      "community_name": "Companion Checklist \u2014 v0.4 Plan: Developer Suite",
       "file_type": "document",
       "node_kind": "heading",
       "norm_label": "4. milestone d \u2014 archive manager (`arc-001..008`) \u2014 v0.4.0 (bersama share)",
@@ -19106,7 +19019,7 @@
       "label": "5. Milestone E \u2014 Desktop Frontend & UI (`WIN-010..013`)",
       "_origin": "ast",
       "community": 39,
-      "community_name": "Mux Web UI \u2014 v0.3 plan: Terminal Resizing & Window Control Hardening",
+      "community_name": "Companion Checklist \u2014 v0.4 Plan: Developer Suite",
       "file_type": "document",
       "node_kind": "heading",
       "norm_label": "5. milestone e \u2014 desktop frontend & ui (`win-010..013`)",
@@ -19118,7 +19031,7 @@
       "label": "6. Definition of Done & Quality Checks (Per Fase + Final)",
       "_origin": "ast",
       "community": 39,
-      "community_name": "Mux Web UI \u2014 v0.3 plan: Terminal Resizing & Window Control Hardening",
+      "community_name": "Companion Checklist \u2014 v0.4 Plan: Developer Suite",
       "file_type": "document",
       "node_kind": "heading",
       "norm_label": "6. definition of done & quality checks (per fase + final)",
@@ -19130,7 +19043,7 @@
       "label": "Backend Implementation (`src/archive.rs` & `src/http.rs` / `src/routes/archive.rs`)",
       "_origin": "ast",
       "community": 39,
-      "community_name": "Mux Web UI \u2014 v0.3 plan: Terminal Resizing & Window Control Hardening",
+      "community_name": "Companion Checklist \u2014 v0.4 Plan: Developer Suite",
       "file_type": "document",
       "node_kind": "heading",
       "norm_label": "backend implementation (`src/archive.rs` & `src/http.rs` / `src/routes/archive.rs`)",
@@ -19142,7 +19055,7 @@
       "label": "Backend Implementation (`src/git.rs` & `src/http.rs` / `src/routes/git.rs`)",
       "_origin": "ast",
       "community": 39,
-      "community_name": "Mux Web UI \u2014 v0.3 plan: Terminal Resizing & Window Control Hardening",
+      "community_name": "Companion Checklist \u2014 v0.4 Plan: Developer Suite",
       "file_type": "document",
       "node_kind": "heading",
       "norm_label": "backend implementation (`src/git.rs` & `src/http.rs` / `src/routes/git.rs`)",
@@ -19154,7 +19067,7 @@
       "label": "Backend Implementation (`src/packages.rs` & `src/http.rs` / `src/routes/packages.rs`)",
       "_origin": "ast",
       "community": 39,
-      "community_name": "Mux Web UI \u2014 v0.3 plan: Terminal Resizing & Window Control Hardening",
+      "community_name": "Companion Checklist \u2014 v0.4 Plan: Developer Suite",
       "file_type": "document",
       "node_kind": "heading",
       "norm_label": "backend implementation (`src/packages.rs` & `src/http.rs` / `src/routes/packages.rs`)",
@@ -19166,7 +19079,7 @@
       "label": "Backend Implementation (`src/session.rs` & `src/http.rs` & `src/auth.rs` & `src/routes/*`)",
       "_origin": "ast",
       "community": 39,
-      "community_name": "Mux Web UI \u2014 v0.3 plan: Terminal Resizing & Window Control Hardening",
+      "community_name": "Companion Checklist \u2014 v0.4 Plan: Developer Suite",
       "file_type": "document",
       "node_kind": "heading",
       "norm_label": "backend implementation (`src/session.rs` & `src/http.rs` & `src/auth.rs` & `src/routes/*`)",
@@ -19178,7 +19091,7 @@
       "label": "Backend Implementation (`src/share.rs` & `src/http.rs` / `src/routes/share.rs`)",
       "_origin": "ast",
       "community": 39,
-      "community_name": "Mux Web UI \u2014 v0.3 plan: Terminal Resizing & Window Control Hardening",
+      "community_name": "Companion Checklist \u2014 v0.4 Plan: Developer Suite",
       "file_type": "document",
       "node_kind": "heading",
       "norm_label": "backend implementation (`src/share.rs` & `src/http.rs` / `src/routes/share.rs`)",
@@ -19190,7 +19103,7 @@
       "label": "Companion Checklist \u2014 v0.4 Plan: Developer Suite",
       "_origin": "ast",
       "community": 39,
-      "community_name": "Mux Web UI \u2014 v0.3 plan: Terminal Resizing & Window Control Hardening",
+      "community_name": "Companion Checklist \u2014 v0.4 Plan: Developer Suite",
       "file_type": "document",
       "node_kind": "heading",
       "norm_label": "companion checklist \u2014 v0.4 plan: developer suite",
@@ -19202,7 +19115,7 @@
       "label": "Frontend Components (`web/src/*`)",
       "_origin": "ast",
       "community": 39,
-      "community_name": "Mux Web UI \u2014 v0.3 plan: Terminal Resizing & Window Control Hardening",
+      "community_name": "Companion Checklist \u2014 v0.4 Plan: Developer Suite",
       "file_type": "document",
       "node_kind": "heading",
       "norm_label": "frontend components (`web/src/*`)",
@@ -19214,7 +19127,7 @@
       "label": "Test Suite Baru (`tests/security_tests.rs`)",
       "_origin": "ast",
       "community": 39,
-      "community_name": "Mux Web UI \u2014 v0.3 plan: Terminal Resizing & Window Control Hardening",
+      "community_name": "Companion Checklist \u2014 v0.4 Plan: Developer Suite",
       "file_type": "document",
       "node_kind": "heading",
       "norm_label": "test suite baru (`tests/security_tests.rs`)",
@@ -19226,7 +19139,7 @@
       "label": "Test Suite (`tests/archive_tests.rs`)",
       "_origin": "ast",
       "community": 39,
-      "community_name": "Mux Web UI \u2014 v0.3 plan: Terminal Resizing & Window Control Hardening",
+      "community_name": "Companion Checklist \u2014 v0.4 Plan: Developer Suite",
       "file_type": "document",
       "node_kind": "heading",
       "norm_label": "test suite (`tests/archive_tests.rs`)",
@@ -19238,7 +19151,7 @@
       "label": "Test Suite (`tests/git_tests.rs`)",
       "_origin": "ast",
       "community": 39,
-      "community_name": "Mux Web UI \u2014 v0.3 plan: Terminal Resizing & Window Control Hardening",
+      "community_name": "Companion Checklist \u2014 v0.4 Plan: Developer Suite",
       "file_type": "document",
       "node_kind": "heading",
       "norm_label": "test suite (`tests/git_tests.rs`)",
@@ -19250,7 +19163,7 @@
       "label": "Test Suite (`tests/package_tests.rs`)",
       "_origin": "ast",
       "community": 39,
-      "community_name": "Mux Web UI \u2014 v0.3 plan: Terminal Resizing & Window Control Hardening",
+      "community_name": "Companion Checklist \u2014 v0.4 Plan: Developer Suite",
       "file_type": "document",
       "node_kind": "heading",
       "norm_label": "test suite (`tests/package_tests.rs`)",
@@ -19262,7 +19175,7 @@
       "label": "Test Suite (`tests/share_tests.rs`)",
       "_origin": "ast",
       "community": 39,
-      "community_name": "Mux Web UI \u2014 v0.3 plan: Terminal Resizing & Window Control Hardening",
+      "community_name": "Companion Checklist \u2014 v0.4 Plan: Developer Suite",
       "file_type": "document",
       "node_kind": "heading",
       "norm_label": "test suite (`tests/share_tests.rs`)",
@@ -22163,119 +22076,10 @@
       "source_location": "L181"
     },
     {
-      "id": "session_ses_fc80_afk_diem",
-      "label": "session-ses_fc80_AFK_DIEM.md",
-      "_origin": "ast",
-      "community": 54,
-      "community_name": "011b.plan-checklist.md",
-      "file_type": "document",
-      "node_kind": "page",
-      "norm_label": "session-ses_fc80_afk_diem.md",
-      "source_file": "session-ses_fc80_AFK_DIEM.md",
-      "source_location": "L1"
-    },
-    {
-      "id": "spec_handoff_008_v062_editor_agents_network_signing_distro",
-      "label": "008.v062-editor-agents-network-signing-distro.md",
-      "_origin": "ast",
-      "community": 54,
-      "community_name": "011b.plan-checklist.md",
-      "file_type": "document",
-      "node_kind": "page",
-      "norm_label": "008.v062-editor-agents-network-signing-distro.md",
-      "source_file": "spec/handoff/008.v062-editor-agents-network-signing-distro.md",
-      "source_location": "L1"
-    },
-    {
-      "id": "spec_handoff_008_v062_editor_agents_network_signing_distro_1_yang_dikerjakan_semua_milestone_a_h",
-      "label": "1. Yang dikerjakan (semua milestone A\u2013H)",
-      "_origin": "ast",
-      "community": 54,
-      "community_name": "011b.plan-checklist.md",
-      "file_type": "document",
-      "node_kind": "heading",
-      "norm_label": "1. yang dikerjakan (semua milestone a\u2013h)",
-      "source_file": "spec/handoff/008.v062-editor-agents-network-signing-distro.md",
-      "source_location": "L7"
-    },
-    {
-      "id": "spec_handoff_008_v062_editor_agents_network_signing_distro_2_keputusan_implementasi_d_log",
-      "label": "2. Keputusan implementasi (D-log)",
-      "_origin": "ast",
-      "community": 54,
-      "community_name": "011b.plan-checklist.md",
-      "file_type": "document",
-      "node_kind": "heading",
-      "norm_label": "2. keputusan implementasi (d-log)",
-      "source_file": "spec/handoff/008.v062-editor-agents-network-signing-distro.md",
-      "source_location": "L22"
-    },
-    {
-      "id": "spec_handoff_008_v062_editor_agents_network_signing_distro_3_gates_semua_hijau",
-      "label": "3. Gates (semua hijau)",
-      "_origin": "ast",
-      "community": 54,
-      "community_name": "011b.plan-checklist.md",
-      "file_type": "document",
-      "node_kind": "heading",
-      "norm_label": "3. gates (semua hijau)",
-      "source_file": "spec/handoff/008.v062-editor-agents-network-signing-distro.md",
-      "source_location": "L31"
-    },
-    {
-      "id": "spec_handoff_008_v062_editor_agents_network_signing_distro_4_pending_user_side",
-      "label": "4. Pending (user-side)",
-      "_origin": "ast",
-      "community": 54,
-      "community_name": "011b.plan-checklist.md",
-      "file_type": "document",
-      "node_kind": "heading",
-      "norm_label": "4. pending (user-side)",
-      "source_file": "spec/handoff/008.v062-editor-agents-network-signing-distro.md",
-      "source_location": "L40"
-    },
-    {
-      "id": "spec_handoff_008_v062_editor_agents_network_signing_distro_handoff_008_v0_6_2_editor_polish_virtualisasi_penuh_agents_ux_persist_layout_network_hardening_signing_distro_mgmt",
-      "label": "Handoff 008 \u2014 v0.6.2 Editor Polish & Virtualisasi Penuh, Agents UX, Persist Layout, Network Hardening, Signing, Distro Mgmt",
-      "_origin": "ast",
-      "community": 54,
-      "community_name": "011b.plan-checklist.md",
-      "file_type": "document",
-      "node_kind": "heading",
-      "norm_label": "handoff 008 \u2014 v0.6.2 editor polish & virtualisasi penuh, agents ux, persist layout, network hardening, signing, distro mgmt",
-      "source_file": "spec/handoff/008.v062-editor-agents-network-signing-distro.md",
-      "source_location": "L1"
-    },
-    {
-      "id": "spec_specs_011_plan_v0_6_2_editor_agents_network_signing_distro",
-      "label": "011.plan-v0.6.2-editor-agents-network-signing-distro.md",
-      "_origin": "ast",
-      "community": 54,
-      "community_name": "011b.plan-checklist.md",
-      "file_type": "document",
-      "node_kind": "page",
-      "norm_label": "011.plan-v0.6.2-editor-agents-network-signing-distro.md",
-      "source_file": "spec/specs/011.plan-v0.6.2-editor-agents-network-signing-distro.md",
-      "source_location": "L1"
-    },
-    {
-      "id": "spec_specs_011b_plan_checklist",
-      "label": "011b.plan-checklist.md",
-      "_origin": "ast",
-      "community": 54,
-      "community_name": "011b.plan-checklist.md",
-      "file_type": "document",
-      "node_kind": "page",
-      "norm_label": "011b.plan-checklist.md",
-      "rationale": "TDD Red\u2192Green per milestone; zero-regression principle (161 cargo + 70 vitest green without edits); identical behavior to v0.6.1 without new flags; gzip budget \u2264750 KiB; argv-only without sh -c.",
-      "source_file": "spec/specs/011b.plan-checklist.md",
-      "source_location": "L1"
-    },
-    {
       "id": "spec_specs_011b_plan_checklist_0_ringkasan_deliverable",
       "label": "0. Ringkasan Deliverable",
       "_origin": "ast",
-      "community": 55,
+      "community": 54,
       "community_name": "Companion Checklist \u2014 v0.6.2 Editor Polish & Virtualisasi, Agents UX, Persist Layout, Network Hardening, Signing, Distro Mgmt",
       "file_type": "document",
       "node_kind": "heading",
@@ -22287,7 +22091,7 @@
       "id": "spec_specs_011b_plan_checklist_10_out_of_scope_ingat",
       "label": "10. Out of Scope (ingat)",
       "_origin": "ast",
-      "community": 55,
+      "community": 54,
       "community_name": "Companion Checklist \u2014 v0.6.2 Editor Polish & Virtualisasi, Agents UX, Persist Layout, Network Hardening, Signing, Distro Mgmt",
       "file_type": "document",
       "node_kind": "heading",
@@ -22299,7 +22103,7 @@
       "id": "spec_specs_011b_plan_checklist_11_keputusan_open_question_log",
       "label": "11. Keputusan & Open Question Log",
       "_origin": "ast",
-      "community": 55,
+      "community": 54,
       "community_name": "Companion Checklist \u2014 v0.6.2 Editor Polish & Virtualisasi, Agents UX, Persist Layout, Network Hardening, Signing, Distro Mgmt",
       "file_type": "document",
       "node_kind": "heading",
@@ -22311,7 +22115,7 @@
       "id": "spec_specs_011b_plan_checklist_1_milestone_a_mux_code_polish_edit_017_edit_013_edit_014",
       "label": "1. Milestone A \u2014 mux-code Polish (`EDIT-017`, `EDIT-013`, `EDIT-014`)",
       "_origin": "ast",
-      "community": 55,
+      "community": 54,
       "community_name": "Companion Checklist \u2014 v0.6.2 Editor Polish & Virtualisasi, Agents UX, Persist Layout, Network Hardening, Signing, Distro Mgmt",
       "file_type": "document",
       "node_kind": "heading",
@@ -22323,7 +22127,7 @@
       "id": "spec_specs_011b_plan_checklist_2_milestone_b_virtualisasi_penuh_edit_018",
       "label": "2. Milestone B \u2014 Virtualisasi Penuh (`EDIT-018`)",
       "_origin": "ast",
-      "community": 55,
+      "community": 54,
       "community_name": "Companion Checklist \u2014 v0.6.2 Editor Polish & Virtualisasi, Agents UX, Persist Layout, Network Hardening, Signing, Distro Mgmt",
       "file_type": "document",
       "node_kind": "heading",
@@ -22335,7 +22139,7 @@
       "id": "spec_specs_011b_plan_checklist_3_milestone_c_folderpicker_cwd_agents_agt_006",
       "label": "3. Milestone C \u2014 FolderPicker cwd Agents (`AGT-006`)",
       "_origin": "ast",
-      "community": 55,
+      "community": 54,
       "community_name": "Companion Checklist \u2014 v0.6.2 Editor Polish & Virtualisasi, Agents UX, Persist Layout, Network Hardening, Signing, Distro Mgmt",
       "file_type": "document",
       "node_kind": "heading",
@@ -22347,7 +22151,7 @@
       "id": "spec_specs_011b_plan_checklist_4_milestone_d_persist_layout_terminal_tab_010_011",
       "label": "4. Milestone D \u2014 Persist Layout Terminal (`TAB-010/011`)",
       "_origin": "ast",
-      "community": 55,
+      "community": 54,
       "community_name": "Companion Checklist \u2014 v0.6.2 Editor Polish & Virtualisasi, Agents UX, Persist Layout, Network Hardening, Signing, Distro Mgmt",
       "file_type": "document",
       "node_kind": "heading",
@@ -22359,7 +22163,7 @@
       "id": "spec_specs_011b_plan_checklist_5_milestone_e_trusted_proxy_wildcard_allowlist_net_007_008",
       "label": "5. Milestone E \u2014 Trusted Proxy + Wildcard Allowlist (`NET-007/008`)",
       "_origin": "ast",
-      "community": 55,
+      "community": 54,
       "community_name": "Companion Checklist \u2014 v0.6.2 Editor Polish & Virtualisasi, Agents UX, Persist Layout, Network Hardening, Signing, Distro Mgmt",
       "file_type": "document",
       "node_kind": "heading",
@@ -22371,7 +22175,7 @@
       "id": "spec_specs_011b_plan_checklist_6_milestone_f_release_signing_sign_001_003",
       "label": "6. Milestone F \u2014 Release Signing (`SIGN-001..003`)",
       "_origin": "ast",
-      "community": 55,
+      "community": 54,
       "community_name": "Companion Checklist \u2014 v0.6.2 Editor Polish & Virtualisasi, Agents UX, Persist Layout, Network Hardening, Signing, Distro Mgmt",
       "file_type": "document",
       "node_kind": "heading",
@@ -22383,7 +22187,7 @@
       "id": "spec_specs_011b_plan_checklist_7_milestone_g_manajemen_distro_agent_hints_distro_001_004",
       "label": "7. Milestone G \u2014 Manajemen Distro + Agent Hints (`DISTRO-001..004`)",
       "_origin": "ast",
-      "community": 55,
+      "community": 54,
       "community_name": "Companion Checklist \u2014 v0.6.2 Editor Polish & Virtualisasi, Agents UX, Persist Layout, Network Hardening, Signing, Distro Mgmt",
       "file_type": "document",
       "node_kind": "heading",
@@ -22395,7 +22199,7 @@
       "id": "spec_specs_011b_plan_checklist_8_milestone_h_security_assurance_sec_007_008",
       "label": "8. Milestone H \u2014 Security Assurance (`SEC-007/008`)",
       "_origin": "ast",
-      "community": 55,
+      "community": 54,
       "community_name": "Companion Checklist \u2014 v0.6.2 Editor Polish & Virtualisasi, Agents UX, Persist Layout, Network Hardening, Signing, Distro Mgmt",
       "file_type": "document",
       "node_kind": "heading",
@@ -22407,7 +22211,7 @@
       "id": "spec_specs_011b_plan_checklist_9_quality_gates_dod",
       "label": "9. Quality Gates & DoD",
       "_origin": "ast",
-      "community": 55,
+      "community": 54,
       "community_name": "Companion Checklist \u2014 v0.6.2 Editor Polish & Virtualisasi, Agents UX, Persist Layout, Network Hardening, Signing, Distro Mgmt",
       "file_type": "document",
       "node_kind": "heading",
@@ -22419,7 +22223,7 @@
       "id": "spec_specs_011b_plan_checklist_companion_checklist_v0_6_2_editor_polish_virtualisasi_agents_ux_persist_layout_network_hardening_signing_distro_mgmt",
       "label": "Companion Checklist \u2014 v0.6.2 Editor Polish & Virtualisasi, Agents UX, Persist Layout, Network Hardening, Signing, Distro Mgmt",
       "_origin": "ast",
-      "community": 55,
+      "community": 54,
       "community_name": "Companion Checklist \u2014 v0.6.2 Editor Polish & Virtualisasi, Agents UX, Persist Layout, Network Hardening, Signing, Distro Mgmt",
       "file_type": "document",
       "node_kind": "heading",
@@ -22431,7 +22235,7 @@
       "id": "spec_specs_011b_plan_checklist_green_gates",
       "label": "Green & gates",
       "_origin": "ast",
-      "community": 55,
+      "community": 54,
       "community_name": "Companion Checklist \u2014 v0.6.2 Editor Polish & Virtualisasi, Agents UX, Persist Layout, Network Hardening, Signing, Distro Mgmt",
       "file_type": "document",
       "node_kind": "heading",
@@ -22443,7 +22247,7 @@
       "id": "spec_specs_011b_plan_checklist_impl",
       "label": "Impl",
       "_origin": "ast",
-      "community": 55,
+      "community": 54,
       "community_name": "Companion Checklist \u2014 v0.6.2 Editor Polish & Virtualisasi, Agents UX, Persist Layout, Network Hardening, Signing, Distro Mgmt",
       "file_type": "document",
       "node_kind": "heading",
@@ -22455,7 +22259,7 @@
       "id": "spec_specs_011b_plan_checklist_red",
       "label": "Red",
       "_origin": "ast",
-      "community": 55,
+      "community": 54,
       "community_name": "Companion Checklist \u2014 v0.6.2 Editor Polish & Virtualisasi, Agents UX, Persist Layout, Network Hardening, Signing, Distro Mgmt",
       "file_type": "document",
       "node_kind": "heading",
@@ -22467,13 +22271,217 @@
       "id": "spec_specs_011b_plan_checklist_red_scenario",
       "label": "Red / Scenario",
       "_origin": "ast",
-      "community": 55,
+      "community": 54,
       "community_name": "Companion Checklist \u2014 v0.6.2 Editor Polish & Virtualisasi, Agents UX, Persist Layout, Network Hardening, Signing, Distro Mgmt",
       "file_type": "document",
       "node_kind": "heading",
       "norm_label": "red / scenario",
       "source_file": "spec/specs/011b.plan-checklist.md",
       "source_location": "L103"
+    },
+    {
+      "id": "spec_specs_015_plan_v0_6_5_update_command",
+      "label": "015.plan-v0.6.5-update-command.md",
+      "_origin": "ast",
+      "community": 55,
+      "community_name": "015 \u2014 v0.6.5 Update Command: `mux-web update` (opsi A)",
+      "file_type": "document",
+      "node_kind": "page",
+      "norm_label": "015.plan-v0.6.5-update-command.md",
+      "source_file": "spec/specs/015.plan-v0.6.5-update-command.md",
+      "source_location": "L1"
+    },
+    {
+      "id": "spec_specs_015_plan_v0_6_5_update_command_015_v0_6_5_update_command_mux_web_update_opsi_a",
+      "label": "015 \u2014 v0.6.5 Update Command: `mux-web update` (opsi A)",
+      "_origin": "ast",
+      "community": 55,
+      "community_name": "015 \u2014 v0.6.5 Update Command: `mux-web update` (opsi A)",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "015 \u2014 v0.6.5 update command: `mux-web update` (opsi a)",
+      "source_file": "spec/specs/015.plan-v0.6.5-update-command.md",
+      "source_location": "L1"
+    },
+    {
+      "id": "spec_specs_015_plan_v0_6_5_update_command_1_latar_belakang_fakta_kode",
+      "label": "1. Latar Belakang & Fakta Kode",
+      "_origin": "ast",
+      "community": 55,
+      "community_name": "015 \u2014 v0.6.5 Update Command: `mux-web update` (opsi A)",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "1. latar belakang & fakta kode",
+      "source_file": "spec/specs/015.plan-v0.6.5-update-command.md",
+      "source_location": "L13"
+    },
+    {
+      "id": "spec_specs_015_plan_v0_6_5_update_command_2_threat_model_lanjutan_10_spec_011_2_spec_014",
+      "label": "2. Threat Model (lanjutan \u00a710 spec 011 + \u00a72 spec 014)",
+      "_origin": "ast",
+      "community": 55,
+      "community_name": "015 \u2014 v0.6.5 Update Command: `mux-web update` (opsi A)",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "2. threat model (lanjutan \u00a710 spec 011 + \u00a72 spec 014)",
+      "source_file": "spec/specs/015.plan-v0.6.5-update-command.md",
+      "source_location": "L24"
+    },
+    {
+      "id": "spec_specs_015_plan_v0_6_5_update_command_3_milestone_upd_upd_001_004",
+      "label": "3. Milestone UPD (`UPD-001..004`)",
+      "_origin": "ast",
+      "community": 55,
+      "community_name": "015 \u2014 v0.6.5 Update Command: `mux-web update` (opsi A)",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "3. milestone upd (`upd-001..004`)",
+      "source_file": "spec/specs/015.plan-v0.6.5-update-command.md",
+      "source_location": "L33"
+    },
+    {
+      "id": "spec_specs_015_plan_v0_6_5_update_command_4_konfigurasi_baru",
+      "label": "4. Konfigurasi Baru",
+      "_origin": "ast",
+      "community": 55,
+      "community_name": "015 \u2014 v0.6.5 Update Command: `mux-web update` (opsi A)",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "4. konfigurasi baru",
+      "source_file": "spec/specs/015.plan-v0.6.5-update-command.md",
+      "source_location": "L46"
+    },
+    {
+      "id": "spec_specs_015_plan_v0_6_5_update_command_5_keputusan_desain",
+      "label": "5. Keputusan Desain",
+      "_origin": "ast",
+      "community": 55,
+      "community_name": "015 \u2014 v0.6.5 Update Command: `mux-web update` (opsi A)",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "5. keputusan desain",
+      "source_file": "spec/specs/015.plan-v0.6.5-update-command.md",
+      "source_location": "L54"
+    },
+    {
+      "id": "spec_specs_015_plan_v0_6_5_update_command_6_bukan_scope",
+      "label": "6. Bukan Scope",
+      "_origin": "ast",
+      "community": 55,
+      "community_name": "015 \u2014 v0.6.5 Update Command: `mux-web update` (opsi A)",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "6. bukan scope",
+      "source_file": "spec/specs/015.plan-v0.6.5-update-command.md",
+      "source_location": "L63"
+    },
+    {
+      "id": "spec_specs_015_plan_v0_6_5_update_command_7_urutan_pengerjaan_tdd",
+      "label": "7. Urutan Pengerjaan (TDD)",
+      "_origin": "ast",
+      "community": 55,
+      "community_name": "015 \u2014 v0.6.5 Update Command: `mux-web update` (opsi A)",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "7. urutan pengerjaan (tdd)",
+      "source_file": "spec/specs/015.plan-v0.6.5-update-command.md",
+      "source_location": "L68"
+    },
+    {
+      "id": "spec_specs_015_plan_v0_6_5_update_command_8_definition_of_done",
+      "label": "8. Definition of Done",
+      "_origin": "ast",
+      "community": 55,
+      "community_name": "015 \u2014 v0.6.5 Update Command: `mux-web update` (opsi A)",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "8. definition of done",
+      "source_file": "spec/specs/015.plan-v0.6.5-update-command.md",
+      "source_location": "L79"
+    },
+    {
+      "id": "spec_specs_015b_plan_checklist",
+      "label": "015b.plan-checklist.md",
+      "_origin": "ast",
+      "community": 55,
+      "community_name": "015 \u2014 v0.6.5 Update Command: `mux-web update` (opsi A)",
+      "file_type": "document",
+      "node_kind": "page",
+      "norm_label": "015b.plan-checklist.md",
+      "source_file": "spec/specs/015b.plan-checklist.md",
+      "source_location": "L1"
+    },
+    {
+      "id": "spec_specs_015b_plan_checklist_1_upd_milestone",
+      "label": "1. UPD Milestone",
+      "_origin": "ast",
+      "community": 55,
+      "community_name": "015 \u2014 v0.6.5 Update Command: `mux-web update` (opsi A)",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "1. upd milestone",
+      "source_file": "spec/specs/015b.plan-checklist.md",
+      "source_location": "L7"
+    },
+    {
+      "id": "spec_specs_015b_plan_checklist_2_docs",
+      "label": "2. Docs",
+      "_origin": "ast",
+      "community": 55,
+      "community_name": "015 \u2014 v0.6.5 Update Command: `mux-web update` (opsi A)",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "2. docs",
+      "source_file": "spec/specs/015b.plan-checklist.md",
+      "source_location": "L22"
+    },
+    {
+      "id": "spec_specs_015b_plan_checklist_companion_checklist_v0_6_5_update_command_mux_web_update_opsi_a",
+      "label": "Companion Checklist \u2014 v0.6.5 Update Command `mux-web update` (opsi A)",
+      "_origin": "ast",
+      "community": 55,
+      "community_name": "015 \u2014 v0.6.5 Update Command: `mux-web update` (opsi A)",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "companion checklist \u2014 v0.6.5 update command `mux-web update` (opsi a)",
+      "source_file": "spec/specs/015b.plan-checklist.md",
+      "source_location": "L1"
+    },
+    {
+      "id": "spec_specs_015b_plan_checklist_green",
+      "label": "Green",
+      "_origin": "ast",
+      "community": 55,
+      "community_name": "015 \u2014 v0.6.5 Update Command: `mux-web update` (opsi A)",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "green",
+      "source_file": "spec/specs/015b.plan-checklist.md",
+      "source_location": "L17"
+    },
+    {
+      "id": "spec_specs_015b_plan_checklist_impl",
+      "label": "Impl",
+      "_origin": "ast",
+      "community": 55,
+      "community_name": "015 \u2014 v0.6.5 Update Command: `mux-web update` (opsi A)",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "impl",
+      "source_file": "spec/specs/015b.plan-checklist.md",
+      "source_location": "L12"
+    },
+    {
+      "id": "spec_specs_015b_plan_checklist_red",
+      "label": "Red",
+      "_origin": "ast",
+      "community": 55,
+      "community_name": "015 \u2014 v0.6.5 Update Command: `mux-web update` (opsi A)",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "red",
+      "source_file": "spec/specs/015b.plan-checklist.md",
+      "source_location": "L9"
     },
     {
       "id": "src_git",
@@ -25455,11 +25463,59 @@
       "source_location": "L1"
     },
     {
+      "id": "spec_specs_000_plan",
+      "label": "000.plan.md",
+      "_origin": "ast",
+      "community": 67,
+      "community_name": "000a.plan-test.md",
+      "file_type": "document",
+      "node_kind": "page",
+      "norm_label": "000.plan.md",
+      "source_file": "spec/specs/000.plan.md",
+      "source_location": "L1"
+    },
+    {
+      "id": "spec_specs_000a_plan_test",
+      "label": "000a.plan-test.md",
+      "_origin": "ast",
+      "community": 67,
+      "community_name": "000a.plan-test.md",
+      "file_type": "document",
+      "node_kind": "page",
+      "norm_label": "000a.plan-test.md",
+      "source_file": "spec/specs/000a.plan-test.md",
+      "source_location": "L1"
+    },
+    {
+      "id": "spec_specs_000b_plan_checklist",
+      "label": "000b.plan-checklist.md",
+      "_origin": "ast",
+      "community": 67,
+      "community_name": "000a.plan-test.md",
+      "file_type": "document",
+      "node_kind": "page",
+      "norm_label": "000b.plan-checklist.md",
+      "source_file": "spec/specs/000b.plan-checklist.md",
+      "source_location": "L1"
+    },
+    {
+      "id": "spec_specs_001_plan_v0_2",
+      "label": "001.plan-v0.2.md",
+      "_origin": "ast",
+      "community": 67,
+      "community_name": "000a.plan-test.md",
+      "file_type": "document",
+      "node_kind": "page",
+      "norm_label": "001.plan-v0.2.md",
+      "source_file": "spec/specs/001.plan-v0.2.md",
+      "source_location": "L1"
+    },
+    {
       "id": "spec_specs_005_plan_v0_5_workspace_desktop_filemanager",
       "label": "005.plan-v0.5-workspace-desktop-filemanager.md",
       "_origin": "ast",
       "community": 67,
-      "community_name": "traceability.md",
+      "community_name": "000a.plan-test.md",
       "file_type": "document",
       "node_kind": "page",
       "norm_label": "005.plan-v0.5-workspace-desktop-filemanager.md",
@@ -25471,7 +25527,7 @@
       "label": "005b.plan-checklist.md",
       "_origin": "ast",
       "community": 67,
-      "community_name": "traceability.md",
+      "community_name": "000a.plan-test.md",
       "file_type": "document",
       "node_kind": "page",
       "norm_label": "005b.plan-checklist.md",
@@ -25483,7 +25539,7 @@
       "label": "006.plan-v0.6-editor-terminal-openfolder.md",
       "_origin": "ast",
       "community": 67,
-      "community_name": "traceability.md",
+      "community_name": "000a.plan-test.md",
       "file_type": "document",
       "node_kind": "page",
       "norm_label": "006.plan-v0.6-editor-terminal-openfolder.md",
@@ -25495,7 +25551,7 @@
       "label": "traceability.md",
       "_origin": "ast",
       "community": 67,
-      "community_name": "traceability.md",
+      "community_name": "000a.plan-test.md",
       "file_type": "document",
       "norm_label": "traceability.md",
       "source_file": "tests/traceability.md",
@@ -25850,7 +25906,18 @@
       "file_type": "code",
       "norm_label": "collect_access_urls()",
       "source_file": "src/config.rs",
-      "source_location": "L224"
+      "source_location": "L242"
+    },
+    {
+      "id": "src_config_commands",
+      "label": "Commands",
+      "_origin": "ast",
+      "community": 7,
+      "community_name": "Config",
+      "file_type": "code",
+      "norm_label": "commands",
+      "source_file": "src/config.rs",
+      "source_location": "L125"
     },
     {
       "id": "src_config_config",
@@ -25872,7 +25939,7 @@
       "file_type": "code",
       "norm_label": ".data_dir()",
       "source_file": "src/config.rs",
-      "source_location": "L385"
+      "source_location": "L403"
     },
     {
       "id": "src_config_config_effective_advertise_addrs",
@@ -25883,7 +25950,7 @@
       "file_type": "code",
       "norm_label": ".effective_advertise_addrs()",
       "source_file": "src/config.rs",
-      "source_location": "L287"
+      "source_location": "L305"
     },
     {
       "id": "src_config_config_effective_allowed_hosts",
@@ -25894,7 +25961,7 @@
       "file_type": "code",
       "norm_label": ".effective_allowed_hosts()",
       "source_file": "src/config.rs",
-      "source_location": "L257"
+      "source_location": "L275"
     },
     {
       "id": "src_config_config_effective_bind",
@@ -25905,7 +25972,7 @@
       "file_type": "code",
       "norm_label": ".effective_bind()",
       "source_file": "src/config.rs",
-      "source_location": "L373"
+      "source_location": "L391"
     },
     {
       "id": "src_config_config_effective_max_sessions",
@@ -25916,7 +25983,7 @@
       "file_type": "code",
       "norm_label": ".effective_max_sessions()",
       "source_file": "src/config.rs",
-      "source_location": "L249"
+      "source_location": "L267"
     },
     {
       "id": "src_config_config_effective_trusted_proxies",
@@ -25927,7 +25994,7 @@
       "file_type": "code",
       "norm_label": ".effective_trusted_proxies()",
       "source_file": "src/config.rs",
-      "source_location": "L318"
+      "source_location": "L336"
     },
     {
       "id": "src_config_config_tls_enabled",
@@ -25938,7 +26005,7 @@
       "file_type": "code",
       "norm_label": ".tls_enabled()",
       "source_file": "src/config.rs",
-      "source_location": "L381"
+      "source_location": "L399"
     },
     {
       "id": "src_config_host_matches",
@@ -25949,7 +26016,7 @@
       "file_type": "code",
       "norm_label": "host_matches()",
       "source_file": "src/config.rs",
-      "source_location": "L212"
+      "source_location": "L230"
     },
     {
       "id": "src_config_is_cgnat_v4",
@@ -25960,7 +26027,7 @@
       "file_type": "code",
       "norm_label": "is_cgnat_v4()",
       "source_file": "src/config.rs",
-      "source_location": "L166"
+      "source_location": "L184"
     },
     {
       "id": "src_config_is_gate_ok_ip",
@@ -25971,7 +26038,7 @@
       "file_type": "code",
       "norm_label": "is_gate_ok_ip()",
       "source_file": "src/config.rs",
-      "source_location": "L174"
+      "source_location": "L192"
     },
     {
       "id": "src_config_rs_ipaddr",
@@ -26048,7 +26115,7 @@
       "file_type": "code",
       "norm_label": "trustedproxy",
       "source_file": "src/config.rs",
-      "source_location": "L121"
+      "source_location": "L139"
     },
     {
       "id": "src_config_trustedproxy_matches",
@@ -26059,7 +26126,7 @@
       "file_type": "code",
       "norm_label": ".matches()",
       "source_file": "src/config.rs",
-      "source_location": "L128"
+      "source_location": "L146"
     },
     {
       "id": "src_config_v4_in_cidr",
@@ -26070,7 +26137,7 @@
       "file_type": "code",
       "norm_label": "v4_in_cidr()",
       "source_file": "src/config.rs",
-      "source_location": "L143"
+      "source_location": "L161"
     },
     {
       "id": "src_config_v6_in_cidr",
@@ -26081,7 +26148,7 @@
       "file_type": "code",
       "norm_label": "v6_in_cidr()",
       "source_file": "src/config.rs",
-      "source_location": "L154"
+      "source_location": "L172"
     },
     {
       "id": "src_config_valid_allowed_host_token",
@@ -26092,7 +26159,7 @@
       "file_type": "code",
       "norm_label": "valid_allowed_host_token()",
       "source_file": "src/config.rs",
-      "source_location": "L201"
+      "source_location": "L219"
     },
     {
       "id": "src_config_valid_host_token",
@@ -26103,7 +26170,7 @@
       "file_type": "code",
       "norm_label": "valid_host_token()",
       "source_file": "src/config.rs",
-      "source_location": "L190"
+      "source_location": "L208"
     },
     {
       "id": "tests_config_tests",
@@ -26280,6 +26347,188 @@
       "norm_label": "net_008_advertise_still_rejects_wildcard()",
       "source_file": "tests/config_tests.rs",
       "source_location": "L48"
+    },
+    {
+      "id": "tests_update_cmd_tests",
+      "label": "update_cmd_tests.rs",
+      "_origin": "ast",
+      "community": 7,
+      "community_name": "Config",
+      "file_type": "code",
+      "norm_label": "update_cmd_tests.rs",
+      "source_file": "tests/update_cmd_tests.rs",
+      "source_location": "L1"
+    },
+    {
+      "id": "tests_update_cmd_tests_upd_001_help_contains_update",
+      "label": "upd_001_help_contains_update()",
+      "_origin": "ast",
+      "community": 7,
+      "community_name": "Config",
+      "file_type": "code",
+      "norm_label": "upd_001_help_contains_update()",
+      "source_file": "tests/update_cmd_tests.rs",
+      "source_location": "L6"
+    },
+    {
+      "id": "tests_update_cmd_tests_upd_001_no_subcommand_still_serves",
+      "label": "upd_001_no_subcommand_still_serves()",
+      "_origin": "ast",
+      "community": 7,
+      "community_name": "Config",
+      "file_type": "code",
+      "norm_label": "upd_001_no_subcommand_still_serves()",
+      "source_file": "tests/update_cmd_tests.rs",
+      "source_location": "L67"
+    },
+    {
+      "id": "tests_update_cmd_tests_upd_001_parse_update_no_args",
+      "label": "upd_001_parse_update_no_args()",
+      "_origin": "ast",
+      "community": 7,
+      "community_name": "Config",
+      "file_type": "code",
+      "norm_label": "upd_001_parse_update_no_args()",
+      "source_file": "tests/update_cmd_tests.rs",
+      "source_location": "L21"
+    },
+    {
+      "id": "tests_update_cmd_tests_upd_001_version_flag_still_works",
+      "label": "upd_001_version_flag_still_works()",
+      "_origin": "ast",
+      "community": 7,
+      "community_name": "Config",
+      "file_type": "code",
+      "norm_label": "upd_001_version_flag_still_works()",
+      "source_file": "tests/update_cmd_tests.rs",
+      "source_location": "L75"
+    },
+    {
+      "id": "tests_update_cmd_tests_upd_002_parse_update_check_and_url",
+      "label": "upd_002_parse_update_check_and_url()",
+      "_origin": "ast",
+      "community": 7,
+      "community_name": "Config",
+      "file_type": "code",
+      "norm_label": "upd_002_parse_update_check_and_url()",
+      "source_file": "tests/update_cmd_tests.rs",
+      "source_location": "L33"
+    },
+    {
+      "id": "tests_update_cmd_tests_upd_004_allowlist_guard",
+      "label": "upd_004_allowlist_guard()",
+      "_origin": "ast",
+      "community": 7,
+      "community_name": "Config",
+      "file_type": "code",
+      "norm_label": "upd_004_allowlist_guard()",
+      "source_file": "tests/update_cmd_tests.rs",
+      "source_location": "L55"
+    },
+    {
+      "id": "update",
+      "label": "update.sh",
+      "_origin": "ast",
+      "community": 7,
+      "community_name": "Config",
+      "file_type": "code",
+      "metadata": {
+        "language": "bash",
+        "kind": "file"
+      },
+      "norm_label": "update.sh",
+      "source_file": "update.sh",
+      "source_location": "L1"
+    },
+    {
+      "id": "update_die",
+      "label": "die()",
+      "_origin": "ast",
+      "community": 7,
+      "community_name": "Config",
+      "file_type": "code",
+      "metadata": {
+        "language": "bash",
+        "kind": "bash_function"
+      },
+      "norm_label": "die()",
+      "source_file": "update.sh",
+      "source_location": "L90"
+    },
+    {
+      "id": "update_sh__entry",
+      "label": "update.sh script",
+      "_origin": "ast",
+      "community": 7,
+      "community_name": "Config",
+      "file_type": "code",
+      "metadata": {
+        "language": "bash",
+        "kind": "bash_entrypoint"
+      },
+      "norm_label": "update.sh script",
+      "source_file": "update.sh",
+      "source_location": "L1"
+    },
+    {
+      "id": "update_sig_gate",
+      "label": "sig_gate()",
+      "_origin": "ast",
+      "community": 7,
+      "community_name": "Config",
+      "file_type": "code",
+      "metadata": {
+        "language": "bash",
+        "kind": "bash_function"
+      },
+      "norm_label": "sig_gate()",
+      "source_file": "update.sh",
+      "source_location": "L58"
+    },
+    {
+      "id": "update_sig_verify_dir",
+      "label": "sig_verify_dir()",
+      "_origin": "ast",
+      "community": 7,
+      "community_name": "Config",
+      "file_type": "code",
+      "metadata": {
+        "language": "bash",
+        "kind": "bash_function"
+      },
+      "norm_label": "sig_verify_dir()",
+      "source_file": "update.sh",
+      "source_location": "L33"
+    },
+    {
+      "id": "update_usage",
+      "label": "usage()",
+      "_origin": "ast",
+      "community": 7,
+      "community_name": "Config",
+      "file_type": "code",
+      "metadata": {
+        "language": "bash",
+        "kind": "bash_function"
+      },
+      "norm_label": "usage()",
+      "source_file": "update.sh",
+      "source_location": "L74"
+    },
+    {
+      "id": "update_ver_cmp",
+      "label": "ver_cmp()",
+      "_origin": "ast",
+      "community": 7,
+      "community_name": "Config",
+      "file_type": "code",
+      "metadata": {
+        "language": "bash",
+        "kind": "bash_function"
+      },
+      "norm_label": "ver_cmp()",
+      "source_file": "update.sh",
+      "source_location": "L96"
     },
     {
       "id": "spec_specs_012b_plan_checklist_0_ringkasan_deliverable",
@@ -26527,7 +26776,7 @@
       "label": "002.terminal-resize-completed.md",
       "_origin": "ast",
       "community": 74,
-      "community_name": "000a.plan-test.md",
+      "community_name": "003.plan-v0.3-terminal-resize.md",
       "file_type": "document",
       "node_kind": "page",
       "norm_label": "002.terminal-resize-completed.md",
@@ -26539,7 +26788,7 @@
       "label": "1. Status Ringkas",
       "_origin": "ast",
       "community": 74,
-      "community_name": "000a.plan-test.md",
+      "community_name": "003.plan-v0.3-terminal-resize.md",
       "file_type": "document",
       "node_kind": "heading",
       "norm_label": "1. status ringkas",
@@ -26551,7 +26800,7 @@
       "label": "2. Git & Release Status",
       "_origin": "ast",
       "community": 74,
-      "community_name": "000a.plan-test.md",
+      "community_name": "003.plan-v0.3-terminal-resize.md",
       "file_type": "document",
       "node_kind": "heading",
       "norm_label": "2. git & release status",
@@ -26563,7 +26812,7 @@
       "label": "Handoff 002 \u2014 Terminal Resizing & Window Control Hardening (v0.3)",
       "_origin": "ast",
       "community": 74,
-      "community_name": "000a.plan-test.md",
+      "community_name": "003.plan-v0.3-terminal-resize.md",
       "file_type": "document",
       "node_kind": "heading",
       "norm_label": "handoff 002 \u2014 terminal resizing & window control hardening (v0.3)",
@@ -26575,7 +26824,7 @@
       "label": "003.security-audit-v0.4-evaluation.md",
       "_origin": "ast",
       "community": 74,
-      "community_name": "000a.plan-test.md",
+      "community_name": "003.plan-v0.3-terminal-resize.md",
       "file_type": "document",
       "node_kind": "page",
       "norm_label": "003.security-audit-v0.4-evaluation.md",
@@ -26583,59 +26832,11 @@
       "source_location": "L1"
     },
     {
-      "id": "spec_specs_000_plan",
-      "label": "000.plan.md",
-      "_origin": "ast",
-      "community": 74,
-      "community_name": "000a.plan-test.md",
-      "file_type": "document",
-      "node_kind": "page",
-      "norm_label": "000.plan.md",
-      "source_file": "spec/specs/000.plan.md",
-      "source_location": "L1"
-    },
-    {
-      "id": "spec_specs_000a_plan_test",
-      "label": "000a.plan-test.md",
-      "_origin": "ast",
-      "community": 74,
-      "community_name": "000a.plan-test.md",
-      "file_type": "document",
-      "node_kind": "page",
-      "norm_label": "000a.plan-test.md",
-      "source_file": "spec/specs/000a.plan-test.md",
-      "source_location": "L1"
-    },
-    {
-      "id": "spec_specs_000b_plan_checklist",
-      "label": "000b.plan-checklist.md",
-      "_origin": "ast",
-      "community": 74,
-      "community_name": "000a.plan-test.md",
-      "file_type": "document",
-      "node_kind": "page",
-      "norm_label": "000b.plan-checklist.md",
-      "source_file": "spec/specs/000b.plan-checklist.md",
-      "source_location": "L1"
-    },
-    {
-      "id": "spec_specs_001_plan_v0_2",
-      "label": "001.plan-v0.2.md",
-      "_origin": "ast",
-      "community": 74,
-      "community_name": "000a.plan-test.md",
-      "file_type": "document",
-      "node_kind": "page",
-      "norm_label": "001.plan-v0.2.md",
-      "source_file": "spec/specs/001.plan-v0.2.md",
-      "source_location": "L1"
-    },
-    {
       "id": "spec_specs_003_plan_v0_3_terminal_resize",
       "label": "003.plan-v0.3-terminal-resize.md",
       "_origin": "ast",
       "community": 74,
-      "community_name": "000a.plan-test.md",
+      "community_name": "003.plan-v0.3-terminal-resize.md",
       "file_type": "document",
       "node_kind": "page",
       "norm_label": "003.plan-v0.3-terminal-resize.md",
@@ -26647,7 +26848,7 @@
       "label": "003b.plan-checklist.md",
       "_origin": "ast",
       "community": 74,
-      "community_name": "000a.plan-test.md",
+      "community_name": "003.plan-v0.3-terminal-resize.md",
       "file_type": "document",
       "node_kind": "page",
       "norm_label": "003b.plan-checklist.md",
@@ -26659,7 +26860,7 @@
       "label": "Langkah 1 \u2014 Milestone A: Backend Dimension Clamping & Robustness",
       "_origin": "ast",
       "community": 74,
-      "community_name": "000a.plan-test.md",
+      "community_name": "003.plan-v0.3-terminal-resize.md",
       "file_type": "document",
       "node_kind": "heading",
       "norm_label": "langkah 1 \u2014 milestone a: backend dimension clamping & robustness",
@@ -26671,7 +26872,7 @@
       "label": "Langkah 2 \u2014 Milestone B: Frontend Window Resize Handles & Debouncing",
       "_origin": "ast",
       "community": 74,
-      "community_name": "000a.plan-test.md",
+      "community_name": "003.plan-v0.3-terminal-resize.md",
       "file_type": "document",
       "node_kind": "heading",
       "norm_label": "langkah 2 \u2014 milestone b: frontend window resize handles & debouncing",
@@ -26683,7 +26884,7 @@
       "label": "Langkah 3 \u2014 Milestone C: Traceability, Documentation & Graph Update",
       "_origin": "ast",
       "community": 74,
-      "community_name": "000a.plan-test.md",
+      "community_name": "003.plan-v0.3-terminal-resize.md",
       "file_type": "document",
       "node_kind": "heading",
       "norm_label": "langkah 3 \u2014 milestone c: traceability, documentation & graph update",
@@ -26695,7 +26896,7 @@
       "label": "Mux Web UI \u2014 v0.3 Implementation Checklist & Verification Matrix",
       "_origin": "ast",
       "community": 74,
-      "community_name": "000a.plan-test.md",
+      "community_name": "003.plan-v0.3-terminal-resize.md",
       "file_type": "document",
       "node_kind": "heading",
       "norm_label": "mux web ui \u2014 v0.3 implementation checklist & verification matrix",
@@ -26707,7 +26908,7 @@
       "label": "TDD Execution Loop Standard",
       "_origin": "ast",
       "community": 74,
-      "community_name": "000a.plan-test.md",
+      "community_name": "003.plan-v0.3-terminal-resize.md",
       "file_type": "document",
       "node_kind": "heading",
       "norm_label": "tdd execution loop standard",
@@ -26719,7 +26920,7 @@
       "label": "004.plan-v0.4-suite.md",
       "_origin": "ast",
       "community": 74,
-      "community_name": "000a.plan-test.md",
+      "community_name": "003.plan-v0.3-terminal-resize.md",
       "file_type": "document",
       "node_kind": "page",
       "norm_label": "004.plan-v0.4-suite.md",
@@ -26731,7 +26932,7 @@
       "label": "004b.plan-checklist.md",
       "_origin": "ast",
       "community": 74,
-      "community_name": "000a.plan-test.md",
+      "community_name": "003.plan-v0.3-terminal-resize.md",
       "file_type": "document",
       "node_kind": "page",
       "norm_label": "004b.plan-checklist.md",
@@ -27862,109 +28063,184 @@
       "source_location": "L19"
     },
     {
-      "id": "update",
-      "label": "update.sh",
+      "id": "spec_specs_009b_plan_checklist_0_ringkasan_deliverable",
+      "label": "0. Ringkasan Deliverable",
       "_origin": "ast",
       "community": 85,
-      "community_name": "update.sh",
-      "file_type": "code",
-      "metadata": {
-        "language": "bash",
-        "kind": "file"
-      },
-      "norm_label": "update.sh",
-      "source_file": "update.sh",
+      "community_name": "Companion Checklist \u2014 v0.5.3 VPN / Jaringan Khusus / Domain Kustom",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "0. ringkasan deliverable",
+      "source_file": "spec/specs/009b.plan-checklist.md",
+      "source_location": "L10"
+    },
+    {
+      "id": "spec_specs_009b_plan_checklist_1_milestone_a_parser_gate_net_001_net_002_net_006_net_007",
+      "label": "1. Milestone A \u2014 Parser & Gate (`NET-001`, `NET-002`, `NET-006`, `NET-007`)",
+      "_origin": "ast",
+      "community": 85,
+      "community_name": "Companion Checklist \u2014 v0.5.3 VPN / Jaringan Khusus / Domain Kustom",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "1. milestone a \u2014 parser & gate (`net-001`, `net-002`, `net-006`, `net-007`)",
+      "source_file": "spec/specs/009b.plan-checklist.md",
+      "source_location": "L22"
+    },
+    {
+      "id": "spec_specs_009b_plan_checklist_2_milestone_b_advertise_banner_net_003_net_004_net_005",
+      "label": "2. Milestone B \u2014 Advertise & Banner (`NET-003`, `NET-004`, `NET-005`)",
+      "_origin": "ast",
+      "community": 85,
+      "community_name": "Companion Checklist \u2014 v0.5.3 VPN / Jaringan Khusus / Domain Kustom",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "2. milestone b \u2014 advertise & banner (`net-003`, `net-004`, `net-005`)",
+      "source_file": "spec/specs/009b.plan-checklist.md",
+      "source_location": "L46"
+    },
+    {
+      "id": "spec_specs_009b_plan_checklist_3_milestone_c_docs_traceability_net_004_net_007",
+      "label": "3. Milestone C \u2014 Docs & Traceability (`NET-004`, `NET-007`)",
+      "_origin": "ast",
+      "community": 85,
+      "community_name": "Companion Checklist \u2014 v0.5.3 VPN / Jaringan Khusus / Domain Kustom",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "3. milestone c \u2014 docs & traceability (`net-004`, `net-007`)",
+      "source_file": "spec/specs/009b.plan-checklist.md",
+      "source_location": "L64"
+    },
+    {
+      "id": "spec_specs_009b_plan_checklist_4_quality_gates_dod",
+      "label": "4. Quality Gates & DoD",
+      "_origin": "ast",
+      "community": 85,
+      "community_name": "Companion Checklist \u2014 v0.5.3 VPN / Jaringan Khusus / Domain Kustom",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "4. quality gates & dod",
+      "source_file": "spec/specs/009b.plan-checklist.md",
+      "source_location": "L72"
+    },
+    {
+      "id": "spec_specs_009b_plan_checklist_5_out_of_scope_ingat",
+      "label": "5. Out of Scope (ingat)",
+      "_origin": "ast",
+      "community": 85,
+      "community_name": "Companion Checklist \u2014 v0.5.3 VPN / Jaringan Khusus / Domain Kustom",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "5. out of scope (ingat)",
+      "source_file": "spec/specs/009b.plan-checklist.md",
+      "source_location": "L81"
+    },
+    {
+      "id": "spec_specs_009b_plan_checklist_6_keputusan_open_question_log",
+      "label": "6. Keputusan & Open Question Log",
+      "_origin": "ast",
+      "community": 85,
+      "community_name": "Companion Checklist \u2014 v0.5.3 VPN / Jaringan Khusus / Domain Kustom",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "6. keputusan & open question log",
+      "source_file": "spec/specs/009b.plan-checklist.md",
+      "source_location": "L87"
+    },
+    {
+      "id": "spec_specs_009b_plan_checklist_companion_checklist_v0_5_3_vpn_jaringan_khusus_domain_kustom",
+      "label": "Companion Checklist \u2014 v0.5.3 VPN / Jaringan Khusus / Domain Kustom",
+      "_origin": "ast",
+      "community": 85,
+      "community_name": "Companion Checklist \u2014 v0.5.3 VPN / Jaringan Khusus / Domain Kustom",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "companion checklist \u2014 v0.5.3 vpn / jaringan khusus / domain kustom",
+      "source_file": "spec/specs/009b.plan-checklist.md",
       "source_location": "L1"
     },
     {
-      "id": "update_die",
-      "label": "die()",
+      "id": "spec_specs_009b_plan_checklist_green",
+      "label": "Green",
       "_origin": "ast",
       "community": 85,
-      "community_name": "update.sh",
-      "file_type": "code",
-      "metadata": {
-        "language": "bash",
-        "kind": "bash_function"
-      },
-      "norm_label": "die()",
-      "source_file": "update.sh",
-      "source_location": "L90"
+      "community_name": "Companion Checklist \u2014 v0.5.3 VPN / Jaringan Khusus / Domain Kustom",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "green",
+      "source_file": "spec/specs/009b.plan-checklist.md",
+      "source_location": "L41"
     },
     {
-      "id": "update_sh__entry",
-      "label": "update.sh script",
+      "id": "spec_specs_009b_plan_checklist_green_58",
+      "label": "Green",
       "_origin": "ast",
       "community": 85,
-      "community_name": "update.sh",
-      "file_type": "code",
-      "metadata": {
-        "language": "bash",
-        "kind": "bash_entrypoint"
-      },
-      "norm_label": "update.sh script",
-      "source_file": "update.sh",
-      "source_location": "L1"
-    },
-    {
-      "id": "update_sig_gate",
-      "label": "sig_gate()",
-      "_origin": "ast",
-      "community": 85,
-      "community_name": "update.sh",
-      "file_type": "code",
-      "metadata": {
-        "language": "bash",
-        "kind": "bash_function"
-      },
-      "norm_label": "sig_gate()",
-      "source_file": "update.sh",
+      "community_name": "Companion Checklist \u2014 v0.5.3 VPN / Jaringan Khusus / Domain Kustom",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "green",
+      "source_file": "spec/specs/009b.plan-checklist.md",
       "source_location": "L58"
     },
     {
-      "id": "update_sig_verify_dir",
-      "label": "sig_verify_dir()",
+      "id": "spec_specs_009b_plan_checklist_impl",
+      "label": "Impl",
       "_origin": "ast",
       "community": 85,
-      "community_name": "update.sh",
-      "file_type": "code",
-      "metadata": {
-        "language": "bash",
-        "kind": "bash_function"
-      },
-      "norm_label": "sig_verify_dir()",
-      "source_file": "update.sh",
-      "source_location": "L33"
+      "community_name": "Companion Checklist \u2014 v0.5.3 VPN / Jaringan Khusus / Domain Kustom",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "impl",
+      "source_file": "spec/specs/009b.plan-checklist.md",
+      "source_location": "L53"
     },
     {
-      "id": "update_usage",
-      "label": "usage()",
+      "id": "spec_specs_009b_plan_checklist_impl_backend",
+      "label": "Impl backend",
       "_origin": "ast",
       "community": 85,
-      "community_name": "update.sh",
-      "file_type": "code",
-      "metadata": {
-        "language": "bash",
-        "kind": "bash_function"
-      },
-      "norm_label": "usage()",
-      "source_file": "update.sh",
-      "source_location": "L74"
+      "community_name": "Companion Checklist \u2014 v0.5.3 VPN / Jaringan Khusus / Domain Kustom",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "impl backend",
+      "source_file": "spec/specs/009b.plan-checklist.md",
+      "source_location": "L35"
     },
     {
-      "id": "update_ver_cmp",
-      "label": "ver_cmp()",
+      "id": "spec_specs_009b_plan_checklist_red",
+      "label": "Red",
       "_origin": "ast",
       "community": 85,
-      "community_name": "update.sh",
-      "file_type": "code",
-      "metadata": {
-        "language": "bash",
-        "kind": "bash_function"
-      },
-      "norm_label": "ver_cmp()",
-      "source_file": "update.sh",
-      "source_location": "L96"
+      "community_name": "Companion Checklist \u2014 v0.5.3 VPN / Jaringan Khusus / Domain Kustom",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "red",
+      "source_file": "spec/specs/009b.plan-checklist.md",
+      "source_location": "L48"
+    },
+    {
+      "id": "spec_specs_009b_plan_checklist_red_gate_security_tests_rs",
+      "label": "Red (gate \u2014 `security_tests.rs`)",
+      "_origin": "ast",
+      "community": 85,
+      "community_name": "Companion Checklist \u2014 v0.5.3 VPN / Jaringan Khusus / Domain Kustom",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "red (gate \u2014 `security_tests.rs`)",
+      "source_file": "spec/specs/009b.plan-checklist.md",
+      "source_location": "L28"
+    },
+    {
+      "id": "spec_specs_009b_plan_checklist_red_parser_field_belum_ada_compile_error_red",
+      "label": "Red (parser \u2014 field belum ada \u2192 compile error = RED)",
+      "_origin": "ast",
+      "community": 85,
+      "community_name": "Companion Checklist \u2014 v0.5.3 VPN / Jaringan Khusus / Domain Kustom",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "red (parser \u2014 field belum ada \u2192 compile error = red)",
+      "source_file": "spec/specs/009b.plan-checklist.md",
+      "source_location": "L24"
     },
     {
       "id": "client",
@@ -28264,37 +28540,158 @@
       "source_location": "L1"
     },
     {
-      "id": "web_src_app",
-      "label": "app.tsx",
+      "id": "ordering",
+      "label": "Ordering",
       "_origin": "ast",
       "community": 89,
-      "community_name": "app.tsx",
+      "community_name": "update.rs",
       "file_type": "code",
-      "norm_label": "app.tsx",
-      "source_file": "web/src/app.tsx",
+      "norm_label": "ordering",
+      "source_file": "",
+      "source_location": ""
+    },
+    {
+      "id": "src_update",
+      "label": "update.rs",
+      "_origin": "ast",
+      "community": 89,
+      "community_name": "update.rs",
+      "file_type": "code",
+      "norm_label": "update.rs",
+      "source_file": "src/update.rs",
       "source_location": "L1"
     },
     {
-      "id": "web_src_main",
-      "label": "main.tsx",
+      "id": "src_update_compare_versions",
+      "label": "compare_versions()",
       "_origin": "ast",
       "community": 89,
-      "community_name": "app.tsx",
+      "community_name": "update.rs",
       "file_type": "code",
-      "norm_label": "main.tsx",
-      "source_file": "web/src/main.tsx",
-      "source_location": "L1"
+      "norm_label": "compare_versions()",
+      "source_file": "src/update.rs",
+      "source_location": "L43"
     },
     {
-      "id": "web_src_main_root",
-      "label": "root",
+      "id": "src_update_current_version",
+      "label": "current_version()",
       "_origin": "ast",
       "community": 89,
-      "community_name": "app.tsx",
+      "community_name": "update.rs",
       "file_type": "code",
-      "norm_label": "root",
-      "source_file": "web/src/main.tsx",
-      "source_location": "L5"
+      "norm_label": "current_version()",
+      "source_file": "src/update.rs",
+      "source_location": "L39"
+    },
+    {
+      "id": "src_update_effective_update_url",
+      "label": "effective_update_url()",
+      "_origin": "ast",
+      "community": 89,
+      "community_name": "update.rs",
+      "file_type": "code",
+      "norm_label": "effective_update_url()",
+      "source_file": "src/update.rs",
+      "source_location": "L27"
+    },
+    {
+      "id": "src_update_extract_tag",
+      "label": "extract_tag()",
+      "_origin": "ast",
+      "community": 89,
+      "community_name": "update.rs",
+      "file_type": "code",
+      "norm_label": "extract_tag()",
+      "source_file": "src/update.rs",
+      "source_location": "L88"
+    },
+    {
+      "id": "src_update_fetch_latest_tag",
+      "label": "fetch_latest_tag()",
+      "_origin": "ast",
+      "community": 89,
+      "community_name": "update.rs",
+      "file_type": "code",
+      "norm_label": "fetch_latest_tag()",
+      "source_file": "src/update.rs",
+      "source_location": "L52"
+    },
+    {
+      "id": "src_update_handle_update",
+      "label": "handle_update()",
+      "_origin": "ast",
+      "community": 89,
+      "community_name": "update.rs",
+      "file_type": "code",
+      "norm_label": "handle_update()",
+      "source_file": "src/update.rs",
+      "source_location": "L103"
+    },
+    {
+      "id": "src_update_is_update_url_allowed",
+      "label": "is_update_url_allowed()",
+      "_origin": "ast",
+      "community": 89,
+      "community_name": "update.rs",
+      "file_type": "code",
+      "norm_label": "is_update_url_allowed()",
+      "source_file": "src/update.rs",
+      "source_location": "L20"
+    },
+    {
+      "id": "src_update_rs_option",
+      "label": "Option",
+      "_origin": "ast",
+      "community": 89,
+      "community_name": "update.rs",
+      "file_type": "code",
+      "norm_label": "option",
+      "source_file": "",
+      "source_location": ""
+    },
+    {
+      "id": "src_update_rs_result",
+      "label": "Result",
+      "_origin": "ast",
+      "community": 89,
+      "community_name": "update.rs",
+      "file_type": "code",
+      "norm_label": "result",
+      "source_file": "",
+      "source_location": ""
+    },
+    {
+      "id": "src_update_rs_string",
+      "label": "String",
+      "_origin": "ast",
+      "community": 89,
+      "community_name": "update.rs",
+      "file_type": "code",
+      "norm_label": "string",
+      "source_file": "",
+      "source_location": ""
+    },
+    {
+      "id": "src_update_upd_004_allowlist_table",
+      "label": "upd_004_allowlist_table()",
+      "_origin": "ast",
+      "community": 89,
+      "community_name": "update.rs",
+      "file_type": "code",
+      "norm_label": "upd_004_allowlist_table()",
+      "source_file": "src/update.rs",
+      "source_location": "L167"
+    },
+    {
+      "id": "src_update_upd_004_effective_url_default",
+      "label": "upd_004_effective_url_default()",
+      "_origin": "ast",
+      "community": 89,
+      "community_name": "update.rs",
+      "file_type": "code",
+      "norm_label": "upd_004_effective_url_default()",
+      "source_file": "src/update.rs",
+      "source_location": "L200"
     },
     {
       "id": "src_auth",
@@ -28715,6 +29112,17 @@
       "source_location": "L320"
     },
     {
+      "id": "systemtime",
+      "label": "SystemTime",
+      "_origin": "ast",
+      "community": 9,
+      "community_name": "auth.rs",
+      "file_type": "code",
+      "norm_label": "systemtime",
+      "source_file": "",
+      "source_location": ""
+    },
+    {
       "id": "tests_auth_tests",
       "label": "auth_tests.rs",
       "_origin": "ast",
@@ -28979,17 +29387,6 @@
       "source_location": ""
     },
     {
-      "id": "systemtime",
-      "label": "SystemTime",
-      "_origin": "ast",
-      "community": 90,
-      "community_name": "files.rs",
-      "file_type": "code",
-      "norm_label": "systemtime",
-      "source_file": "",
-      "source_location": ""
-    },
-    {
       "id": "spec_handoff_smoke_v0_6_3_device_checklist",
       "label": "smoke-v0.6.3-device-checklist.md",
       "_origin": "ast",
@@ -29023,7 +29420,7 @@
       "node_kind": "heading",
       "norm_label": "peta perbaikan cepat",
       "source_file": "spec/handoff/smoke-v0.6.3-device-checklist.md",
-      "source_location": "L148"
+      "source_location": "L159"
     },
     {
       "id": "spec_handoff_smoke_v0_6_3_device_checklist_prasyarat",
@@ -29072,6 +29469,18 @@
       "norm_label": "s12 \u2014 codex window \ud83e\udd16 (spec 014 m-d)",
       "source_file": "spec/handoff/smoke-v0.6.3-device-checklist.md",
       "source_location": "L133"
+    },
+    {
+      "id": "spec_handoff_smoke_v0_6_3_device_checklist_s13_update_command_mux_web_update_spec_015",
+      "label": "S13 \u2014 Update Command `mux-web update` (spec 015)",
+      "_origin": "ast",
+      "community": 91,
+      "community_name": "Device Smoke Checklist \u2014 v0.6.2/v0.6.3 (specs 010\u2013013)",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "s13 \u2014 update command `mux-web update` (spec 015)",
+      "source_file": "spec/handoff/smoke-v0.6.3-device-checklist.md",
+      "source_location": "L146"
     },
     {
       "id": "spec_handoff_smoke_v0_6_3_device_checklist_s1_installer_updater_jalur_signature_dist_sign",
@@ -29247,6 +29656,55 @@
       "norm_label": "uri",
       "source_file": "",
       "source_location": ""
+    },
+    {
+      "id": "session_ses_fc80_afk_diem",
+      "label": "session-ses_fc80_AFK_DIEM.md",
+      "_origin": "ast",
+      "community": 94,
+      "community_name": "011b.plan-checklist.md",
+      "file_type": "document",
+      "node_kind": "page",
+      "norm_label": "session-ses_fc80_afk_diem.md",
+      "source_file": "session-ses_fc80_AFK_DIEM.md",
+      "source_location": "L1"
+    },
+    {
+      "id": "spec_handoff_008_v062_editor_agents_network_signing_distro",
+      "label": "008.v062-editor-agents-network-signing-distro.md",
+      "_origin": "ast",
+      "community": 94,
+      "community_name": "011b.plan-checklist.md",
+      "file_type": "document",
+      "node_kind": "page",
+      "norm_label": "008.v062-editor-agents-network-signing-distro.md",
+      "source_file": "spec/handoff/008.v062-editor-agents-network-signing-distro.md",
+      "source_location": "L1"
+    },
+    {
+      "id": "spec_specs_011_plan_v0_6_2_editor_agents_network_signing_distro",
+      "label": "011.plan-v0.6.2-editor-agents-network-signing-distro.md",
+      "_origin": "ast",
+      "community": 94,
+      "community_name": "011b.plan-checklist.md",
+      "file_type": "document",
+      "node_kind": "page",
+      "norm_label": "011.plan-v0.6.2-editor-agents-network-signing-distro.md",
+      "source_file": "spec/specs/011.plan-v0.6.2-editor-agents-network-signing-distro.md",
+      "source_location": "L1"
+    },
+    {
+      "id": "spec_specs_011b_plan_checklist",
+      "label": "011b.plan-checklist.md",
+      "_origin": "ast",
+      "community": 94,
+      "community_name": "011b.plan-checklist.md",
+      "file_type": "document",
+      "node_kind": "page",
+      "norm_label": "011b.plan-checklist.md",
+      "rationale": "TDD Red\u2192Green per milestone; zero-regression principle (161 cargo + 70 vitest green without edits); identical behavior to v0.6.1 without new flags; gzip budget \u2264750 KiB; argv-only without sh -c.",
+      "source_file": "spec/specs/011b.plan-checklist.md",
+      "source_location": "L1"
     },
     {
       "id": "web_src_apps_editor_runpanel",
@@ -30015,6 +30473,214 @@
       "source_url": null
     },
     {
+      "id": "src_config_rs",
+      "label": "src/config.rs",
+      "_origin": "semantic",
+      "author": null,
+      "captured_at": null,
+      "community": 120,
+      "community_name": "Spec 012: v0.6.3 Terminal Liveness Hotfix",
+      "contributor": null,
+      "file_type": "code",
+      "norm_label": "src/config.rs",
+      "rationale": null,
+      "source_file": "session-ses_fc80_AFK_DIEM.md",
+      "source_location": "cited lines 61-74",
+      "source_url": null
+    },
+    {
+      "id": "src_session_rs",
+      "label": "src/session.rs",
+      "_origin": "semantic",
+      "author": null,
+      "captured_at": null,
+      "community": 120,
+      "community_name": "Spec 012: v0.6.3 Terminal Liveness Hotfix",
+      "contributor": null,
+      "file_type": "code",
+      "norm_label": "src/session.rs",
+      "rationale": null,
+      "source_file": "session-ses_fc80_AFK_DIEM.md",
+      "source_location": "cited lines 40-407",
+      "source_url": null
+    },
+    {
+      "id": "web_src_apps_terminal_terminalview_tsx",
+      "label": "web/src/apps/terminal/TerminalView.tsx",
+      "_origin": "semantic",
+      "author": null,
+      "captured_at": null,
+      "community": 120,
+      "community_name": "Spec 012: v0.6.3 Terminal Liveness Hotfix",
+      "contributor": null,
+      "file_type": "code",
+      "norm_label": "web/src/apps/terminal/terminalview.tsx",
+      "rationale": null,
+      "source_file": "session-ses_fc80_AFK_DIEM.md",
+      "source_location": "cited lines 60-139",
+      "source_url": null
+    },
+    {
+      "id": "session_ses_fc80_afk_diem_life_020",
+      "label": "LIFE-020: Auto-Reconnect Backoff Eksponensial + Reattach + Replay",
+      "_origin": "semantic",
+      "author": null,
+      "captured_at": null,
+      "community": 120,
+      "community_name": "Spec 012: v0.6.3 Terminal Liveness Hotfix",
+      "contributor": null,
+      "file_type": "concept",
+      "norm_label": "life-020: auto-reconnect backoff eksponensial + reattach + replay",
+      "rationale": "Server sudah punya request_attach + ring replay sehingga reconnect klien mendapat catch-up gratis; backoff 500ms..8s jitter, cap 20 percobaan mencegah stampede",
+      "source_file": "session-ses_fc80_AFK_DIEM.md",
+      "source_location": null,
+      "source_url": null
+    },
+    {
+      "id": "session_ses_fc80_afk_diem_life_021",
+      "label": "LIFE-021: visibilitychange/online Memicu Reconnect Segera",
+      "_origin": "semantic",
+      "author": null,
+      "captured_at": null,
+      "community": 120,
+      "community_name": "Spec 012: v0.6.3 Terminal Liveness Hotfix",
+      "contributor": null,
+      "file_type": "concept",
+      "norm_label": "life-021: visibilitychange/online memicu reconnect segera",
+      "rationale": null,
+      "source_file": "session-ses_fc80_AFK_DIEM.md",
+      "source_location": null,
+      "source_url": null
+    },
+    {
+      "id": "session_ses_fc80_afk_diem_life_022",
+      "label": "LIFE-022: Overlay Tri-State Reconnecting/Exited/Offline",
+      "_origin": "semantic",
+      "author": null,
+      "captured_at": null,
+      "community": 120,
+      "community_name": "Spec 012: v0.6.3 Terminal Liveness Hotfix",
+      "contributor": null,
+      "file_type": "concept",
+      "norm_label": "life-022: overlay tri-state reconnecting/exited/offline",
+      "rationale": "EXIT (proses selesai) tidak boleh reconnect; SESSION_NOT_FOUND setelah reap menghentikan retry dengan pesan jelas",
+      "source_file": "session-ses_fc80_AFK_DIEM.md",
+      "source_location": null,
+      "source_url": null
+    },
+    {
+      "id": "session_ses_fc80_afk_diem_rc_01",
+      "label": "RC-01: Janitor Reap-on-Detach dengan Grace 60dtk",
+      "_origin": "semantic",
+      "author": null,
+      "captured_at": null,
+      "community": 120,
+      "community_name": "Spec 012: v0.6.3 Terminal Liveness Hotfix",
+      "contributor": null,
+      "file_type": "concept",
+      "norm_label": "rc-01: janitor reap-on-detach dengan grace 60dtk",
+      "rationale": "User AFK mematikan WS (Doze/network) \u2192 detach \u2192 bom 60 detik membunuh shell idle tanpa output",
+      "source_file": "session-ses_fc80_AFK_DIEM.md",
+      "source_location": null,
+      "source_url": null
+    },
+    {
+      "id": "session_ses_fc80_afk_diem_rc_02",
+      "label": "RC-02: Busy-Grace 30dtk Terlalu Kecil untuk Agen LLM",
+      "_origin": "semantic",
+      "author": null,
+      "captured_at": null,
+      "community": 120,
+      "community_name": "Spec 012: v0.6.3 Terminal Liveness Hotfix",
+      "contributor": null,
+      "file_type": "concept",
+      "norm_label": "rc-02: busy-grace 30dtk terlalu kecil untuk agen llm",
+      "rationale": "Codex 'berpikir' sunyi >30 dtk sehingga deadline berhenti di-extend dan PTY dibunuh walau proses hidup",
+      "source_file": "session-ses_fc80_AFK_DIEM.md",
+      "source_location": null,
+      "source_url": null
+    },
+    {
+      "id": "session_ses_fc80_afk_diem_rc_03",
+      "label": "RC-03: TerminalView Attach One-Shot Tanpa Auto-Reconnect",
+      "_origin": "semantic",
+      "author": null,
+      "captured_at": null,
+      "community": 120,
+      "community_name": "Spec 012: v0.6.3 Terminal Liveness Hotfix",
+      "contributor": null,
+      "file_type": "concept",
+      "norm_label": "rc-03: terminalview attach one-shot tanpa auto-reconnect",
+      "rationale": "onclose hanya menampilkan overlay offline padahal server sudah punya request_attach + ring buffer replay",
+      "source_file": "session-ses_fc80_AFK_DIEM.md",
+      "source_location": null,
+      "source_url": null
+    },
+    {
+      "id": "session_ses_fc80_afk_diem_rc_04",
+      "label": "RC-04: Heartbeat PONG via JS Dithrottle di Background Tab",
+      "_origin": "semantic",
+      "author": null,
+      "captured_at": null,
+      "community": 120,
+      "community_name": "Spec 012: v0.6.3 Terminal Liveness Hotfix",
+      "contributor": null,
+      "file_type": "concept",
+      "norm_label": "rc-04: heartbeat pong via js dithrottle di background tab",
+      "rationale": "Timer JS dibekukan di background Android/iOS; tak ada mekanisme resync saat tab visible kembali",
+      "source_file": "session-ses_fc80_AFK_DIEM.md",
+      "source_location": null,
+      "source_url": null
+    },
+    {
+      "id": "session_ses_fc80_afk_diem_sess_011",
+      "label": "SESS-011: Default session_idle_timeout 60\u2192900dtk",
+      "_origin": "semantic",
+      "author": null,
+      "captured_at": null,
+      "community": 120,
+      "community_name": "Spec 012: v0.6.3 Terminal Liveness Hotfix",
+      "contributor": null,
+      "file_type": "concept",
+      "norm_label": "sess-011: default session_idle_timeout 60\u2192900dtk",
+      "rationale": "Env/flag existing tetap agar operator bisa mengembalikan perilaku lama",
+      "source_file": "session-ses_fc80_AFK_DIEM.md",
+      "source_location": null,
+      "source_url": null
+    },
+    {
+      "id": "session_ses_fc80_afk_diem_sess_012",
+      "label": "SESS-012: Busy-Grace 30\u2192300dtk + Janitor Reap Logging",
+      "_origin": "semantic",
+      "author": null,
+      "captured_at": null,
+      "community": 120,
+      "community_name": "Spec 012: v0.6.3 Terminal Liveness Hotfix",
+      "contributor": null,
+      "file_type": "concept",
+      "norm_label": "sess-012: busy-grace 30\u2192300dtk + janitor reap logging",
+      "rationale": "Implementasi minimal: naikkan default + test; janitor mencatat alasan reap untuk diagnosability",
+      "source_file": "session-ses_fc80_AFK_DIEM.md",
+      "source_location": null,
+      "source_url": null
+    },
+    {
+      "id": "session_ses_fc80_afk_diem_spec_012",
+      "label": "Spec 012: v0.6.3 Terminal Liveness Hotfix",
+      "_origin": "semantic",
+      "author": null,
+      "captured_at": null,
+      "community": 120,
+      "community_name": "Spec 012: v0.6.3 Terminal Liveness Hotfix",
+      "contributor": null,
+      "file_type": "concept",
+      "norm_label": "spec 012: v0.6.3 terminal liveness hotfix",
+      "rationale": "Sempurna = benar di perangkat, bukan hanya di CI; fix berlanjut sampai keempat gejala laporan tidak reproduksible setelah install v0.6.3",
+      "source_file": "session-ses_fc80_AFK_DIEM.md",
+      "source_location": "planning notes",
+      "source_url": null
+    },
+    {
       "id": "concept_bracket_auto_close",
       "label": "Bracket Auto-Close",
       "_origin": "semantic",
@@ -30540,22 +31206,6 @@
       "rationale": null,
       "source_file": "session-ses_fc80_AFK_DIEM.md",
       "source_location": null,
-      "source_url": null
-    },
-    {
-      "id": "web_src_apps_browser_browser_test",
-      "label": "browser.test.tsx",
-      "_origin": "semantic",
-      "author": null,
-      "captured_at": null,
-      "community": 145,
-      "community_name": "BrowserView.tsx",
-      "contributor": null,
-      "file_type": "code",
-      "norm_label": "browser.test.tsx",
-      "rationale": null,
-      "source_file": "spec/specs/005b.plan-checklist.md",
-      "source_location": "\u00a73b Red Tests",
       "source_url": null
     },
     {
@@ -31141,6 +31791,22 @@
       "norm_label": "tdd execution loop (red-green-refactor)",
       "source_file": "spec/specs/001b.plan-checklist.md",
       "source_location": null,
+      "source_url": null
+    },
+    {
+      "id": "web_src_apps_browser_browser_test",
+      "label": "browser.test.tsx",
+      "_origin": "semantic",
+      "author": null,
+      "captured_at": null,
+      "community": 26,
+      "community_name": "DesktopCanvas.tsx",
+      "contributor": null,
+      "file_type": "code",
+      "norm_label": "browser.test.tsx",
+      "rationale": null,
+      "source_file": "spec/specs/005b.plan-checklist.md",
+      "source_location": "\u00a73b Red Tests",
       "source_url": null
     },
     {
@@ -32229,150 +32895,6 @@
       "source_url": null
     },
     {
-      "id": "session_ses_fc80_afk_diem_checklist_011b_ticking",
-      "label": "011b Checklist Ticking",
-      "_origin": "semantic",
-      "author": null,
-      "captured_at": null,
-      "community": 54,
-      "community_name": "011b.plan-checklist.md",
-      "contributor": null,
-      "file_type": "concept",
-      "norm_label": "011b checklist ticking",
-      "rationale": "Only items verified locally are ticked; CI-only scenario, user-side Termux smoke, and key-ceremony rows stay unchecked with honest annotations appended.",
-      "source_file": "session-ses_fc80_AFK_DIEM.md",
-      "source_location": null,
-      "source_url": null
-    },
-    {
-      "id": "session_ses_fc80_afk_diem_git_commit_feat_v062",
-      "label": "Commit cc62fbb feat(v0.6.2)",
-      "_origin": "semantic",
-      "author": null,
-      "captured_at": null,
-      "community": 54,
-      "community_name": "011b.plan-checklist.md",
-      "contributor": null,
-      "file_type": "concept",
-      "norm_label": "commit cc62fbb feat(v0.6.2)",
-      "rationale": "Repo history separates feat(vX.Y.Z) commits from chore(graph) sync commits; unrelated .kilo/kilo.json config drift and .kilo/plans/ session artifacts deliberately left unstaged.",
-      "source_file": "session-ses_fc80_AFK_DIEM.md",
-      "source_location": null,
-      "source_url": null
-    },
-    {
-      "id": "session_ses_fc80_afk_diem_git_commit_graph_sync",
-      "label": "Commit 20064bc chore(graph)",
-      "_origin": "semantic",
-      "author": null,
-      "captured_at": null,
-      "community": 54,
-      "community_name": "011b.plan-checklist.md",
-      "contributor": null,
-      "file_type": "concept",
-      "norm_label": "commit 20064bc chore(graph)",
-      "rationale": null,
-      "source_file": "session-ses_fc80_AFK_DIEM.md",
-      "source_location": null,
-      "source_url": null
-    },
-    {
-      "id": "session_ses_fc80_afk_diem_handoff_008_write",
-      "label": "Handoff 008 Authoring",
-      "_origin": "semantic",
-      "author": null,
-      "captured_at": null,
-      "community": 54,
-      "community_name": "011b.plan-checklist.md",
-      "contributor": null,
-      "file_type": "concept",
-      "norm_label": "handoff 008 authoring",
-      "rationale": "Repo convention requires a numbered handoff doc recording decision-log entries (cancel uses SIGKILL directly, wildcard matches multi-level subdomains at dot boundary, wrap mode disables gutter and highlight overlay, releases publish unsigned with warning until signing secret is set) plus pending user-side steps.",
-      "source_file": "session-ses_fc80_AFK_DIEM.md",
-      "source_location": null,
-      "source_url": null
-    },
-    {
-      "id": "session_ses_fc80_afk_diem_push_origin_main",
-      "label": "Push origin/main (1c5536c..20064bc)",
-      "_origin": "semantic",
-      "author": null,
-      "captured_at": null,
-      "community": 54,
-      "community_name": "011b.plan-checklist.md",
-      "contributor": null,
-      "file_type": "concept",
-      "norm_label": "push origin/main (1c5536c..20064bc)",
-      "rationale": null,
-      "source_file": "session-ses_fc80_AFK_DIEM.md",
-      "source_location": null,
-      "source_url": null
-    },
-    {
-      "id": "session_ses_fc80_afk_diem_spec_011_status_update",
-      "label": "Spec 011 Status Update to Implemented",
-      "_origin": "semantic",
-      "author": null,
-      "captured_at": null,
-      "community": 54,
-      "community_name": "011b.plan-checklist.md",
-      "contributor": null,
-      "file_type": "concept",
-      "norm_label": "spec 011 status update to implemented",
-      "rationale": "Status advanced from Planned to Implemented because all automated gates passed; manual E2E and key-ceremony signing explicitly deferred to 011b.",
-      "source_file": "session-ses_fc80_AFK_DIEM.md",
-      "source_location": null,
-      "source_url": null
-    },
-    {
-      "id": "session_ses_fc80_afk_diem_tab_layout_persist",
-      "label": "Terminal Tab Layout Persist/Restore (TAB-010/011)",
-      "_origin": "semantic",
-      "author": null,
-      "captured_at": null,
-      "community": 54,
-      "community_name": "011b.plan-checklist.md",
-      "contributor": null,
-      "file_type": "concept",
-      "norm_label": "terminal tab layout persist/restore (tab-010/011)",
-      "rationale": null,
-      "source_file": "session-ses_fc80_AFK_DIEM.md",
-      "source_location": null,
-      "source_url": null
-    },
-    {
-      "id": "session_ses_fc80_afk_diem_terminal_offline_issue",
-      "label": "User Report: Terminal Offline After AFK/Idle While Codex Session Running",
-      "_origin": "semantic",
-      "author": null,
-      "captured_at": null,
-      "community": 54,
-      "community_name": "011b.plan-checklist.md",
-      "contributor": null,
-      "file_type": "concept",
-      "norm_label": "user report: terminal offline after afk/idle while codex session running",
-      "rationale": null,
-      "source_file": "session-ses_fc80_AFK_DIEM.md",
-      "source_location": null,
-      "source_url": null
-    },
-    {
-      "id": "session_ses_fc80_afk_diem_session",
-      "label": "Session ses_fc80_AFK_DIEM Log",
-      "_origin": "semantic",
-      "author": null,
-      "captured_at": null,
-      "community": 54,
-      "community_name": "011b.plan-checklist.md",
-      "contributor": null,
-      "file_type": "document",
-      "norm_label": "session ses_fc80_afk_diem log",
-      "rationale": null,
-      "source_file": "session-ses_fc80_AFK_DIEM.md",
-      "source_location": null,
-      "source_url": null
-    },
-    {
       "id": "concept_prompt_rendering",
       "label": "Nerd Font + Unicode11 Prompt Rendering",
       "_origin": "semantic",
@@ -32523,7 +33045,7 @@
       "author": null,
       "captured_at": null,
       "community": 67,
-      "community_name": "traceability.md",
+      "community_name": "000a.plan-test.md",
       "contributor": null,
       "file_type": "concept",
       "norm_label": "cargo audit absent from ci (gap)",
@@ -32539,7 +33061,7 @@
       "author": null,
       "captured_at": null,
       "community": 67,
-      "community_name": "traceability.md",
+      "community_name": "000a.plan-test.md",
       "contributor": null,
       "file_type": "concept",
       "norm_label": "soc 2 tsc traceability",
@@ -32555,7 +33077,7 @@
       "author": null,
       "captured_at": null,
       "community": 67,
-      "community_name": "traceability.md",
+      "community_name": "000a.plan-test.md",
       "contributor": null,
       "file_type": "concept",
       "norm_label": "soc 2 trust services criteria mapping",
@@ -32571,7 +33093,7 @@
       "author": null,
       "captured_at": null,
       "community": 67,
-      "community_name": "traceability.md",
+      "community_name": "000a.plan-test.md",
       "contributor": null,
       "file_type": "concept",
       "norm_label": "no-lag performance budget (virtualized, debounce, lru, \u2264750 kib)",
@@ -32731,7 +33253,7 @@
       "author": null,
       "captured_at": null,
       "community": 74,
-      "community_name": "000a.plan-test.md",
+      "community_name": "003.plan-v0.3-terminal-resize.md",
       "contributor": null,
       "file_type": "document",
       "norm_label": "handoff 001 \u2014 progress & backlog (v0.2)",
@@ -32747,7 +33269,7 @@
       "author": null,
       "captured_at": null,
       "community": 74,
-      "community_name": "000a.plan-test.md",
+      "community_name": "003.plan-v0.3-terminal-resize.md",
       "contributor": null,
       "file_type": "document",
       "norm_label": "001b plan checklist",
@@ -33043,211 +33565,147 @@
       "source_url": null
     },
     {
-      "id": "src_config_rs",
-      "label": "src/config.rs",
+      "id": "session_ses_fc80_afk_diem_checklist_011b_ticking",
+      "label": "011b Checklist Ticking",
       "_origin": "semantic",
       "author": null,
       "captured_at": null,
       "community": 94,
-      "community_name": "Spec 012: v0.6.3 Terminal Liveness Hotfix",
-      "contributor": null,
-      "file_type": "code",
-      "norm_label": "src/config.rs",
-      "rationale": null,
-      "source_file": "session-ses_fc80_AFK_DIEM.md",
-      "source_location": "cited lines 61-74",
-      "source_url": null
-    },
-    {
-      "id": "src_session_rs",
-      "label": "src/session.rs",
-      "_origin": "semantic",
-      "author": null,
-      "captured_at": null,
-      "community": 94,
-      "community_name": "Spec 012: v0.6.3 Terminal Liveness Hotfix",
-      "contributor": null,
-      "file_type": "code",
-      "norm_label": "src/session.rs",
-      "rationale": null,
-      "source_file": "session-ses_fc80_AFK_DIEM.md",
-      "source_location": "cited lines 40-407",
-      "source_url": null
-    },
-    {
-      "id": "web_src_apps_terminal_terminalview_tsx",
-      "label": "web/src/apps/terminal/TerminalView.tsx",
-      "_origin": "semantic",
-      "author": null,
-      "captured_at": null,
-      "community": 94,
-      "community_name": "Spec 012: v0.6.3 Terminal Liveness Hotfix",
-      "contributor": null,
-      "file_type": "code",
-      "norm_label": "web/src/apps/terminal/terminalview.tsx",
-      "rationale": null,
-      "source_file": "session-ses_fc80_AFK_DIEM.md",
-      "source_location": "cited lines 60-139",
-      "source_url": null
-    },
-    {
-      "id": "session_ses_fc80_afk_diem_life_020",
-      "label": "LIFE-020: Auto-Reconnect Backoff Eksponensial + Reattach + Replay",
-      "_origin": "semantic",
-      "author": null,
-      "captured_at": null,
-      "community": 94,
-      "community_name": "Spec 012: v0.6.3 Terminal Liveness Hotfix",
+      "community_name": "011b.plan-checklist.md",
       "contributor": null,
       "file_type": "concept",
-      "norm_label": "life-020: auto-reconnect backoff eksponensial + reattach + replay",
-      "rationale": "Server sudah punya request_attach + ring replay sehingga reconnect klien mendapat catch-up gratis; backoff 500ms..8s jitter, cap 20 percobaan mencegah stampede",
+      "norm_label": "011b checklist ticking",
+      "rationale": "Only items verified locally are ticked; CI-only scenario, user-side Termux smoke, and key-ceremony rows stay unchecked with honest annotations appended.",
       "source_file": "session-ses_fc80_AFK_DIEM.md",
       "source_location": null,
       "source_url": null
     },
     {
-      "id": "session_ses_fc80_afk_diem_life_021",
-      "label": "LIFE-021: visibilitychange/online Memicu Reconnect Segera",
+      "id": "session_ses_fc80_afk_diem_git_commit_feat_v062",
+      "label": "Commit cc62fbb feat(v0.6.2)",
       "_origin": "semantic",
       "author": null,
       "captured_at": null,
       "community": 94,
-      "community_name": "Spec 012: v0.6.3 Terminal Liveness Hotfix",
+      "community_name": "011b.plan-checklist.md",
       "contributor": null,
       "file_type": "concept",
-      "norm_label": "life-021: visibilitychange/online memicu reconnect segera",
+      "norm_label": "commit cc62fbb feat(v0.6.2)",
+      "rationale": "Repo history separates feat(vX.Y.Z) commits from chore(graph) sync commits; unrelated .kilo/kilo.json config drift and .kilo/plans/ session artifacts deliberately left unstaged.",
+      "source_file": "session-ses_fc80_AFK_DIEM.md",
+      "source_location": null,
+      "source_url": null
+    },
+    {
+      "id": "session_ses_fc80_afk_diem_git_commit_graph_sync",
+      "label": "Commit 20064bc chore(graph)",
+      "_origin": "semantic",
+      "author": null,
+      "captured_at": null,
+      "community": 94,
+      "community_name": "011b.plan-checklist.md",
+      "contributor": null,
+      "file_type": "concept",
+      "norm_label": "commit 20064bc chore(graph)",
       "rationale": null,
       "source_file": "session-ses_fc80_AFK_DIEM.md",
       "source_location": null,
       "source_url": null
     },
     {
-      "id": "session_ses_fc80_afk_diem_life_022",
-      "label": "LIFE-022: Overlay Tri-State Reconnecting/Exited/Offline",
+      "id": "session_ses_fc80_afk_diem_handoff_008_write",
+      "label": "Handoff 008 Authoring",
       "_origin": "semantic",
       "author": null,
       "captured_at": null,
       "community": 94,
-      "community_name": "Spec 012: v0.6.3 Terminal Liveness Hotfix",
+      "community_name": "011b.plan-checklist.md",
       "contributor": null,
       "file_type": "concept",
-      "norm_label": "life-022: overlay tri-state reconnecting/exited/offline",
-      "rationale": "EXIT (proses selesai) tidak boleh reconnect; SESSION_NOT_FOUND setelah reap menghentikan retry dengan pesan jelas",
+      "norm_label": "handoff 008 authoring",
+      "rationale": "Repo convention requires a numbered handoff doc recording decision-log entries (cancel uses SIGKILL directly, wildcard matches multi-level subdomains at dot boundary, wrap mode disables gutter and highlight overlay, releases publish unsigned with warning until signing secret is set) plus pending user-side steps.",
       "source_file": "session-ses_fc80_AFK_DIEM.md",
       "source_location": null,
       "source_url": null
     },
     {
-      "id": "session_ses_fc80_afk_diem_rc_01",
-      "label": "RC-01: Janitor Reap-on-Detach dengan Grace 60dtk",
+      "id": "session_ses_fc80_afk_diem_push_origin_main",
+      "label": "Push origin/main (1c5536c..20064bc)",
       "_origin": "semantic",
       "author": null,
       "captured_at": null,
       "community": 94,
-      "community_name": "Spec 012: v0.6.3 Terminal Liveness Hotfix",
+      "community_name": "011b.plan-checklist.md",
       "contributor": null,
       "file_type": "concept",
-      "norm_label": "rc-01: janitor reap-on-detach dengan grace 60dtk",
-      "rationale": "User AFK mematikan WS (Doze/network) \u2192 detach \u2192 bom 60 detik membunuh shell idle tanpa output",
+      "norm_label": "push origin/main (1c5536c..20064bc)",
+      "rationale": null,
       "source_file": "session-ses_fc80_AFK_DIEM.md",
       "source_location": null,
       "source_url": null
     },
     {
-      "id": "session_ses_fc80_afk_diem_rc_02",
-      "label": "RC-02: Busy-Grace 30dtk Terlalu Kecil untuk Agen LLM",
+      "id": "session_ses_fc80_afk_diem_spec_011_status_update",
+      "label": "Spec 011 Status Update to Implemented",
       "_origin": "semantic",
       "author": null,
       "captured_at": null,
       "community": 94,
-      "community_name": "Spec 012: v0.6.3 Terminal Liveness Hotfix",
+      "community_name": "011b.plan-checklist.md",
       "contributor": null,
       "file_type": "concept",
-      "norm_label": "rc-02: busy-grace 30dtk terlalu kecil untuk agen llm",
-      "rationale": "Codex 'berpikir' sunyi >30 dtk sehingga deadline berhenti di-extend dan PTY dibunuh walau proses hidup",
+      "norm_label": "spec 011 status update to implemented",
+      "rationale": "Status advanced from Planned to Implemented because all automated gates passed; manual E2E and key-ceremony signing explicitly deferred to 011b.",
       "source_file": "session-ses_fc80_AFK_DIEM.md",
       "source_location": null,
       "source_url": null
     },
     {
-      "id": "session_ses_fc80_afk_diem_rc_03",
-      "label": "RC-03: TerminalView Attach One-Shot Tanpa Auto-Reconnect",
+      "id": "session_ses_fc80_afk_diem_tab_layout_persist",
+      "label": "Terminal Tab Layout Persist/Restore (TAB-010/011)",
       "_origin": "semantic",
       "author": null,
       "captured_at": null,
       "community": 94,
-      "community_name": "Spec 012: v0.6.3 Terminal Liveness Hotfix",
+      "community_name": "011b.plan-checklist.md",
       "contributor": null,
       "file_type": "concept",
-      "norm_label": "rc-03: terminalview attach one-shot tanpa auto-reconnect",
-      "rationale": "onclose hanya menampilkan overlay offline padahal server sudah punya request_attach + ring buffer replay",
+      "norm_label": "terminal tab layout persist/restore (tab-010/011)",
+      "rationale": null,
       "source_file": "session-ses_fc80_AFK_DIEM.md",
       "source_location": null,
       "source_url": null
     },
     {
-      "id": "session_ses_fc80_afk_diem_rc_04",
-      "label": "RC-04: Heartbeat PONG via JS Dithrottle di Background Tab",
+      "id": "session_ses_fc80_afk_diem_terminal_offline_issue",
+      "label": "User Report: Terminal Offline After AFK/Idle While Codex Session Running",
       "_origin": "semantic",
       "author": null,
       "captured_at": null,
       "community": 94,
-      "community_name": "Spec 012: v0.6.3 Terminal Liveness Hotfix",
+      "community_name": "011b.plan-checklist.md",
       "contributor": null,
       "file_type": "concept",
-      "norm_label": "rc-04: heartbeat pong via js dithrottle di background tab",
-      "rationale": "Timer JS dibekukan di background Android/iOS; tak ada mekanisme resync saat tab visible kembali",
+      "norm_label": "user report: terminal offline after afk/idle while codex session running",
+      "rationale": null,
       "source_file": "session-ses_fc80_AFK_DIEM.md",
       "source_location": null,
       "source_url": null
     },
     {
-      "id": "session_ses_fc80_afk_diem_sess_011",
-      "label": "SESS-011: Default session_idle_timeout 60\u2192900dtk",
+      "id": "session_ses_fc80_afk_diem_session",
+      "label": "Session ses_fc80_AFK_DIEM Log",
       "_origin": "semantic",
       "author": null,
       "captured_at": null,
       "community": 94,
-      "community_name": "Spec 012: v0.6.3 Terminal Liveness Hotfix",
+      "community_name": "011b.plan-checklist.md",
       "contributor": null,
-      "file_type": "concept",
-      "norm_label": "sess-011: default session_idle_timeout 60\u2192900dtk",
-      "rationale": "Env/flag existing tetap agar operator bisa mengembalikan perilaku lama",
+      "file_type": "document",
+      "norm_label": "session ses_fc80_afk_diem log",
+      "rationale": null,
       "source_file": "session-ses_fc80_AFK_DIEM.md",
       "source_location": null,
-      "source_url": null
-    },
-    {
-      "id": "session_ses_fc80_afk_diem_sess_012",
-      "label": "SESS-012: Busy-Grace 30\u2192300dtk + Janitor Reap Logging",
-      "_origin": "semantic",
-      "author": null,
-      "captured_at": null,
-      "community": 94,
-      "community_name": "Spec 012: v0.6.3 Terminal Liveness Hotfix",
-      "contributor": null,
-      "file_type": "concept",
-      "norm_label": "sess-012: busy-grace 30\u2192300dtk + janitor reap logging",
-      "rationale": "Implementasi minimal: naikkan default + test; janitor mencatat alasan reap untuk diagnosability",
-      "source_file": "session-ses_fc80_AFK_DIEM.md",
-      "source_location": null,
-      "source_url": null
-    },
-    {
-      "id": "session_ses_fc80_afk_diem_spec_012",
-      "label": "Spec 012: v0.6.3 Terminal Liveness Hotfix",
-      "_origin": "semantic",
-      "author": null,
-      "captured_at": null,
-      "community": 94,
-      "community_name": "Spec 012: v0.6.3 Terminal Liveness Hotfix",
-      "contributor": null,
-      "file_type": "concept",
-      "norm_label": "spec 012: v0.6.3 terminal liveness hotfix",
-      "rationale": "Sempurna = benar di perangkat, bukan hanya di CI; fix berlanjut sampai keempat gejala laporan tidak reproduksible setelah install v0.6.3",
-      "source_file": "session-ses_fc80_AFK_DIEM.md",
-      "source_location": "planning notes",
       "source_url": null
     },
     {
@@ -34225,7 +34683,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "src/config.rs",
-      "source_location": "L301",
+      "source_location": "L319",
       "weight": 1.0
     },
     {
@@ -34237,7 +34695,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "src/config.rs",
-      "source_location": "L264",
+      "source_location": "L282",
       "weight": 1.0
     },
     {
@@ -34249,7 +34707,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "src/config.rs",
-      "source_location": "L272",
+      "source_location": "L290",
       "weight": 1.0
     },
     {
@@ -34261,7 +34719,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "src/config.rs",
-      "source_location": "L181",
+      "source_location": "L199",
       "weight": 1.0
     },
     {
@@ -34273,7 +34731,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "src/config.rs",
-      "source_location": "L132",
+      "source_location": "L150",
       "weight": 1.0
     },
     {
@@ -34285,7 +34743,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "src/config.rs",
-      "source_location": "L136",
+      "source_location": "L154",
       "weight": 1.0
     },
     {
@@ -34297,7 +34755,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "src/config.rs",
-      "source_location": "L203",
+      "source_location": "L221",
       "weight": 1.0
     },
     {
@@ -35557,7 +36015,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "src/main.rs",
-      "source_location": "L140",
+      "source_location": "L156",
       "weight": 1.0
     },
     {
@@ -35569,7 +36027,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "src/main.rs",
-      "source_location": "L222",
+      "source_location": "L238",
       "weight": 1.0
     },
     {
@@ -36746,6 +37204,78 @@
       "context": "call",
       "source_file": "src/share.rs",
       "source_location": "L243",
+      "weight": 1.0
+    },
+    {
+      "source": "src_update_fetch_latest_tag",
+      "target": "src_update_extract_tag",
+      "relation": "calls",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "call",
+      "source_file": "src/update.rs",
+      "source_location": "L63",
+      "weight": 1.0
+    },
+    {
+      "source": "src_update_handle_update",
+      "target": "src_update_effective_update_url",
+      "relation": "calls",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "call",
+      "source_file": "src/update.rs",
+      "source_location": "L104",
+      "weight": 1.0
+    },
+    {
+      "source": "src_update_handle_update",
+      "target": "src_update_is_update_url_allowed",
+      "relation": "calls",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "call",
+      "source_file": "src/update.rs",
+      "source_location": "L105",
+      "weight": 1.0
+    },
+    {
+      "source": "src_update_handle_update",
+      "target": "src_update_fetch_latest_tag",
+      "relation": "calls",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "call",
+      "source_file": "src/update.rs",
+      "source_location": "L112",
+      "weight": 1.0
+    },
+    {
+      "source": "src_update_handle_update",
+      "target": "src_update_current_version",
+      "relation": "calls",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "call",
+      "source_file": "src/update.rs",
+      "source_location": "L113",
+      "weight": 1.0
+    },
+    {
+      "source": "src_update_handle_update",
+      "target": "src_update_compare_versions",
+      "relation": "calls",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "call",
+      "source_file": "src/update.rs",
+      "source_location": "L114",
       "weight": 1.0
     },
     {
@@ -41225,6 +41755,18 @@
       "weight": 1.0
     },
     {
+      "source": "src_config_commands",
+      "target": "src_config_rs_option",
+      "relation": "references",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "field",
+      "source_file": "src/config.rs",
+      "source_location": "L133",
+      "weight": 1.0
+    },
+    {
       "source": "src_config_config",
       "target": "src_config_rs_ipaddr",
       "relation": "references",
@@ -41245,7 +41787,7 @@
       "confidence_score": 1.0,
       "context": "field",
       "source_file": "src/config.rs",
-      "source_location": "L111",
+      "source_location": "L120",
       "weight": 1.0
     },
     {
@@ -41257,7 +41799,7 @@
       "confidence_score": 1.0,
       "context": "field",
       "source_file": "src/config.rs",
-      "source_location": "L122",
+      "source_location": "L140",
       "weight": 1.0
     },
     {
@@ -41269,7 +41811,7 @@
       "confidence_score": 1.0,
       "context": "field",
       "source_file": "src/config.rs",
-      "source_location": "L123",
+      "source_location": "L141",
       "weight": 1.0
     },
     {
@@ -41281,7 +41823,7 @@
       "confidence_score": 1.0,
       "context": "field",
       "source_file": "src/config.rs",
-      "source_location": "L124",
+      "source_location": "L142",
       "weight": 1.0
     },
     {
@@ -43081,7 +43623,19 @@
       "confidence_score": 1.0,
       "context": "generic_arg",
       "source_file": "src/config.rs",
-      "source_location": "L224",
+      "source_location": "L242",
+      "weight": 1.0
+    },
+    {
+      "source": "src_config_commands",
+      "target": "src_config_rs_string",
+      "relation": "references",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "generic_arg",
+      "source_file": "src/config.rs",
+      "source_location": "L133",
       "weight": 1.0
     },
     {
@@ -43094,6 +43648,18 @@
       "context": "generic_arg",
       "source_file": "src/config.rs",
       "source_location": "L111",
+      "weight": 1.0
+    },
+    {
+      "source": "src_config_config",
+      "target": "src_config_commands",
+      "relation": "references",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "generic_arg",
+      "source_file": "src/config.rs",
+      "source_location": "L120",
       "weight": 1.0
     },
     {
@@ -43117,7 +43683,7 @@
       "confidence_score": 1.0,
       "context": "generic_arg",
       "source_file": "src/config.rs",
-      "source_location": "L287",
+      "source_location": "L305",
       "weight": 1.0
     },
     {
@@ -43129,7 +43695,7 @@
       "confidence_score": 1.0,
       "context": "generic_arg",
       "source_file": "src/config.rs",
-      "source_location": "L287",
+      "source_location": "L305",
       "weight": 1.0
     },
     {
@@ -43141,7 +43707,7 @@
       "confidence_score": 1.0,
       "context": "generic_arg",
       "source_file": "src/config.rs",
-      "source_location": "L257",
+      "source_location": "L275",
       "weight": 1.0
     },
     {
@@ -43153,7 +43719,7 @@
       "confidence_score": 1.0,
       "context": "generic_arg",
       "source_file": "src/config.rs",
-      "source_location": "L257",
+      "source_location": "L275",
       "weight": 1.0
     },
     {
@@ -43165,7 +43731,7 @@
       "confidence_score": 1.0,
       "context": "generic_arg",
       "source_file": "src/config.rs",
-      "source_location": "L318",
+      "source_location": "L336",
       "weight": 1.0
     },
     {
@@ -43177,7 +43743,7 @@
       "confidence_score": 1.0,
       "context": "generic_arg",
       "source_file": "src/config.rs",
-      "source_location": "L318",
+      "source_location": "L336",
       "weight": 1.0
     },
     {
@@ -43189,7 +43755,7 @@
       "confidence_score": 1.0,
       "context": "generic_arg",
       "source_file": "src/config.rs",
-      "source_location": "L318",
+      "source_location": "L336",
       "weight": 1.0
     },
     {
@@ -45193,7 +45759,7 @@
       "confidence_score": 1.0,
       "context": "generic_arg",
       "source_file": "src/main.rs",
-      "source_location": "L61",
+      "source_location": "L62",
       "weight": 1.0
     },
     {
@@ -45205,7 +45771,7 @@
       "confidence_score": 1.0,
       "context": "generic_arg",
       "source_file": "src/main.rs",
-      "source_location": "L61",
+      "source_location": "L62",
       "weight": 1.0
     },
     {
@@ -45217,7 +45783,7 @@
       "confidence_score": 1.0,
       "context": "generic_arg",
       "source_file": "src/main.rs",
-      "source_location": "L61",
+      "source_location": "L62",
       "weight": 1.0
     },
     {
@@ -45229,7 +45795,7 @@
       "confidence_score": 1.0,
       "context": "generic_arg",
       "source_file": "src/main.rs",
-      "source_location": "L96",
+      "source_location": "L97",
       "weight": 1.0
     },
     {
@@ -45241,7 +45807,7 @@
       "confidence_score": 1.0,
       "context": "generic_arg",
       "source_file": "src/main.rs",
-      "source_location": "L96",
+      "source_location": "L97",
       "weight": 1.0
     },
     {
@@ -45253,7 +45819,7 @@
       "confidence_score": 1.0,
       "context": "generic_arg",
       "source_file": "src/main.rs",
-      "source_location": "L32",
+      "source_location": "L33",
       "weight": 1.0
     },
     {
@@ -46574,6 +47140,42 @@
       "context": "generic_arg",
       "source_file": "src/share.rs",
       "source_location": "L16",
+      "weight": 1.0
+    },
+    {
+      "source": "src_update_extract_tag",
+      "target": "src_update_rs_string",
+      "relation": "references",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "generic_arg",
+      "source_file": "src/update.rs",
+      "source_location": "L88",
+      "weight": 1.0
+    },
+    {
+      "source": "src_update_fetch_latest_tag",
+      "target": "src_update_rs_string",
+      "relation": "references",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "generic_arg",
+      "source_file": "src/update.rs",
+      "source_location": "L52",
+      "weight": 1.0
+    },
+    {
+      "source": "src_update_handle_update",
+      "target": "src_update_rs_string",
+      "relation": "references",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "generic_arg",
+      "source_file": "src/update.rs",
+      "source_location": "L103",
       "weight": 1.0
     },
     {
@@ -50451,7 +51053,7 @@
       "confidence_score": 1.0,
       "context": "import",
       "source_file": "src/main.rs",
-      "source_location": "L25",
+      "source_location": "L26",
       "weight": 1.0
     },
     {
@@ -50463,7 +51065,7 @@
       "confidence_score": 1.0,
       "context": "import",
       "source_file": "src/main.rs",
-      "source_location": "L26",
+      "source_location": "L27",
       "weight": 1.0
     },
     {
@@ -50475,7 +51077,7 @@
       "confidence_score": 1.0,
       "context": "import",
       "source_file": "src/main.rs",
-      "source_location": "L27",
+      "source_location": "L28",
       "weight": 1.0
     },
     {
@@ -50487,7 +51089,7 @@
       "confidence_score": 1.0,
       "context": "import",
       "source_file": "src/main.rs",
-      "source_location": "L30",
+      "source_location": "L31",
       "weight": 1.0
     },
     {
@@ -50980,6 +51582,30 @@
       "context": "import",
       "source_file": "tests/term_tests.rs",
       "source_location": "L1",
+      "weight": 1.0
+    },
+    {
+      "source": "tests_update_cmd_tests",
+      "target": "src_config",
+      "relation": "imports_from",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "import",
+      "source_file": "tests/update_cmd_tests.rs",
+      "source_location": "L2",
+      "weight": 1.0
+    },
+    {
+      "source": "tests_update_cmd_tests",
+      "target": "update",
+      "relation": "imports_from",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "import",
+      "source_file": "tests/update_cmd_tests.rs",
+      "source_location": "L3",
       "weight": 1.0
     },
     {
@@ -52275,7 +52901,7 @@
       "confidence_score": 1.0,
       "context": "parameter_type",
       "source_file": "src/config.rs",
-      "source_location": "L224",
+      "source_location": "L242",
       "weight": 1.0
     },
     {
@@ -52287,7 +52913,7 @@
       "confidence_score": 1.0,
       "context": "parameter_type",
       "source_file": "src/config.rs",
-      "source_location": "L166",
+      "source_location": "L184",
       "weight": 1.0
     },
     {
@@ -52299,7 +52925,7 @@
       "confidence_score": 1.0,
       "context": "parameter_type",
       "source_file": "src/config.rs",
-      "source_location": "L174",
+      "source_location": "L192",
       "weight": 1.0
     },
     {
@@ -52311,7 +52937,7 @@
       "confidence_score": 1.0,
       "context": "parameter_type",
       "source_file": "src/config.rs",
-      "source_location": "L128",
+      "source_location": "L146",
       "weight": 1.0
     },
     {
@@ -52323,7 +52949,7 @@
       "confidence_score": 1.0,
       "context": "parameter_type",
       "source_file": "src/config.rs",
-      "source_location": "L143",
+      "source_location": "L161",
       "weight": 1.0
     },
     {
@@ -52335,7 +52961,7 @@
       "confidence_score": 1.0,
       "context": "parameter_type",
       "source_file": "src/config.rs",
-      "source_location": "L154",
+      "source_location": "L172",
       "weight": 1.0
     },
     {
@@ -53895,7 +54521,7 @@
       "confidence_score": 1.0,
       "context": "parameter_type",
       "source_file": "src/main.rs",
-      "source_location": "L61",
+      "source_location": "L62",
       "weight": 1.0
     },
     {
@@ -54196,6 +54822,30 @@
       "context": "parameter_type",
       "source_file": "src/share.rs",
       "source_location": "L82",
+      "weight": 1.0
+    },
+    {
+      "source": "src_update_effective_update_url",
+      "target": "src_update_rs_option",
+      "relation": "references",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "parameter_type",
+      "source_file": "src/update.rs",
+      "source_location": "L27",
+      "weight": 1.0
+    },
+    {
+      "source": "src_update_handle_update",
+      "target": "src_update_rs_option",
+      "relation": "references",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "parameter_type",
+      "source_file": "src/update.rs",
+      "source_location": "L103",
       "weight": 1.0
     },
     {
@@ -55395,7 +56045,7 @@
       "confidence_score": 1.0,
       "context": "return_type",
       "source_file": "src/config.rs",
-      "source_location": "L224",
+      "source_location": "L242",
       "weight": 1.0
     },
     {
@@ -55407,7 +56057,7 @@
       "confidence_score": 1.0,
       "context": "return_type",
       "source_file": "src/config.rs",
-      "source_location": "L385",
+      "source_location": "L403",
       "weight": 1.0
     },
     {
@@ -55419,7 +56069,7 @@
       "confidence_score": 1.0,
       "context": "return_type",
       "source_file": "src/config.rs",
-      "source_location": "L287",
+      "source_location": "L305",
       "weight": 1.0
     },
     {
@@ -55431,7 +56081,7 @@
       "confidence_score": 1.0,
       "context": "return_type",
       "source_file": "src/config.rs",
-      "source_location": "L257",
+      "source_location": "L275",
       "weight": 1.0
     },
     {
@@ -55443,7 +56093,7 @@
       "confidence_score": 1.0,
       "context": "return_type",
       "source_file": "src/config.rs",
-      "source_location": "L373",
+      "source_location": "L391",
       "weight": 1.0
     },
     {
@@ -55455,7 +56105,7 @@
       "confidence_score": 1.0,
       "context": "return_type",
       "source_file": "src/config.rs",
-      "source_location": "L318",
+      "source_location": "L336",
       "weight": 1.0
     },
     {
@@ -56511,7 +57161,7 @@
       "confidence_score": 1.0,
       "context": "return_type",
       "source_file": "src/main.rs",
-      "source_location": "L61",
+      "source_location": "L62",
       "weight": 1.0
     },
     {
@@ -56523,7 +57173,7 @@
       "confidence_score": 1.0,
       "context": "return_type",
       "source_file": "src/main.rs",
-      "source_location": "L96",
+      "source_location": "L97",
       "weight": 1.0
     },
     {
@@ -56535,7 +57185,7 @@
       "confidence_score": 1.0,
       "context": "return_type",
       "source_file": "src/main.rs",
-      "source_location": "L32",
+      "source_location": "L33",
       "weight": 1.0
     },
     {
@@ -57328,6 +57978,78 @@
       "context": "return_type",
       "source_file": "src/share.rs",
       "source_location": "L16",
+      "weight": 1.0
+    },
+    {
+      "source": "src_update_compare_versions",
+      "target": "ordering",
+      "relation": "references",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "return_type",
+      "source_file": "src/update.rs",
+      "source_location": "L43",
+      "weight": 1.0
+    },
+    {
+      "source": "src_update_current_version",
+      "target": "src_update_rs_string",
+      "relation": "references",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "return_type",
+      "source_file": "src/update.rs",
+      "source_location": "L39",
+      "weight": 1.0
+    },
+    {
+      "source": "src_update_effective_update_url",
+      "target": "src_update_rs_string",
+      "relation": "references",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "return_type",
+      "source_file": "src/update.rs",
+      "source_location": "L27",
+      "weight": 1.0
+    },
+    {
+      "source": "src_update_extract_tag",
+      "target": "src_update_rs_option",
+      "relation": "references",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "return_type",
+      "source_file": "src/update.rs",
+      "source_location": "L88",
+      "weight": 1.0
+    },
+    {
+      "source": "src_update_fetch_latest_tag",
+      "target": "src_update_rs_result",
+      "relation": "references",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "return_type",
+      "source_file": "src/update.rs",
+      "source_location": "L52",
+      "weight": 1.0
+    },
+    {
+      "source": "src_update_handle_update",
+      "target": "src_update_rs_result",
+      "relation": "references",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "return_type",
+      "source_file": "src/update.rs",
+      "source_location": "L103",
       "weight": 1.0
     },
     {
@@ -62678,13 +63400,13 @@
     },
     {
       "source": "spec_handoff_smoke_v0_6_3_device_checklist_device_smoke_checklist_v0_6_2_v0_6_3_specs_010_013",
-      "target": "spec_handoff_smoke_v0_6_3_device_checklist_peta_perbaikan_cepat",
+      "target": "spec_handoff_smoke_v0_6_3_device_checklist_s13_update_command_mux_web_update_spec_015",
       "relation": "contains",
       "_origin": "ast",
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "spec/handoff/smoke-v0.6.3-device-checklist.md",
-      "source_location": "L148",
+      "source_location": "L146",
       "weight": 1.0
     },
     {
@@ -62696,6 +63418,17 @@
       "confidence_score": 1.0,
       "source_file": "spec/handoff/smoke-v0.6.3-device-checklist.md",
       "source_location": "L15",
+      "weight": 1.0
+    },
+    {
+      "source": "spec_handoff_smoke_v0_6_3_device_checklist_device_smoke_checklist_v0_6_2_v0_6_3_specs_010_013",
+      "target": "spec_handoff_smoke_v0_6_3_device_checklist_peta_perbaikan_cepat",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "spec/handoff/smoke-v0.6.3-device-checklist.md",
+      "source_location": "L159",
       "weight": 1.0
     },
     {
@@ -69904,6 +70637,171 @@
       "weight": 1.0
     },
     {
+      "source": "spec_specs_015_plan_v0_6_5_update_command",
+      "target": "spec_specs_015_plan_v0_6_5_update_command_015_v0_6_5_update_command_mux_web_update_opsi_a",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "spec/specs/015.plan-v0.6.5-update-command.md",
+      "source_location": "L1",
+      "weight": 1.0
+    },
+    {
+      "source": "spec_specs_015_plan_v0_6_5_update_command_015_v0_6_5_update_command_mux_web_update_opsi_a",
+      "target": "spec_specs_015_plan_v0_6_5_update_command_1_latar_belakang_fakta_kode",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "spec/specs/015.plan-v0.6.5-update-command.md",
+      "source_location": "L13",
+      "weight": 1.0
+    },
+    {
+      "source": "spec_specs_015_plan_v0_6_5_update_command_015_v0_6_5_update_command_mux_web_update_opsi_a",
+      "target": "spec_specs_015_plan_v0_6_5_update_command_2_threat_model_lanjutan_10_spec_011_2_spec_014",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "spec/specs/015.plan-v0.6.5-update-command.md",
+      "source_location": "L24",
+      "weight": 1.0
+    },
+    {
+      "source": "spec_specs_015_plan_v0_6_5_update_command_015_v0_6_5_update_command_mux_web_update_opsi_a",
+      "target": "spec_specs_015_plan_v0_6_5_update_command_3_milestone_upd_upd_001_004",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "spec/specs/015.plan-v0.6.5-update-command.md",
+      "source_location": "L33",
+      "weight": 1.0
+    },
+    {
+      "source": "spec_specs_015_plan_v0_6_5_update_command_015_v0_6_5_update_command_mux_web_update_opsi_a",
+      "target": "spec_specs_015_plan_v0_6_5_update_command_4_konfigurasi_baru",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "spec/specs/015.plan-v0.6.5-update-command.md",
+      "source_location": "L46",
+      "weight": 1.0
+    },
+    {
+      "source": "spec_specs_015_plan_v0_6_5_update_command_015_v0_6_5_update_command_mux_web_update_opsi_a",
+      "target": "spec_specs_015_plan_v0_6_5_update_command_5_keputusan_desain",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "spec/specs/015.plan-v0.6.5-update-command.md",
+      "source_location": "L54",
+      "weight": 1.0
+    },
+    {
+      "source": "spec_specs_015_plan_v0_6_5_update_command_015_v0_6_5_update_command_mux_web_update_opsi_a",
+      "target": "spec_specs_015_plan_v0_6_5_update_command_6_bukan_scope",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "spec/specs/015.plan-v0.6.5-update-command.md",
+      "source_location": "L63",
+      "weight": 1.0
+    },
+    {
+      "source": "spec_specs_015_plan_v0_6_5_update_command_015_v0_6_5_update_command_mux_web_update_opsi_a",
+      "target": "spec_specs_015_plan_v0_6_5_update_command_7_urutan_pengerjaan_tdd",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "spec/specs/015.plan-v0.6.5-update-command.md",
+      "source_location": "L68",
+      "weight": 1.0
+    },
+    {
+      "source": "spec_specs_015_plan_v0_6_5_update_command_015_v0_6_5_update_command_mux_web_update_opsi_a",
+      "target": "spec_specs_015_plan_v0_6_5_update_command_8_definition_of_done",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "spec/specs/015.plan-v0.6.5-update-command.md",
+      "source_location": "L79",
+      "weight": 1.0
+    },
+    {
+      "source": "spec_specs_015b_plan_checklist",
+      "target": "spec_specs_015b_plan_checklist_companion_checklist_v0_6_5_update_command_mux_web_update_opsi_a",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "spec/specs/015b.plan-checklist.md",
+      "source_location": "L1",
+      "weight": 1.0
+    },
+    {
+      "source": "spec_specs_015b_plan_checklist_1_upd_milestone",
+      "target": "spec_specs_015b_plan_checklist_impl",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "spec/specs/015b.plan-checklist.md",
+      "source_location": "L12",
+      "weight": 1.0
+    },
+    {
+      "source": "spec_specs_015b_plan_checklist_1_upd_milestone",
+      "target": "spec_specs_015b_plan_checklist_green",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "spec/specs/015b.plan-checklist.md",
+      "source_location": "L17",
+      "weight": 1.0
+    },
+    {
+      "source": "spec_specs_015b_plan_checklist_1_upd_milestone",
+      "target": "spec_specs_015b_plan_checklist_red",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "spec/specs/015b.plan-checklist.md",
+      "source_location": "L9",
+      "weight": 1.0
+    },
+    {
+      "source": "spec_specs_015b_plan_checklist_companion_checklist_v0_6_5_update_command_mux_web_update_opsi_a",
+      "target": "spec_specs_015b_plan_checklist_2_docs",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "spec/specs/015b.plan-checklist.md",
+      "source_location": "L22",
+      "weight": 1.0
+    },
+    {
+      "source": "spec_specs_015b_plan_checklist_companion_checklist_v0_6_5_update_command_mux_web_update_opsi_a",
+      "target": "spec_specs_015b_plan_checklist_1_upd_milestone",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "spec/specs/015b.plan-checklist.md",
+      "source_location": "L7",
+      "weight": 1.0
+    },
+    {
       "source": "src_agent_cfg",
       "target": "src_agent_cfg_config_rel_path",
       "relation": "contains",
@@ -70587,13 +71485,24 @@
     },
     {
       "source": "src_config",
+      "target": "src_config_commands",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "src/config.rs",
+      "source_location": "L125",
+      "weight": 1.0
+    },
+    {
+      "source": "src_config",
       "target": "src_config_trustedproxy",
       "relation": "contains",
       "_origin": "ast",
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/config.rs",
-      "source_location": "L121",
+      "source_location": "L139",
       "weight": 1.0
     },
     {
@@ -70604,7 +71513,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/config.rs",
-      "source_location": "L143",
+      "source_location": "L161",
       "weight": 1.0
     },
     {
@@ -70615,7 +71524,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/config.rs",
-      "source_location": "L154",
+      "source_location": "L172",
       "weight": 1.0
     },
     {
@@ -70626,7 +71535,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/config.rs",
-      "source_location": "L166",
+      "source_location": "L184",
       "weight": 1.0
     },
     {
@@ -70637,7 +71546,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/config.rs",
-      "source_location": "L174",
+      "source_location": "L192",
       "weight": 1.0
     },
     {
@@ -70648,7 +71557,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/config.rs",
-      "source_location": "L190",
+      "source_location": "L208",
       "weight": 1.0
     },
     {
@@ -70659,7 +71568,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/config.rs",
-      "source_location": "L201",
+      "source_location": "L219",
       "weight": 1.0
     },
     {
@@ -70670,7 +71579,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/config.rs",
-      "source_location": "L212",
+      "source_location": "L230",
       "weight": 1.0
     },
     {
@@ -70681,7 +71590,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/config.rs",
-      "source_location": "L224",
+      "source_location": "L242",
       "weight": 1.0
     },
     {
@@ -72155,7 +73064,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/main.rs",
-      "source_location": "L32",
+      "source_location": "L33",
       "weight": 1.0
     },
     {
@@ -72166,7 +73075,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/main.rs",
-      "source_location": "L61",
+      "source_location": "L62",
       "weight": 1.0
     },
     {
@@ -72177,7 +73086,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/main.rs",
-      "source_location": "L96",
+      "source_location": "L97",
       "weight": 1.0
     },
     {
@@ -73190,6 +74099,105 @@
       "confidence_score": 1.0,
       "source_file": "src/share.rs",
       "source_location": "L8",
+      "weight": 1.0
+    },
+    {
+      "source": "src_update",
+      "target": "src_update_handle_update",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "src/update.rs",
+      "source_location": "L103",
+      "weight": 1.0
+    },
+    {
+      "source": "src_update",
+      "target": "src_update_upd_004_allowlist_table",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "src/update.rs",
+      "source_location": "L167",
+      "weight": 1.0
+    },
+    {
+      "source": "src_update",
+      "target": "src_update_is_update_url_allowed",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "src/update.rs",
+      "source_location": "L20",
+      "weight": 1.0
+    },
+    {
+      "source": "src_update",
+      "target": "src_update_upd_004_effective_url_default",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "src/update.rs",
+      "source_location": "L200",
+      "weight": 1.0
+    },
+    {
+      "source": "src_update",
+      "target": "src_update_effective_update_url",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "src/update.rs",
+      "source_location": "L27",
+      "weight": 1.0
+    },
+    {
+      "source": "src_update",
+      "target": "src_update_current_version",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "src/update.rs",
+      "source_location": "L39",
+      "weight": 1.0
+    },
+    {
+      "source": "src_update",
+      "target": "src_update_compare_versions",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "src/update.rs",
+      "source_location": "L43",
+      "weight": 1.0
+    },
+    {
+      "source": "src_update",
+      "target": "src_update_fetch_latest_tag",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "src/update.rs",
+      "source_location": "L52",
+      "weight": 1.0
+    },
+    {
+      "source": "src_update",
+      "target": "src_update_extract_tag",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "src/update.rs",
+      "source_location": "L88",
       "weight": 1.0
     },
     {
@@ -75269,6 +76277,72 @@
       "confidence_score": 1.0,
       "source_file": "tests/traceability.md",
       "source_location": "L1",
+      "weight": 1.0
+    },
+    {
+      "source": "tests_update_cmd_tests",
+      "target": "tests_update_cmd_tests_upd_001_parse_update_no_args",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "tests/update_cmd_tests.rs",
+      "source_location": "L21",
+      "weight": 1.0
+    },
+    {
+      "source": "tests_update_cmd_tests",
+      "target": "tests_update_cmd_tests_upd_002_parse_update_check_and_url",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "tests/update_cmd_tests.rs",
+      "source_location": "L33",
+      "weight": 1.0
+    },
+    {
+      "source": "tests_update_cmd_tests",
+      "target": "tests_update_cmd_tests_upd_004_allowlist_guard",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "tests/update_cmd_tests.rs",
+      "source_location": "L55",
+      "weight": 1.0
+    },
+    {
+      "source": "tests_update_cmd_tests",
+      "target": "tests_update_cmd_tests_upd_001_help_contains_update",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "tests/update_cmd_tests.rs",
+      "source_location": "L6",
+      "weight": 1.0
+    },
+    {
+      "source": "tests_update_cmd_tests",
+      "target": "tests_update_cmd_tests_upd_001_no_subcommand_still_serves",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "tests/update_cmd_tests.rs",
+      "source_location": "L67",
+      "weight": 1.0
+    },
+    {
+      "source": "tests_update_cmd_tests",
+      "target": "tests_update_cmd_tests_upd_001_version_flag_still_works",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "tests/update_cmd_tests.rs",
+      "source_location": "L75",
       "weight": 1.0
     },
     {
@@ -80161,7 +81235,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/config.rs",
-      "source_location": "L249",
+      "source_location": "L267",
       "weight": 1.0
     },
     {
@@ -80172,7 +81246,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/config.rs",
-      "source_location": "L257",
+      "source_location": "L275",
       "weight": 1.0
     },
     {
@@ -80183,7 +81257,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/config.rs",
-      "source_location": "L287",
+      "source_location": "L305",
       "weight": 1.0
     },
     {
@@ -80194,7 +81268,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/config.rs",
-      "source_location": "L318",
+      "source_location": "L336",
       "weight": 1.0
     },
     {
@@ -80205,7 +81279,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/config.rs",
-      "source_location": "L373",
+      "source_location": "L391",
       "weight": 1.0
     },
     {
@@ -80216,7 +81290,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/config.rs",
-      "source_location": "L381",
+      "source_location": "L399",
       "weight": 1.0
     },
     {
@@ -80227,7 +81301,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/config.rs",
-      "source_location": "L385",
+      "source_location": "L403",
       "weight": 1.0
     },
     {
@@ -80238,7 +81312,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/config.rs",
-      "source_location": "L128",
+      "source_location": "L146",
       "weight": 1.0
     },
     {
@@ -81914,6 +82988,17 @@
       "weight": 1.0
     },
     {
+      "source": "spec_specs_015b_plan_checklist",
+      "target": "spec_specs_015_plan_v0_6_5_update_command",
+      "relation": "references",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "spec/specs/015b.plan-checklist.md",
+      "source_location": "L3",
+      "weight": 1.0
+    },
+    {
       "source": "web_index_spa_mount",
       "target": "web_src_main_root",
       "relation": "references",
@@ -82100,7 +83185,7 @@
       "confidence_score": 0.85,
       "context": "call",
       "source_file": "src/main.rs",
-      "source_location": "L194",
+      "source_location": "L210",
       "weight": 1.0
     },
     {
@@ -86167,5 +87252,5 @@
       "source_file": "session-ses_fc80_AFK_DIEM.md"
     }
   ],
-  "built_at_commit": "847e54f2fdbfd19ebc930b9b6dfc54a3f970f9ab"
+  "built_at_commit": "10fea699668b959bd9aac97b3088007ffb98a6c0"
 }
