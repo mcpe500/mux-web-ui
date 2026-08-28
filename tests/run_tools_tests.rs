@@ -426,7 +426,13 @@ async fn phase_happy_busy_cancel_ws_stream() {
     write_fixture(
         fake_bin.path(),
         "python3",
-        "#!/bin/sh\necho from-fake-python\nsleep 3\n",
+        // sleep-before-echo: the WS route uses a no-replay broadcast channel,
+        // and this test subscribes only after the 409 busy round-trip. Without
+        // the delay the line frame can be emitted before the WS subscribes and
+        // is lost forever (deterministic CI failure, race won locally). The
+        // delay must also stay well inside the drain loop's 400ms per-frame
+        // read timeout, hence 0.2s — after subscribe, before read deadline.
+        "#!/bin/sh\nsleep 0.2\necho from-fake-python\nsleep 2.8\n",
     );
     let old_path = {
         let cur = std::env::var("PATH").unwrap_or_default();

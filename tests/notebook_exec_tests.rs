@@ -295,7 +295,7 @@ async fn phase_execute_executed_happy() {
     common_write_fixture(
         fake_bin.path(),
         "jupyter",
-        "#!/bin/sh\nsleep 0.5\necho jupyter-line\ncat > \"$6\" <<'EOF'\n{\"cells\":[]}\nEOF\nsleep 1.5\nexit 0\n",
+        "#!/bin/sh\nsleep 0.2\necho jupyter-line\ncat > \"$6\" <<'EOF'\n{\"cells\":[]}\nEOF\nsleep 1.8\nexit 0\n",
     );
     let cur = std::env::var("PATH").unwrap_or_default();
     unsafe { std::env::set_var("PATH", format!("{}:{cur}", fake_bin.path().display())) };
@@ -447,7 +447,7 @@ async fn phase_cell_run_streams_and_cleans_tmp() {
         "python3",
         // sleep-before-echo, same no-replay broadcast race as the jupyter
         // stub above — the WS subscribes only after the tmp-scan round-trip.
-        "#!/bin/sh\nprintf '%s\\n' \"$1\" >/dev/null\nsleep 0.3\necho cell-line-1\necho cell-line-2\nsleep 1\nexit 0\n",
+        "#!/bin/sh\nprintf '%s\\n' \"$1\" >/dev/null\nsleep 0.2\necho cell-line-1\necho cell-line-2\nsleep 1\nexit 0\n",
     );
     let cur = std::env::var("PATH").unwrap_or_default();
     unsafe { std::env::set_var("PATH", format!("{}:{cur}", fake_bin.path().display())) };
