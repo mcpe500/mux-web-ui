@@ -25,6 +25,19 @@ describe('CDX-010 XSS safety (T2)', () => {
     expect(out).toContain('<a href="https://example.com/a"');
     expect(out).not.toContain('<a href="ftp');
   });
+
+  it('renders image ![alt](https/data:image) as lazy img; other src stays literal', () => {
+    const out = renderMarkdownLite(
+      '![alt text](https://example.com/a.png) dan ![](data:image/png;base64,AAAA)',
+    );
+    expect(out).toContain('<img src="https://example.com/a.png" alt="alt text" loading="lazy">');
+    expect(out).toContain('<img src="data:image/png;base64,AAAA"');
+    // relative/scheme-berbahaya tanpa root fs di chat → tetap teks literal
+    const lit = renderMarkdownLite('![x](image.png) dan ![y](javascript:alert(1))');
+    expect(lit).not.toContain('<img');
+    expect(lit).toContain('![x](image.png)');
+    expect(lit).toContain('![y](javascript:alert(1))');
+  });
 });
 
 describe('CDX-010 constructions', () => {

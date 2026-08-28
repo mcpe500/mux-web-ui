@@ -11,7 +11,7 @@ import {
   type Notebook,
 } from './notebookModel';
 import { cellsToScript, splitRunStdout } from './cellScript';
-import { renderToNodes, tokenizeMarkdown } from './mdMini';
+import { renderToNodes, tokenizeMarkdown, type RenderNode } from './mdMini';
 
 interface NotebookViewProps {
   rootId: string;
@@ -41,12 +41,39 @@ function downloadText(filename: string, text: string): void {
 }
 
 // ── markdown → preact nodes (text-only contract, no innerHTML) ──
-function MarkdownBlock({ source }: { source: string }) {
+
+// Amend 2026-08-28: `![alt](src)` preview. Relative src resolves against the
+// notebook's directory via the existing fs endpoint (PdfViewerView pattern).
+function resolveImgSrc(src: string, rootId: string, filePath: string): string {
+  if (/^(https?:\/\/|data:image\/)/i.test(src)) return src;
+  const dir = filePath.includes('/') ? filePath.slice(0, filePath.lastIndexOf('/')) : '';
+  const full = dir ? `${dir}/${src}` : src;
+  return `/api/v1/fs/file?root=${encodeURIComponent(rootId)}&path=${encodeURIComponent(full)}`;
+}
+
+function ImgNode({ node, rootId, filePath }: { node: RenderNode; rootId: string; filePath: string }) {
+  const [big, setBig] = useState(false);
+  return (
+    <span style={{ display: 'block', margin: '4px 0' }}>
+      <img
+        src={resolveImgSrc(node.src ?? '#', rootId, filePath)}
+        alt={node.text}
+        loading="lazy"
+        onClick={() => setBig((v) => !v)}
+        style={{ maxWidth: '100%', maxHeight: big ? undefined : 320, borderRadius: 6, border: '1px solid rgba(255,255,255,0.08)', cursor: 'zoom-in', display: 'block' }}
+      />
+      {node.text ? <span style={{ display: 'block', color: '#64748b', fontSize: 11, marginTop: 2 }}>{node.text}</span> : null}
+    </span>
+  );
+}
+
+function MarkdownBlock({ source, rootId, filePath }: { source: string; rootId: string; filePath: string }) {
   const tokens = tokenizeMarkdown(source);
   const nodes = renderToNodes(tokens);
   return (
     <div style={{ lineHeight: 1.55 }}>
       {nodes.map((n, i) => {
+        if (n.tag === 'img') return <ImgNode key={i} node={n} rootId={rootId} filePath={filePath} />;
         if (n.tag === 'h1') return <h1 key={i} style={{ fontSize: 22, margin: '6px 0', color: '#f1f5f9' }}>{n.text}</h1>;
         if (n.tag === 'h2') return <h2 key={i} style={{ fontSize: 19, margin: '6px 0', color: '#f1f5f9' }}>{n.text}</h2>;
         if (n.tag === 'h3') return <h3 key={i} style={{ fontSize: 16, margin: '5px 0', color: '#f1f5f9' }}>{n.text}</h3>;
@@ -717,7 +744,7 @@ export function NotebookView({ rootId, filePath }: NotebookViewProps) {
                     </div>
                   ) : (
                     <div onDblClick={() => startEdit(cell)} title="Double-click untuk edit">
-                      {cell.source.join('').trim() ? <MarkdownBlock source={cell.source.join('')} /> : <span style={{ color: '#475569', fontStyle: 'italic', fontSize: 12 }}>(kosong — double-click untuk edit)</span>}
+                      {cell.source.join('').trim() ? <MarkdownBlock source={cell.source.join('')} rootId={rootId} filePath={filePath} /> : <span style={{ color: '#475569', fontStyle: 'italic', fontSize: 12 }}>(kosong — double-click untuk edit)</span>}
                     </div>
                   )
                 ) : cell.type === 'raw' ? (

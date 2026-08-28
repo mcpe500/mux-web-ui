@@ -102,6 +102,37 @@ describe('mdMini security', () => {
     const t = tokenizeMarkdown('[klik](javascript:alert(1))');
     expect(t[0]).toEqual({ type: 'link', text: 'klik', href: '#' });
   });
+
+  it('image ![alt](src) relatif/http/data:image → token image; scheme lain → literal text', () => {
+    expect(tokenizeMarkdown('![alt text](image.png)')).toEqual([
+      { type: 'image', alt: 'alt text', src: 'image.png' },
+    ]);
+    expect(tokenizeMarkdown('![](https://a/b.png)')).toEqual([
+      { type: 'image', alt: '', src: 'https://a/b.png' },
+    ]);
+    expect(tokenizeMarkdown('![](data:image/png;base64,AAAA)')).toEqual([
+      { type: 'image', alt: '', src: 'data:image/png;base64,AAAA' },
+    ]);
+    // disallowed → tetap teks literal (bukan token image); `)` URL nyambung
+    // kembali saat join (greedy `[^)\s]+` boleh memisah token text)
+    const evil = tokenizeMarkdown('![x](javascript:alert(1))');
+    expect(evil.some((t) => t.type === 'image')).toBe(false);
+    expect(evil.every((t) => t.type === 'text')).toBe(true);
+    expect(evil.map((t) => (t as { text: string }).text).join('')).toBe('![x](javascript:alert(1))');
+    expect(tokenizeMarkdown('![](data:text/html,x)')).toEqual([
+      { type: 'text', text: '![](data:text/html,x)' },
+    ]);
+  });
+
+  it('image berdampingan dgn inline lain dipecah benar', () => {
+    const t = tokenizeMarkdown('lihat ![foto](a.png) dan **tebal**');
+    expect(t).toEqual([
+      { type: 'text', text: 'lihat ' },
+      { type: 'image', alt: 'foto', src: 'a.png' },
+      { type: 'text', text: ' dan ' },
+      { type: 'bold', text: 'tebal' },
+    ]);
+  });
 });
 
 // ── renderToNodes: descriptor tanpa string HTML ──
@@ -119,8 +150,13 @@ describe('mdMini renderToNodes', () => {
     const nodes = renderToNodes(tokenizeMarkdown(payload));
     for (const n of nodes) {
       // descriptor hanya tag aman + teks mentah; renderer wajib children-text
-      expect(n.tag).toMatch(/^(h[1-6]|p|li|pre|blockquote|span|a|code|em|strong)$/);
+      expect(n.tag).toMatch(/^(h[1-6]|p|li|pre|blockquote|span|a|code|em|strong|img)$/);
       expect((n as unknown as { html?: unknown }).html).toBeUndefined();
     }
+  });
+
+  it('image token → node {tag:img, src, text:alt} tanpa markup', () => {
+    const nodes = renderToNodes(tokenizeMarkdown('![foto](https://a/b.png)'));
+    expect(nodes[0]).toEqual({ tag: 'img', text: 'foto', src: 'https://a/b.png' });
   });
 });

@@ -1,23 +1,23 @@
-# Graph Report - mux-web-ui  (2026-08-27)
+# Graph Report - mux-web-ui  (2026-08-28)
 
 ## Corpus Check
-- 173 files · ~322,351 words
+- 179 files · ~344,321 words
 - Verdict: corpus is large enough that graph structure adds value.
 
 ## Summary
-- 2798 nodes · 4636 edges · 192 communities (127 shown, 65 thin omitted)
-- Extraction: 98% EXTRACTED · 2% INFERRED · 0% AMBIGUOUS · INFERRED: 107 edges (avg confidence: 0.84)
+- 2869 nodes · 4761 edges · 202 communities (137 shown, 65 thin omitted)
+- Extraction: 98% EXTRACTED · 2% INFERRED · 0% AMBIGUOUS · INFERRED: 108 edges (avg confidence: 0.84)
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `10fea699`
+- Built from commit: `bdc45e69`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
 ## Community Hubs (Navigation)
 - Rencana v0.6.2 — Editor Polish, Agents UX, Network/Supply-chain Hardening & Distro Management
 - http.rs
-- SessionRegistry
+- session.rs
 - AllowedRoots
 - router9.rs
 - RunTaskRegistry
@@ -43,7 +43,7 @@
 - 009 — v0.5.3 Akses VPN / Jaringan Khusus / Domain Kustom (Host Allowlist & Advertise)
 - DesktopCanvas.tsx
 - 010 — v0.6.1 Coding Agents & proot-distro, Anti-Timeout/Banter, dan Editor Engine In-house
-- start_health_server
+- SessionRegistry
 - agents.rs
 - Mux Web UI — v0.2.1 plan: Distribution (prebuilt binary + installer tanpa Rust)
 - security_tests.rs
@@ -53,12 +53,12 @@
 - 008 — v0.5.2 Editor Multi-Terminal ala VS Code (Tabs, Split Side-by-Side, Drag & Drop)
 - agent_cfg.rs
 - tokenizeLineStateful
-- mux-web Server Binary
+- Mux Web UI — v0.2.1 Implementation Checklist & Verification Matrix
 - Companion Checklist — v0.4 Plan: Developer Suite
 - Mux Web UI — v0.5 plan: Workspace & Desktop System + File Manager (Windows Explorer Sempurna) + Editor (VS Code Sempurna) + Browser — Lebih Baik & Tidak Ngelag
 - AgentCodexView.tsx
 - 1. Yang Dikerjakan
-- v0.6.2 Full-Scope Release Decision
+- RingBuffer
 - PdfViewerView.tsx
 - notebookModel.ts
 - 009.plan-v0.5.3-network-vpn-custom-domain.md
@@ -69,7 +69,7 @@
 - 1. Milestone A — Integrated Terminal (`EDT-001..005`)
 - Companion Checklist — v0.5.2 Editor Multi-Terminal ala VS Code
 - resize_tests.rs
-- Companion Checklist — v0.6.2 Editor Polish & Virtualisasi, Agents UX, Persist Layout, Network Hardening, Signing, Distro Mgmt
+- start_health_server
 - 015 — v0.6.5 Update Command: `mux-web update` (opsi A)
 - GitError
 - codexEvents.ts
@@ -82,19 +82,20 @@
 - run_tools_tests.rs
 - notebook_exec.rs
 - 008.plan-v0.5.2-editor-multi-terminal-tabs.md
-- 000a.plan-test.md
+- traceability.md
 - Handoff 003 — Security Audit v0.3 & Evaluasi v0.4 Developer Suite
 - environments.rs
 - Checklist 012b
 - Companion Checklist — v0.6.2 Terminal Resiliensi saat AFK (Auto-Reconnect + Retensi Sesi)
 - windowStore.ts
 - git_tests.rs
-- 003.plan-v0.3-terminal-resize.md
-- Mux Web UI — LinkedIn Post #2 (v0.6.x Metamorphosis)
+- 000a.plan-test.md
+- 011b.plan-checklist.md
 - 006 — Handoff: VPN / Jaringan Khusus / Domain Kustom v0.5.3 (spec 009)
 - Mux Web UI — Implementation Checklist & Verification Matrix
 - 007 — Hotfix v0.5.1 Terminal CWD & Prompt Rendering
 - install.sh
+- Spec 012: v0.6.3 Terminal Liveness Hotfix
 - brackets.ts
 - FileExplorerView.tsx
 - Milestone A: EDIT-017 + EDIT-013 + EDIT-014 (+vitest)
@@ -104,10 +105,11 @@
 - FolderPicker.tsx
 - promptLibrary.ts
 - update.rs
-- files.rs
+- .new
 - Device Smoke Checklist — v0.6.2/v0.6.3 (specs 010–013)
+- mux-web Server Binary
 - static_handler
-- 011b.plan-checklist.md
+- Companion Checklist — v0.6.2 Editor Polish & Virtualisasi, Agents UX, Persist Layout, Network Hardening, Signing, Distro Mgmt
 - runPanelLogic.ts
 - Handoff 010 — v0.6.4 Documents & Agent Experience (Notebook / Python Runner / PDF Reader / Codex Window)
 - 004 — Handoff: Hotfix v0.5.1 Terminal CWD & Prompt Rendering (spec 007)
@@ -132,7 +134,7 @@
 - adapterTypes.ts
 - PtySession
 - 007 — Handoff: Coding Agents & proot-distro, Anti-Timeout, Editor mux-code (spec 010, v0.6.1)
-- Spec 012: v0.6.3 Terminal Liveness Hotfix
+- sessionStore.ts
 - 11. Rencana Eksekusi Multi-Subagent (Kualitas Terverifikasi Independen)
 - Bracket Auto-Close
 - proot-distro Management
@@ -157,23 +159,23 @@
 - Editor Virtualization Overlay
 - Wildcard Host Allowlist
 - Wrap Toggle UI
-- Handoff 008 — v0.6.2 Editor Polish & Virtualisasi Penuh, Agents UX, Persist Layout, Network Hardening, Signing, Distro Mgmt
+- start_server_with_session_limit
 - 3. Milestone A — Notebooks 📓 (`NB-001..012`)
 - 1. Latar Belakang & Risiko
 - CI: Sign checksums.txt (SIGN-001)
 - CI: Scenarios 5a/5b/5c (SIGN-003)
 - 1. Milestone B — Python Runner (`PY-001..006`) — risk-first ✅
-- 2. Milestone A — Notebooks 📓 (`NB-001..012`) ✅
+- 1. Milestone A — proot-distro (`PROOT-001..006`)
 - Milestone A: Stateful Tokenizer, Bracket Auto-close, Wrap Toggle
 - Milestone B: Editor Virtualization
 - Milestone C: FolderPicker cwd for Quick-launch Agents
 - Milestone D: Terminal Layout Persist & Restore
 - 4. Milestone D — Codex Window 🤖 (`AGX-001..010`) ✅
-- FrameOpcode
+- 016 — v0.6.7 Codex Studio: UI Coding Agent 1:1 Codex CLI (ringan)
 - mux-web
+- v0.6.2 Full-Scope Release Decision
 - 1. Latar Belakang & Risiko
-- 1. Latar Belakang & Risiko
-- 4. Milestone A — Backend: `work_dir` di Respons + Versi `0.5.1` (`V051-001`, `V051-005`)
+- files.rs
 - Bracket Auto-Close (editor)
 - cargo test Full Suite Gate (172 tests)
 - Milestone A
@@ -182,7 +184,7 @@
 - graphify update Knowledge Graph Sync
 - Frontend Gates: vitest 117/117 + tsc --noEmit
 - Word Wrap Toggle UI
-- 5. Milestone B — Frontend: Header = Server `work_dir` + Version Gate (`V051-002`, `V051-003`)
+- Mux Web UI — v0.2 Implementation Checklist & Verification Matrix
 - Exponential backoff 500ms→1s→2s→4s→cap 10s
 - Keepalive PING→PONG (opcode 0x05→0x06)
 - MUX_WEB_ROUTER9_PORT
@@ -191,8 +193,10 @@
 - src/main.rs
 - create_session
 - MAX_SESSIONS (=4)
+- 3. Milestone C — PDF Reader 📄 (`PDF-001..007`) ✅
+- Job: Release (multi-target matrix)
 - Mux Web UI — v0.3 plan: Terminal Resizing & Window Control Hardening
-- archive_tests.rs
+- Handoff 008 — v0.6.2 Editor Polish & Virtualisasi Penuh, Agents UX, Persist Layout, Network Hardening, Signing, Distro Mgmt
 - web/package.json
 - prismjs@1.29 dependency
 - editor.test.tsx
@@ -200,6 +204,13 @@
 - detectLang
 - web/src/apps/editor/TextEditorView.tsx
 - Wallpaper.tsx
+- 016b — Checklist Codex Studio (v0.6.7)
+- markdownLite.ts
+- app.tsx
+- 4. Milestone A — Backend: `work_dir` di Respons + Versi `0.5.1` (`V051-001`, `V051-005`)
+- 5. Milestone B — Frontend: Header = Server `work_dir` + Version Gate (`V051-002`, `V051-003`)
+- BrowserView.tsx
+- StartMenu.tsx
 
 ## God Nodes (most connected - your core abstractions)
 1. `Rencana v0.6.2 — Editor Polish, Agents UX, Network/Supply-chain Hardening & Distro Management` - 291 edges
@@ -211,19 +222,19 @@
 7. `v0.6.2 development planning from specs` - 24 edges
 8. `RunTaskRegistry` - 19 edges
 9. `ShareRegistry` - 19 edges
-10. `Config` - 18 edges
+10. `AgentCodexView()` - 19 edges
 
 ## Surprising Connections (you probably didn't know these)
 - `test_net_007_resolve_client_ip_matrix()` --calls--> `resolve_client_ip()`  [INFERRED]
   tests/security_tests.rs → src/http.rs
+- `Milestone B: Session Persistence` --references--> `SessionRegistry`  [EXTRACTED]
+  spec/handoff/001.progress-and-backlog.md → src/session.rs
+- `Checklist Milestone B: Session Persistence (B.1-B.9)` --references--> `SessionRegistry`  [EXTRACTED]
+  spec/specs/001b.plan-checklist.md → src/session.rs
 - `Handoff 001 - Progress & Backlog (v0.2)` --references--> `TestServer`  [EXTRACTED]
   spec/handoff/001.progress-and-backlog.md → tests/common/mod.rs
 - `net_004_collect_access_urls_order_and_dedupe()` --calls--> `collect_access_urls()`  [INFERRED]
   tests/config_tests.rs → src/config.rs
-- `distro_001_parse_proot_list()` --calls--> `parse_proot_list()`  [INFERRED]
-  tests/distro_mgmt_tests.rs → src/distro_mgmt.rs
-- `test_edit_001_file_read_and_atomic_write()` --calls--> `create_router()`  [INFERRED]
-  tests/editor_tests.rs → src/http.rs
 
 ## Import Cycles
 - None detected.
@@ -248,7 +259,7 @@
 - **v0.2 Milestone B Session Persistence Workstream** — spec_handoff_001_progress_and_backlog_milestone_b, src_session_sessionregistry, src_session_ringbuffer, spec_handoff_001_progress_and_backlog_life_002_orphan_cleanup, tests_session_tests [INFERRED 0.85]
 - **mux-code Editor Polish Cluster** — session_ses_fc80_afk_diem_multiline_block_comment_tracking, session_ses_fc80_afk_diem_bracket_autoclose, session_ses_fc80_afk_diem_wrap_toggle_ui, session_ses_fc80_afk_diem_dom_virtualization [INFERRED 0.90]
 
-## Communities (192 total, 65 thin omitted)
+## Communities (202 total, 65 thin omitted)
 
 ### Community 0 - "Rencana v0.6.2 — Editor Polish, Agents UX, Network/Supply-chain Hardening & Distro Management"
 Cohesion: 0.01
@@ -258,9 +269,9 @@ Nodes (289): Assistant (Code · Ox Alpha), Assistant (Code · Ox Alpha · 103.2s
 Cohesion: 0.06
 Nodes (134): Body, ConnectInfo, HeaderMap, IntoResponse, Json, Next, Query, Request (+126 more)
 
-### Community 2 - "SessionRegistry"
-Cohesion: 0.06
-Nodes (58): AtomicU64, minisign release signing (proposed), Job: Budget & Metric Verification, Job: Cross-Compile Check (Android ARM64), Job: Installer & Updater Test (DIST-013), Job: Release (multi-target matrix), Job: Assemble Release (checksums.txt), Job: Build & Test (Linux x86_64) (+50 more)
+### Community 2 - "session.rs"
+Cohesion: 0.24
+Nodes (12): AttachError, AttachInfo, rand_id(), Option, PathBuf, Result, String, SessionError (+4 more)
 
 ### Community 3 - "AllowedRoots"
 Cohesion: 0.11
@@ -319,8 +330,8 @@ Cohesion: 0.17
 Nodes (26): adjustGroupFlex(), clampSplit(), closeTab(), createTab(), focusTargetIndex(), maxReached(), moveTab(), nextKey() (+18 more)
 
 ### Community 17 - "TerminalView.tsx"
-Cohesion: 0.17
-Nodes (15): CodexTerminal(), BACKOFF_BASE_MS, BACKOFF_MAX_MS, canOpenSocket(), nextReconnectDelay(), shouldStopOnAttachStatus(), shouldStopOnFrame(), SocketLike (+7 more)
+Cohesion: 0.11
+Nodes (23): CodexTerminal(), BACKOFF_BASE_MS, BACKOFF_MAX_MS, canOpenSocket(), FrameOpcode, ERROR, EXIT, INPUT (+15 more)
 
 ### Community 18 - "package.json"
 Cohesion: 0.07
@@ -355,16 +366,16 @@ Cohesion: 0.09
 Nodes (23): 009 — v0.5.3 Akses VPN / Jaringan Khusus / Domain Kustom (Host Allowlist & Advertise), 10. Urutan Pengerjaan TDD (Red → Green → Refactor), 11. Definition of Done (DoD) v0.5.3, 1.1 Skenario User, 1.2 Kondisi Saat Ini (fakta kode — titik awal), 1.3 Risiko Tanpa Desain, 1. Latar Belakang & Risiko, 2. Hubungan dengan Rencana & Requirement (+15 more)
 
 ### Community 26 - "DesktopCanvas.tsx"
-Cohesion: 0.10
-Nodes (17): browser.test.tsx, BrowserView(), Tab, GitView(), GitViewProps, MetricsData, SystemMonitorView(), PackageCenterView() (+9 more)
+Cohesion: 0.15
+Nodes (11): GitView(), GitViewProps, MetricsData, SystemMonitorView(), PackageCenterView(), ShareModal(), SEARCHABLE, SearchApp() (+3 more)
 
 ### Community 27 - "010 — v0.6.1 Coding Agents & proot-distro, Anti-Timeout/Banter, dan Editor Engine In-house"
-Cohesion: 0.18
-Nodes (17): 010 — v0.6.1 Coding Agents & proot-distro, Anti-Timeout/Banter, dan Editor Engine In-house, 10. Bukan Scope, 11. Urutan Pengerjaan (TDD), 12. Definition of Done, 2. Hubungan dengan Rencana & Requirement, 3. Threat Model, 4. Milestone A — Environment proot-distro (`PROOT-001..006`), 5. Milestone B — Coding Agents (`AGT-001..005`) (+9 more)
+Cohesion: 0.14
+Nodes (21): 010 — v0.6.1 Coding Agents & proot-distro, Anti-Timeout/Banter, dan Editor Engine In-house, 10. Bukan Scope, 11. Urutan Pengerjaan (TDD), 12. Definition of Done, 1.1 Skenario User, 1.2 Kondisi Saat Ini (fakta kode — titik awal), 1.3 Risiko Tanpa Desain, 1. Latar Belakang & Risiko (+13 more)
 
-### Community 28 - "start_health_server"
-Cohesion: 0.19
-Nodes (10): start_health_server(), test_pkg_002_list_installed_packages_via_http(), test_pkg_003_search_repository_packages(), test_pkg_005_search_injection_blocked_http(), test_pkg_backend_http(), test_edt_002_cwd_traversal_400(), test_shr_001_create_share_token_csp_rng(), test_shr_002_expired_token_rejected() (+2 more)
+### Community 28 - "SessionRegistry"
+Cohesion: 0.20
+Nodes (11): AtomicU64, PendingAttach, Arc, AtomicBool, HashMap, Instant, Mutex, Receiver (+3 more)
 
 ### Community 29 - "agents.rs"
 Cohesion: 0.18
@@ -375,8 +386,8 @@ Cohesion: 0.10
 Nodes (20): 10. Definition of done v0.2.1, 1.1 Fakta kode v0.2 yang menjadi titik awal, 1.2 Scope v0.2.1, 1. Latar belakang dan risiko, 2. Hubungan dengan rencana v1 dan requirement, 3. Threat model (supply chain), 4. Milestone A — Release pipeline multi-target, 5. Milestone B — Installer & updater binary-first (+12 more)
 
 ### Community 31 - "security_tests.rs"
-Cohesion: 0.12
-Nodes (16): PathBuf, String, server_port(), start_server_with_hosts(), status_with_host(), test_net_001_allowed_host_accepted(), test_net_001_case_insensitive(), test_net_002_cgnat_ip_accepted() (+8 more)
+Cohesion: 0.13
+Nodes (14): PathBuf, start_server_with_hosts(), status_with_host(), test_net_001_allowed_host_accepted(), test_net_001_case_insensitive(), test_net_002_cgnat_ip_accepted(), test_net_003_advertise_implies_allowlist(), test_net_005_host_rejected_message_hints_flag() (+6 more)
 
 ### Community 32 - "SupportHubView.tsx"
 Cohesion: 0.19
@@ -402,9 +413,9 @@ Nodes (16): acfg_004_claude_patch_empty_start(), acfg_004_claude_patch_keeps_fie
 Cohesion: 0.16
 Nodes (18): '#'-word infinite loop bug, Incremental per-line block-comment state cache, Lazy chunk boundary preservation, Windowed gutter/highlight rendering, TextEditorView component, visibleRange, LineStateCache interface, createCache (+10 more)
 
-### Community 38 - "mux-web Server Binary"
-Cohesion: 0.05
-Nodes (47): SEC-007 weekly dependency vulnerability audit, SEC-008 control-to-SOC2-TSC mapping, Security Audit CI job, Single-Use Bootstrap Secret, 🛠️ Building from Source, Dependency Audit (cargo audit), DNS Rebinding Defense, ✨ Features (+39 more)
+### Community 38 - "Mux Web UI — v0.2.1 Implementation Checklist & Verification Matrix"
+Cohesion: 0.13
+Nodes (17): SEC-007 weekly dependency vulnerability audit, SEC-008 control-to-SOC2-TSC mapping, Security Audit CI job, README Security & Authentication, v0.2.1 Implementation Checklist & Verification Matrix, CI installer-test Job (4 scenarios), Langkah 1 — Milestone A: Release pipeline multi-target, Langkah 2 — Milestone B: `install.sh` binary-first (+9 more)
 
 ### Community 39 - "Companion Checklist — v0.4 Plan: Developer Suite"
 Cohesion: 0.11
@@ -416,23 +427,23 @@ Nodes (26): 10. Urutan TDD — Sempurna & Tidak Ngelag (Setelah Approve Final), 
 
 ### Community 41 - "AgentCodexView.tsx"
 Cohesion: 0.10
-Nodes (33): AgentCodexView(), AgentCodexViewProps, btnGhostStyle, CodexTerminalProps, dangerStyle, EnvOption, inputStyle, labelStyle (+25 more)
+Nodes (32): AgentCodexView(), AgentCodexViewProps, btnGhostStyle, CodexTerminalProps, dangerStyle, EnvOption, inputStyle, labelStyle (+24 more)
 
 ### Community 42 - "1. Yang Dikerjakan"
 Cohesion: 0.18
 Nodes (11): 1. Yang Dikerjakan, 2. Keputusan Implementasi (D-log), 3. Bukti Gate (2026-08-26, akhir spec 013), 4. Pending (user-side), 5. Konteks untuk Sesi Berikutnya, Handoff 009 — v0.6.2 AFK Auto-Reconnect (spec 012) & v0.6.3 Support Hub, Package Center, 9Router, Config Editor (spec 013), Spec 012 — Terminal Resiliensi saat AFK (`AFK-001..011`), Spec 013 — 9Router (`RTR-001..005`) (+3 more)
 
-### Community 43 - "v0.6.2 Full-Scope Release Decision"
-Cohesion: 0.17
-Nodes (12): GPG/cosign Installer Signature, Handoff 007 (v0.6.1), Multi-line Block Comment Tracking (mux-code), Opsi A — Phased Iterative Release, SOC 1/2/3 Trust Services Security Requirement, Manual Smoke Termux+proot Screen-off 10 mnt, Threat Model per Fitur, Reverse-Proxy Mode (--trusted-proxies) (+4 more)
+### Community 43 - "RingBuffer"
+Cohesion: 0.21
+Nodes (12): scripts/check_budget.sh, Handoff 001 - Progress & Backlog (v0.2), LIFE-002 Orphan Child Cleanup, Milestone B: Session Persistence, Checklist Langkah 4: CI (C.1-C.6), v0.2 Implementation Checklist & Verification Matrix, Checklist Milestone B: Session Persistence (B.1-B.9), TDD Execution Loop (Red-Green-Refactor) (+4 more)
 
 ### Community 44 - "PdfViewerView.tsx"
 Cohesion: 0.12
 Nodes (28): loadPdfjs(), PdfjsModule, resetPdfjsLoaderForTest(), WORKER_URL, DOC_MAX_BYTES, DOC_WARN_BYTES, DocTooLargeError, FetchCapOpts (+20 more)
 
 ### Community 45 - "notebookModel.ts"
-Cohesion: 0.07
-Nodes (47): cellsToScript(), ScriptCell, SplitResult, splitRunStdout(), inlineChain, InlineFn, RenderNode, renderToNodes() (+39 more)
+Cohesion: 0.06
+Nodes (49): cellsToScript(), ScriptCell, SplitResult, splitRunStdout(), inlineChain, InlineFn, RenderNode, renderToNodes() (+41 more)
 
 ### Community 46 - "009.plan-v0.5.3-network-vpn-custom-domain.md"
 Cohesion: 0.16
@@ -443,16 +454,16 @@ Cohesion: 0.21
 Nodes (15): 0. Keputusan Desain Final (Sudah Dijawab — Konfirmasi), 1. Workspace System — Sempurna (`WS-001..008`), 2. Desktop System — Sempurna (`DESK-001..008`) — Lebih Baik dari Windows, 3. File Manager Windows-like — Sempurna (`FM-001..018`) — Recreation + Lebih Baik, 3a. Editor VS Code-like — Sempurna (`ED-001..010`) — Lebih Baik & Tidak Ngelag, 3b. Browser Inside Desktop — Sempurna (`BR-001..006`) — Chrome-like, 4. DoD & Quality Gates — Sempurna = Lengkap + Lebih Baik + Tidak Ngelag, Companion Checklist — v0.5 Workspace, Desktop & File Manager Sempurna (Windows Explorer + VS Code + Browser) — Lebih Baik & Tidak Ngelag (+7 more)
 
 ### Community 48 - "014 — v0.6.4 Documents & Agent Experience: Notebook .ipynb, Python Runner, PDF Reader, Codex Window"
-Cohesion: 0.20
-Nodes (10): 014 — v0.6.4 Documents & Agent Experience: Notebook .ipynb, Python Runner, PDF Reader, Codex Window, 10. Urutan Pengerjaan (TDD), 12. Definition of Done, 2. Threat Model (lanjutan SOC 2 TSC §10 spec 011), 4. Milestone B — Python Runner 🐍 (`PY-001..006`), 5. Milestone C — PDF Reader 📄 (`PDF-001..007`), 6. Milestone D — Codex Window 🤖 (`AGX-001..010`), 7. Konfigurasi Baru (+2 more)
+Cohesion: 0.18
+Nodes (11): 014 — v0.6.4 Documents & Agent Experience: Notebook .ipynb, Python Runner, PDF Reader, Codex Window, 10. Urutan Pengerjaan (TDD), 12. Definition of Done, 13. Addendum 2026-08-28 — Bugfix `![alt](image.png)` (`spec/promptss/prompt1.md:1`), 2. Threat Model (lanjutan SOC 2 TSC §10 spec 011), 4. Milestone B — Python Runner 🐍 (`PY-001..006`), 5. Milestone C — PDF Reader 📄 (`PDF-001..007`), 6. Milestone D — Codex Window 🤖 (`AGX-001..010`) (+3 more)
 
 ### Community 49 - "Companion Checklist — v0.5.1 Terminal CWD & Prompt Hotfix"
 Cohesion: 0.16
 Nodes (15): 0. Ringkasan Deliverable, 1. Milestone A — Backend: `work_dir` di Respons + Bump `0.5.1` (`V051-001`, `V051-005`), 2. Milestone B — Frontend: Header = Server `work_dir` + Version Gate (`V051-002`, `V051-003`), 3. Milestone C — Prompt Rendering (`V051-004`), 4. Quality Gates & DoD (`V051-006`), 5. Out of Scope (ingat — jangan dikerjakan), 6. Keputusan & Open Question Log, 7. Estimasi (+7 more)
 
 ### Community 50 - "Companion Checklist — v0.6.1 Coding Agents & proot-distro, Anti-Timeout, Editor Engine"
-Cohesion: 0.09
-Nodes (22): 0. Ringkasan Deliverable, 1. Milestone A — proot-distro (`PROOT-001..006`), 2. Milestone B — Coding Agents (`AGT-001..005`), 3. Milestone C — Anti-Timeout & Banter (`SESS-009/010`, `LIFE-010`, `PERF-006`) — PRIORITAS #1, 4. Milestone D — Editor Engine "mux-code" (`EDIT-009..016`, `PERF-007`), 5. Quality Gates & DoD, 6. Out of Scope (ingat), 7. Keputusan & Open Question Log (+14 more)
+Cohesion: 0.12
+Nodes (17): 0. Ringkasan Deliverable, 2. Milestone B — Coding Agents (`AGT-001..005`), 3. Milestone C — Anti-Timeout & Banter (`SESS-009/010`, `LIFE-010`, `PERF-006`) — PRIORITAS #1, 4. Milestone D — Editor Engine "mux-code" (`EDIT-009..016`, `PERF-007`), 5. Quality Gates & DoD, 6. Out of Scope (ingat), 7. Keputusan & Open Question Log, Companion Checklist — v0.6.1 Coding Agents & proot-distro, Anti-Timeout, Editor Engine (+9 more)
 
 ### Community 51 - "1. Milestone A — Integrated Terminal (`EDT-001..005`)"
 Cohesion: 0.13
@@ -466,9 +477,9 @@ Nodes (15): 1. Milestone A — Backend `--max-sessions` + metrics (`TAB-001`, `T
 Cohesion: 0.41
 Nodes (13): connect_ws(), create_terminal_with_size(), get_terminal_metadata(), request_attach(), Option, Value, Ws, send_resize() (+5 more)
 
-### Community 54 - "Companion Checklist — v0.6.2 Editor Polish & Virtualisasi, Agents UX, Persist Layout, Network Hardening, Signing, Distro Mgmt"
-Cohesion: 0.24
-Nodes (17): 0. Ringkasan Deliverable, 10. Out of Scope (ingat), 11. Keputusan & Open Question Log, 1. Milestone A — mux-code Polish (`EDIT-017`, `EDIT-013`, `EDIT-014`), 2. Milestone B — Virtualisasi Penuh (`EDIT-018`), 3. Milestone C — FolderPicker cwd Agents (`AGT-006`), 4. Milestone D — Persist Layout Terminal (`TAB-010/011`), 5. Milestone E — Trusted Proxy + Wildcard Allowlist (`NET-007/008`) (+9 more)
+### Community 54 - "start_health_server"
+Cohesion: 0.19
+Nodes (10): start_health_server(), test_pkg_002_list_installed_packages_via_http(), test_pkg_003_search_repository_packages(), test_pkg_005_search_injection_blocked_http(), test_pkg_backend_http(), test_edt_002_cwd_traversal_400(), test_shr_001_create_share_token_csp_rng(), test_shr_002_expired_token_rejected() (+2 more)
 
 ### Community 55 - "015 — v0.6.5 Update Command: `mux-web update` (opsi A)"
 Cohesion: 0.12
@@ -479,8 +490,8 @@ Cohesion: 0.24
 Nodes (8): GitError, GitService, Display, Formatter, Path, Result, String, Value
 
 ### Community 57 - "codexEvents.ts"
-Cohesion: 0.15
-Nodes (19): HistorySession, analyzeTranscript(), ARGS_PREVIEW_MAX_CHARS, Classified, classify(), CodexEvent, contentText(), fromV1Msg() (+11 more)
+Cohesion: 0.13
+Nodes (23): HistorySession, analyzeTranscript(), ARGS_PREVIEW_MAX_CHARS, Classified, classify(), CodexEvent, contentText(), DriftReport (+15 more)
 
 ### Community 58 - "protocol.rs"
 Cohesion: 0.18
@@ -518,8 +529,8 @@ Nodes (31): cell_script_body(), effective_run_timeout(), env_known(), exec_outpu
 Cohesion: 0.17
 Nodes (10): Persist Layout Tab Terminal, 005 — Handoff: Multi-Terminal Editor ala VS Code v0.5.2 (spec 008), 1. Yang Dikerjakan, 2. Bukti Gate, 3. Pending (user-side / CI), 4. Konteks untuk Sesi Berikutnya, 5. Final (2026-08-23 sore) — Rilis Terverifikasi, Milestone A — Backend (`TAB-001`, `TAB-009`) (+2 more)
 
-### Community 67 - "000a.plan-test.md"
-Cohesion: 0.24
+### Community 67 - "traceability.md"
+Cohesion: 0.31
 Nodes (4): cargo audit absent from CI (gap), SOC 2 TSC Traceability, SOC 2 Trust Services Criteria Mapping, No-Lag Performance Budget (virtualized, debounce, LRU, ≤750 KiB)
 
 ### Community 68 - "Handoff 003 — Security Audit v0.3 & Evaluasi v0.4 Developer Suite"
@@ -546,13 +557,13 @@ Nodes (7): ResizeDirection, WindowFrame(), WindowFrameProps, tileWindowsGrid(), 
 Cohesion: 0.36
 Nodes (5): init_git_repo(), Path, test_git_001_status_porcelain_parsing(), test_git_002_diff_unified_parser(), test_git_005_branch_list()
 
-### Community 74 - "003.plan-v0.3-terminal-resize.md"
-Cohesion: 0.16
+### Community 74 - "000a.plan-test.md"
+Cohesion: 0.15
 Nodes (10): Handoff 001 — Progress & Backlog (v0.2), 1. Status Ringkas, 2. Git & Release Status, Handoff 002 — Terminal Resizing & Window Control Hardening (v0.3), 001b Plan Checklist, Langkah 1 — Milestone A: Backend Dimension Clamping & Robustness, Langkah 2 — Milestone B: Frontend Window Resize Handles & Debouncing, Langkah 3 — Milestone C: Traceability, Documentation & Graph Update (+2 more)
 
-### Community 75 - "Mux Web UI — LinkedIn Post #2 (v0.6.x Metamorphosis)"
-Cohesion: 0.50
-Nodes (3): Mux Web UI — LinkedIn Post #2 (v0.6.x Metamorphosis), 🌐 Option 1: Primary Post (English — Recommended, ~2,878 chars), 🇮🇩 Option 2: Alternative Post (Bahasa Indonesia, ~2,906 chars)
+### Community 75 - "011b.plan-checklist.md"
+Cohesion: 0.22
+Nodes (9): 011b Checklist Ticking, Commit cc62fbb feat(v0.6.2), Commit 20064bc chore(graph), Handoff 008 Authoring, Push origin/main (1c5536c..20064bc), Session ses_fc80_AFK_DIEM Log, Spec 011 Status Update to Implemented, Terminal Tab Layout Persist/Restore (TAB-010/011) (+1 more)
 
 ### Community 76 - "006 — Handoff: VPN / Jaringan Khusus / Domain Kustom v0.5.3 (spec 009)"
 Cohesion: 0.22
@@ -569,6 +580,10 @@ Nodes (9): 007 — Hotfix v0.5.1 Terminal CWD & Prompt Rendering, 10. Urutan Pen
 ### Community 79 - "install.sh"
 Cohesion: 0.57
 Nodes (7): die(), fallback_source(), install_from_release(), install.sh script, sig_gate(), sig_verify_dir(), usage()
+
+### Community 80 - "Spec 012: v0.6.3 Terminal Liveness Hotfix"
+Cohesion: 0.17
+Nodes (13): LIFE-020: Auto-Reconnect Backoff Eksponensial + Reattach + Replay, LIFE-021: visibilitychange/online Memicu Reconnect Segera, LIFE-022: Overlay Tri-State Reconnecting/Exited/Offline, RC-01: Janitor Reap-on-Detach dengan Grace 60dtk, RC-02: Busy-Grace 30dtk Terlalu Kecil untuk Agen LLM, RC-03: TerminalView Attach One-Shot Tanpa Auto-Reconnect, RC-04: Heartbeat PONG via JS Dithrottle di Background Tab, SESS-011: Default session_idle_timeout 60→900dtk (+5 more)
 
 ### Community 81 - "brackets.ts"
 Cohesion: 0.36
@@ -591,8 +606,8 @@ Cohesion: 0.13
 Nodes (15): 0. Ringkasan Deliverable, 1. Milestone A — Parser & Gate (`NET-001`, `NET-002`, `NET-006`, `NET-007`), 2. Milestone B — Advertise & Banner (`NET-003`, `NET-004`, `NET-005`), 3. Milestone C — Docs & Traceability (`NET-004`, `NET-007`), 4. Quality Gates & DoD, 5. Out of Scope (ingat), 6. Keputusan & Open Question Log, Companion Checklist — v0.5.3 VPN / Jaringan Khusus / Domain Kustom (+7 more)
 
 ### Community 86 - "TestServer"
-Cohesion: 0.12
-Nodes (17): Client, Future, JoinHandle, MaybeTlsStream, Pin, TcpStream, authed_ws_connect(), Drop (+9 more)
+Cohesion: 0.14
+Nodes (14): Client, JoinHandle, MaybeTlsStream, TcpStream, authed_ws_connect(), Drop, Option, Result (+6 more)
 
 ### Community 87 - "FolderPicker.tsx"
 Cohesion: 0.21
@@ -600,27 +615,31 @@ Nodes (11): EDT-001..010 Requirement Family (Integrated Terminal & Open), Folder
 
 ### Community 88 - "promptLibrary.ts"
 Cohesion: 0.16
-Nodes (8): defaultLocalStorageStore(), read(), LibEntry, PROMPT_STORE_FULL, PromptStore, sanitizeWorkspaceKey(), storageKey(), StorageLike
+Nodes (9): defaultLocalStorageStore(), read(), LibEntry, PROMPT_STORE_FULL, PromptStore, sanitizeWorkspaceKey(), storageKey(), StorageLike (+1 more)
 
 ### Community 89 - "update.rs"
 Cohesion: 0.29
 Nodes (11): Ordering, compare_versions(), current_version(), effective_update_url(), extract_tag(), fetch_latest_tag(), handle_update(), is_update_url_allowed() (+3 more)
 
-### Community 90 - "files.rs"
-Cohesion: 0.20
-Nodes (14): Single-Folder Workspace Model, DirectoryListing, FileEntry, FsAction, list_directory(), Path, Result, String (+6 more)
+### Community 90 - ".new"
+Cohesion: 0.23
+Nodes (7): Default, Duration, Self, SessionConfig, test_sess_003_exit_detection_marks_closed(), test_sess_004_attach_token_ttl_and_single_use(), test_sess_007_ring_buffer_empty_snapshot()
 
 ### Community 91 - "Device Smoke Checklist — v0.6.2/v0.6.3 (specs 010–013)"
 Cohesion: 0.12
 Nodes (16): Device Smoke Checklist — v0.6.2/v0.6.3 (specs 010–013), Peta perbaikan cepat, Prasyarat, S10 — Python Runner 🐍 (spec 014 M-B), S11 — PDF Reader 📄 (spec 014 M-C), S12 — Codex Window 🤖 (spec 014 M-D), S13 — Update Command `mux-web update` (spec 015), S1 — Installer/Updater + jalur signature (DIST/SIGN) (+8 more)
 
+### Community 92 - "mux-web Server Binary"
+Cohesion: 0.07
+Nodes (30): Single-Use Bootstrap Secret, 🛠️ Building from Source, Dependency Audit (cargo audit), DNS Rebinding Defense, ✨ Features, File Explorer, 📥 Install (Create), install.sh (+22 more)
+
 ### Community 93 - "static_handler"
 Cohesion: 0.40
 Nodes (4): Assets, Response, static_handler(), Uri
 
-### Community 94 - "011b.plan-checklist.md"
-Cohesion: 0.22
-Nodes (9): 011b Checklist Ticking, Commit cc62fbb feat(v0.6.2), Commit 20064bc chore(graph), Handoff 008 Authoring, Push origin/main (1c5536c..20064bc), Session ses_fc80_AFK_DIEM Log, Spec 011 Status Update to Implemented, Terminal Tab Layout Persist/Restore (TAB-010/011) (+1 more)
+### Community 94 - "Companion Checklist — v0.6.2 Editor Polish & Virtualisasi, Agents UX, Persist Layout, Network Hardening, Signing, Distro Mgmt"
+Cohesion: 0.24
+Nodes (17): 0. Ringkasan Deliverable, 10. Out of Scope (ingat), 11. Keputusan & Open Question Log, 1. Milestone A — mux-code Polish (`EDIT-017`, `EDIT-013`, `EDIT-014`), 2. Milestone B — Virtualisasi Penuh (`EDIT-018`), 3. Milestone C — FolderPicker cwd Agents (`AGT-006`), 4. Milestone D — Persist Layout Terminal (`TAB-010/011`), 5. Milestone E — Trusted Proxy + Wildcard Allowlist (`NET-007/008`) (+9 more)
 
 ### Community 95 - "runPanelLogic.ts"
 Cohesion: 0.36
@@ -635,8 +654,8 @@ Cohesion: 0.20
 Nodes (10): 004 — Handoff: Hotfix v0.5.1 Terminal CWD & Prompt Rendering (spec 007), 1. Yang Dikerjakan, 2. Bukti Gate (angka aktual), 3. Fakta Kode Penting (untuk session berikutnya), 4. Pending (bloker nol, tapi wajib ditutup), 5. Konteks untuk Session Berikutnya, 6. Lampiran (update 2026-08-22 sore) — Rilis v0.5.1 & Perbaikan CI, Milestone A — Backend (`V051-001`, `V051-005`) (+2 more)
 
 ### Community 98 - "codexArgs.ts"
-Cohesion: 0.31
-Nodes (8): ALLOWED_SANDBOXES, CodexExecOpts, DANGEROUS_FLAG_DENYLIST, DENYLIST_COMBINED, matchesDangerousFlag(), SandboxMode, validateCodexOpts(), validateCodexPrompt()
+Cohesion: 0.23
+Nodes (13): ALLOWED_SANDBOXES, buildCodexResumeArgs(), CodexExecOpts, CodexResumeOpts, DANGEROUS_FLAG_DENYLIST, DENYLIST_COMBINED, isValidThreadId(), matchesDangerousFlag() (+5 more)
 
 ### Community 99 - "010b.plan-checklist.md"
 Cohesion: 0.18
@@ -648,35 +667,35 @@ Nodes (3): cargo-audit, Job: Security Audit (SEC-007), Milestone H: Cargo Audit 
 
 ### Community 115 - "Companion Checklist — v0.6.4 Documents & Agent Experience (Notebooks, Python Runner, PDF Reader, Codex Window)"
 Cohesion: 0.22
-Nodes (9): 0. Ringkasan Deliverable, 3. Milestone C — PDF Reader 📄 (`PDF-001..007`) ✅, 5. Quality Gates & DoD ✅, 6. Out of Scope (ingat), 7. Keputusan Log (ringkas), Companion Checklist — v0.6.4 Documents & Agent Experience (Notebooks, Python Runner, PDF Reader, Codex Window), Green & gates, Impl (+1 more)
+Nodes (9): 0. Ringkasan Deliverable, 2. Milestone A — Notebooks 📓 (`NB-001..012`) ✅, 5. Quality Gates & DoD ✅, 6. Out of Scope (ingat), 7. Keputusan Log (ringkas), Companion Checklist — v0.6.4 Documents & Agent Experience (Notebooks, Python Runner, PDF Reader, Codex Window), Green & gates, Impl (+1 more)
 
 ### Community 116 - "windowRouter.ts"
-Cohesion: 0.21
-Nodes (9): SPA mount point (#app + main.tsx), App(), DesktopCanvas(), routedAppForFile(), RoutedAppId, RouteEntry, routeForFile(), TABLE (+1 more)
+Cohesion: 0.38
+Nodes (5): routedAppForFile(), RoutedAppId, RouteEntry, routeForFile(), TABLE
 
 ### Community 117 - "adapterTypes.ts"
 Cohesion: 0.22
 Nodes (4): AgentEventSink, AgentLaunchOptions, AgentSessionHandle, AgentSurfaceAdapter
 
 ### Community 118 - "PtySession"
-Cohesion: 0.07
-Nodes (36): File, OwnedFd, Pid, forkpty fd-table Inheritance Bug, PTY Fork Hardening (manual open + close_range), ArchiveEntry, ArchiveError, ArchiveInspect (+28 more)
+Cohesion: 0.06
+Nodes (45): File, OwnedFd, Pid, forkpty fd-table Inheritance Bug, PTY Fork Hardening (manual open + close_range), ArchiveEntry, ArchiveError, ArchiveInspect (+37 more)
 
 ### Community 119 - "007 — Handoff: Coding Agents & proot-distro, Anti-Timeout, Editor mux-code (spec 010, v0.6.1)"
 Cohesion: 0.22
 Nodes (9): 007 — Handoff: Coding Agents & proot-distro, Anti-Timeout, Editor mux-code (spec 010, v0.6.1), 1. Yang Dikerjakan, 2. Bukti Gate (2026-08-24), 3. Pending (user-side / deferred), 4. Konteks untuk Sesi Berikutnya, Milestone A — proot-distro (`PROOT-001..006`), Milestone B — Coding agents (`AGT-001..005`), Milestone C — Anti-Timeout & Banter (PRIORITAS #1) (`SESS-009/010`, `LIFE-010`, `PERF-006`) (+1 more)
 
-### Community 120 - "Spec 012: v0.6.3 Terminal Liveness Hotfix"
-Cohesion: 0.17
-Nodes (13): LIFE-020: Auto-Reconnect Backoff Eksponensial + Reattach + Replay, LIFE-021: visibilitychange/online Memicu Reconnect Segera, LIFE-022: Overlay Tri-State Reconnecting/Exited/Offline, RC-01: Janitor Reap-on-Detach dengan Grace 60dtk, RC-02: Busy-Grace 30dtk Terlalu Kecil untuk Agen LLM, RC-03: TerminalView Attach One-Shot Tanpa Auto-Reconnect, RC-04: Heartbeat PONG via JS Dithrottle di Background Tab, SESS-011: Default session_idle_timeout 60→900dtk (+5 more)
+### Community 120 - "sessionStore.ts"
+Cohesion: 0.13
+Nodes (14): allTags(), capTranscript(), CodexSessionRecord, codexSessionStore, read(), isValidRecord(), MAX_SESSION_EVENTS, MAX_SESSION_TAGS (+6 more)
 
 ### Community 121 - "11. Rencana Eksekusi Multi-Subagent (Kualitas Terverifikasi Independen)"
 Cohesion: 0.33
 Nodes (6): 11.1 Daftar Subagent — total **7** (4 builder + 2 verifier + 1 investigator), 11.2 Struktur & Gelombang (DAG), 11.3 Kontrak Handoff Antar-Agent (format padat), 11.4 Definisi LOLOS Verifier (semua wajib), 11.5 Mode Degradasi (bila kuota/konteks sempit), 11. Rencana Eksekusi Multi-Subagent (Kualitas Terverifikasi Independen)
 
-### Community 145 - "Handoff 008 — v0.6.2 Editor Polish & Virtualisasi Penuh, Agents UX, Persist Layout, Network Hardening, Signing, Distro Mgmt"
+### Community 145 - "start_server_with_session_limit"
 Cohesion: 0.40
-Nodes (5): 1. Yang dikerjakan (semua milestone A–H), 2. Keputusan implementasi (D-log), 3. Gates (semua hijau), 4. Pending (user-side), Handoff 008 — v0.6.2 Editor Polish & Virtualisasi Penuh, Agents UX, Persist Layout, Network Hardening, Signing, Distro Mgmt
+Nodes (5): Future, Pin, Box, start_server_with_session_limit(), test_tab_001_registry_configurable_limit()
 
 ### Community 146 - "3. Milestone A — Notebooks 📓 (`NB-001..012`)"
 Cohesion: 0.40
@@ -690,45 +709,81 @@ Nodes (4): 1.1 Skenario User, 1.2 Kondisi Saat Ini (fakta kode — titik awal), 
 Cohesion: 0.50
 Nodes (4): 1. Milestone B — Python Runner (`PY-001..006`) — risk-first ✅, Green & gates, Impl, Red (backend)
 
-### Community 151 - "2. Milestone A — Notebooks 📓 (`NB-001..012`) ✅"
-Cohesion: 0.50
-Nodes (4): 2. Milestone A — Notebooks 📓 (`NB-001..012`) ✅, Green & gates, Impl, Red (vitest logic)
+### Community 151 - "1. Milestone A — proot-distro (`PROOT-001..006`)"
+Cohesion: 0.40
+Nodes (5): 1. Milestone A — proot-distro (`PROOT-001..006`), Frontend, Green & gates, Impl backend, Red
 
 ### Community 156 - "4. Milestone D — Codex Window 🤖 (`AGX-001..010`) ✅"
 Cohesion: 0.50
 Nodes (4): 4. Milestone D — Codex Window 🤖 (`AGX-001..010`) ✅, Green & gates, Impl, Red (fixtures drift-first!)
 
-### Community 157 - "FrameOpcode"
-Cohesion: 0.25
-Nodes (8): FrameOpcode, ERROR, EXIT, INPUT, OUTPUT, PING, PONG, RESIZE
+### Community 157 - "016 — v0.6.7 Codex Studio: UI Coding Agent 1:1 Codex CLI (ringan)"
+Cohesion: 0.10
+Nodes (19): 016 — v0.6.7 Codex Studio: UI Coding Agent 1:1 Codex CLI (ringan), 10. Konfigurasi Baru, 11. Keputusan Desain (log), 12. Bukan Scope, 13. Urutan Pengerjaan (TDD), 14. Definition of Done, 1.1 Permintaan user, 1.2 Kondisi saat ini (fakta kode — titik awal) (+11 more)
 
-### Community 159 - "1. Latar Belakang & Risiko"
-Cohesion: 0.50
-Nodes (4): 1.1 Skenario User, 1.2 Kondisi Saat Ini (fakta kode — titik awal), 1.3 Risiko Tanpa Desain, 1. Latar Belakang & Risiko
+### Community 159 - "v0.6.2 Full-Scope Release Decision"
+Cohesion: 0.17
+Nodes (12): GPG/cosign Installer Signature, Handoff 007 (v0.6.1), Multi-line Block Comment Tracking (mux-code), Opsi A — Phased Iterative Release, SOC 1/2/3 Trust Services Security Requirement, Manual Smoke Termux+proot Screen-off 10 mnt, Threat Model per Fitur, Reverse-Proxy Mode (--trusted-proxies) (+4 more)
 
 ### Community 161 - "1. Latar Belakang & Risiko"
 Cohesion: 0.50
 Nodes (4): 1.1 Laporan Bug (verbatim ringkas), 1.2 Kondisi Saat Ini (fakta kode — titik awal), 1.3 Root-Cause Analysis, 1. Latar Belakang & Risiko
 
-### Community 162 - "4. Milestone A — Backend: `work_dir` di Respons + Versi `0.5.1` (`V051-001`, `V051-005`)"
-Cohesion: 0.50
-Nodes (4): 4.1 Perilaku Target, 4.2 Keputusan Desain, 4.3 Acceptance Milestone A, 4. Milestone A — Backend: `work_dir` di Respons + Versi `0.5.1` (`V051-001`, `V051-005`)
+### Community 162 - "files.rs"
+Cohesion: 0.20
+Nodes (14): Single-Folder Workspace Model, DirectoryListing, FileEntry, FsAction, list_directory(), Path, Result, String (+6 more)
 
-### Community 171 - "5. Milestone B — Frontend: Header = Server `work_dir` + Version Gate (`V051-002`, `V051-003`)"
-Cohesion: 0.50
-Nodes (4): 5.1 Perilaku Target, 5.2 Keputusan Desain, 5.3 Acceptance Milestone B, 5. Milestone B — Frontend: Header = Server `work_dir` + Version Gate (`V051-002`, `V051-003`)
+### Community 171 - "Mux Web UI — v0.2 Implementation Checklist & Verification Matrix"
+Cohesion: 0.22
+Nodes (9): Langkah 1 — Harness test + regression (harus hijau sejak awal), Langkah 2 — Milestone A: Auth + TLS, Langkah 3 — Milestone B: Session persistence, Langkah 4 — CI, Langkah 5-6 — Traceability, README, update.sh, Langkah 7 — Rilis, Mux Web UI — v0.2 Implementation Checklist & Verification Matrix, Open questions yang diputuskan saat implementasi (+1 more)
 
 ### Community 176 - "6. Milestone C — Prompt Rendering Tanpa Kotak Rusak (`V051-004`)"
 Cohesion: 0.50
 Nodes (4): 6.1 Perilaku Target, 6.2 Keputusan Desain, 6.3 Acceptance Milestone C, 6. Milestone C — Prompt Rendering Tanpa Kotak Rusak (`V051-004`)
 
+### Community 181 - "3. Milestone C — PDF Reader 📄 (`PDF-001..007`) ✅"
+Cohesion: 0.50
+Nodes (4): 3. Milestone C — PDF Reader 📄 (`PDF-001..007`) ✅, Green & gates, Impl, Red
+
+### Community 182 - "Job: Release (multi-target matrix)"
+Cohesion: 0.29
+Nodes (7): minisign release signing (proposed), Job: Budget & Metric Verification, Job: Cross-Compile Check (Android ARM64), Job: Installer & Updater Test (DIST-013), Job: Release (multi-target matrix), Job: Assemble Release (checksums.txt), Job: Build & Test (Linux x86_64)
+
 ### Community 183 - "Mux Web UI — v0.3 plan: Terminal Resizing & Window Control Hardening"
 Cohesion: 0.15
 Nodes (13): 1.1 Fakta Kode Titik Awal, 1. Latar Belakang dan Fakta Kode, 2. Hubungan dengan Rencana dan Requirement, 3. Threat Model, 4. Milestone A — Backend Dimension Clamping & Robustness, 5. Milestone B — Frontend Window Resize Handles & Debounce, 6. Milestone C — Automated Test Suite & Traceability, 7. Definition of Done (DoD) (+5 more)
 
-### Community 184 - "archive_tests.rs"
-Cohesion: 0.28
-Nodes (9): create_sample_tar_gz(), create_sample_zip(), create_traversal_zip(), Path, PathBuf, test_arc_001_inspect_zip_and_tar(), test_arc_002_extract_zip_clean(), test_arc_003_extract_tar_gz_clean() (+1 more)
+### Community 184 - "Handoff 008 — v0.6.2 Editor Polish & Virtualisasi Penuh, Agents UX, Persist Layout, Network Hardening, Signing, Distro Mgmt"
+Cohesion: 0.40
+Nodes (5): 1. Yang dikerjakan (semua milestone A–H), 2. Keputusan implementasi (D-log), 3. Gates (semua hijau), 4. Pending (user-side), Handoff 008 — v0.6.2 Editor Polish & Virtualisasi Penuh, Agents UX, Persist Layout, Network Hardening, Signing, Distro Mgmt
+
+### Community 199 - "016b — Checklist Codex Studio (v0.6.7)"
+Cohesion: 0.20
+Nodes (9): 016b — Checklist Codex Studio (v0.6.7), Definition of Done sesi ini, Milestone A — Session Engine (CDX-001..006) — SESI INI, Milestone B — Studio UI (CDX-010..016) — SESI INI, Milestone C — Profiles, Providers & Login (CDX-020..026) — menyusul, Milestone D — MCP Manager (CDX-030..034) — menyusul, Milestone E — Skills Manager (CDX-040..044) — menyusul, Milestone F — Subagents (CDX-050..054) — menyusul (+1 more)
+
+### Community 200 - "markdownLite.ts"
+Cohesion: 0.43
+Nodes (5): Bubbles(), escapeHtml(), ESCAPES, renderInline(), renderMarkdownLite()
+
+### Community 201 - "app.tsx"
+Cohesion: 0.47
+Nodes (4): SPA mount point (#app + main.tsx), App(), DesktopCanvas(), root
+
+### Community 203 - "4. Milestone A — Backend: `work_dir` di Respons + Versi `0.5.1` (`V051-001`, `V051-005`)"
+Cohesion: 0.50
+Nodes (4): 4.1 Perilaku Target, 4.2 Keputusan Desain, 4.3 Acceptance Milestone A, 4. Milestone A — Backend: `work_dir` di Respons + Versi `0.5.1` (`V051-001`, `V051-005`)
+
+### Community 204 - "5. Milestone B — Frontend: Header = Server `work_dir` + Version Gate (`V051-002`, `V051-003`)"
+Cohesion: 0.50
+Nodes (4): 5.1 Perilaku Target, 5.2 Keputusan Desain, 5.3 Acceptance Milestone B, 5. Milestone B — Frontend: Header = Server `work_dir` + Version Gate (`V051-002`, `V051-003`)
+
+### Community 206 - "BrowserView.tsx"
+Cohesion: 0.50
+Nodes (3): browser.test.tsx, BrowserView(), Tab
+
+### Community 207 - "StartMenu.tsx"
+Cohesion: 0.50
+Nodes (3): APPS, StartMenu(), StartMenuProps
 
 ## Ambiguous Edges - Review These
 - `Job: Assemble Release (checksums.txt)` → `minisign release signing (proposed)`  [AMBIGUOUS]
@@ -739,7 +794,7 @@ Nodes (9): create_sample_tar_gz(), create_sample_zip(), create_traversal_zip(), 
   session-ses_fc80_AFK_DIEM.md · relation: conceptually_related_to
 
 ## Knowledge Gaps
-- **1169 isolated node(s):** `mux-web`, `check_budget.sh script`, `Assets`, `uninstall.sh script`, `name` (+1164 more)
+- **1198 isolated node(s):** `mux-web`, `check_budget.sh script`, `Assets`, `uninstall.sh script`, `name` (+1193 more)
   These have ≤1 connection - possible missing edges or undocumented components.
 - **65 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
 
@@ -752,11 +807,11 @@ _Questions this graph is uniquely positioned to answer:_
   _Edge tagged AMBIGUOUS (relation: conceptually_related_to) - confidence is low._
 - **What is the exact relationship between `Terminal Tab Layout Persist/Restore (TAB-010/011)` and `User Report: Terminal Offline After AFK/Idle While Codex Session Running`?**
   _Edge tagged AMBIGUOUS (relation: conceptually_related_to) - confidence is low._
-- **Why does `EDT-001..010 Requirement Family (Integrated Terminal & Open)` connect `FolderPicker.tsx` to `000a.plan-test.md`?**
-  _High betweenness centrality (0.166) - this node is a cross-community bridge._
-- **Why does `v0.2 Implementation Checklist & Verification Matrix` connect `SessionRegistry` to `auth.rs`, `000a.plan-test.md`, `mux-web Server Binary`?**
-  _High betweenness centrality (0.140) - this node is a cross-community bridge._
+- **Why does `EDT-001..010 Requirement Family (Integrated Terminal & Open)` connect `FolderPicker.tsx` to `traceability.md`?**
+  _High betweenness centrality (0.167) - this node is a cross-community bridge._
 - **Why does `Rencana v0.6.2 — Editor Polish, Agents UX, Network/Supply-chain Hardening & Distro Management` connect `Rencana v0.6.2 — Editor Polish, Agents UX, Network/Supply-chain Hardening & Distro Management` to `010b.plan-checklist.md`, `011b.plan-checklist.md`, `v0.6.2 development planning from specs`?**
-  _High betweenness centrality (0.126) - this node is a cross-community bridge._
+  _High betweenness centrality (0.146) - this node is a cross-community bridge._
+- **Why does `v0.2 Implementation Checklist & Verification Matrix` connect `RingBuffer` to `Mux Web UI — v0.2.1 Implementation Checklist & Verification Matrix`, `auth.rs`, `000a.plan-test.md`, `Mux Web UI — v0.2 Implementation Checklist & Verification Matrix`, `mux-web Server Binary`?**
+  _High betweenness centrality (0.135) - this node is a cross-community bridge._
 - **What connects `mux-web`, `check_budget.sh script`, `Assets` to the rest of the system?**
-  _1169 weakly-connected nodes found - possible documentation gaps or missing edges._
+  _1198 weakly-connected nodes found - possible documentation gaps or missing edges._

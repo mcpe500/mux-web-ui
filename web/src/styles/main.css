@@ -380,5 +380,10 @@ button {
 .codex-md a {
   color: #818cf8;
 }
+.codex-md img {
+  max-width: 100%;
+  border-radius: 6px;
+  border: 1px solid #334155;
+}
 
 

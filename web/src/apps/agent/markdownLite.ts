@@ -2,7 +2,9 @@
 // Zero dependencies (ringan, D3): every character is HTML-escaped BEFORE any
 // markdown transform runs, so injected markup can never leave the text layer.
 // Supported: fenced code blocks, headings (#..###), bullet/numbered lists,
-// inline `code`, **bold**, *italic*, [text](http/https URL only).
+// inline `code`, **bold**, *italic*, [text](http/https URL only),
+// ![alt](https/data:image URL only) — amend 2026-08-28; other image srcs
+// stay literal text (chat context has no fs root to resolve relatives).
 
 const ESCAPES: Record<string, string> = {
   '&': '&amp;',
@@ -21,6 +23,12 @@ function renderInline(escaped: string): string {
   let out = escaped;
   // inline code first — its content must not be further transformed
   out = out.replace(/`([^`\n]+)`/g, (_m, code: string) => `<code>${code}</code>`);
+  // images BEFORE links (link regex would consume the `[alt](src)` part);
+  // https/data:image only — escaped quotes can't break the attribute
+  out = out.replace(
+    /!\[([^\]\n]*)\]\((https?:\/\/[^\s)]+|data:image\/[^\s)]+)\)/g,
+    (_m, alt: string, src: string) => `<img src="${src}" alt="${alt}" loading="lazy">`,
+  );
   // links: [text](http…/https…) only — escaped quotes can't appear in URLs
   out = out.replace(
     /\[([^\]\n]+)\]\((https?:\/\/[^\s)]+)\)/g,

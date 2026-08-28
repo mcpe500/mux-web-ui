@@ -3,7 +3,9 @@
 // inside `text` fields INTENTIONALLY as literal text; renderToNodes emits
 // flat descriptors {tag,text} that consumers MUST map onto preact
 // children-as-text (never innerHTML / dangerouslySetInnerHTML). Link hrefs
-// with any scheme other than http(s)/#/relative are coerced to '#'.
+// with any scheme other than http(s)/#/relative are coerced to '#'. Image
+// srcs (amend 2026-08-28): http(s)/data:image/*/relative pass; any other
+// scheme keeps the whole `![alt](src)` as literal text.
 export type Token =
   | { type: 'heading'; level: number; text: string }
   | { type: 'text'; text: string }
@@ -13,6 +15,7 @@ export type Token =
   | { type: 'bold'; text: string }
   | { type: 'italic'; text: string }
   | { type: 'inline_code'; text: string }
+  | { type: 'image'; alt: string; src: string }
   | { type: 'link'; text: string; href: string };
 
 export function sanitizeHref(href: string): string {
@@ -27,6 +30,20 @@ export function sanitizeHref(href: string): string {
   return h;
 }
 
+/** null = disallowed scheme → caller keeps `![alt](src)` as literal text. */
+export function sanitizeImgSrc(src: string): string | null {
+  const h = src.trim();
+  const scheme = /^[a-zA-Z][a-zA-Z0-9+.-]*:/.exec(h);
+  if (scheme) {
+    const s = scheme[0].slice(0, -1).toLowerCase();
+    if (s === 'http' || s === 'https') return h;
+    if (s === 'data' && /^data:image\//i.test(h)) return h;
+    return null;
+  }
+  // no scheme: relative / absolute-path are fine
+  return h;
+}
+
 type InlineFn = (t: Token[]) => Token[];
 
 const runInline = (src: string, chain: InlineFn[]): Token[] =>
@@ -37,8 +54,17 @@ const RULES: { re: RegExp; build: (m: RegExpExecArray) => Token }[] = [
   { re: /\*([^*]+)\*/, build: (m) => ({ type: 'italic', text: m[1] }) },
   { re: /`([^`]+)`/, build: (m) => ({ type: 'inline_code', text: m[1] }) },
   {
-    re: /\[([^\]]+)\]\(([^)\s]+)\)/,
+    // negative lookbehind: `[x](y)` preceded by `!` belongs to the image rule,
+    // which runs LAST so its literal-text fallback is never re-consumed
+    re: /(?<!!)\[([^\]]+)\]\(([^)\s]+)\)/,
     build: (m) => ({ type: 'link', text: m[1], href: sanitizeHref(m[2]) }),
+  },
+  {
+    re: /!\[([^\]]*)\]\(([^)\s]+)(?:\s+"[^"]*")?\)/,
+    build: (m) => {
+      const src = sanitizeImgSrc(m[2]);
+      return src === null ? { type: 'text', text: m[0] } : { type: 'image', alt: m[1], src };
+    },
   },
 ];
 
@@ -63,7 +89,13 @@ const makeSplitter = (ruleIdx: number): InlineFn => (tokens) => {
   return out;
 };
 
-const inlineChain: InlineFn[] = [makeSplitter(0), makeSplitter(1), makeSplitter(2), makeSplitter(3)];
+const inlineChain: InlineFn[] = [
+  makeSplitter(0),
+  makeSplitter(1),
+  makeSplitter(2),
+  makeSplitter(3),
+  makeSplitter(4),
+];
 
 export function tokenizeMarkdown(src: string): Token[] {
   const lines = src.split('\n');
@@ -114,9 +146,10 @@ export function tokenizeMarkdown(src: string): Token[] {
 
 // Renderer descriptors — flat, no HTML strings anywhere downstream.
 export interface RenderNode {
-  tag: 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'p' | 'li' | 'pre' | 'blockquote' | 'span' | 'a' | 'code' | 'em' | 'strong';
+  tag: 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'p' | 'li' | 'pre' | 'blockquote' | 'span' | 'a' | 'code' | 'em' | 'strong' | 'img';
   text: string;
   href?: string;
+  src?: string;
   lang?: string;
 }
 
@@ -139,6 +172,8 @@ export function renderToNodes(tokens: Token[]): RenderNode[] {
         return { tag: 'em', text: t.text };
       case 'inline_code':
         return { tag: 'code', text: t.text };
+      case 'image':
+        return { tag: 'img', text: t.alt, src: t.src };
       case 'link':
         return { tag: 'a', text: t.text, href: t.href };
     }
