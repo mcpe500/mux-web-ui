@@ -144,12 +144,29 @@ function classify(line: string): Classified {
   if (!o) return { events: [], recognized: false };
 
   const msg = obj(o.msg);
-  if (msg) return fromV1Msg(msg);
+  if (msg) {
+    // CDX-002 (spec 016): lifecycle shapes are recognized (no drift penalty).
+    const mt = str(msg.type);
+    if (mt === 'session_configured' || mt === 'turn.completed' || mt === 'turn.failed') {
+      return { events: [], recognized: true };
+    }
+    return fromV1Msg(msg);
+  }
 
   const type = str(o.type);
   if (type === 'error') {
     const message = str(o.message) ?? '';
     return { events: [{ kind: 'error', message }], recognized: true };
+  }
+  // CDX-002 (spec 016): v2 lifecycle events — recognized, zero events.
+  if (
+    type === 'thread.started' ||
+    type === 'thread.resumed' ||
+    type === 'session.created' ||
+    type === 'turn.completed' ||
+    type === 'turn.failed'
+  ) {
+    return { events: [], recognized: true };
   }
   if (type === 'item.completed' || type === 'item.updated') {
     const item = obj(o.item);
@@ -165,6 +182,55 @@ function classify(line: string): Classified {
  */
 export function parseCodexJsonLine(line: string): CodexEvent[] {
   return classify(line.trim()).events;
+}
+
+/**
+ * CDX-001 (spec 016): extracts the codex thread/session id from ONE JSONL
+ * line. Tolerant: unknown/invalid shapes → null. Known carriers:
+ *   {"type":"thread.started","thread_id":"..."}   (v2, also thread.resumed)
+ *   {"type":"session.created","session":{"id":"..."}} | {"session_id":"..."}
+ *   {"msg":{"type":"session_configured","session_id":"..."}}  (legacy v1)
+ */
+export function extractCodexThreadId(line: string): string | null {
+  let parsed: unknown;
+  try {
+    parsed = JSON.parse(line.trim());
+  } catch {
+    return null;
+  }
+  const o = obj(parsed);
+  if (!o) return null;
+  const type = str(o.type);
+  if (type === 'thread.started' || type === 'thread.resumed') return str(o.thread_id);
+  if (type === 'session.created') {
+    return str(o.session_id) ?? str(obj(o.session)?.id);
+  }
+  if (type === 'session_configured') return str(o.session_id);
+  const msg = obj(o.msg);
+  if (msg && str(msg.type) === 'session_configured') return str(msg.session_id);
+  return null;
+}
+
+const TURN_END_TYPES: ReadonlySet<string> = new Set(['turn.completed', 'turn.failed']);
+
+/**
+ * CDX-002 (spec 016): true when this JSONL line signals the end of a turn —
+ * the multi-turn engine uses it to flip running→idle and trigger autosave.
+ * Tolerant: invalid JSON → false.
+ */
+export function isTurnEndLine(line: string): boolean {
+  let parsed: unknown;
+  try {
+    parsed = JSON.parse(line.trim());
+  } catch {
+    return false;
+  }
+  const o = obj(parsed);
+  if (!o) return false;
+  if (str(o.type) !== null && TURN_END_TYPES.has(str(o.type)!)) return true;
+  const msg = obj(o.msg);
+  if (msg && str(msg.type) !== null && TURN_END_TYPES.has(str(msg.type)!)) return true;
+  return false;
 }
 
 /**

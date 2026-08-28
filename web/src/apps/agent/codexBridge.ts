@@ -20,6 +20,18 @@ export class OutputPump {
     return this.accumulator.analyzeNow();
   }
 
+  /** CDX-003 (spec 016): latest codex thread id observed in the output. */
+  threadId(): string | null {
+    return this.accumulator.threadId;
+  }
+
+  /** CDX-003 (spec 016): true once per completed turn (latched until drained). */
+  drainTurnEnded(): boolean {
+    const ended = this.accumulator.turnEnded;
+    this.accumulator.turnEnded = false;
+    return ended;
+  }
+
   reset(): void {
     this.decoder = new TextDecoder();
     this.accumulator.resetForTest();

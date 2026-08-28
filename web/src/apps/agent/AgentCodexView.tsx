@@ -27,7 +27,7 @@ import {
   shouldStopOnFrame,
 } from '../terminal/reconnect';
 import '@xterm/xterm/css/xterm.css';
-import { ALLOWED_SANDBOXES, buildCodexExecArgs, validateCodexOpts } from './codexArgs';
+import { ALLOWED_SANDBOXES, buildCodexExecArgs, buildCodexResumeArgs, validateCodexOpts, validateResumeOpts } from './codexArgs';
 import type { SandboxMode } from './codexArgs';
 import type { CodexEvent } from './codexEvents';
 import {
@@ -42,9 +42,17 @@ import {
   keystrokesFor,
   modelListFromRouter,
   shouldAutoSwitchToTerminal,
-  trimHistory,
 } from './codexBridge';
-import type { HistorySession } from './codexBridge';
+import {
+  SESSION_STORE_FULL,
+  allTags,
+  capTranscript,
+  codexSessionStore,
+  normalizeTag,
+  searchSessions,
+} from './sessionStore';
+import type { CodexSessionRecord } from './sessionStore';
+import { renderMarkdownLite } from './markdownLite';
 import { defaultLocalStorageStore, validateCodexPrompt } from './promptLibrary';
 import type { LibEntry } from './promptLibrary';
 
@@ -65,27 +73,35 @@ function Bubbles({ events }: { events: CodexEvent[] }) {
       {events.map((ev, i) => {
         if (ev.kind === 'user')
           return (
-            <div key={i} style={{ alignSelf: 'flex-end', maxWidth: '85%', background: '#3730a3', color: '#eef2ff', padding: '6px 10px', borderRadius: 12 }}>
+            <div key={i} style={{ alignSelf: 'flex-end', maxWidth: '85%', background: '#3730a3', color: '#eef2ff', padding: '6px 10px', borderRadius: 12, whiteSpace: 'pre-wrap' }}>
               {ev.text}
             </div>
           );
         if (ev.kind === 'assistant')
           return (
-            <div key={i} style={{ alignSelf: 'flex-start', maxWidth: '85%', background: '#1e293b', color: '#e2e8f0', padding: '6px 10px', borderRadius: 12 }}>
-              {ev.text}
-            </div>
+            <div
+              key={i}
+              class="codex-md"
+              // CDX-011 (spec 016): markdownLite escapes ALL HTML before
+              // transforms — XSS-safe by construction (see markdownLite.test).
+              dangerouslySetInnerHTML={{ __html: renderMarkdownLite(ev.text) }}
+              style={{ alignSelf: 'flex-start', maxWidth: '92%', background: '#1e293b', color: '#e2e8f0', padding: '6px 10px', borderRadius: 12, fontSize: 13, lineHeight: 1.55, overflowX: 'auto' }}
+            />
           );
         if (ev.kind === 'error')
           return (
-            <div key={i} style={{ background: '#7f1d1d', color: '#fee2e2', padding: '4px 10px', borderRadius: 8 }}>
+            <div key={i} style={{ background: '#7f1d1d', color: '#fee2e2', padding: '4px 10px', borderRadius: 8, fontSize: 12 }}>
               ⚠ {ev.message}
             </div>
           );
         if (ev.kind === 'tool_result')
           return (
-            <div key={i} style={{ opacity: 0.65, fontFamily: 'monospace', fontSize: 12, whiteSpace: 'pre-wrap', borderLeft: '3px solid #334155', paddingLeft: 8 }}>
-              ▤ result[{ev.id}] {ev.output}
-            </div>
+            <details key={i} style={{ opacity: 0.7, borderLeft: '3px solid #334155', paddingLeft: 8 }}>
+              <summary style={{ fontFamily: 'monospace', fontSize: 11, cursor: 'pointer', color: '#94a3b8' }}>
+                ▤ result[{ev.id}] ({ev.output.length} chars)
+              </summary>
+              <pre style={{ whiteSpace: 'pre-wrap', margin: '4px 0', fontSize: 11, color: '#94a3b8' }}>{ev.output}</pre>
+            </details>
           );
         return (
           <details key={i} style={{ fontFamily: 'monospace', fontSize: 12, color: '#94a3b8' }}>
@@ -403,8 +419,19 @@ export function AgentCodexView({ rootId, cwdPath, onClose }: AgentCodexViewProps
   const [toast, setToast] = useState<string | null>(null);
   const [noticeLog, setNoticeLog] = useState<string[]>([]);
   const [auditLog, setAuditLog] = useState<string[]>([]);
-  const [history, setHistory] = useState<HistorySession[]>([]);
   const [showLibrary, setShowLibrary] = useState(false);
+
+  // CDX-012 (spec 016): persistent session browser state
+  const [sessions, setSessions] = useState<CodexSessionRecord[]>([]);
+  const [sessionQuery, setSessionQuery] = useState('');
+  const [sessionTagFilter, setSessionTagFilter] = useState('');
+  const [editingTagsFor, setEditingTagsFor] = useState<string | null>(null);
+  const [tagDraft, setTagDraft] = useState('');
+  const [storeNotice, setStoreNotice] = useState<string | null>(null);
+
+  // CDX-006 (spec 016): multi-turn engine state
+  const [turnRunning, setTurnRunning] = useState(false);
+  const [webSearch, setWebSearch] = useState(false);
 
   const [envOptions, setEnvOptions] = useState<EnvOption[]>([{ id: 'termux' }]);
   const [envId, setEnvId] = useState('termux');
@@ -429,15 +456,64 @@ export function AgentCodexView({ rootId, cwdPath, onClose }: AgentCodexViewProps
   const errorBurstRef = useRef(0);
   const driftFiredRef = useRef(false);
   const surfaceRef = useRef<Surface>('chat');
+  /** CDX-006: live session record (thread id, tags, transcript autosave). */
+  const currentSessionRef = useRef<CodexSessionRecord | null>(null);
+  /** CDX-006: true while a codex turn is executing inside the PTY shell. */
+  const turnRunningRef = useRef(false);
+  /** CDX-016: resumed sessions skip the auto-typed launch line. */
+  const pendingResumeRef = useRef(false);
+  const eventsRef = useRef<CodexEvent[]>([]);
+  const saveTimerRef = useRef<number | null>(null);
 
   const workspaceKey = rootId || 'default';
   const store = useMemo(() => defaultLocalStorageStore(workspaceKey), [workspaceKey]);
+  const sessionStore = useMemo(() => codexSessionStore(workspaceKey), [workspaceKey]);
 
   const logAction = (entry: string) => setAuditLog((log) => buildAuditEntry(log, entry));
+
+  const refreshSessions = () => {
+    try {
+      setSessions(sessionStore.list());
+      setStoreNotice(null);
+    } catch {
+      setStoreNotice('Penyimpanan sesi tidak tersedia');
+    }
+  };
+
+  /** CDX-006: debounced transcript autosave (1s) — cheap, quota-capped. */
+  const scheduleSessionSave = () => {
+    if (saveTimerRef.current !== null) window.clearTimeout(saveTimerRef.current);
+    saveTimerRef.current = window.setTimeout(() => {
+      saveTimerRef.current = null;
+      saveSessionNow();
+    }, 1000);
+  };
+
+  const saveSessionNow = () => {
+    const rec = currentSessionRef.current;
+    if (!rec) return;
+    try {
+      sessionStore.save({
+        ...rec,
+        lastActiveAt: Date.now(),
+        transcript: capTranscript(eventsRef.current),
+      });
+      setStoreNotice(null);
+    } catch (err) {
+      setStoreNotice(err instanceof Error && err.message === SESSION_STORE_FULL
+        ? 'Penyimpanan sesi penuh — hapus sesi lama'
+        : 'Gagal menyimpan sesi');
+    }
+  };
 
   useEffect(() => {
     setLibEntries(store.list());
   }, [store]);
+
+  useEffect(() => {
+    refreshSessions();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [sessionStore]);
 
   useEffect(() => {
     let cancelled = false;
@@ -479,16 +555,23 @@ export function AgentCodexView({ rootId, cwdPath, onClose }: AgentCodexViewProps
     setLiveOver(false);
     setSessionId(metaId);
     setEvents([]);
+    eventsRef.current = [];
     setSurface('chat');
     errorBurstRef.current = 0;
     driftFiredRef.current = false;
     typedLaunchRef.current = false;
+    turnRunningRef.current = false;
+    setTurnRunning(false);
     pumpRef.current = new OutputPump();
   };
 
   const ingestEvents = (incoming: CodexEvent[]) => {
     if (incoming.length === 0) return;
-    setEvents((prev) => [...prev, ...incoming].slice(-MAX_HISTORY_EVENTS * 2));
+    setEvents((prev) => {
+      const next = [...prev, ...incoming].slice(-MAX_HISTORY_EVENTS * 2);
+      eventsRef.current = next;
+      return next;
+    });
     for (const ev of incoming) {
       errorBurstRef.current = incrementErrorBurst(errorBurstRef.current, ev);
     }
@@ -513,6 +596,7 @@ export function AgentCodexView({ rootId, cwdPath, onClose }: AgentCodexViewProps
       model: activeModel,
       sandbox,
       prompt: taskPrompt.trim(),
+      search: webSearch,
     });
 
   const launch = async () => {
@@ -553,17 +637,24 @@ export function AgentCodexView({ rootId, cwdPath, onClose }: AgentCodexViewProps
       if (!meta.id) throw new Error('response tanpa id sesi');
       const metaId = meta.id;
       startNewLaunchData(metaId);
-      setHistory((h) =>
-        trimHistory([
-          ...h,
-          {
-            id: metaId,
-            title: taskPrompt.trim().slice(0, 60),
-            startedAt: Date.now(),
-            events: [],
-          },
-        ]),
-      );
+      pendingResumeRef.current = false;
+      // CDX-004/006: persist the session record (thread id diisi saat event masuk)
+      const rec: CodexSessionRecord = {
+        id: metaId,
+        threadId: null,
+        title: taskPrompt.trim().slice(0, 60),
+        tags: [],
+        envId: envId || 'termux',
+        model: activeModel,
+        sandbox,
+        startedAt: Date.now(),
+        lastActiveAt: Date.now(),
+        status: 'live',
+        transcript: [],
+      };
+      currentSessionRef.current = rec;
+      saveSessionNow();
+      refreshSessions();
       logAction(`launch ${activeModel ?? 'default'} @${envId}/${sandbox}`);
     } catch (err) {
       console.error('codex launch failed:', err);
@@ -573,15 +664,111 @@ export function AgentCodexView({ rootId, cwdPath, onClose }: AgentCodexViewProps
     }
   };
 
+  /** CDX-003/006: output pump bookkeeping — thread id + turn end + autosave. */
+  const onCodexOutput = (merged: Uint8Array) => {
+    const pump = pumpRef.current;
+    if (!pump) return;
+    ingestEvents(pump.push(merged));
+    if (currentSessionRef.current) {
+      const tid = pump.threadId();
+      if (tid && currentSessionRef.current.threadId !== tid) {
+        currentSessionRef.current = { ...currentSessionRef.current, threadId: tid };
+      }
+      if (pump.drainTurnEnded()) {
+        turnRunningRef.current = false;
+        setTurnRunning(false);
+        saveSessionNow();
+        refreshSessions();
+        logAction('turn-completed');
+      } else {
+        scheduleSessionSave();
+      }
+    }
+  };
+
+  /** CDX-016: continue a persisted session — new PTY, transcript restored. */
+  const resumeSession = async (rec: CodexSessionRecord) => {
+    if (launchBusy) return;
+    setLaunchBusy(true);
+    setLauncherError(null);
+    try {
+      const res = await fetch('/api/v1/terminals', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          cwd_root: rootId || undefined,
+          cwd_path: cwdPath || undefined,
+          env_id: rec.envId || undefined,
+        }),
+      });
+      if (!res.ok) throw new Error(`create failed (${res.status})`);
+      const meta = (await res.json()) as { id?: string };
+      if (!meta.id) throw new Error('response tanpa id sesi');
+      startNewLaunchData(meta.id);
+      pendingResumeRef.current = true;
+      currentSessionRef.current = { ...rec, id: meta.id, status: 'live', lastActiveAt: Date.now() };
+      const restored = rec.transcript.slice(-MAX_HISTORY_EVENTS * 2);
+      setEvents(restored);
+      eventsRef.current = restored;
+      setModelText(rec.model ?? '');
+      if (rec.sandbox && (ALLOWED_SANDBOXES as readonly string[]).includes(rec.sandbox)) {
+        setSandbox(rec.sandbox as SandboxMode);
+      }
+      saveSessionNow();
+      refreshSessions();
+      logAction(`resume-session ${rec.id.slice(0, 8)}${rec.threadId ? ' (thread ada)' : ''}`);
+    } catch (err) {
+      console.error('codex resume failed:', err);
+      setLauncherError(err instanceof Error ? err.message : 'Gagal melanjutkan sesi');
+    } finally {
+      setLaunchBusy(false);
+    }
+  };
+
+  const deleteSession = (id: string) => {
+    sessionStore.remove(id);
+    refreshSessions();
+    logAction('delete-session');
+  };
+
+  const commitTagDraft = (id: string) => {
+    const tag = normalizeTag(tagDraft);
+    if (tag === '') {
+      setEditingTagsFor(null);
+      return;
+    }
+    const rec = sessions.find((s) => s.id === id);
+    if (rec && !rec.tags.includes(tag)) {
+      sessionStore.setTags(id, [...rec.tags, tag]);
+      refreshSessions();
+    }
+    setTagDraft('');
+  };
+
+  const removeTag = (id: string, tag: string) => {
+    const rec = sessions.find((s) => s.id === id);
+    if (!rec) return;
+    sessionStore.setTags(id, rec.tags.filter((t) => t !== tag));
+    refreshSessions();
+  };
+
   /** Types the composed single-line command ONCE per session, post-open. */
   const typeLaunchLineOnce = () => {
     if (typedLaunchRef.current) return;
+    // CDX-016: resumed sessions do NOT auto-type — the first composer send
+    // composes the `codex exec resume` line instead.
+    if (pendingResumeRef.current) {
+      typedLaunchRef.current = true;
+      return;
+    }
     const write = writerRef.current;
     if (!write) return;
     typedLaunchRef.current = true;
     try {
       const line = composeLaunchInput(launchArgs());
       write(new TextEncoder().encode(line));
+      turnRunningRef.current = true;
+      setTurnRunning(true);
       logAction('type-launch-line');
     } catch (err) {
       typedLaunchRef.current = false;
@@ -595,20 +782,96 @@ export function AgentCodexView({ rootId, cwdPath, onClose }: AgentCodexViewProps
     write(new TextEncoder().encode(text));
   };
 
-  const backToLauncher = () => {
-    if (pumpRef.current) {
-      const snapshot = pumpRef.current.accumulator.eventsSnapshot();
-      setHistory((h) => {
-        if (h.length === 0) return h;
-        const next = [...h];
-        const cur = next[next.length - 1]!;
-        next[next.length - 1] = { ...cur, events: snapshot.slice(-MAX_HISTORY_EVENTS) };
-        return next;
+  /**
+   * CDX-006/014: the composer is turn-aware. While a codex turn is running
+   * the text is forwarded raw (approvals, mid-run steering). When idle the
+   * text NEVER reaches the shell bare — it becomes a new turn: `codex exec`
+   * (fresh) or `codex exec resume <threadId>` (continuation), argv-quoted.
+   */
+  const sendComposer = () => {
+    const text = draft.trim();
+    if (text === '' || liveOver) return;
+    if (turnRunningRef.current) {
+      sendRawKeys(text + '\n');
+      setDraft('');
+      logAction('composer-raw');
+      return;
+    }
+    const threadId = currentSessionRef.current?.threadId ?? null;
+    let args: string[];
+    if (threadId) {
+      const rejection = validateResumeOpts({
+        threadId,
+        prompt: text,
+        model: activeModel,
+        sandbox,
+        search: webSearch,
       });
+      if (rejection !== null) {
+        setLauncherError(rejection);
+        return;
+      }
+      args = buildCodexResumeArgs({
+        threadId,
+        prompt: text,
+        model: activeModel,
+        sandbox,
+        search: webSearch,
+      });
+    } else {
+      const rejection = validateCodexOpts({ model: activeModel, sandbox, prompt: text });
+      if (rejection !== null) {
+        setLauncherError(rejection);
+        return;
+      }
+      args = buildCodexExecArgs({ model: activeModel, sandbox, prompt: text, search: webSearch });
+    }
+    try {
+      const line = composeLaunchInput(args); // multiline gate before any send
+      sendRawKeys(line);
+    } catch (err) {
+      setLauncherError(
+        err instanceof Error && err.message === LAUNCH_MULTILINE_ERROR
+          ? 'Prompt tidak boleh mengandung baris baru di jalur ketik ini'
+          : 'Gagal menyusun argumen turn',
+      );
+      return;
+    }
+    // optimistic user bubble + turn bookkeeping
+    setEvents((prev) => {
+      const next = [...prev, { kind: 'user', text } as CodexEvent].slice(-MAX_HISTORY_EVENTS * 2);
+      eventsRef.current = next;
+      return next;
+    });
+    turnRunningRef.current = true;
+    setTurnRunning(true);
+    if (currentSessionRef.current && !currentSessionRef.current.title) {
+      currentSessionRef.current = { ...currentSessionRef.current, title: text.slice(0, 60) };
+    }
+    setDraft('');
+    setLauncherError(null);
+    logAction(threadId ? 'composer-resume-turn' : 'composer-new-turn');
+  };
+
+  const backToLauncher = () => {
+    if (currentSessionRef.current) {
+      const rec = currentSessionRef.current;
+      currentSessionRef.current = {
+        ...rec,
+        status: liveOver ? 'ended' : rec.status,
+      };
+      saveSessionNow();
+      refreshSessions();
     }
     setPhase('launch');
     logAction('back-to-launcher');
   };
+
+  const filteredSessions = searchSessions(sessions, sessionQuery, sessionTagFilter);
+  const tagList = allTags(sessions);
+  const threadBadge = currentSessionRef.current?.threadId
+    ? currentSessionRef.current.threadId.slice(0, 12)
+    : null;
 
   if (phase === 'launch') {
     return (
@@ -659,6 +922,11 @@ export function AgentCodexView({ rootId, cwdPath, onClose }: AgentCodexViewProps
           </label>
         </div>
 
+        <label style={{ display: 'flex', alignItems: 'center', gap: 6, marginTop: 10, cursor: 'pointer' }}>
+          <input type="checkbox" checked={webSearch} onChange={(e) => setWebSearch((e.target as HTMLInputElement).checked)} />
+          <span style={{ fontSize: 13 }}>🌐 Web search (codex --search)</span>
+        </label>
+
         <label style={labelStyle}>Tugas awal (prompt satu baris)</label>
         <textarea
           rows={3}
@@ -698,19 +966,102 @@ export function AgentCodexView({ rootId, cwdPath, onClose }: AgentCodexViewProps
           </div>
         )}
 
-        {history.length > 0 && (
-          <>
-            <label style={labelStyle}>Riwayat sesi ({history.length}, ring {20})</label>
-            <ul style={listStyle}>
-              {trimHistory(history).map((s) => (
-                <li key={s.id} style={{ marginBottom: 4 }}>
-                  <span style={{ fontFamily: 'monospace', fontSize: 12 }}>#{s.id}</span>{' '}
-                  {s.title} · {s.events.length} event
-                </li>
-              ))}
-            </ul>
-          </>
+        <label style={labelStyle}>Sesi tersimpan ({filteredSessions.length}/{sessions.length})</label>
+        <div style={{ display: 'flex', gap: 6 }}>
+          <input
+            value={sessionQuery}
+            onChange={(e) => setSessionQuery((e.target as HTMLInputElement).value)}
+            placeholder="🔍 cari judul / thread / tag…"
+            style={{ ...inputStyle, flex: 1 }}
+          />
+        </div>
+        {tagList.length > 0 && (
+          <div style={{ display: 'flex', flexWrap: 'wrap', gap: 4, marginTop: 6 }}>
+            <button
+              onClick={() => setSessionTagFilter('')}
+              style={{ ...btnGhostStyle, borderColor: sessionTagFilter === '' ? '#4f46e5' : '#334155' }}
+            >
+              semua
+            </button>
+            {tagList.map((t) => (
+              <button
+                key={t}
+                onClick={() => setSessionTagFilter(sessionTagFilter === t ? '' : t)}
+                style={{ ...btnGhostStyle, borderColor: sessionTagFilter === t ? '#4f46e5' : '#334155' }}
+              >
+                🏷 {t}
+              </button>
+            ))}
+          </div>
         )}
+        <ul style={{ ...listStyle, listStyle: 'none', paddingLeft: 0 }}>
+          {filteredSessions.map((s) => (
+            <li key={s.id} style={{ marginBottom: 8, padding: '6px 8px', background: '#0b1220', borderRadius: 8, border: '1px solid #1e293b' }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
+                <span title={s.status} style={{ color: s.status === 'live' ? '#22c55e' : '#64748b', fontSize: 10 }}>
+                  ●
+                </span>
+                <strong style={{ fontSize: 13, flex: 1, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+                  {s.title || '(tanpa judul)'}
+                </strong>
+                <button onClick={() => resumeSession(s)} disabled={launchBusy} style={btnGhostStyle}>
+                  ▶ Lanjutkan
+                </button>
+                <button onClick={() => deleteSession(s.id)} style={{ ...btnGhostStyle, color: '#f87171' }}>
+                  ✕
+                </button>
+              </div>
+              <div style={{ display: 'flex', flexWrap: 'wrap', gap: 4, marginTop: 4, alignItems: 'center' }}>
+                <span style={{ fontFamily: 'monospace', fontSize: 10, opacity: 0.6 }}>
+                  {s.threadId ? `thread ${s.threadId.slice(0, 12)}` : `#${s.id.slice(0, 8)}`} · {s.transcript.length} event · {s.envId}
+                  {s.model ? ` · ${s.model}` : ''}
+                </span>
+                {s.tags.map((t) => (
+                  <span key={t} style={{ fontSize: 10, background: '#1e293b', borderRadius: 8, padding: '1px 6px', display: 'inline-flex', alignItems: 'center', gap: 3 }}>
+                    🏷 {t}
+                    <span
+                      onClick={() => removeTag(s.id, t)}
+                      style={{ cursor: 'pointer', color: '#f87171' }}
+                      title="hapus tag"
+                    >
+                      ✕
+                    </span>
+                  </span>
+                ))}
+                {editingTagsFor === s.id ? (
+                  <span style={{ display: 'inline-flex', gap: 4 }}>
+                    <input
+                      autoFocus
+                      value={tagDraft}
+                      onChange={(e) => setTagDraft((e.target as HTMLInputElement).value)}
+                      onKeyDown={(e) => {
+                        if ((e as KeyboardEvent).key === 'Enter') commitTagDraft(s.id);
+                        if ((e as KeyboardEvent).key === 'Escape') setEditingTagsFor(null);
+                      }}
+                      placeholder="tag baru + Enter"
+                      style={{ ...inputStyle, width: 120, padding: '2px 6px', fontSize: 11 }}
+                    />
+                    <button onClick={() => commitTagDraft(s.id)} style={btnGhostStyle}>ok</button>
+                  </span>
+                ) : (
+                  <button
+                    onClick={() => {
+                      setEditingTagsFor(s.id);
+                      setTagDraft('');
+                    }}
+                    style={{ ...btnGhostStyle, fontSize: 10, padding: '1px 6px' }}
+                  >
+                    + tag
+                  </button>
+                )}
+              </div>
+            </li>
+          ))}
+          {filteredSessions.length === 0 && (
+            <li style={{ fontSize: 12, opacity: 0.6 }}>Belum ada sesi yang cocok.</li>
+          )}
+        </ul>
+        {storeNotice && <div style={noticeStyle}>{storeNotice}</div>}
 
         {auditLog.length > 0 && (
           <>
@@ -731,7 +1082,18 @@ export function AgentCodexView({ rootId, cwdPath, onClose }: AgentCodexViewProps
     <div style={{ width: '100%', height: '100%', display: 'flex', flexDirection: 'column', background: '#0f172a', color: '#e2e8f0' }}>
       <header style={{ display: 'flex', alignItems: 'center', gap: 8, padding: '6px 10px', borderBottom: '1px solid #1e293b' }}>
         <strong style={{ fontSize: 14 }}>🤖 Codex</strong>
-        <span style={{ fontFamily: 'monospace', fontSize: 11, opacity: 0.6 }}>#{sessionId}</span>
+        <span style={{ fontFamily: 'monospace', fontSize: 11, opacity: 0.6 }}>#{sessionId.slice(0, 8)}</span>
+        {threadBadge && (
+          <span title={currentSessionRef.current?.threadId ?? ''} style={{ fontFamily: 'monospace', fontSize: 10, background: '#1e293b', borderRadius: 8, padding: '1px 6px' }}>
+            thread {threadBadge}
+          </span>
+        )}
+        <span
+          title={turnRunning ? 'codex sedang mengerjakan turn' : 'idle — kirim pesan untuk turn baru'}
+          style={{ fontSize: 11, color: turnRunning ? '#fbbf24' : '#22c55e' }}
+        >
+          {turnRunning ? '🔄 running' : '⏸ idle'}
+        </span>
         <button
           onClick={() => {
             const next: Surface = surface === 'chat' ? 'terminal' : 'chat';
@@ -773,10 +1135,7 @@ export function AgentCodexView({ rootId, cwdPath, onClose }: AgentCodexViewProps
         <div style={{ position: 'absolute', inset: 0, display: surface === 'terminal' ? 'block' : 'none' }}>
           <CodexTerminal
             terminalId={sessionId}
-            onCoalescedOutput={(merged) => {
-              if (!pumpRef.current) return;
-              ingestEvents(pumpRef.current.push(merged));
-            }}
+            onCoalescedOutput={onCodexOutput}
             registerWriter={(w) => {
               writerRef.current = w;
             }}
@@ -871,16 +1230,20 @@ export function AgentCodexView({ rootId, cwdPath, onClose }: AgentCodexViewProps
             value={draft}
             disabled={liveOver}
             onChange={(e) => setDraft((e.target as HTMLTextAreaElement).value.replace(/[\n\r]+/g, ' '))}
-            placeholder={liveOver ? 'sesi berakhir' : 'teks diteruskan utuh ke PTY'}
+            placeholder={
+              liveOver
+                ? 'sesi berakhir'
+                : turnRunning
+                  ? 'teks diteruskan utuh ke PTY (approval/steering)'
+                  : threadBadge
+                    ? '↵ turn baru — lanjut thread codex (resume)'
+                    : '↵ turn baru — codex exec'
+            }
             style={{ ...inputStyle, flex: 1 }}
           />
           <button
             disabled={liveOver || draft.trim() === ''}
-            onClick={() => {
-              sendRawKeys(draft + '\n');
-              setDraft('');
-              logAction('composer-send');
-            }}
+            onClick={sendComposer}
             style={btnGhostStyle}
           >
             Kirim
