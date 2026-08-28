@@ -287,10 +287,15 @@ async fn phase_execute_executed_happy() {
     // stub `jupyter` mimicking `nbconvert --output $6`: emits a line, writes
     // the output file given as its 6th argument, lingers briefly so the 409
     // busy-check stays deterministic.
+    // NOTE: sleep BEFORE the first echo — nb_ws_stream_socket uses a plain
+    // broadcast channel with NO replay, and this test subscribes only after
+    // two extra HTTP round-trips (409 + NOT_READY checks). Without the delay
+    // the child can emit `jupyter-line` before the WS subscribes and the
+    // frame is lost forever (deterministic CI failure, race won locally).
     common_write_fixture(
         fake_bin.path(),
         "jupyter",
-        "#!/bin/sh\necho jupyter-line\ncat > \"$6\" <<'EOF'\n{\"cells\":[]}\nEOF\nsleep 2\nexit 0\n",
+        "#!/bin/sh\nsleep 0.5\necho jupyter-line\ncat > \"$6\" <<'EOF'\n{\"cells\":[]}\nEOF\nsleep 1.5\nexit 0\n",
     );
     let cur = std::env::var("PATH").unwrap_or_default();
     unsafe { std::env::set_var("PATH", format!("{}:{cur}", fake_bin.path().display())) };
@@ -440,7 +445,9 @@ async fn phase_cell_run_streams_and_cleans_tmp() {
     common_write_fixture(
         fake_bin.path(),
         "python3",
-        "#!/bin/sh\nprintf '%s\\n' \"$1\" >/dev/null\necho cell-line-1\necho cell-line-2\nsleep 1\nexit 0\n",
+        // sleep-before-echo, same no-replay broadcast race as the jupyter
+        // stub above — the WS subscribes only after the tmp-scan round-trip.
+        "#!/bin/sh\nprintf '%s\\n' \"$1\" >/dev/null\nsleep 0.3\necho cell-line-1\necho cell-line-2\nsleep 1\nexit 0\n",
     );
     let cur = std::env::var("PATH").unwrap_or_default();
     unsafe { std::env::set_var("PATH", format!("{}:{cur}", fake_bin.path().display())) };
